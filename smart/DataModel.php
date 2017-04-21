@@ -16,9 +16,8 @@ class DataModel extends Server {
 	public $errorMessage = '';
 	function __construct($params = null) {
 		try {
-			if(!isset($params['allowedOperations'])){
-				$this->allowedOperations = array('fetch');
-			}else{
+			$this->allowedOperations = array('fetch');
+			if(isset($params['allowedOperations'])){
 				$this->allowedOperations = $params['allowedOperations'];
 			}
 			if(!isset($params['baseTable'])){
@@ -53,10 +52,9 @@ class DataModel extends Server {
  			$return = array();
 			$pkID = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : NULL;
 			$binding[":id"] = $pkID;
+			$sql = "select * from {$this->table} where {$this->pk_col} = coalesce(:id,{$this->pk_col});";
 			if(isset($args['sql'])){
 				$sql = $args['sql'];
-			}else{
-				$sql = "select * from {$this->table} where {$this->pk_col} = coalesce(:id,{$this->pk_col});";
 			}
 			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $pkID);
 		}
