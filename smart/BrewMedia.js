@@ -2,7 +2,7 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 	title: "Brew Media",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
-		this.BrewMediaDS = isc.myDataSource.create({
+		this.brewMediaDS = isc.myDataSource.create({
 			dataURL: "BrewMedia.php",
 			showFilterEditor: true,
 			fields:[
@@ -13,9 +13,9 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 				{name: "media"}
 			]
 		});
-		this.BrewMediaLG = isc.myListGrid.create({
+		this.brewMediaLG = isc.myListGrid.create({
 			parent: this,
-			dataSource: this.BrewMediaDS,
+			dataSource: this.brewMediaDS,
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
 				return false;
@@ -23,9 +23,9 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,
-			callingListGrid: this.BrewMediaLG
+			callingListGrid: this.brewMediaLG
 		});
-		this.BrewMediaVL = isc.myVLayout.create({members: [this.BrewMediaLG]});
-		this.addItem(this.BrewMediaVL);
+		this.brewMediaVL = isc.myVLayout.create({members: [this.brewMediaLG]});
+		this.addItem(this.brewMediaVL);
 	}
 });
