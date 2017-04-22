@@ -8,7 +8,7 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 			dataURL: "BrewClubs.php",
 			showFilterEditor: true,
 			fields:[
-				{name: "clubID", primaryKey: true, type: "sequence"},
+				{name: "clubID", primaryKey: true, type: "sequence", detail: true},
 				{name: "clubName"},
 				{name: "clubAbbr"},
 				{name: "city"},
@@ -23,7 +23,7 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 				return false;
 			}
 		});
-		this.localContextMenu = isc.myContextMenu.create({
+		this.localContextMenu = isc.myClubMenu.create({
 			parent: this,
 			callingListGrid: this.BrewClubsLG
 		});

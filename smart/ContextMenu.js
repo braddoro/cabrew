@@ -205,3 +205,54 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 		}
 	]
 });
+isc.defineClass("myContactMenu", "myMenu").addProperties({
+	parent: this,
+	callingListGrid: null,
+	data: [
+		{title: "Show Contact Types",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewContactPoints.create({
+					title: "Contact Types for " + record.contactName,
+					contactID: record.contactID,
+					width: 400,
+					height: 200,
+					left: 190,
+					top: 90
+				});
+			}
+		}
+	]
+});
+isc.defineClass("myClubMenu", "myMenu").addProperties({
+	parent: this,
+	callingListGrid: null,
+	data: [
+		{title: "Show Contacts",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewContacts.create({
+					title: "Contacts for " + record.clubName,
+					clubID: record.clubID,
+					width: 400,
+					height: 200,
+					left: 190,
+					top: 90
+				});
+			}
+		},
+		{title: "Show Media",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewMedia.create({
+					title: "Media for " + record.clubName,
+					clubID: record.clubID,
+					width: 500,
+					height: 200,
+					left: 190,
+					top: 90
+				});
+			}
+		}
+	]
+});

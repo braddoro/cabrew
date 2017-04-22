@@ -9,13 +9,13 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			]
 		});
 		this.clubsMenu = isc.myMenu.create({
-			title: "Brew Clubs",
+			title: "Affiliates",
 			items: [
-				{title: "Clubs", click: "isc.BrewClubs.create()"},
-				{title: "Club Media", click: "isc.BrewMedia.create()"},
-				{title: "Club Attendence", click: "isc.BrewAttendence.create()"},
-				{title: "Contacts", click: "isc.BrewContacts.create()"},
-				{title: "Contact Points", click: "isc.BrewContactPoints.create()"}
+				{title: "Clubs", click: "isc.BrewClubs.create()"}
+				//{title: "Club Media", click: "isc.BrewMedia.create()"},
+				//{title: "Club Attendence", click: "isc.BrewAttendence.create()"},
+				//{title: "Contacts", click: "isc.BrewContacts.create()"},
+				//{title: "Contact Points", click: "isc.BrewContactPoints.create()"}
 			]
 		});
 		this.mainMenu = isc.myMenu.create({
@@ -23,7 +23,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			showShadow: true,
 			items: [
 				{title: "Members", submenu: this.membersMenu},
-				{title: "Clubs", submenu: this.clubsMenu}
+				{title: "Affiliates", submenu: this.clubsMenu}
 				//,{title: "Testing", click: "isc.TestData.create({title: "Testing"})"}
 			]
 		});

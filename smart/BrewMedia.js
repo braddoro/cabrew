@@ -2,20 +2,20 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 	title: "Brew Media",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
-		this.brewMediaDS = isc.myDataSource.create({
+		this.BrewMediaDS = isc.myDataSource.create({
 			dataURL: "BrewMedia.php",
-			showFilterEditor: true,
+			autoFetchData: false,
 			fields:[
-				{name: "mediaID", primaryKey: true, type: "sequence"},
-				{name: "clubID"},
-				{name: "typeID"},
-				{name: "priority"},
+				{name: "mediaID", primaryKey: true, type: "sequence", detail: true},
+				{name: "clubID", detail: true},
+				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
+				{name: "priority", width: 75},
 				{name: "media"}
 			]
 		});
-		this.brewMediaLG = isc.myListGrid.create({
+		this.BrewMediaLG = isc.myListGrid.create({
 			parent: this,
-			dataSource: this.brewMediaDS,
+			dataSource: this.BrewMediaDS,
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
 				return false;
@@ -23,9 +23,12 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,
-			callingListGrid: this.brewMediaLG
+			callingListGrid: this.BrewMediaLG
 		});
-		this.brewMediaVL = isc.myVLayout.create({members: [this.brewMediaLG]});
-		this.addItem(this.brewMediaVL);
+		this.BrewMediaVL = isc.myVLayout.create({members: [this.BrewMediaLG]});
+		this.addItem(this.BrewMediaVL);
+		if(initData.clubID){
+			this.BrewMediaLG.fetchData({clubID: initData.clubID});
+		}
 	}
 });
