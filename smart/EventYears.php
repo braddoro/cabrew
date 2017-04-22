@@ -2,7 +2,7 @@
 require_once('data_library.php');
 class EventYears {
 	function __construct() {}
-	public function doFetch($args = NULL) {
+	public function doFetch() {
 		$rows = array();
 		$data = New DataLibrary();
 		$sql = "select distinct year(memberDate) as 'Year' from memberDates where year(memberDate) > 2014 order by memberDate;";

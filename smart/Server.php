@@ -15,7 +15,7 @@ class Server {
 		$this->dbname = $cabrew_array['database']['dbname'];
 		$this->connect();
 	}
-	public function connect($params = null) {
+	public function connect() {
  		try{
 			$opt = [
 				PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

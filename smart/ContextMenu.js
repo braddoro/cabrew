@@ -5,14 +5,12 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 		{title: "Copy Row",
 			click: function(target, item, menu, colNum){
 				var record;
-				var text;
+				var text = '';
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
 					for(var key in record) {
 						let value = record[key];
-						if (typeof value === "undefined" || typeof key === "undefined"){
-							console.log(key);
-						}else{
+						if (typeof value !== "undefined" && typeof key !== "undefined"){
 							text += key +  ": " + value + " - " + typeof(value) + "<br/>";
 						}
 					}
