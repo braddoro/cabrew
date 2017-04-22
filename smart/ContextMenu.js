@@ -169,9 +169,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 					record = menu.callingListGrid.getSelectedRecord();
 					for(var key in record) {
 						let value = record[key];
-						if (typeof value === "undefined" || typeof key === "undefined"){
-							console.log(key);
-						}else{
+						if (typeof value !== "undefined" && typeof key !== "undefined"){
 							text += key +  ": " + value + " - " + typeof(value) + "<br/>";
 						}
 					}

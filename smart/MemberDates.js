@@ -1,7 +1,5 @@
 isc.defineClass("MemberDates", "myWindow").addProperties({
 	title: "Members By Date",
-	autoFetch: true,
-	hideNames: false,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.MemberDatesDS = isc.myDataSource.create({
@@ -32,7 +30,7 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 		});
 		this.localContextMenu = isc.myFullMenu.create({
 			parent: this,
-			callingListGrid: this.MemberDatesDS
+			callingListGrid: this.MemberDatesLG
 		});
 		this.MemberDatesVL = isc.myVLayout.create({members: [this.MemberDatesLG]});
 		this.addItem(this.MemberDatesVL);
