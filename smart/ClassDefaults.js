@@ -75,3 +75,8 @@ isc.defineClass("myLabel", "Label").addProperties({
 	align: "left",
 	baseStyle: "headerItem"
 });
+
+isc.defineClass("myIButton", "IButton").addProperties({
+	autoFit: true
+});
+
