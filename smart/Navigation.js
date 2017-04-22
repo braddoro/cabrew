@@ -4,7 +4,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "Members",
 			items: [
 				{title: "By Status", click: "isc.MemberStatus.create({width: 750})"},
-				{title: "By Date", click: "isc.MemberDates.create({hideNames: false, autoFetch, false})"},
+				{title: "By Date", click: "isc.MemberDates.create({hideNames: false, autoFetch: false})"},
 				{title: "By Points", click: "isc.MemberPoints.create()"}
 			]
 		});
