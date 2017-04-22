@@ -4,7 +4,6 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		this.Super("initWidget", arguments);
 		this.AddEventDS = isc.myDataSource.create({
 			dataURL: "AddEvent.php",
-			showFilterEditor: true,
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
 				{name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
@@ -26,9 +25,26 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		});
 		this.AddEventLG = isc.myListGrid.create({
 			parent: this,
+			showHeader: false,
+			autoSaveEdits: false,
 			dataSource: this.ActiveMembersDS
 		});
-		this.AddEventVL = isc.myVLayout.create({members: [this.AddEventDF, this.AddEventLG]});
+		this.AddEventBT = isc.myIButton.create({
+			parent: this,
+			title: "Add",
+			align: "center",
+			click: function(){
+				this.parent.submitData();
+			}
+		});
+		this.AddEventVL = isc.myVLayout.create({members: [
+			this.AddEventDF,
+			this.AddEventBT,
+			this.AddEventLG
+		]});
 		this.addItem(this.AddEventVL);
+	},
+	submitData: function(){
+		isc.warn('submitData:');
 	}
 });
