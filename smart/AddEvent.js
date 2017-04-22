@@ -7,7 +7,7 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
 				{name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
-				{name: "memberDate", title: 'Date', useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
+				{name: "memberDate", title: "Date", useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 				{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
 			]
 		});
@@ -57,6 +57,6 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 				dateDetail: formData["dateDetail"]
 			};
 			this.AddEventDS.addData(newData);
-		};
-	}
+		}
+	};
 });
