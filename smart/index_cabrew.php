@@ -10,6 +10,7 @@ $classes[] = 'Desktop.js';
 $classes[] = 'Navigation.js';
 $classes[] = 'ContextMenu.js';
 $classes[] = 'Shared.js';
+$classes[] = 'AddEvent.js';
 $classes[] = 'Corporations.js';
 $classes[] = 'MemberChairs.js';
 $classes[] = 'MemberContacts.js';
