@@ -5,10 +5,6 @@ require_once('Server.php');
 require_once('library.php');
 class DataModel extends Server {
 	private $conn = '';
-	private $hostname = '';
-	private $username = '';
-	private $password = '';
-	private $dbname = '';
 	private $table = '';
 	private $pk_col = '';
 	public $allowedOperations = array();
@@ -69,7 +65,6 @@ class DataModel extends Server {
 		$return = array();
 		$setFields = array();
 		$setValues = array();
-		$bindings = array();
 		$fields = $args;
 		if(!array_keys($this->allowedOperations, $args['operationType'])){
 			return array('status' => -4, 'errorMessage' => "This view does not allow {$args['operationType']} operations.");
