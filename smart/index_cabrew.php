@@ -1,22 +1,8 @@
 <?php
 // https://mattstauffer.co/blog/sublime-text-3-for-php-developers
-/*
-0 BlackOps
-0 ToolSkin
-0 ToolSkinNative
-2 SmartClient
-3 TreeFrog
-3 Cupertino
-3 Mobile
-3 SilverWave
-3 standard
-4 Enterprise
-4 Simplicity
-5 fleet
-6 EnterpriseBlue
-7 Graphite
-*/
-$title = 'Cabarrus Homebrewers Society';
+$cabrew_array  = parse_ini_file('cabrew.ini',true);
+$skin = $cabrew_array['application']['skin'];;
+$title = $cabrew_array['application']['title'];
 $classes = array();
 $classes[] = 'ClassDefaults.js';
 $classes[] = 'library.js';
@@ -24,6 +10,7 @@ $classes[] = 'Desktop.js';
 $classes[] = 'Navigation.js';
 $classes[] = 'ContextMenu.js';
 $classes[] = 'Shared.js';
+$classes[] = 'Corporations.js';
 $classes[] = 'MemberChairs.js';
 $classes[] = 'MemberContacts.js';
 $classes[] = 'MemberDates.js';
@@ -36,7 +23,6 @@ $classes[] = 'BrewContacts.js';
 $classes[] = 'BrewContactPoints.js';
 $classes[] = 'BrewMedia.js';
 $classes[] = 'ShowInfo.js';
-//$classes[] = 'TestData.js';
 echo "<html>
 <head>
 <script>var isomorphicDir='../../../smartclientRuntime/isomorphic/';</script>
@@ -46,7 +32,7 @@ echo "<html>
 <script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_Grids.js'></script>
 <script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
 <script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
-<script src='../../../smartclientRuntime/isomorphic/skins/fleet/load_skin.js'></script>
+<script src='../../../smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>$title</title>
 </head>
