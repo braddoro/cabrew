@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE);
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 class Server {
@@ -8,7 +7,7 @@ class Server {
 	private $username = '';
 	private $password = '';
 	private $dbname = '';
-	function __construct($params = null) {
+	function __construct() {
 		$cabrew_array  = parse_ini_file('cabrew.ini',true);
 		$this->hostname = $cabrew_array['database']['hostname'];;
 		$this->username = $cabrew_array['database']['username'];
