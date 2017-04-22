@@ -15,7 +15,6 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			dataURL: "ActiveMembers.php",
 			fields:[
 				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
-				{name: "Attended", type: "boolean", canEdit: true},
 				{name: "FullName"}
 			]
 		});
@@ -45,6 +44,19 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		this.addItem(this.AddEventVL);
 	},
 	submitData: function(){
-		isc.warn('submitData:');
+		var formData = this.AddEventDF.getValues();
+		console.log(formData);
+		var selectedData = this.AddEventLG.getSelectedRecords();
+		var loop = selectedData.length;
+		var newData;
+		for (i = 0; i < loop; i++) {
+			newData = {
+				memberID_fk: selectedData[i]["memberID"],
+				dateTypeID_fk: formData["dateTypeID_fk"],
+				memberDate: formData["memberDate"],
+				dateDetail: formData["dateDetail"]
+			};
+			this.AddEventDS.addData(newData);
+		};
 	}
 });

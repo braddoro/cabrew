@@ -2,7 +2,8 @@
 require_once('DataModel.php');
 $params = array(
 	'baseTable' => 'memberDates',
-	'pk_col' => 'memberDateID'
+	'pk_col' => 'memberDateID',
+	'allowedOperations' => array('fetch','add')
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){
