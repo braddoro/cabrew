@@ -4,11 +4,11 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 		this.Super("initWidget", arguments);
 		this.BrewContactPointsDS = isc.myDataSource.create({
 			dataURL: "BrewContactPoints.php",
-			showFilterEditor: true,
+			autoFetchData: false,
 			fields:[
-				{name: "contactPointID", primaryKey: true, type: "sequence"},
-				{name: "contactID"},
-				{name: "typeID"},
+				{name: "contactPointID", primaryKey: true, type: "sequence", detail: true},
+				{name: "contactID", detail: true},
+				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
 				{name: "contactPoint"}
 			]
 		});
@@ -26,5 +26,8 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 		});
 		this.BrewContactPointsVL = isc.myVLayout.create({members: [this.BrewContactPointsLG]});
 		this.addItem(this.BrewContactPointsVL);
+		if(initData.contactID){
+			this.BrewContactPointsLG.fetchData({contactID: initData.contactID});
+		}
 	}
 });

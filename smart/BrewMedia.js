@@ -4,12 +4,12 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 		this.Super("initWidget", arguments);
 		this.BrewMediaDS = isc.myDataSource.create({
 			dataURL: "BrewMedia.php",
-			showFilterEditor: true,
+			autoFetchData: false,
 			fields:[
-				{name: "mediaID", primaryKey: true, type: "sequence"},
-				{name: "clubID"},
-				{name: "typeID"},
-				{name: "priority"},
+				{name: "mediaID", primaryKey: true, type: "sequence", detail: true},
+				{name: "clubID", detail: true},
+				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
+				{name: "priority", width: 75},
 				{name: "media"}
 			]
 		});
@@ -27,5 +27,8 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 		});
 		this.BrewMediaVL = isc.myVLayout.create({members: [this.BrewMediaLG]});
 		this.addItem(this.BrewMediaVL);
+		if(initData.clubID){
+			this.BrewMediaLG.fetchData({clubID: initData.clubID});
+		}
 	}
 });

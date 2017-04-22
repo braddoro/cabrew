@@ -4,21 +4,16 @@
 require_once('Server.php');
 require_once('library.php');
 class DataModel extends Server {
-	private $conn;
-	private $hostname;
-	private $username;
-	private $password;
-	private $dbname;
-	private $table;
-	private $pk_col;
-	public $allowedOperations;
-	public $status;
-	public $errorMessage;
+	private $conn = '';
+	private $table = '';
+	private $pk_col = '';
+	public $allowedOperations = array();
+	public $status = false;
+	public $errorMessage = '';
 	function __construct($params = null) {
 		try {
-			if(!isset($params['allowedOperations'])){
-				$this->allowedOperations = array('fetch');
-			}else{
+			$this->allowedOperations = array('fetch');
+			if(isset($params['allowedOperations'])){
 				$this->allowedOperations = $params['allowedOperations'];
 			}
 			if(!isset($params['baseTable'])){
@@ -51,14 +46,13 @@ class DataModel extends Server {
 		}
  		try{
  			$return = array();
-			$id = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : NULL;
-			$binding[":id"] = $id;
+			$pkID = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : NULL;
+			$binding[":id"] = $pkID;
+			$sql = "select * from {$this->table} where {$this->pk_col} = coalesce(:id,{$this->pk_col});";
 			if(isset($args['sql'])){
 				$sql = $args['sql'];
-			}else{
-				$sql = "select * from {$this->table} where {$this->pk_col} = coalesce(:id,{$this->pk_col});";
 			}
-			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $id);
+			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $pkID);
 		}
 		catch(PDOException $e){
 			$return['status'] = -110;
@@ -71,7 +65,6 @@ class DataModel extends Server {
 		$return = array();
 		$setFields = array();
 		$setValues = array();
-		$bindings = array();
 		$fields = $args;
 		if(!array_keys($this->allowedOperations, $args['operationType'])){
 			return array('status' => -4, 'errorMessage' => "This view does not allow {$args['operationType']} operations.");
@@ -107,7 +100,7 @@ class DataModel extends Server {
 			return array('status' => -4, 'errorMessage' => "This view does not allow {$args['operationType']} operations.");
 		}
 		try{
-			$id = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : 0;
+			$pkID = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : 0;
 			$fields = $args;
 			unset($fields['operationType']);
 			unset($fields["{$this->pk_col}"]);
@@ -115,8 +108,8 @@ class DataModel extends Server {
 				$setFields[] = "{$key} = :{$key}";
 				$binding[":{$key}"] = $value;
 			}
-			$sql = "UPDATE {$this->table} SET ".implode(', ', $setFields).", lastChangeDate = NOW() WHERE {$this->pk_col} = {$id}";
-			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $id);
+			$sql = "UPDATE {$this->table} SET ".implode(', ', $setFields).", lastChangeDate = NOW() WHERE {$this->pk_col} = {$pkID}";
+			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $pkID);
 		}
 		catch(PDOException $e){
 			$return['status'] = -110;
@@ -131,10 +124,10 @@ class DataModel extends Server {
 			return array('status' => -4, 'errorMessage' => "This view does not allow {$args['operationType']} operations.");
 		}
 		try{
-			$id = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : 0;
-			$binding[":id"] = $id;
+			$pkID = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : 0;
+			$binding[":id"] = $pkID;
 			$sql = "DELETE FROM {$this->table} WHERE {$this->pk_col} = :id";
-			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $id);
+			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $pkID);
 		}
 		catch(PDOException $e){
 			$return['status'] = -110;
@@ -143,7 +136,7 @@ class DataModel extends Server {
 		}
 		return $rows;
 	}
-	function pdoExecute($sql, $binding, $operationType, $id = null){
+	function pdoExecute($sql, $binding, $operationType, $pkID = null){
 		try{
 			$stmt = $this->conn->prepare($sql);
 			$stmt->execute($binding);
@@ -167,13 +160,13 @@ class DataModel extends Server {
 					$return = $rows;
 					break;
 				case 'add':
-					$id = $this->conn->lastInsertId();
-					$fetchArgs["{$this->pk_col}"] = $id;
+					$pkID = $this->conn->lastInsertId();
+					$fetchArgs["{$this->pk_col}"] = $pkID;
 					$fetchArgs['operationType'] = 'fetch';
 					$return = $this->pdoFetch($fetchArgs);
 					break;
 				case 'update':
-					$fetchArgs["{$this->pk_col}"] = $id;
+					$fetchArgs["{$this->pk_col}"] = $pkID;
 					$fetchArgs['operationType'] = 'fetch';
 					$fetchArgs['retOT'] = $operationType;
 					$return = $this->pdoFetch($fetchArgs);
@@ -181,7 +174,7 @@ class DataModel extends Server {
 				case 'remove':
 					$return = $stmt->rowCount();
 					if($return > 0){
-						$fetchArgs["{$this->pk_col}"] = $id;
+						$fetchArgs["{$this->pk_col}"] = $pkID;
 						$fetchArgs['operationType'] = 'fetch';
 						$return = $this->pdoFetch($fetchArgs);
 					}

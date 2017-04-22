@@ -6,13 +6,12 @@ class DataLibrary {
 	private $dbname = '';
 	public  $conn = '';
 	public  $debugLevel = 0;
-
 	function __construct() {
-		$cabrew_array  = parse_ini_file('cabrew.ini',true);
-		$this->hostname = $cabrew_array['database']['hostname'];;
-		$this->username = $cabrew_array['database']['username'];
-		$this->password = $cabrew_array['database']['password'];
-		$this->dbname = $cabrew_array['database']['dbname'];
+		$server_array  = parse_ini_file('server.ini',true);
+		$this->hostname = $server_array['database']['hostname'];;
+		$this->username = $server_array['database']['username'];
+		$this->password = $server_array['database']['password'];
+		$this->dbname = $server_array['database']['dbname'];
 	}
 
 	// GetData

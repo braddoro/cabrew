@@ -5,18 +5,17 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 		{title: "Copy Row",
 			click: function(target, item, menu, colNum){
 				var record;
-				var text;
+				var text = "";
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					for(var key in record) {
-						let value = record[key];
-						if (typeof value === "undefined" || typeof key === "undefined"){
-							console.log(key);
-						}else{
-							text += key +  ": " + value + " - " + typeof(value) + "<br/>";
-						}
-					}
-					isc.say(text);
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+
+					isc.say(copyValues(record));
 				}
 			}
 		},
@@ -169,15 +168,14 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				var text;
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					for(var key in record) {
-						let value = record[key];
-						if (typeof value === "undefined" || typeof key === "undefined"){
-							console.log(key);
-						}else{
-							text += key +  ": " + value + " - " + typeof(value) + "<br/>";
-						}
-					}
-					isc.say(text);
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+					// isc.say(text);
+					isc.say(copyValues(record));
 				}
 			}
 		},
@@ -205,6 +203,57 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData({testID: record.testID});
 				}
+			}
+		}
+	]
+});
+isc.defineClass("myContactMenu", "myMenu").addProperties({
+	parent: this,
+	callingListGrid: null,
+	data: [
+		{title: "Show Contact Types",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewContactPoints.create({
+					title: "Contact Types for " + record.contactName,
+					contactID: record.contactID,
+					width: 400,
+					height: 200,
+					left: 190,
+					top: 90
+				});
+			}
+		}
+	]
+});
+isc.defineClass("myClubMenu", "myMenu").addProperties({
+	parent: this,
+	callingListGrid: null,
+	data: [
+		{title: "Show Contacts",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewContacts.create({
+					title: "Contacts for " + record.clubName,
+					clubID: record.clubID,
+					width: 400,
+					height: 200,
+					left: 190,
+					top: 90
+				});
+			}
+		},
+		{title: "Show Media",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewMedia.create({
+					title: "Media for " + record.clubName,
+					clubID: record.clubID,
+					width: 500,
+					height: 200,
+					left: 190,
+					top: 90
+				});
 			}
 		}
 	]

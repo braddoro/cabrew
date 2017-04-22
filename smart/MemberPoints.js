@@ -50,7 +50,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			},
 			dataArrived: function(startRow, endRow){
 				this.selectSingleRecord(startRow);
-				this.recordClick(this,this.getRecord(0),"memberID",0)
+				this.recordClick(this,this.getRecord(0),"memberID",0);
 			},
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();

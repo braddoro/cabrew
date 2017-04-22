@@ -1,5 +1,5 @@
-isc.defineClass("BrewClubs", "myWindow").addProperties({
-	title: "Brew Clubs",
+isc.defineClass("Corporations", "myWindow").addProperties({
+	title: "Corporations",
 	autoFetch: true,
 	hideNames: false,
 	initWidget: function(initData){
