@@ -58,5 +58,5 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			};
 			this.AddEventDS.addData(newData);
 		}
-	};
+	}
 });
