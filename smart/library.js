@@ -1,6 +1,16 @@
 String.prototype.capitalize = function() {
   return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){return p1+p2.toUpperCase();});
 };
+function copyValues(stringIn){
+	var stringOut = "";
+	for(var key in stringIn) {
+		let value = stringIn[key];
+		if (typeof value !== "undefined" && typeof key !== "undefined") {
+			stringOut += key +  ": " + value + " - " + typeof(value) + "<br/>";
+		}
+	}
+	return stringOut;
+}
 function errorTitle(code) {
 	var title = "";
 	switch(code) {

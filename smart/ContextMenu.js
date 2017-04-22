@@ -8,13 +8,14 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 				var text = "";
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					for(var key in record) {
-						let value = record[key];
-						if (typeof value !== "undefined" && typeof key !== "undefined"){
-							text += key +  ": " + value + " - " + typeof(value) + "<br/>";
-						}
-					}
-					isc.say(text);
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+
+					isc.say(copyValues(record));
 				}
 			}
 		},
@@ -167,13 +168,14 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				var text;
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					for(var key in record) {
-						let value = record[key];
-						if (typeof value !== "undefined" && typeof key !== "undefined"){
-							text += key +  ": " + value + " - " + typeof(value) + "<br/>";
-						}
-					}
-					isc.say(text);
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+					// isc.say(text);
+					isc.say(copyValues(record));
 				}
 			}
 		},
