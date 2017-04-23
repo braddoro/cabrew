@@ -20,6 +20,7 @@ case 'fetch':
 			M.sex,
 			M.lastName,
 			M.firstName,
+			M.renewalMonth,
 			M.statusTypeID_fk,
 			M.lastChangeDate,
 			C.memberContact as 'Email',
