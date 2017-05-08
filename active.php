@@ -55,9 +55,11 @@ try {
 		ST.statusType,
 		M.statusTypeID_fk,
 		M.renewalMonth
+	having
+		floor(datediff(now(), max(D.memberDate))/30.4) >= 12
 	order by
-		M.renewalMonth,
 		max(D.memberDate),
+		M.renewalMonth,
 		M.lastName,
 		M.firstName;
 	";
