@@ -44,7 +44,6 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 				status: status,
 				willHandleError: false,
 				errorMessage: (data.errorMessage) ? data.errorMessage : "A bad thing happened. It was probably your fault. Go outside and play.",
-				clientContext: dsRequest.clientContext,
 				httpResponseCode: dsResponse.httpResponseCode
 			};
 		}
@@ -61,7 +60,6 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 });
 
 isc.defineClass("myDynamicForm", "DynamicForm").addProperties({
-
 });
 
 isc.defineClass("myMenu", "Menu").addProperties({
