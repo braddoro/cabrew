@@ -45,7 +45,6 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 	},
 	submitData: function(){
 		var formData = this.AddEventDF.getValues();
-		console.log(formData);
 		var selectedData = this.AddEventLG.getSelectedRecords();
 		var loop = selectedData.length;
 		var newData;

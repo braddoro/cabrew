@@ -15,9 +15,10 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 			{name: "lastChangeDate", detail: true},
 			{name: "Email"},
 			{name: "Phone"},
+			{name: "renewalMonth", type: "integer"},
 			{name: "LastPayment", detail: true},
 			{name: "JoinedDate", detail: true},
-			{name: "MonthsPaid"}
+			{name: "MonthsPaid", type: "integer"}
 		]
 	});
 	this.MemberStatusLG = isc.myListGrid.create({
