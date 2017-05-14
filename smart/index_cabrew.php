@@ -26,14 +26,14 @@ $classes[] = 'BrewMedia.js';
 $classes[] = 'ShowInfo.js';
 echo "<html>
 <head>
-<script>var isomorphicDir='../../../smartclientRuntime/isomorphic/';</script>
-<script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_Core.js'></script>
-<script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_Foundation.js'></script>
-<script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_Containers.js'></script>
-<script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_Grids.js'></script>
-<script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
-<script src='../../../smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
-<script src='../../../smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
+<script>var isomorphicDir='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/';</script>
+<script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Core.js'></script>
+<script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Foundation.js'></script>
+<script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Containers.js'></script>
+<script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Grids.js'></script>
+<script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
+<script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
+<script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>$title</title>
 </head>
