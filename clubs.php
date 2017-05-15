@@ -2,7 +2,7 @@
 <html>
 <body>
 <head>
-	<title>Active</title>
+	<title>Clubs</title>
 <style>
 .odd{
 	background-color: #DCDCDC;
@@ -32,37 +32,30 @@ try {
 	}
 	$sql = "
 	select
-		M.memberID,
-		M.firstName,
-		M.lastName,
-		ST.statusType,
-		M.renewalMonth,
-		floor(datediff(now(), max(D.memberDate))/30.4) as 'MonthsSincePayment',
-		max(D.memberDate) as 'LastPaid',
-		C1.memberContact as 'Phone',
-		C2.memberContact as 'Email',
-		C3.memberContact as 'Address'
-	from members M
-	inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID and ST.statusTypeID not in (4,5)
-	inner join memberDates D on M.memberID = D.memberID_fk and D.dateTypeID_fk = 3
-	left join memberContacts C1 on M.memberID = C1.memberID_fk and C1.contactTypeID_fk = 1
-	left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2
-	left join memberContacts C3 on M.memberID = C3.memberID_fk and C3.contactTypeID_fk = 3
-	group by
-		M.memberID,
-		M.firstName,
-		M.lastName,
-		ST.statusType,
-		M.statusTypeID_fk,
-		M.renewalMonth
---	having
---		floor(datediff(now(), max(D.memberDate))/30.4) >= 12
+		club.clubName,
+		club.clubAbbr,
+		club.city,
+		club.state,
+		contact.contactName,
+		points.contactPoint,
+		concat('<a href=\"',media.media,'\">url</a>') as 'web'
+	from brew_clubs club
+		inner join brew_contacts contact on club.clubID = contact.clubID
+		inner join brew_contactPoints points on contact.contactID = points.contactID
+		inner join contactTypes cp on points.contactTypeID_fk = cp.contactTypeID
+		inner join brew_media media on club.clubID = media.clubID
+		inner join contactTypes cp2 on media.contactTypeID_fk = cp2.contactTypeID
+	where
+		points.contactTypeID_fk = 2
+		and contact.priority = 1
+		and media.priority = 1
+		and media.contactTypeID_fk = 5
 	order by
-		M.renewalMonth,
-		max(D.memberDate),
-		M.lastName,
-		M.firstName;
-	";
+		club.clubName,
+		club.clubAbbr,
+		contact.contactName,
+		cp.contactType
+	;";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";
 		exit();
