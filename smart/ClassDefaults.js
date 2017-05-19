@@ -35,16 +35,15 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 		var newResponse;
 		var status = (data.status) ? data.status : isc.RPCResponse.STATUS_SUCCESS;
 		var title = errorTitle(status);
-		if(status === isc.RPCResponse.STATUS_SUCCESS){
+		if(status == isc.RPCResponse.STATUS_SUCCESS){
 			newResponse = dsResponse;
-			isc.addProperties({}, newResponse, {willHandleError: false});
+			isc.addProperties({}, newResponse, {willHandleError: true});
 		}else{
 			isc.warn(data.errorMessage, null, {title: title});
 			newResponse = {
 				status: status,
-				willHandleError: false,
-				errorMessage: (data.errorMessage) ? data.errorMessage : "A bad thing happened. It was probably your fault. Go outside and play.",
-				httpResponseCode: dsResponse.httpResponseCode
+				willHandleError: true,
+				data: data.errorMessage
 			};
 		}
 		return this.Super("transformResponse", [newResponse, dsRequest, data]);

@@ -12,7 +12,7 @@
 // 	console.log(datestring);
 // 	this.AddEventDF.getItem("memberDate").defaultValue = datestring;
 // }
-	isc.defineClass("AddEvent", "myWindow").addProperties({
+isc.defineClass("AddEvent", "myWindow").addProperties({
 	title: "Add Event",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);

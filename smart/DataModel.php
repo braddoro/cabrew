@@ -137,7 +137,7 @@ class DataModel extends Server {
 		return $rows;
 	}
 	function pdoExecute($sql, $binding, $operationType, $pkID = null){
-		echo("/*" . $sql . "*/");
+		// echo("/*" . $sql . "*/");
 		try{
 			$stmt = $this->conn->prepare($sql);
 			$stmt->execute($binding);
