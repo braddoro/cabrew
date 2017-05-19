@@ -60,9 +60,10 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 	submitData: function(){
 		var formData = this.AddEventDF.getValues();
 		var selectedData = this.AddEventLG.getSelectedRecords();
-		var loop = selectedData.length;
 		var newData;
-		for (i = 0; i < loop; i++) {
+		var loop = selectedData.length;
+		var zero = 0;
+		for (i = zero; i < loop; i++) {
 			newData = {
 				memberID_fk: selectedData[i]["memberID"],
 				dateTypeID_fk: formData["dateTypeID_fk"],
