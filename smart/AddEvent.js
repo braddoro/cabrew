@@ -1,3 +1,17 @@
+// defaultValue: function() {
+// 	var today = new Date();
+// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
+// 	return datestring;
+// }
+// ,
+// windowInitialize: function(initData){
+// 	this.initData = initData;
+// 	var today = new Date();
+// 	console.log(today);
+// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
+// 	console.log(datestring);
+// 	this.AddEventDF.getItem("memberDate").defaultValue = datestring;
+// }
 isc.defineClass("AddEvent", "myWindow").addProperties({
 	title: "Add Event",
 	initWidget: function(initData){

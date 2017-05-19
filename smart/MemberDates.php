@@ -29,6 +29,11 @@ case 'fetch':
 	}else{
 		$dateTypeID = 'NULL';
 	}
+	if(isset($argsIN['statusTypeID_fk'])) {
+		$statusTypeID = ($argsIN['statusTypeID_fk'] > 0) ? $argsIN['statusTypeID_fk'] : NULL;
+	}else{
+		$dateTypeID = 'NULL';
+	}
 	if(isset($argsIN['$points'])) {
 		$points = ($argsIN['$points'] > 0) ? $argsIN['$points'] : NULL;
 	}else{
@@ -57,6 +62,7 @@ case 'fetch':
 		and year(d.memberDate) = coalesce($year,year(d.memberDate))
 		and m.memberID = coalesce($memberID,m.memberID)
 		and dt.dateTypeID = coalesce($dateTypeID,dt.dateTypeID)
+		and m.statusTypeID_fk = coalesce($statusTypeID,m.statusTypeID_fk)
 	order by
 		d.memberDate,
 		dt.dateType;

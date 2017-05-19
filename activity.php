@@ -2,7 +2,7 @@
 <html>
 <body>
 <head>
-	<title>Active</title>
+	<title>Member Activity</title>
 <style>
 .odd{
 	background-color: #DCDCDC;
@@ -32,31 +32,31 @@ try {
 	}
 	$sql = "
 	select
-		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName',
+		M.memberID,
+		concat(M.firstName, ' ',M.lastName) as Name,
 		ST.statusType,
-		M.renewalMonth,
-		floor(datediff(now(), max(D.memberDate))/30.4) as 'MonthsSincePayment',
-		max(D.memberDate) as 'LastPaid',
-		C1.memberContact as 'Phone',
-		C2.memberContact as 'Email',
-		C3.memberContact as 'Address'
+		DT.dateType,
+		max(D.memberDate) as LastDate,
+		floor(datediff(now(), max(D.memberDate))/30.4) as Months,
+		-- D.dateDetail
+		left(D.dateDetail,75) as DateDetail
 	from members M
-	inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID and ST.statusTypeID not in (4,5)
-	inner join memberDates D on M.memberID = D.memberID_fk and D.dateTypeID_fk = 3
-	left join memberContacts C1 on M.memberID = C1.memberID_fk and C1.contactTypeID_fk = 1
-	left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2
-	left join memberContacts C3 on M.memberID = C3.memberID_fk and C3.contactTypeID_fk = 3
+		inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID
+		inner join memberDates D on M.memberID = D.memberID_fk
+		inner join dateTypes DT on D.dateTypeID_fk = DT.dateTypeID
+	where
+		D.dateTypeID_fk <> 2
 	group by
-		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' '),
+		M.memberID,
+		concat(M.firstName, ' ',M.lastName),
 		ST.statusType,
-		M.statusTypeID_fk,
-		M.renewalMonth
---	having
---		floor(datediff(now(), max(D.memberDate))/30.4) >= 12
+		DT.dateType,
+		-- D.dateDetail
+		left(D.dateDetail,75)
 	order by
 		max(D.memberDate) desc,
-		M.renewalMonth,
-		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ');
+		M.firstName,
+		M.lastName;
 	";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";
@@ -76,7 +76,7 @@ try {
 			}
 			$fmt .= substr($base,$x,1);
 		}
-		echo "\t\t<th>" . ucfirst($fmt) . "</th>" . PHP_EOL;
+		echo "\t\t<th>" . ucfirst($fmt) . "&nbsp;&nbsp;</th>" . PHP_EOL;
 	}
 	echo "\t<tr>" . PHP_EOL;
 	$loop=0;
@@ -84,7 +84,7 @@ try {
 		$style = ($loop % 2 == 0) ? 'even' : 'odd';
 		echo "\t<tr class='$style'>" . PHP_EOL;
 		foreach($row as $field){
-			echo "\t\t<td>" . $field . "</td>" . PHP_EOL;
+			echo "\t\t<td>" . $field . "&nbsp;&nbsp;</td>" . PHP_EOL;
 		}
 		echo "\t</tr>" . PHP_EOL;
 		$loop++;

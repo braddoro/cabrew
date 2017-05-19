@@ -65,7 +65,8 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			dataSource: this.pointListDS,
 			margin: 1,
 			width: "*",
-			sortField: 0
+			sortField: 0,
+			sortDirection: "descending"
 		});
 		this.memberPointsScreenVL = isc.myVLayout.create({
 			members: [this.yearChooserDF,
