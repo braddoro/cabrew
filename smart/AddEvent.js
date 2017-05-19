@@ -3,7 +3,16 @@
 // 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
 // 	return datestring;
 // }
-isc.defineClass("AddEvent", "myWindow").addProperties({
+// ,
+// windowInitialize: function(initData){
+// 	this.initData = initData;
+// 	var today = new Date();
+// 	console.log(today);
+// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
+// 	console.log(datestring);
+// 	this.AddEventDF.getItem("memberDate").defaultValue = datestring;
+// }
+	isc.defineClass("AddEvent", "myWindow").addProperties({
 	title: "Add Event",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
@@ -62,13 +71,5 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			};
 			this.AddEventDS.addData(newData);
 		}
-	},
-	windowInitialize: function(initData){
-		this.initData = initData;
-		var today = new Date();
-		console.log(today);
-		var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
-		console.log(datestring);
-		this.AddEventDF.getItem("memberDate").defaultValue = datestring;
 	}
 });
