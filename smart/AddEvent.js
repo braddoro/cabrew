@@ -62,11 +62,9 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		var selectedData = this.AddEventLG.getSelectedRecords();
 		var loop = selectedData.length;
 		var newData;
-		var memberID;
 		for (i = 0; i < loop; i++) {
-			memberID = selectedData[i]["memberID"];
 			newData = {
-				memberID_fk: memberID,
+				memberID_fk: selectedData[i]["memberID"],
 				dateTypeID_fk: formData["dateTypeID_fk"],
 				memberDate: formData["memberDate"],
 				dateDetail: formData["dateDetail"]
