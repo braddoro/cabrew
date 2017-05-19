@@ -50,7 +50,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			},
 			dataArrived: function(startRow, endRow){
 				this.selectSingleRecord(startRow);
-				this.recordClick(this,this.getRecord(0),"memberID",0);
+				this.recordClick(this,this.getRecord(startRow),"memberID",this.getFieldNum("memberID"));
 			},
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
@@ -66,7 +66,11 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			margin: 1,
 			width: "*",
 			sortField: 0,
-			sortDirection: "descending"
+			sortDirection: "descending",
+			dataArrived: function(startRow, endRow){
+				this.selectSingleRecord(startRow);
+				this.recordClick(this,this.getRecord(startRow),"dateTypeID",this.getFieldNum("dateTypeID"));
+			}
 		});
 		this.memberPointsScreenVL = isc.myVLayout.create({
 			members: [this.yearChooserDF,
