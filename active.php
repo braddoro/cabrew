@@ -32,9 +32,7 @@ try {
 	}
 	$sql = "
 	select
-		M.memberID,
-		M.firstName,
-		M.lastName,
+		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName',
 		ST.statusType,
 		M.renewalMonth,
 		floor(datediff(now(), max(D.memberDate))/30.4) as 'MonthsSincePayment',
@@ -49,19 +47,16 @@ try {
 	left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2
 	left join memberContacts C3 on M.memberID = C3.memberID_fk and C3.contactTypeID_fk = 3
 	group by
-		M.memberID,
-		M.firstName,
-		M.lastName,
+		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' '),
 		ST.statusType,
 		M.statusTypeID_fk,
 		M.renewalMonth
 --	having
 --		floor(datediff(now(), max(D.memberDate))/30.4) >= 12
 	order by
+		max(D.memberDate) desc,
 		M.renewalMonth,
-		max(D.memberDate),
-		M.lastName,
-		M.firstName;
+		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ');
 	";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";

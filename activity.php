@@ -32,30 +32,27 @@ try {
 	}
 	$sql = "
 	select
+		M.memberID,
 		concat(M.firstName, ' ',M.lastName) as Name,
 		ST.statusType,
 		DT.dateType,
 		max(D.memberDate) as LastDate,
 		floor(datediff(now(), max(D.memberDate))/30.4) as Months,
+		-- D.dateDetail
 		left(D.dateDetail,75) as DateDetail
-		-- M.memberID,
-		-- M.statusTypeID_fk,
-		-- M.renewalMonth,
 	from members M
 		inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID
 		inner join memberDates D on M.memberID = D.memberID_fk
 		inner join dateTypes DT on D.dateTypeID_fk = DT.dateTypeID
-	-- where
-	-- 	and D.dateTypeID_fk <> 2
+	where
+		D.dateTypeID_fk <> 2
 	group by
+		M.memberID,
 		concat(M.firstName, ' ',M.lastName),
 		ST.statusType,
 		DT.dateType,
+		-- D.dateDetail
 		left(D.dateDetail,75)
-		-- M.memberID,
-		-- M.statusTypeID_fk,
-		-- M.renewalMonth,
-		-- having floor(datediff(now(), max(D.memberDate))/30.4) > 12
 	order by
 		max(D.memberDate) desc,
 		M.firstName,
