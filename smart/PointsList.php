@@ -30,7 +30,11 @@ case 'fetch':
 		d.memberDate,
 		dt.dateTypeID,
 		dt.datePoints,
-		d.dateDetail
+		d.dateDetail,
+		day(d.memberDate) as 'Day',
+		month(d.memberDate) as 'Month',
+		year(d.memberDate) as 'Year'
+
 	from
 		memberDates d
 		inner join members m on m.memberID = d.memberID_fk

@@ -15,7 +15,10 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			dataURL: "PointsList.php",
 			fields:[
 				{name: "memberID", type: "sequence", primaryKey: true, detail: true},
-				{name: "memberDate", type: "string", title: "Date", width: 100},
+				{name: "memberDate", type: "string", title: "Date", width: 100, detail: true},
+				{name: "Year", type: "integer", width: 50, detail: true},
+				{name: "Month", type: "integer", width: 60},
+				{name: "Day", type: "integer", width: 50},
 				{name: "datePoints", type: "integer", title: "Points", width: 75},
 				{name: "dateTypeID", title: "Event", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
 				{name: "dateDetail", type: "string", title: "Detail", width: "*"}

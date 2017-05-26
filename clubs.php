@@ -39,7 +39,8 @@ try {
 		contact.contactName,
 		points.contactPoint,
 		concat('<a href=\"',media.media,'\">url</a>') as 'web'
-	from brew_clubs club
+	from
+		brew_clubs club
 		inner join brew_contacts contact on club.clubID = contact.clubID
 		inner join brew_contactPoints points on contact.contactID = points.contactID
 		inner join contactTypes cp on points.contactTypeID_fk = cp.contactTypeID
@@ -54,8 +55,8 @@ try {
 		club.clubName,
 		club.clubAbbr,
 		contact.contactName,
-		cp.contactType
-	;";
+		cp.contactType;
+	";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";
 		exit();

@@ -19,6 +19,16 @@ case 'fetch':
 	}else{
 		$year = 'NULL';
 	}
+	if(isset($argsIN['Month'])) {
+		$month = ($argsIN['Month'] > 0) ? $argsIN['Month'] : NULL;
+	}else{
+		$month = 'NULL';
+	}
+	if(isset($argsIN['Day'])) {
+		$day = ($argsIN['Day'] > 0) ? $argsIN['Day'] : NULL;
+	}else{
+		$day = 'NULL';
+	}
 	if(isset($argsIN['memberID'])) {
 		$memberID = ($argsIN['memberID'] > 0) ? $argsIN['memberID'] : NULL;
 	}else{
@@ -32,7 +42,7 @@ case 'fetch':
 	if(isset($argsIN['statusTypeID_fk'])) {
 		$statusTypeID = ($argsIN['statusTypeID_fk'] > 0) ? $argsIN['statusTypeID_fk'] : NULL;
 	}else{
-		$dateTypeID = 'NULL';
+		$statusTypeID = 'NULL';
 	}
 	if(isset($argsIN['$points'])) {
 		$points = ($argsIN['$points'] > 0) ? $argsIN['$points'] : NULL;
@@ -46,6 +56,8 @@ case 'fetch':
 		dt.dateTypeID,
 		dt.datePoints,
 		year(d.memberDate) as 'Year',
+		month(d.memberDate) as 'Month',
+		day(d.memberDate) as 'Day',
 		d.memberDate,
 		d.dateDetail,
 		m.sex,
@@ -60,6 +72,8 @@ case 'fetch':
 		d.memberDateID = coalesce(:id, d.memberDateID)
 		and dt.datePoints > $points
 		and year(d.memberDate) = coalesce($year,year(d.memberDate))
+		and month(d.memberDate) = coalesce($month,month(d.memberDate))
+		and day(d.memberDate) = coalesce($day,day(d.memberDate))
 		and m.memberID = coalesce($memberID,m.memberID)
 		and dt.dateTypeID = coalesce($dateTypeID,dt.dateTypeID)
 		and m.statusTypeID_fk = coalesce($statusTypeID,m.statusTypeID_fk)
