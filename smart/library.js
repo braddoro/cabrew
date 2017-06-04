@@ -20,7 +20,6 @@ function errorTitle(code) {
 	if(code === isc.RPCResponse.STATUS_FAILURE){ // -1
 		return "Failure";
 	}
-
 	if(code === isc.RPCResponse.STATUS_AUTHORIZATION_FAILURE){ // -3
 		return "Authorization Failure";
 	}
