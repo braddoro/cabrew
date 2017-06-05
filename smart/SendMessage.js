@@ -53,6 +53,7 @@ isc.defineClass("SendMessage", "myWindow").addProperties({
 		var formData = this.AddEventDF.getValues();
 		var selectedData = this.AddEventLG.getSelectedRecords();
 		var newData;
+		var sendMembers = new Array();
 		var loop = selectedData.length;
 		var zero = 0;
 		for (i = zero; i < loop; i++) {

@@ -13,7 +13,11 @@ if($lclass->status != 0){
 }
 $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
-//var_dump($argsIN)
+
+$out = '';
+foreach($argsIN as $arg){$out .= $arg . "\n";}
+echo "/* $out */";
+
 switch($operationType){
 case 'fetch':
 	if(isset($argsIN['Year'])) {
@@ -66,8 +70,8 @@ case 'fetch':
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':
-	$response = $lclass->pdoAdd($argsIN);
-	break;
+// 	$response = $lclass->pdoAdd($argsIN);
+ 	break;
 case 'update':
 	$response = $lclass->pdoUpdate($argsIN);
 	break;
