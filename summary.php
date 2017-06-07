@@ -2,7 +2,7 @@
 <html>
 <body>
 <head>
-	<title>Clubs</title>
+	<title>Summary</title>
 <style>
 .odd{
 	background-color: #DCDCDC;
@@ -32,30 +32,21 @@ try {
 	}
 	$sql = "
 	select
-		club.clubName,
-		club.clubAbbr,
-		club.city,
-		club.state,
-		contact.contactName,
-		points.contactPoint,
-		concat('<a href=\"',media.media,'\">url</a>') as 'web'
+		DATE_FORMAT(md.memberDate, '%M') 'Month',
+		dt.dateType,
+		count(*) 'Total'
 	from
-		brew_clubs club
-		inner join brew_contacts contact on club.clubID = contact.clubID
-		inner join brew_contactPoints points on contact.contactID = points.contactID
-		inner join contactTypes cp on points.contactTypeID_fk = cp.contactTypeID
-		inner join brew_media media on club.clubID = media.clubID
-		inner join contactTypes cp2 on media.contactTypeID_fk = cp2.contactTypeID
-	where
-		points.contactTypeID_fk = 2
-		and contact.priority = 1
-		and media.priority = 1
-		and media.contactTypeID_fk = 5
+		memberDates md
+	inner join
+		dateTypes dt on md.dateTypeID_fk = dt.dateTypeID
+	where year(md.memberDate) = 2017
+	group by
+		DATE_FORMAT(md.memberDate, '%M'),
+		dt.dateType
 	order by
-		club.clubName,
-		club.clubAbbr,
-		contact.contactName,
-		cp.contactType;
+		md.memberDate,
+		month(md.memberDate),
+		dt.dateType;
 	";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";

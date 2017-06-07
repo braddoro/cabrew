@@ -73,12 +73,12 @@ class DataModel extends Server {
 			unset($fields['operationType']);
 			foreach($fields as $key => $value){
 				$setFields[] = "{$key}, ";
-				if(is_numeric($value)){
-					$setValues[] = "{$value}, ";
-				}else{
+				$newValue = "{$value}, ";
+				if(!is_numeric($value)){
 					$string = $this->conn->quote($value);
-					$setValues[] = "{$string}, ";
+					$newValue = "{$string}, ";
 				}
+				$setValues[] = $newValue;
 			}
 			$sql = "INSERT INTO {$this->table} (";
 			$sql .= implode($setFields) . 'lastChangeDate) ';

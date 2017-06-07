@@ -4,6 +4,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "Members",
 			items: [
 				{title: "Add Event", click: "isc.AddEvent.create({width: 300, height: \"95%\"})"},
+				{title: "Send Message", click: "isc.SendMessage.create({width: 800, height: \"95%\"})"},
 				{isSeparator: true},
 				{title: "By Status", click: "isc.MemberStatus.create({width: 750})"},
 				{title: "By Date", click: "isc.MemberDates.create({hideNames: false, autoFetch: false})"},

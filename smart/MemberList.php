@@ -1,6 +1,6 @@
 <?php
 require_once('data_library.php');
-class ActiveMembers {
+class MemberList {
   function __construct() {}
   public function doFetch() {
 	$rows = array();
@@ -8,11 +8,11 @@ class ActiveMembers {
 	$sql = "
 		select
 			M.memberID,
-			REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName'
+			REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName',
+			MS.statusType
 		from
 			members M
-		where
-			M.statusTypeID_fk = 1
+		inner join statusTypes MS on M.statusTypeID_fk = MS.statusTypeID
 		order by
 			M.lastName,
 			M.firstName;";
@@ -26,8 +26,9 @@ class ActiveMembers {
 	$result = $dataSet['result'];
 	while ($row = $result->fetch()) {
 		$rows[] = array(
-		'memberID'	=> $row['memberID'],
-		'FullName'	=> $row['FullName']
+		'memberID'	 => $row['memberID'],
+		'FullName'	 => $row['FullName'],
+		'StatusType' => $row['statusType']
 	  );
 	}
 	$result->closeCursor();
@@ -36,6 +37,6 @@ class ActiveMembers {
   }
 }
 $argsIN = $_POST;
-$Foo = New ActiveMembers();
+$Foo = New MemberList();
 echo $Foo->doFetch();
 ?>

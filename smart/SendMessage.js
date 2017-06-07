@@ -1,35 +1,26 @@
-// defaultValue: function() {
-// 	var today = new Date();
-// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
-// 	return datestring;
-// }
-// ,
-// windowInitialize: function(initData){
-// 	this.initData = initData;
-// 	var today = new Date();
-// 	console.log(today);
-// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
-// 	console.log(datestring);
-// 	this.AddEventDF.getItem("memberDate").defaultValue = datestring;
-// }
-isc.defineClass("AddEvent", "myWindow").addProperties({
+// {name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
+// {name: "memberDate", title: "Date", useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
+// optionDataSource: isc.Shared.messageTypesDS, displayField: "displayLOV", valueField: "valueLOV"
+//
+isc.defineClass("SendMessage", "myWindow").addProperties({
 	title: "Add Event",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.AddEventDS = isc.myDataSource.create({
-			dataURL: "AddEvent.php",
+			dataURL: "SendMessage.php",
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
-				{name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
-				{name: "memberDate", title: "Date", useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
-				{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
+				{name: "MessageType", type: "radioGroup", vertical: false, width: "*", defaultValue: "SMS", valueMap:["SMS","Email","Other"]},
+				{name: "Subject", type: "text", width: "*", validators: [{type: "lengthRange", max: 64}]},
+				{name: "Message", type: "textArea", width: "*", validators: [{type: "lengthRange", max: 150}]}
 			]
 		});
 		this.ActiveMembersDS = isc.myDataSource.create({
-			dataURL: "ActiveMembers.php",
+			dataURL: "MemberStatus.php",
 			fields:[
 				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
-				{name: "FullName"}
+				{name: "FullName"},
+				{name: "statusTypeID_fk", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"}
 			]
 		});
 		this.AddEventDF = isc.myDynamicForm.create({
@@ -40,6 +31,7 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			parent: this,
 			showHeader: false,
 			autoSaveEdits: false,
+			showFilterEditor: true,
 			dataSource: this.ActiveMembersDS
 		});
 		this.AddEventBT = isc.myIButton.create({
@@ -61,14 +53,15 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		var formData = this.AddEventDF.getValues();
 		var selectedData = this.AddEventLG.getSelectedRecords();
 		var newData;
+		var sendMembers = new Array();
 		var loop = selectedData.length;
 		var zero = 0;
 		for (i = zero; i < loop; i++) {
 			newData = {
 				memberID_fk: selectedData[i]["memberID"],
-				dateTypeID_fk: formData["dateTypeID_fk"],
-				memberDate: formData["memberDate"],
-				dateDetail: formData["dateDetail"]
+				MessageType: formData["MessageType"],
+				Subject: formData["Subject"],
+				Message: formData["Message"]
 			};
 			this.AddEventDS.addData(newData);
 		}

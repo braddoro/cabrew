@@ -35,7 +35,7 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 		var newResponse;
 		var status = (data.status) ? data.status : isc.RPCResponse.STATUS_SUCCESS;
 		var title = errorTitle(status);
-		if(status == isc.RPCResponse.STATUS_SUCCESS){
+		if(status === isc.RPCResponse.STATUS_SUCCESS){
 			newResponse = dsResponse;
 			isc.addProperties({}, newResponse, {willHandleError: true});
 		}else{

@@ -1,4 +1,15 @@
 isc.Shared = {
+	messageTypesDS: isc.DataSource.create({
+		clientOnly: true,
+		fields: [
+			{name: "valueLOV", type: "sequence", primaryKey: true},
+			{name: "displayLOV", type: "text"}
+		],
+		testData:[
+			{valueLOV: 1, displayLOV: "SMS"},
+			{valueLOV: 2, displayLOV: "Email"}
+		]
+	}),
 	statusTypesDS: isc.DataSource.create({
 		clientOnly: true,
 		fields: [

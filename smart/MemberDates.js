@@ -14,6 +14,8 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 				{name: "dateTypeID", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
 				{name: "Points"},
 				{name: "Year", type: "SelectItem", optionDataSource: isc.Shared.eventYearsDS, displayField: "Year", valueField: "Year"},
+				{name: "Month", type: "integer", detail: true},
+				{name: "Day", type: "integer", detail: true},
 				{name: "memberDate"},
 				{name: "DateDetail"}
 			]

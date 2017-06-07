@@ -18,6 +18,7 @@ $classes[] = 'MemberDates.js';
 $classes[] = 'MemberNotes.js';
 $classes[] = 'MemberPoints.js';
 $classes[] = 'MemberStatus.js';
+$classes[] = 'SendMessage.js';
 $classes[] = 'BrewAttendence.js';
 $classes[] = 'BrewClubs.js';
 $classes[] = 'BrewContacts.js';
