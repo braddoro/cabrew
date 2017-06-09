@@ -1,0 +1,15 @@
+<style>
+.odd{
+	background-color: #DCDCDC;
+	font-family: sans-serif;
+}
+.even{
+	background-color: #F5F5F5;
+	font-family: sans-serif;
+}
+.label{
+	background-color: #F5F5F5;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+</style>
