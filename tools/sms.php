@@ -16,7 +16,7 @@ $client->messages->create(
     // the number you'd like to send the message to
     // +13154917192 Jay
     // +19805210162 Brad
-    '+13154917192',
+    '+19805210162',
     array(
         // A Twilio phone number you purchased at twilio.com/console
         // +13154917192
