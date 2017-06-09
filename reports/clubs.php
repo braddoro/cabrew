@@ -1,10 +1,14 @@
+<?php
+$title = 'Other Club Contacts';
+?>
 <!DOCTYPE html>
 <html>
 <body>
 <head>
-	<title>Clubs</title>
+	<title><?php echo $title; ?></title>
 	<link rel="stylesheet" type="text/css"href="reports.css">
 </head>
+<span class="title"><?php echo $title; ?></span>
 <?php
 try {
 	$server_array  = parse_ini_file('../smart/server.ini',true);
