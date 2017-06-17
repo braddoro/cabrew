@@ -40,6 +40,9 @@ class DataModel extends Server {
 			return $response;
 		}
 	}
+	function __destruct() {
+		$this->conn = null;
+	}
 	public function pdoFetch($args = NULL) {
 		if(!array_keys($this->allowedOperations, $args['operationType'])){
 			return array('status' => -4, 'errorMessage' => "This view does not allow {$args['operationType']} operations.");
