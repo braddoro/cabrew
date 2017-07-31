@@ -41,7 +41,8 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 				var record;
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					menu.callingListGrid.removeData({testID: record.testID});
+					console.log(record);
+					menu.callingListGrid.removeData(record);
 				}
 			}
 		}
@@ -201,7 +202,8 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				var record;
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					menu.callingListGrid.removeData({testID: record.testID});
+					console.log(record);
+					menu.callingListGrid.removeData(record);
 				}
 			}
 		}

@@ -6,14 +6,8 @@ isc.defineClass("Items", "myWindow").addProperties({
 			dataURL: "Items.php",
 			fields:[
 				{name: "itemID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
+				{name: "itemDate", width: 120, editorType: "DateItem", inputFormat: "toUSShortDate", displayFormat: "toSerializeableDate", useTextField: true},
 				{name: "userName", width: 100},
-				{name: "itemDate",
-					defaultValue: this.today,
-					width: 100,
-					editorType: "DateItem",
-					inputFormat: "toUSShortDate",
-					displayFormat: "toUSShortDate",
-					useTextField: true},
 				{name: "item", width: "*"}
 			]
 		});
@@ -24,12 +18,21 @@ isc.defineClass("Items", "myWindow").addProperties({
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
 				var now = new Date();
-				console.log(now.toISOString());
 				return false;
 			},
  			rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
  				this.startEditing(recordNum);
+ 			},
+ 			startEditingNew: function(newValues, suppressFocus){
+				var now = new Date();
+				var today = now.toSerializeableDate();
+				var moreCriteria = isc.addProperties({}, newValues, {itemDate: today});
+ 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
  			}
+ 			// ,
+ 			// removeData: function(){
+ 			// 	return this.Super("removeData", [data, callback, requestProperties]);
+ 			// }
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,
@@ -37,8 +40,5 @@ isc.defineClass("Items", "myWindow").addProperties({
 		});
 		this.ItemsVL = isc.myVLayout.create({members: [this.ItemsLG]});
 		this.addItem(this.ItemsVL);
-		var now = new Date();
-		this.today = now.toSerializeableDate();
-
 	}
 });

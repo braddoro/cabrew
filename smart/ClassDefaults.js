@@ -55,7 +55,8 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	leaveScrollbarGap: false,
 	showFilterEditor: false,
 	showAllRecords: true,
-	autoFetchData: true
+	autoFetchData: true,
+	modalEditing: true,
 });
 
 isc.defineClass("myDynamicForm", "DynamicForm").addProperties({
