@@ -41,7 +41,6 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 				var record;
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					console.log(record);
 					menu.callingListGrid.removeData(record);
 				}
 			}
@@ -202,7 +201,6 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				var record;
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
-					console.log(record);
 					menu.callingListGrid.removeData(record);
 				}
 			}
