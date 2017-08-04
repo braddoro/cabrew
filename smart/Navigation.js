@@ -24,7 +24,8 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			items: [
 				{title: "Members", submenu: this.membersMenu},
 				{title: "Affiliate", submenu: this.AffiliatesMenu},
-				{title: "Items", click: "isc.Items.create({width: 800, height: \"95%\"})"}
+				{title: "Items", click: "isc.Items.create({width: 800, height: \"95%\"})"},
+				{title: "UserStories", click: "isc.UserStories.create({width: 1200, height: \"95%\"})"}
 			]
 		});
 		this.menuBar = isc.MenuBar.create({

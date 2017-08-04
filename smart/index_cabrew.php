@@ -27,6 +27,7 @@ $classes[] = 'BrewMedia.js';
 $classes[] = 'Items.js';
 $classes[] = 'ShowInfo.js';
 $classes[] = 'AddMember.js';
+$classes[] = 'UserStories.js';
 echo "<html>
 <head>
 <script>var isomorphicDir='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/';</script>
