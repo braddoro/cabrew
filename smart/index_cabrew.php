@@ -29,10 +29,9 @@ $classes[] = "{$client_path}MemberPoints.js";
 $classes[] = "{$client_path}MemberStatus.js";
 $classes[] = "{$client_path}SendMessage.js";
 $classes[] = "{$client_path}ShowInfo.js";
-//$classes[] = "{$client_path}Items.js";
-//$classes[] = "{$client_path}UserStories.js";
 echo "<html>
 <head>
+<script type=\"text/javascript\">var application.server_path = \"$server_path\";</script>
 <script>var isomorphicDir='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/';</script>
 <script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Core.js'></script>
 <script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Foundation.js'></script>
@@ -41,12 +40,10 @@ echo "<html>
 <script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
 <script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
 <script src='../../../SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
-
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>$title</title>
 </head>
 <body>
-<script type=\"text/javascript\">var application.server_path = \"$server_path\";</script>
 <script>
 ";
 $content = '';

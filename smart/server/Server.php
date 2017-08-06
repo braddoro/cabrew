@@ -8,7 +8,7 @@ class Server {
 	private $password = '';
 	private $dbname = '';
 	function __construct() {
-		$cabrew_array  = parse_ini_file('server.ini',true);
+		$cabrew_array  = parse_ini_file('../server.ini',true);
 		$this->hostname = $cabrew_array['database']['hostname'];
 		$this->username = $cabrew_array['database']['username'];
 		$this->password = $cabrew_array['database']['password'];
