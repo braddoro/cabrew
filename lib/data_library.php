@@ -7,7 +7,7 @@ class DataLibrary {
 	public  $conn = '';
 	public  $debugLevel = 0;
 	function __construct() {
-		$server_array  = parse_ini_file('../smart/server.ini', true);
+		$server_array  = parse_ini_file('server.ini', true);
 		$this->hostname = $server_array['database']['hostname'];;
 		$this->username = $server_array['database']['username'];
 		$this->password = $server_array['database']['password'];
