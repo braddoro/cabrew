@@ -18,7 +18,7 @@ isc.defineClass("EditMember", "myWindow").addProperties({
 		});
 		this.EditMemberDF = isc.myDynamicForm.create({
 			parent: this,
-			dataSource: this.EditMemberDS,
+			dataSource: this.EditMemberDS
 		});
 		this.EditMemberBT = isc.myIButton.create({
 			parent: this,
@@ -29,7 +29,7 @@ isc.defineClass("EditMember", "myWindow").addProperties({
 			}
 		});
 		this.EditMemberVL = isc.myVLayout.create({members: [this.EditMemberDF, this.EditMemberBT]});
-		this.addItem(this.EditMemberVL);		;
+		this.addItem(this.EditMemberVL);
 		this.EditMemberDF.fetchData({memberID: initData.memberID});
 	}
 });
