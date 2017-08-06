@@ -7,7 +7,7 @@ isc.defineClass("SendMessage", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.AddEventDS = isc.myDataSource.create({
-			dataURL: "SendMessage.php",
+			dataURL: application.server_path + "SendMessage.php",
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
 				{name: "MessageType", type: "radioGroup", vertical: false, width: "*", defaultValue: "SMS", valueMap:["SMS","Email","Other"]},
@@ -16,7 +16,7 @@ isc.defineClass("SendMessage", "myWindow").addProperties({
 			]
 		});
 		this.ActiveMembersDS = isc.myDataSource.create({
-			dataURL: "MemberStatus.php",
+			dataURL: application.server_path + "MemberStatus.php",
 			fields:[
 				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
 				{name: "FullName"},

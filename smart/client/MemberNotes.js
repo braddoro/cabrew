@@ -2,7 +2,7 @@ isc.defineClass("MemberNotes", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.MemberNotesDS = isc.myDataSource.create({
-		dataURL: "MemberNotes.php",
+		dataURL: application.server_path + "MemberNotes.php",
 		showFilterEditor: true,
 		fields:[
 			{name: "memberNoteID", primaryKey: true, detail: true, type: "sequence"},

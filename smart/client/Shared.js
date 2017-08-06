@@ -25,13 +25,13 @@ isc.Shared = {
 		]
 	}),
 	eventYearsDS: isc.myDataSource.create({
-		dataURL: "EventYears.php",
+		dataURL: application.server_path + "EventYears.php",
 		fields:[
 			{name: "Year", type: "sequence", primaryKey: true}
 		]
 	}),
 	dateTypesDS: isc.myDataSource.create({
-		dataURL: "DateTypes.php",
+		dataURL: application.server_path + "DateTypes.php",
 		fields:[
 			{name: "dateTypeID", type: "sequence", primaryKey: true},
 			{name: "dateType", type: "text"},
@@ -39,7 +39,7 @@ isc.Shared = {
 		]
 	}),
 	noteTypesDS: isc.myDataSource.create({
-		dataURL: "NoteTypes.php",
+		dataURL: application.server_path + "NoteTypes.php",
 		fields:[
 			{name: "noteTypeID", type: "sequence", primaryKey: true},
 			{name: "noteType", type: "text"},
@@ -47,7 +47,7 @@ isc.Shared = {
 		]
 	}),
 	contactTypesDS: isc.myDataSource.create({
-		dataURL: "ContactTypes.php",
+		dataURL: application.server_path + "ContactTypes.php",
 		fields:[
 			{name: "contactTypeID", type: "sequence", primaryKey: true},
 			{name: "contactType", type: "text"},
@@ -55,7 +55,7 @@ isc.Shared = {
 		]
 	}),
 	chairTypesDS: isc.myDataSource.create({
-		dataURL: "ChairTypes.php",
+		dataURL: application.server_path + "ChairTypes.php",
 		fields:[
 			{name: "chairTypeID", type: "sequence", primaryKey: true},
 			{name: "chairType", type: "text"},
