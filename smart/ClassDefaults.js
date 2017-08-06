@@ -60,6 +60,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 });
 
 isc.defineClass("myDynamicForm", "DynamicForm").addProperties({
+	validateOnChange: true
 });
 
 isc.defineClass("myMenu", "Menu").addProperties({

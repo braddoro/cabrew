@@ -23,7 +23,8 @@ try {
 	}
 	$sql = "
 	select
-		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName',
+		-- REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName',
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', M.lastName),'  ',' ') as 'FullName',
 		ST.statusType,
 		M.renewalMonth,
 		floor(datediff(now(), max(D.memberDate))/30.4) as 'MonthsSincePayment',
@@ -38,16 +39,17 @@ try {
 	left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2
 	left join memberContacts C3 on M.memberID = C3.memberID_fk and C3.contactTypeID_fk = 3
 	group by
-		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' '),
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', M.lastName),'  ',' '),
 		ST.statusType,
 		M.statusTypeID_fk,
 		M.renewalMonth
 --	having
 --		floor(datediff(now(), max(D.memberDate))/30.4) >= 12
 	order by
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', M.lastName),'  ',' '),
 		max(D.memberDate) desc,
-		M.renewalMonth,
-		REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ');
+		M.renewalMonth
+		;
 	";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";

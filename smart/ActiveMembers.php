@@ -14,8 +14,8 @@ class ActiveMembers {
 		where
 			M.statusTypeID_fk = 1
 		order by
-			M.lastName,
-			M.firstName;";
+			M.firstName,
+			M.lastName;";
 	$dataSet = $data->getData($sql);
 	if(!$dataSet['status']) {
 	  $rows['status'] = -1;

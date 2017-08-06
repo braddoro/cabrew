@@ -10,7 +10,7 @@ class DataModel extends Server {
 	public $allowedOperations = array();
 	public $status = false;
 	public $errorMessage = '';
-	function __construct($params = null) {
+	function __construct($params = NULL) {
 		try {
 			$this->allowedOperations = array('fetch');
 			if(isset($params['allowedOperations'])){
@@ -41,7 +41,7 @@ class DataModel extends Server {
 		}
 	}
 	function __destruct() {
-		$this->conn = null;
+		$this->conn = NULL;
 	}
 	public function pdoFetch($args = NULL) {
 		if(!array_keys($this->allowedOperations, $args['operationType'])){
@@ -109,6 +109,7 @@ class DataModel extends Server {
 			unset($fields["{$this->pk_col}"]);
 			foreach ($fields as $key => $value){
 				$setFields[] = "{$key} = :{$key}";
+				$value = ($value == 'null') ? NULL : $value;
 				$binding[":{$key}"] = $value;
 			}
 			$sql = "UPDATE {$this->table} SET ".implode(', ', $setFields).", lastChangeDate = NOW() WHERE {$this->pk_col} = {$pkID}";
@@ -139,7 +140,7 @@ class DataModel extends Server {
 		}
 		return $rows;
 	}
-	function pdoExecute($sql, $binding, $operationType, $pkID = null){
+	function pdoExecute($sql, $binding, $operationType, $pkID = NULL){
 		// echo("/*" . $sql . "*/");
 		try{
 			$stmt = $this->conn->prepare($sql);
