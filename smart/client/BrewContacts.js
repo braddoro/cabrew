@@ -3,7 +3,7 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewContactsDS = isc.myDataSource.create({
-			dataURL: "BrewContacts.php",
+			dataURL: application.server_path + "BrewContacts.php",
 			autoFetchData: false,
 			fields:[
 				{name: "contactID", primaryKey: true, type: "sequence", detail: true},

@@ -1,9 +1,8 @@
 <?php
-require_once('DataModel.php');
+require_once('../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'Items',
-	'pk_col' => 'itemID',
-	'allowedOperations' => array('fetch','add','update','remove')
+	'baseTable' => 'brew_contactPoints',
+	'pk_col' => 'contactID'
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){
@@ -15,6 +14,7 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
+	$argsIN['sql'] = "select * from brew_contactPoints where contactID = coalesce(:id, contactID);";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

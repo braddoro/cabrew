@@ -1,11 +1,11 @@
-isc.defineClass("BrewClubs", "myWindow").addProperties({
-	title: "Brew Clubs",
+isc.defineClass("Corporations", "myWindow").addProperties({
+	title: "Corporations",
 	autoFetch: true,
 	hideNames: false,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewClubsDS = isc.myDataSource.create({
-			dataURL: "BrewClubs.php",
+			dataURL: application.server_path + "BrewClubs.php",
 			showFilterEditor: true,
 			fields:[
 				{name: "clubID", primaryKey: true, type: "sequence", detail: true},

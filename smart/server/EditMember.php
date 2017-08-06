@@ -1,8 +1,9 @@
 <?php
-require_once('DataModel.php');
+require_once('../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'members',
-	'pk_col' => 'memberID'
+	'pk_col' => 'memberID',
+	'allowedOperations' => array('fetch','edit','update')
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){
@@ -14,37 +15,36 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
+	if(isset($argsIN['Year'])) {
+		$year = ($argsIN['Year'] > 0) ? $argsIN['Year'] : NULL;
+	}else{
+		$year = 'NULL';
+	}
 	if(isset($argsIN['memberID'])) {
 		$memberID = ($argsIN['memberID'] > 0) ? $argsIN['memberID'] : NULL;
 	}else{
 		$memberID = 'NULL';
 	}
-	if(isset($argsIN['year'])) {
-		$year = ($argsIN['year'] > 0) ? $argsIN['year'] : NULL;
+	if(isset($argsIN['dateTypeID'])) {
+		$dateTypeID = ($argsIN['dateTypeID'] > 0) ? $argsIN['dateTypeID'] : NULL;
 	}else{
-		$year = date('Y');
+		$dateTypeID = 'NULL';
+	}
+	if(isset($argsIN['$points'])) {
+		$points = ($argsIN['$points'] > 0) ? $argsIN['$points'] : NULL;
+	}else{
+		$points = '-1';
 	}
 	$argsIN['sql'] = "
 	select
-		M.memberID,
-		st.statusType,
-		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ') as 'FullName',
-		sum(dt.datePoints) as 'Points'
+		*
 	from
-		memberDates d
-		inner join members M on M.memberID = d.memberID_fk
-		inner join dateTypes dt on d.dateTypeID_fk = dt.dateTypeID
-	    inner join statusTypes st on M.statusTypeID_fk = st.statusTypeID
+		members
 	where
-		M.memberID = coalesce(:id, M.memberID)
-		and year(d.memberDate) = {$year}
-	group by
-		M.memberID,
-		st.statusType,
-		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ')
+		memberID = coalesce(:id, memberID)
 	order by
-		sum(dt.datePoints) desc,
-		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ');
+		firstName,
+		lastName;
 	";
 	$response = $lclass->pdoFetch($argsIN);
 	break;

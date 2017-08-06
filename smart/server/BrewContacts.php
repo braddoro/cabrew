@@ -1,7 +1,7 @@
 <?php
-require_once('DataModel.php');
+require_once('../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'brew_media',
+	'baseTable' => 'brew_contacts',
 	'pk_col' => 'clubID'
 );
 $lclass = New DataModel($params);
@@ -10,11 +10,12 @@ if($lclass->status != 0){
 	echo json_encode($response);
 	exit;
 }
+$response = array('status' => 0);
 $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
-	$argsIN['sql'] = "select * from brew_media where clubID = coalesce(:id, clubID);";
+	$argsIN['sql'] = "select * from brew_contacts where clubID = coalesce(:id, clubID) order by priority;";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

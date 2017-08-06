@@ -78,4 +78,3 @@ isc.defineClass("myLabel", "Label").addProperties({
 isc.defineClass("myIButton", "IButton").addProperties({
 	autoFit: true
 });
-

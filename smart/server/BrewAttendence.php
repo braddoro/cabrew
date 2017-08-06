@@ -1,8 +1,8 @@
 <?php
-require_once('DataModel.php');
+require_once('../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'brew_clubs',
-	'pk_col' => 'clubID'
+	'baseTable' => 'brew_attendence',
+	'pk_col' => 'attendenceID'
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){

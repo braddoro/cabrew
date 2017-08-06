@@ -1,8 +1,8 @@
 <?php
-require_once('DataModel.php');
+require_once('../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'memberDates',
-	'pk_col' => 'memberDateID'
+	'baseTable' => 'members',
+	'pk_col' => 'memberID'
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){
@@ -22,33 +22,30 @@ case 'fetch':
 	if(isset($argsIN['year'])) {
 		$year = ($argsIN['year'] > 0) ? $argsIN['year'] : NULL;
 	}else{
-		$year = 'NULL';
+		$year = date('Y');
 	}
 	$argsIN['sql'] = "
 	select
-		m.memberID,
-		d.memberDate,
-		dt.dateTypeID,
-		dt.datePoints,
-		d.dateDetail,
-		day(d.memberDate) as 'Day',
-		month(d.memberDate) as 'Month',
-		year(d.memberDate) as 'Year'
-
+		M.memberID,
+		st.statusType,
+		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ') as 'FullName',
+		sum(dt.datePoints) as 'Points'
 	from
 		memberDates d
-		inner join members m on m.memberID = d.memberID_fk
+		inner join members M on M.memberID = d.memberID_fk
 		inner join dateTypes dt on d.dateTypeID_fk = dt.dateTypeID
+	    inner join statusTypes st on M.statusTypeID_fk = st.statusTypeID
 	where
-		d.memberDateID = coalesce(:id, d.memberDateID)
-		and dt.datePoints > 0
-		and m.memberID = {$memberID}
+		M.memberID = coalesce(:id, M.memberID)
 		and year(d.memberDate) = {$year}
+	group by
+		M.memberID,
+		st.statusType,
+		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ')
 	order by
-		d.memberDate,
-		dt.dateType;
+		sum(dt.datePoints) desc,
+		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ');
 	";
-	// echo("/*" . $argsIN['sql'] . "*/");
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':
@@ -64,7 +61,5 @@ default:
 	$response = array('status' => 0);
 	break;
 }
-$response = str_replace("'", '`', $response);
-$response = str_replace('"', '`', $response);
 echo json_encode($response);
 ?>

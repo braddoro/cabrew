@@ -2,7 +2,7 @@ isc.defineClass("MemberContacts", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.MemberContactsDS = isc.myDataSource.create({
-			dataURL: "MemberContacts.php",
+			dataURL: application.server_path + "MemberContacts.php",
 			fields:[
 				{name: "memberContactID", primaryKey: true, detail: true},
 				{name: "memberID_fk", detail: true},

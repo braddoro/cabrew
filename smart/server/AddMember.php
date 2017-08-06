@@ -1,9 +1,9 @@
 <?php
-require_once('DataModel.php');
+require_once('../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'memberDates',
 	'pk_col' => 'memberDateID',
-	'allowedOperations' => array('fetch')
+	'allowedOperations' => array('fetch','add')
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){
@@ -13,11 +13,6 @@ if($lclass->status != 0){
 }
 $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
-
-$out = '';
-foreach($argsIN as $arg){$out .= $arg . "\n";}
-echo "/* $out */";
-
 switch($operationType){
 case 'fetch':
 	if(isset($argsIN['Year'])) {
@@ -70,8 +65,8 @@ case 'fetch':
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':
-// 	$response = $lclass->pdoAdd($argsIN);
- 	break;
+	$response = $lclass->pdoAdd($argsIN);
+	break;
 case 'update':
 	$response = $lclass->pdoUpdate($argsIN);
 	break;
