@@ -1,34 +1,34 @@
 <?php
 // https://mattstauffer.co/blog/sublime-text-3-for-php-developers
-$cabrew_array  = parse_ini_file('cabrew.ini',true);
+$cabrew_array  = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
-$client_path = 'client/';
+$client_path = '/client/';
 $server_path = 'server/';
 $classes = array();
-$classes[] = "{$client_path}ClassDefaults.js";
-$classes[] = "{$client_path}library.js";
-$classes[] = "{$client_path}Desktop.js";
-$classes[] = "{$client_path}Navigation.js";
-$classes[] = "{$client_path}ContextMenu.js";
-$classes[] = "{$client_path}Shared.js";
-$classes[] = "{$client_path}AddEvent.js";
-$classes[] = "{$client_path}AddMember.js";
-$classes[] = "{$client_path}BrewAttendence.js";
-$classes[] = "{$client_path}BrewClubs.js";
-$classes[] = "{$client_path}BrewContactPoints.js";
-$classes[] = "{$client_path}BrewContacts.js";
-$classes[] = "{$client_path}BrewMedia.js";
-$classes[] = "{$client_path}Corporations.js";
-$classes[] = "{$client_path}EditMember.js";
-$classes[] = "{$client_path}MemberChairs.js";
-$classes[] = "{$client_path}MemberContacts.js";
-$classes[] = "{$client_path}MemberDates.js";
-$classes[] = "{$client_path}MemberNotes.js";
-$classes[] = "{$client_path}MemberPoints.js";
-$classes[] = "{$client_path}MemberStatus.js";
-$classes[] = "{$client_path}SendMessage.js";
-$classes[] = "{$client_path}ShowInfo.js";
+$classes[] = "ClassDefaults.js";
+$classes[] = "library.js";
+$classes[] = "Desktop.js";
+$classes[] = "Navigation.js";
+$classes[] = "ContextMenu.js";
+$classes[] = "Shared.js";
+$classes[] = "AddEvent.js";
+$classes[] = "AddMember.js";
+$classes[] = "BrewAttendence.js";
+$classes[] = "BrewClubs.js";
+$classes[] = "BrewContactPoints.js";
+$classes[] = "BrewContacts.js";
+$classes[] = "BrewMedia.js";
+$classes[] = "Corporations.js";
+$classes[] = "EditMember.js";
+$classes[] = "MemberChairs.js";
+$classes[] = "MemberContacts.js";
+$classes[] = "MemberDates.js";
+$classes[] = "MemberNotes.js";
+$classes[] = "MemberPoints.js";
+$classes[] = "MemberStatus.js";
+$classes[] = "SendMessage.js";
+$classes[] = "ShowInfo.js";
 echo "<html>
 <head>
 <script type=\"text/javascript\">var application.server_path = \"$server_path\";</script>
@@ -47,16 +47,22 @@ echo "<html>
 <script>
 ";
 $content = '';
-foreach($classes as $class) {if(file_exists($class)){$content .= file_get_contents($class);}}
+foreach($classes as $class) {
+	//echo $client_path.$class . PHP_EOL;
+	if(file_exists($class)){
+		$content .= file_get_contents($client_path.$class);
+	}
+}
 echo $content;
 $cmdret = '';
-exec("git status --short --branch",$cmdret);
+exec("git status --short --branch", $cmdret);
 $str='';
 foreach ($cmdret as $key) {
 	$str .= $key . '<br/>';
 }
-echo 'isc.Desktop.create({gitInfo: "'. $str .'"});';
-echo '</script>
+echo 'isc.Desktop.create({gitInfo: "'. $str .'"});
+</script>';
+echo '
 </body>
 </html>';
 ?>
