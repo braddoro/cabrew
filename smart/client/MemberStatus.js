@@ -13,8 +13,6 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 			{name: "firstName", detail: true},
 			{name: "sex", detail: true},
 			{name: "lastChangeDate", detail: true},
-			{name: "Email"},
-			{name: "Phone"},
 			{name: "renewalMonth", type: "integer"},
 			{name: "LastPayment", detail: true},
 			{name: "JoinedDate", detail: true},

@@ -13,10 +13,16 @@ isc.defineClass("MemberContacts", "myWindow").addProperties({
 			]
 		});
 		this.MemberContactsLG = isc.myListGrid.create({
+			parent: this,
 			dataSource: this.MemberContactsDS,
-			canSelectCells: true,
-			canDragRecordsOut: true,
-			dragDataAction: "copy"
+			rowContextClick: function(record, rowNum, colNum){
+				this.parent.localContextMenu.showContextMenu();
+				return false;
+			}
+		});
+		this.localContextMenu = isc.myContextMenu.create({
+			parent: this,
+			callingListGrid: this.MemberContactsLG
 		});
 		this.MemberContactsVL = isc.myVLayout.create({members: [this.MemberContactsLG]});
 		this.addItem(this.MemberContactsVL);
