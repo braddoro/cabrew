@@ -1,5 +1,5 @@
 <?php
-require_once('../../data_library.php');
+require_once('../../lib/data_library.php');
 class ActiveMembers {
   function __construct() {}
   public function doFetch() {
