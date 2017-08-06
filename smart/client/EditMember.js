@@ -3,7 +3,7 @@ isc.defineClass("EditMember", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.EditMemberDS = isc.myDataSource.create({
-			dataURL: application.server_path + "EditMember.php",
+			dataURL: serverPath + "EditMember.php",
 			fields:[
 				{name: "memberID", primaryKey: true, statusTypepe: "sequence", canEdit: false},
 				{name: "statusTypeID_fk", type: "integer", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},

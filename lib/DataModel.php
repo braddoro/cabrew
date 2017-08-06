@@ -1,8 +1,8 @@
 <?php
 // http://www.mustbebuilt.co.uk/php/insert-update-and-delete-with-pdo/
 // https://phpdelusions.net/pdo
-require_once('Server.php');
-require_once('library.php');
+require_once('../server/Server.php');
+require_once('../server/library.php');
 class DataModel extends Server {
 	private $conn = '';
 	private $table = '';

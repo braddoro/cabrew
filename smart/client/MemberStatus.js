@@ -3,7 +3,7 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.MemberStatusDS = isc.myDataSource.create({
-		dataURL: application.server_path + "MemberStatus.php",
+		dataURL: serverPath + "MemberStatus.php",
 		showFilterEditor: true,
 		fields:[
 			{name: "statusTypeID_fk", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},

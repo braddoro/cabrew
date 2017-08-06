@@ -17,7 +17,7 @@ isc.defineClass("AddMember", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.AddEventDS = isc.myDataSource.create({
-			dataURL: application.server_path + "AddMember.php",
+			dataURL: serverPath + "AddMember.php",
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
 				{name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},

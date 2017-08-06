@@ -5,7 +5,7 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewClubsDS = isc.myDataSource.create({
-			dataURL: application.server_path + "BrewClubs.php",
+			dataURL: serverPath + "BrewClubs.php",
 			showFilterEditor: true,
 			fields:[
 				{name: "clubID", primaryKey: true, type: "sequence", detail: true},

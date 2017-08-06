@@ -3,9 +3,10 @@
 $cabrew_array  = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
-$client_path = 'client/';
-$server_path = 'server/';
-$source_path = '../../../';
+$source_path = $cabrew_array['application']['source_path'];
+$smart_ver = $cabrew_array['application']['smartclient_version'];
+$client_path = $cabrew_array['application']['client_path'];
+$server_path = $cabrew_array['application']['server_path'];
 $classes = array();
 $classes[] = "ClassDefaults.js";
 $classes[] = "library.js";
@@ -32,15 +33,15 @@ $classes[] = "SendMessage.js";
 $classes[] = "ShowInfo.js";
 echo "<html>
 <head>
-<script type='text/javascript'>var application.server_path = '$server_path';</script>
-<script>var isomorphicDir='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/';</script>
-<script src='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Core.js'></script>
-<script src='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Foundation.js'></script>
-<script src='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Containers.js'></script>
-<script src='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Grids.js'></script>
-<script src='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
-<script src='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
-<script src='{$source_path}SmartClient_v110p_2017-05-12_LGPL/smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
+<script>var serverPath = '$server_path';</script>
+<script>var isomorphicDir = '{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/';</script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Core.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Foundation.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Containers.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Grids.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>$title</title>
 </head>
@@ -49,8 +50,7 @@ echo "<html>
 ";
 $content = '';
 foreach($classes as $class) {
-	if(file_exists($class)){
-		echo $client_path . $class . PHP_EOF;
+	if(file_exists($client_path . $class)){
 		$content .= file_get_contents($client_path . $class);
 	}
 }

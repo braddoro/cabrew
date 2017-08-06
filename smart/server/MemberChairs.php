@@ -1,5 +1,5 @@
 <?php
-require_once('data_library.php');
+require_once('../../data_library.php');
 class MemberChair {
 	function __construct() {
 	}

@@ -3,7 +3,7 @@ isc.defineClass("BrewAttendence", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewAttendenceDS = isc.myDataSource.create({
-			dataURL: application.server_path + "BrewAttendence.php",
+			dataURL: serverPath + "BrewAttendence.php",
 			showFilterEditor: true,
 			fields:[
 				{name: "attendenceID", primaryKey: true, type: "sequence"},
