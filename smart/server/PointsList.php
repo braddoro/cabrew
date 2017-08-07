@@ -45,7 +45,10 @@ case 'fetch':
 		and m.memberID = {$memberID}
 		and year(d.memberDate) = {$year}
 	order by
-		d.memberDate,
+		year(d.memberDate) desc,
+		month(d.memberDate) desc,
+		day(d.memberDate) desc,
+		dt.datePoints,
 		dt.dateType;
 	";
 	// echo("/*" . $argsIN['sql'] . "*/");

@@ -8,7 +8,7 @@ class MemberList {
 	$sql = "
 		select
 			M.memberID,
-			REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName',
+			REPLACE(CONCAT(IFNULL(m.nickName,m.firstName), ' ', m.lastName),'  ',' ') as 'FullName',
 			MS.statusType
 		from
 			members M

@@ -8,7 +8,7 @@ class ActiveMembers {
 	$sql = "
 		select
 			M.memberID,
-			REPLACE(CONCAT(M.firstName,  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName'
+			REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ') as 'FullName'
 		from
 			members M
 		where

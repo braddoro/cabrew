@@ -38,7 +38,7 @@ case 'fetch':
 	$argsIN['sql'] = "
 	select
 		m.memberID,
-		REPLACE(CONCAT(m.firstName,' ',IFNULL(m.midName,''),' ',m.lastName),'  ',' ') as 'FullName',
+		REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
 		dt.dateTypeID,
 		dt.datePoints,
 		year(d.memberDate) as 'Year',

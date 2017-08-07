@@ -28,7 +28,7 @@ case 'fetch':
 	select
 		M.memberID,
 		st.statusType,
-		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ') as 'FullName',
+		REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
 		sum(dt.datePoints) as 'Points'
 	from
 		memberDates d
@@ -41,10 +41,10 @@ case 'fetch':
 	group by
 		M.memberID,
 		st.statusType,
-		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ')
+		REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ')
 	order by
 		sum(dt.datePoints) desc,
-		REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ');
+		REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ');
 	";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
