@@ -6,17 +6,19 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 		dataURL: serverPath + "MemberStatus.php",
 		showFilterEditor: true,
 		fields:[
-			{name: "statusTypeID_fk", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "statusTypeID_fk", width: 100, title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "FullName", width: "*"},
+			{name: "JoinedDate", width: 100},
+			{name: "renewalMonth", width: 100, type: "integer"},
+			{name: "MonthsPaid", width: 100, type: "integer"},
 			{name: "memberID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "FullName"},
-			{name: "lastName", detail: true},
-			{name: "firstName", detail: true},
 			{name: "sex", detail: true},
-			{name: "lastChangeDate", detail: true},
-			{name: "renewalMonth", type: "integer"},
-			{name: "LastPayment", detail: true},
-			{name: "JoinedDate", detail: true},
-			{name: "MonthsPaid", type: "integer"}
+			{name: "nickName", detail: true},
+			{name: "firstName", detail: true},
+			{name: "midName", detail: true},
+			{name: "lastName", detail: true},
+			{name: "lastChangeDate", width: 100, detail: true},
+			{name: "LastPayment", width: 100, detail: true}
 		]
 	});
 	this.MemberStatusLG = isc.myListGrid.create({
