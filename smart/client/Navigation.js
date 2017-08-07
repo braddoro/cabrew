@@ -23,8 +23,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			showShadow: true,
 			items: [
 				{title: "Members", submenu: this.membersMenu},
-				{title: "Affiliate", submenu: this.AffiliatesMenu},
-				{title: "Items", click: "isc.Items.create({width: 800, height: \"95%\"})"}
+				{title: "Affiliate", submenu: this.AffiliatesMenu}
 			]
 		});
 		this.menuBar = isc.MenuBar.create({
