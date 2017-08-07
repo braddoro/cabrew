@@ -11,7 +11,7 @@ $title = 'Active Member List';
 <span class="title"><?php echo $title; ?></span>
 <?php
 try {
-	$server_array  = parse_ini_file('../smart/server.ini',true);
+	$server_array  = parse_ini_file('../lib/server.ini',true);
 	$dbhost = $server_array['database']['hostname'];
 	$dbuser = $server_array['database']['username'];
 	$dbpass = $server_array['database']['password'];
@@ -23,8 +23,7 @@ try {
 	}
 	$sql = "
 	select
-		-- REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', IFNULL(M.midName,''),  ' ', M.lastName),'  ',' ') as 'FullName',
-		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', M.lastName),'  ',' ') as 'FullName',
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
 		ST.statusType,
 		M.renewalMonth,
 		floor(datediff(now(), max(D.memberDate))/30.4) as 'MonthsSincePayment',
@@ -33,20 +32,18 @@ try {
 		C2.memberContact as 'Email',
 		C3.memberContact as 'Address'
 	from members M
-	inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID and ST.statusTypeID not in (4,5)
-	inner join memberDates D on M.memberID = D.memberID_fk and D.dateTypeID_fk = 3
-	left join memberContacts C1 on M.memberID = C1.memberID_fk and C1.contactTypeID_fk = 1
-	left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2
-	left join memberContacts C3 on M.memberID = C3.memberID_fk and C3.contactTypeID_fk = 3
+		inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID and ST.statusTypeID not in (4,5)
+		inner join memberDates D on M.memberID = D.memberID_fk and D.dateTypeID_fk = 3
+		left join memberContacts C1 on M.memberID = C1.memberID_fk and C1.contactTypeID_fk = 1
+		left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2
+		left join memberContacts C3 on M.memberID = C3.memberID_fk and C3.contactTypeID_fk = 3
 	group by
-		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', M.lastName),'  ',' '),
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' '),
 		ST.statusType,
 		M.statusTypeID_fk,
 		M.renewalMonth
---	having
---		floor(datediff(now(), max(D.memberDate))/30.4) >= 12
 	order by
-		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName),  ' ', M.lastName),'  ',' '),
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' '),
 		max(D.memberDate) desc,
 		M.renewalMonth
 		;

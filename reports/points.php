@@ -11,7 +11,7 @@ $title = 'Member Point Totals';
 <span class="title"><?php echo $title; ?></span>
 <?php
 try {
-	$server_array  = parse_ini_file('../smart/server.ini',true);
+	$server_array  = parse_ini_file('../lib/server.ini',true);
 	$dbhost = $server_array['database']['hostname'];
 	$dbuser = $server_array['database']['username'];
 	$dbpass = $server_array['database']['password'];
@@ -24,7 +24,7 @@ try {
 	$sql = "
 		select
 			M.memberID,
-			REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ') as 'FullName',
+			REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
 			sum(dt.datePoints) as 'Points'
 		from
 			memberDates d
@@ -35,10 +35,10 @@ try {
 			and M.statusTypeID_fk = 1
 		group by
 			M.memberID,
-			REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ')
+			REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ')
 		order by
 			sum(dt.datePoints) desc,
-			REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ');
+			REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ');
 	";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";

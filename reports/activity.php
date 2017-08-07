@@ -11,7 +11,7 @@ $title = 'Club Activity Detail';
 <span class="title"><?php echo $title; ?></span>
 <?php
 try {
-	$server_array  = parse_ini_file('../smart/server.ini',true);
+	$server_array  = parse_ini_file('../lib/server.ini',true);
 	$dbhost = $server_array['database']['hostname'];
 	$dbuser = $server_array['database']['username'];
 	$dbpass = $server_array['database']['password'];
@@ -24,7 +24,7 @@ try {
 	$sql = "
 	select
 		M.memberID,
-		concat(M.firstName, ' ',M.lastName) as Name,
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as Name,
 		ST.statusType,
 		DT.dateType,
 		max(D.memberDate) as LastDate,
@@ -39,7 +39,7 @@ try {
 		D.dateTypeID_fk <> 2
 	group by
 		M.memberID,
-		concat(M.firstName, ' ',M.lastName),
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' '),
 		ST.statusType,
 		DT.dateType,
 		-- D.dateDetail

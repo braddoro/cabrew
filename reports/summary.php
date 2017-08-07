@@ -11,7 +11,7 @@ $title = 'Club Summary Activity';
 <span class="title"><?php echo $title; ?></span>
 <?php
 try {
-	$server_array  = parse_ini_file('../smart/server.ini',true);
+	$server_array  = parse_ini_file('../lib/server.ini',true);
 	$dbhost = $server_array['database']['hostname'];
 	$dbuser = $server_array['database']['username'];
 	$dbpass = $server_array['database']['password'];
