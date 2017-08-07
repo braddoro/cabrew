@@ -17,7 +17,7 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 				{name: "Month", type: "integer", detail: true},
 				{name: "Day", type: "integer", detail: true},
 				{name: "memberDate"},
-				{name: "DateDetail"}
+				{name: "dateDetail"}
 			]
 		});
 		this.MemberDatesLG = isc.myListGrid.create({
@@ -44,6 +44,8 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 		}
 		if(initData.autoFetch === true) {
 			this.MemberDatesLG.fetchData({memberID: initData.memberID});
+		}else{
+			this.MemberDatesLG.filterData({Year: 2017});
 		}
 	}
 });
