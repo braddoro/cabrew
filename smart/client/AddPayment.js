@@ -20,7 +20,7 @@ isc.defineClass("AddPayment", "myWindow").addProperties({
 					pickListFields: [
 						{name: "FullName", width: "*"},
 						{name: "Status", width: 75},
-						{name: "Month", width: 50},
+						{name: "Month", width: 50}
 					]
 				},
 				{
@@ -52,24 +52,10 @@ isc.defineClass("AddPayment", "myWindow").addProperties({
 				}
 			]
 		});
-		// this.ActiveMembersDS = isc.myDataSource.create({
-		// 	dataURL: serverPath + "ActiveMembers.php",
-		// 	fields:[
-		// 		{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
-		// 		{name: "FullName"}
-		// 	]
-		// });
 		this.AddPaymentDF = isc.myDynamicForm.create({
 			parent: this,
-//			showFilterEditor: true,
 			dataSource: this.AddPaymentDS
 		});
-		// this.AddPaymentLG = isc.myListGrid.create({
-		// 	parent: this,
-		// 	showHeader: false,
-		// 	autoSaveEdits: false,
-		// 	dataSource: this.ActiveMembersDS
-		// });
 		this.AddPaymentBT = isc.myIButton.create({
 			parent: this,
 			title: "Add",
@@ -85,20 +71,6 @@ isc.defineClass("AddPayment", "myWindow").addProperties({
 		this.addItem(this.AddPaymentVL);
 	},
 	submitData: function(){
-		// var formData = this.AddPaymentDF.getValues();
-		// console.log(formData);
-		// var selectedData = this.AddPaymentLG.getSelectedRecords();
-		// var newData;
-		// var loop = selectedData.length;
-		// var zero = 0;
-		// for (i = zero; i < loop; i++) {
-		// newData = {
-		// 	memberID_fk: selectedData[i]["memberID"],
-		// 	dateTypeID_fk: formData["dateTypeID_fk"],
-		// 	memberDate: formData["memberDate"],
-		// 	dateDetail: formData["dateDetail"]
-		// };
-			this.AddPaymentDS.addData(this.AddPaymentDF.getValues());
-		//}
+		this.AddPaymentDS.addData(this.AddPaymentDF.getValues());
 	}
 });
