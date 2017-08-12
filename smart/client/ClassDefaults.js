@@ -52,13 +52,13 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 		if(dsResponse.errorMessage){
 			error = dsResponse.errorMessage;
 		}
-		if(error == "" && data.errorMessage){
-			error = error + data.errorMessage;
+		if(error === "" && data.errorMessage){
+			error += data.errorMessage;
 		}
-		if(error == "" && dsResponse.httpResponseText){
-			error = error + dsResponse.httpResponseText;
+		if(error === "" && dsResponse.httpResponseText){
+			error += dsResponse.httpResponseText;
 		}
-		if(error == ""){
+		if(error === ""){
 			error = title;
 		}
 

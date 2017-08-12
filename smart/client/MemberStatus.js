@@ -33,7 +33,9 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 			return false;
 		},
 		dataArrived: function(){
-			var statusText = this.parent.baseTitle + " - Rows: " + this.getTotalRows();
+			var statusText = this.parent.baseTitle
+			statusText += " - Rows: ";
+			statusText += this.getTotalRows();
 			this.parent.setTitle = statusText;
 		}
 	});
