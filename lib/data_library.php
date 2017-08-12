@@ -13,6 +13,13 @@ class DataLibrary {
 		$this->password = $server_array['database']['password'];
 		$this->dbname = $server_array['database']['dbname'];
 	}
+	function __destruct() {
+		if($this->conn){
+			$this->conn->close();
+		}
+		$this->conn = NULL;
+		unset($this->conn);
+	}
 
 	// GetData
 	//
@@ -63,18 +70,22 @@ class DataLibrary {
 
 		try {
 		    $conn = new PDO("mysql:host=$this->hostname;dbname=$this->dbname", $this->username, $this->password);
-		    }
-		catch(PDOException $e)
-		    {
-				$retArr['status'] = false;
-				$retArr['message'][] = 'Failed to connect.';
-				$retArr['message'][] = $e->getMessage();
-				$retArr['message'][] = $conn;
-				$retArr['message'][] = 'Error Code: ' . $e->getCode();
-				$retArr['message'][] = 'Error File: ' . basename($e->getFile());
-				$retArr['message'][] = 'Error Line: ' . $e->getLine();
-				return $retArr;
-				}
+		}
+		catch(PDOException $e) {
+			$retArr['status'] = false;
+			$retArr['message'][] = 'Failed to connect.';
+			$retArr['message'][] = $e->getMessage();
+			$retArr['message'][] = $conn;
+			$retArr['message'][] = 'Error Code: ' . $e->getCode();
+			$retArr['message'][] = 'Error File: ' . basename($e->getFile());
+			$retArr['message'][] = 'Error Line: ' . $e->getLine();
+			return $retArr;
+		}
+		finally {
+			if(!$conn){
+				$conn = new PDO("mysql:host=$this->hostname;dbname=$this->dbname", $this->username, $this->password);
+			}
+		}
 		try {
           $retArr['result'] = $conn->query($sql);
 		}

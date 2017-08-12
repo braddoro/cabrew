@@ -42,6 +42,7 @@ class DataModel extends Server {
 	}
 	function __destruct() {
 		$this->conn = NULL;
+		unset($this->conn);
 	}
 	public function pdoFetch($args = NULL) {
 		if(!array_keys($this->allowedOperations, $args['operationType'])){
@@ -187,6 +188,11 @@ class DataModel extends Server {
 				default:
 					//
 				break;
+			}
+			if($stmt){
+				$stmt->closeCursor();
+				$stmt = NULL;
+				unset($stmt);
 			}
 		}
 		catch(PDOException $e){

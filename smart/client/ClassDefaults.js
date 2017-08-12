@@ -32,18 +32,47 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 		return isc.addProperties({}, superClassArguments, newProperties);
 	},
 	transformResponse: function(dsResponse, dsRequest, data){
+		var status = isc.RPCResponse.STATUS_SUCCESS;
+		var title = "";
+		var error = "";
 		var newResponse;
-		var status = (data.status) ? data.status : isc.RPCResponse.STATUS_SUCCESS;
-		var title = errorTitle(status);
+		var message = "";
+
+		if(dsResponse.status !== undefined && dsResponse.status !== isc.RPCResponse.STATUS_SUCCESS){
+			status = dsResponse.status;
+		}
+		if(status === isc.RPCResponse.STATUS_SUCCESS &&
+			data.status !== undefined &&
+			data.status !== isc.RPCResponse.STATUS_SUCCESS){
+			status = data.status;
+		}
+
+		title = errorTitle(status);
+
+		if(dsResponse.errorMessage){
+			error = dsResponse.errorMessage;
+		}
+		if(error == "" && data.errorMessage){
+			error = error + data.errorMessage;
+		}
+		if(error == "" && dsResponse.httpResponseText){
+			error = error + dsResponse.httpResponseText;
+		}
+		if(error == ""){
+			error = title;
+		}
+
+		message = title + "<br/>Error Code: " + status + "<br/>" + error;
+
 		if(status === isc.RPCResponse.STATUS_SUCCESS){
 			newResponse = dsResponse;
 			isc.addProperties({}, newResponse, {willHandleError: true});
 		}else{
-			isc.warn(data.errorMessage, null, {title: title});
+			isc.warn(message, null, {title: title});
 			newResponse = {
 				status: status,
 				willHandleError: true,
-				data: data.errorMessage
+				data: message
 			};
 		}
 		return this.Super("transformResponse", [newResponse, dsRequest, data]);

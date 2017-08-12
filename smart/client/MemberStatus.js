@@ -1,5 +1,6 @@
 isc.defineClass("MemberStatus", "myWindow").addProperties({
 	title: "Members by Status",
+	baseTitle: "Members by Status",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.MemberStatusDS = isc.myDataSource.create({
@@ -23,14 +24,20 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 	});
 	this.MemberStatusLG = isc.myListGrid.create({
 		parent: this,
+		id: "MemberStatusLG",
 		showFilterEditor: true,
+		canEdit: false,
 		dataSource: this.MemberStatusDS,
 		rowContextClick: function(record, rowNum, colNum){
 			this.parent.localContextMenu.showContextMenu();
 			return false;
+		},
+		dataArrived: function(){
+			var statusText = this.parent.baseTitle + " - Rows: " + this.getTotalRows();
+			this.parent.setTitle = statusText;
 		}
 	});
-	this.localContextMenu = isc.myFullMenu.create({
+	this.localContextMenu = isc.myChildMenu.create({
 		parent: this,
 		callingListGrid: this.MemberStatusLG
 	});

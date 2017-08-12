@@ -1,7 +1,7 @@
 isc.defineClass("MemberDates", "myWindow").addProperties({
 	title: "Members By Date",
 	initWidget: function(initData){
-		this.Super("initWidget", arguments);
+	this.Super("initWidget", arguments);
 		this.MemberDatesDS = isc.myDataSource.create({
 			dataURL: serverPath + "MemberDates.php",
 			fields:[
@@ -21,6 +21,7 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 			]
 		});
 		this.MemberDatesLG = isc.myListGrid.create({
+			parent: this,
 			showFilterEditor: true,
 			autoFetchData: false,
 			dataSource: this.MemberDatesDS,
@@ -29,7 +30,7 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 				return false;
 			}
 		});
-		this.localContextMenu = isc.myFullMenu.create({
+		this.localContextMenu = isc.myChildMenu.create({
 			parent: this,
 			callingListGrid: this.MemberDatesLG
 		});
@@ -38,7 +39,7 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 		if(initData.hideNames === true) {
 			this.MemberDatesLG.hideField("FullName");
 			this.MemberDatesLG.hideField("statusTypeID_fk");
-			this.MemberDatesLG.hideField("DateDetail");
+			this.MemberDatesLG.hideField("dateDetail");
 			this.MemberDatesLG.hideField("Year");
 			this.MemberDatesLG.setShowFilterEditor(false);
 		}

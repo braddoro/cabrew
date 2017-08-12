@@ -102,6 +102,19 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 					top: 110
 				});
 			}
+		},
+		{title: "Edit Member",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.EditMember.create({
+					title: "Editing " + record.FullName,
+					memberID: record.memberID,
+					width: 400,
+					height: 300,
+					left: 210,
+					top: 110
+				});
+			}
 		}
 	]
 });
