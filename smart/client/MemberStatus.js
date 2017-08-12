@@ -33,7 +33,7 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 			return false;
 		},
 		dataArrived: function(){
-			var statusText = this.parent.baseTitle
+			var statusText = this.parent.baseTitle;
 			statusText += " - Rows: ";
 			statusText += this.getTotalRows();
 			this.parent.setTitle = statusText;
@@ -45,5 +45,6 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 	});
 	this.MemberStatusVL = isc.myVLayout.create({members: [this.MemberStatusLG]});
 	this.addItem(this.MemberStatusVL);
+	this.MemberStatusLG.filterData({statusTypeID_fk: 1});
   }
 });

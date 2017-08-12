@@ -103,6 +103,11 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				});
 			}
 		},
+		{title: "Refresh",
+			click: function(target, item, menu, colNum){
+				menu.callingListGrid.invalidateCache();
+			}
+		},
 		{title: "Edit Member",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();

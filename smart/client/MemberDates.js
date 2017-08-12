@@ -46,7 +46,8 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 		if(initData.autoFetch === true) {
 			this.MemberDatesLG.fetchData({memberID: initData.memberID});
 		}else{
-			this.MemberDatesLG.filterData({Year: 2017});
+			var curr = new Date().getFullYear();
+			this.MemberDatesLG.filterData({Year: curr, statusTypeID_fk: 1});
 		}
 	}
 });
