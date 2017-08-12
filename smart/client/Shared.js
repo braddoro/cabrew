@@ -61,5 +61,13 @@ isc.Shared = {
 			{name: "chairType", type: "text"},
 			{name: "active", type: "text"}
 		]
+	}),
+	memberNamesDS: isc.myDataSource.create({
+		dataURL: serverPath + "MemberStatus.php",
+		fields:[
+			{name: "memberID", type: "sequence", primaryKey: true},
+			{name: "FullName", type: "text"},
+			{name: "Status", type: "text"}
+		]
 	})
 };

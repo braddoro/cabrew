@@ -141,10 +141,33 @@ class DataModel extends Server {
 		}
 		return $rows;
 	}
+	public function pdoProc($args = NULL) {
+		$return = array();
+		if(!array_keys($this->allowedOperations, $args['operationType'])){
+			return array('status' => -4, 'errorMessage' => "This view does not allow {$args['operationType']} operations.");
+		}
+		try{
+			$proc = $args['procedure'];
+			echo("/*" . $proc . "*/");
+			$stmt = $this->conn->query("CALL {$proc}");
+			$return = $stmt->fetchAll();
+		}
+		catch(PDOException $e){
+			$return['status'] = -110;
+			$return['errorMessage'] = parseArray($e);
+			return $return;
+		}
+		return $return;
+	}
 	function pdoExecute($sql, $binding, $operationType, $pkID = NULL){
 		// echo("/*" . $sql . "*/");
 		try{
 			$stmt = $this->conn->prepare($sql);
+			if(!$stmt){
+				$return['status'] = $stmt->errorCode();
+				$return['errorMessage'] = $stmt->errorInfo() . $sql;
+				return $return;
+			}
 			$stmt->execute($binding);
 			if(!$stmt){
 				$return['status'] = $stmt->errorCode();

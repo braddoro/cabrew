@@ -16,6 +16,7 @@ $classes[] = "ContextMenu.js";
 $classes[] = "Shared.js";
 $classes[] = "AddEvent.js";
 $classes[] = "AddMember.js";
+$classes[] = "AddPayment.js";
 $classes[] = "BrewAttendence.js";
 $classes[] = "BrewClubs.js";
 $classes[] = "BrewContactPoints.js";

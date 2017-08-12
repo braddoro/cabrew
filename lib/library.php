@@ -10,9 +10,10 @@ function string2array($array){
 function parseArray($inArr) {
 	$outStr = null;
 	foreach($inArr as $key => $element) {
-		$tempStr = $key . ' | ' . $element . "<br />";
 		if(is_array($element)){
 			$tempStr = parseArray($element);
+		} else {
+			$tempStr = $key . ' | ' . $element . "<br />";
 		}
 		$outStr .= $tempStr;
 	}
@@ -31,5 +32,11 @@ function generateGUID() {
 		.substr($charid,16, 4).$hyphen
 		.substr($charid,20,12);
 	return $uuid;
+}
+// Calling example
+// validateDate('2012-02-28', 'Y-m-d')
+function validateDate($date, $format = 'Y-m-d H:i:s'){
+	$d = DateTime::createFromFormat($format, $date);
+	return $d && $d->format($format) == $date;
 }
 ?>
