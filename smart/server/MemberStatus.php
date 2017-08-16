@@ -2,7 +2,8 @@
 require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'members',
-	'pk_col' => 'memberID'
+	'pk_col' => 'memberID',
+	'ini_file' => realpath('../../lib/server.ini')
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){

@@ -2,7 +2,8 @@
 require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'brew_media',
-	'pk_col' => 'clubID'
+	'pk_col' => 'clubID',
+	'ini_file' => realpath('../../lib/server.ini')
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){

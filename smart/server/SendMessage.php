@@ -3,7 +3,8 @@ require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'memberDates',
 	'pk_col' => 'memberDateID',
-	'allowedOperations' => array('fetch')
+	'allowedOperations' => array('fetch'),
+	'ini_file' => realpath('../../lib/server.ini')
 );
 $lclass = New DataModel($params);
 if($lclass->status != 0){
