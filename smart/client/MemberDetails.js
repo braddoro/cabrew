@@ -2,81 +2,44 @@ isc.defineClass("MemberDetails", "myWindow").addProperties({
 	title: "Member Details",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
+		this.MemberListDF = isc.myDynamicForm.create({
+			parent: this,
+			dataSource: isc.Members.nameListDS,
+			itemChange: function(item, newValue, oldValue){
+				this.parent.MemberDetailsLG.fetchData({memberID: newValue});
+				this.parent.MemberContactsLG.fetchData({memberID: newValue});
+				this.parent.MemberDatesLG.fetchData({memberID: newValue});
+				this.parent.MemberNotesLG.fetchData({memberID: newValue});
+			}
+		});
 		this.MemberDetailsLG = isc.myListGrid.create({
 			parent: this,
 			height: "10%",
 			dataSource: isc.Members.membersDS,
-			recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
-				this.parent.MemberContactsLG.fetchData({memberID: record.memberID});
-				this.parent.MemberDatesLG.fetchData({memberID: record.memberID});
-				this.parent.MemberNotesLG.fetchData({memberID: record.memberID});
-			}
+			autoFetchData: false
 		});
 		this.MemberContactsLG = isc.myListGrid.create({
 			parent: this,
-			dataSource: isc.Members.contactsDS,
 			height: "15%",
-			fetchData: function(criteria, callback, requestProperties){
-				var morecriteria = "";
-				var newcriteria = "";
-				if (this.parent.MemberDetailsLG.anySelected()){
-					morecriteria = {memberID : this.parent.MemberDetailsLG.getSelectedRecord().memberID};
-					newcriteria = isc.addProperties({}, criteria, morecriteria);
-					callback = {target: this, methodName: "selectFirstRow"};
-					return this.Super("fetchData", [newcriteria, callback, requestProperties]);
-				} else {
-					return false;
-				}
-			},
-			selectFirstRow: function(){
-				this.selectRecord(0, true);
-				this.recordClick();
-			}
+			dataSource: isc.Members.contactsDS,
+			autoFetchData: false
 		});
 		this.MemberDatesLG = isc.myListGrid.create({
 			parent: this,
 			height: "*",
 			dataSource: isc.Members.datesDS,
-			fetchData: function(criteria, callback, requestProperties){
-				var morecriteria = "";
-				var newcriteria = "";
-				if (this.parent.MemberDetailsLG.anySelected()){
-					morecriteria = {memberID : this.parent.MemberDetailsLG.getSelectedRecord().memberID};
-					newcriteria = isc.addProperties({}, criteria, morecriteria);
-					callback = {target: this, methodName: "selectFirstRow"};
-					return this.Super("fetchData", [newcriteria, callback, requestProperties]);
-				} else {
-					return false;
-				}
-			},
-			selectFirstRow: function(){
-				this.selectRecord(0, true);
-				this.recordClick();
-			}
+			autoFetchData: false,
+			initialSort: ["memberDate"]
 		});
 		this.MemberNotesLG = isc.myListGrid.create({
 			parent: this,
 			height: "15%",
 			dataSource: isc.Members.notesDS,
-			fetchData: function(criteria, callback, requestProperties){
-				var morecriteria = "";
-				var newcriteria = "";
-				if (this.parent.MemberDetailsLG.anySelected()){
-					morecriteria = {memberID : this.parent.MemberDetailsLG.getSelectedRecord().memberID};
-					newcriteria = isc.addProperties({}, criteria, morecriteria);
-					callback = {target: this, methodName: "selectFirstRow"};
-					return this.Super("fetchData", [newcriteria, callback, requestProperties]);
-				} else {
-					return false;
-				}
-			},
-			selectFirstRow: function(){
-				this.selectRecord(0, true);
-				this.recordClick();
-			}
+			autoFetchData: false
 		});
 		this.MemberDetailsVL = isc.myVLayout.create({
 			members: [
+				this.MemberListDF,
 				this.MemberDetailsLG,
 				this.MemberContactsLG,
 				this.MemberDatesLG,
@@ -84,6 +47,9 @@ isc.defineClass("MemberDetails", "myWindow").addProperties({
 			]
 		});
 		this.addItem(this.MemberDetailsVL);
-		this.MemberDetailsLG.fetchData({memberID: initData.memberID});
+		// this.MemberDetailsLG.fetchData({memberID: 0});
+		// this.MemberContactsLG.fetchData({memberID: 0});
+		// this.MemberDatesLG.fetchData({memberID: 0});
+		// this.MemberNotesLG.fetchData({memberID: 0});
 	}
 });

@@ -125,5 +125,28 @@ isc.Members = {
 			{name: "memberNote"},
 			{name: "lastChangeDate", detail: true}
 		]
+	}),
+	nameListDS: isc.myDataSource.create({
+		dataURL: serverPath + "AddPayment.php",
+		fields: [
+			{
+				name: "memberID",
+				title: "Member",
+				editorType: "SelectItem",
+				optionDataSource: isc.Shared.memberNamesDS,
+				wrapTitle: false,
+				displayField: "FullName",
+				valueField: "memberID",
+				pickListWidth: 300,
+				pickListProperties: {
+					showFilterEditor: true
+				},
+				pickListFields: [
+					{name: "FullName", width: "*"},
+					{name: "Status", width: 75},
+					{name: "Month", width: 50}
+				]
+			}
+		]
 	})
 };
