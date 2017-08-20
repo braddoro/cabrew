@@ -30,6 +30,7 @@ $classes[] = "MemberDates.js";
 $classes[] = "MemberNotes.js";
 $classes[] = "MemberPoints.js";
 $classes[] = "MemberStatus.js";
+$classes[] = "MemberDetails.js";
 $classes[] = "SendMessage.js";
 $classes[] = "ShowInfo.js";
 echo "<html>

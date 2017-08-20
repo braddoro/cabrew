@@ -51,6 +51,19 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,
 	data: [
+		{title: "Show Details",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberDetails.create({
+					title: "Activity for " + record.FullName,
+					memberID: record.memberID,
+					height: "95%",
+					width: 800,
+					left: 50,
+					top: 50
+				});
+			}
+		},
 		{title: "Show Dates",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
