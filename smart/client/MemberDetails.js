@@ -2,7 +2,6 @@ isc.defineClass("MemberDetails", "myWindow").addProperties({
 	title: "Member Details",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
-console.log(arguments);
 		this.MemberListDF = isc.myDynamicForm.create({
 			parent: this,
 			dataSource: isc.Members.nameListDS,
