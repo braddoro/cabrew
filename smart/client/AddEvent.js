@@ -13,6 +13,8 @@
 // 	this.AddEventDF.getItem("memberDate").defaultValue = datestring;
 // }
 isc.defineClass("AddEvent", "myWindow").addProperties({
+	showFooter: true,
+	showStatusBar: true,
 	title: "Add Event",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
@@ -40,7 +42,12 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			parent: this,
 			showHeader: false,
 			autoSaveEdits: false,
-			dataSource: this.ActiveMembersDS
+			dataSource: this.ActiveMembersDS,
+			recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
+				var selected = viewer.getSelectedRecords();
+				var count = selected.length;
+				viewer.parent.setStatus(count + " selected");
+			}
 		});
 		this.AddEventBT = isc.myIButton.create({
 			parent: this,

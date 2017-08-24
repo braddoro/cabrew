@@ -20,7 +20,9 @@ isc.defineClass("myWindow", "Window").addProperties({
 isc.defineClass("myVLayout", "VLayout").addProperties({
 	height: "100%"
 });
-
+isc.defineClass("myHLayout", "HLayout").addProperties({
+	//width: "99%"
+});
 isc.defineClass("myDataSource", "DataSource").addProperties({
 	dataProtocol: "postParams",
 	dataFormat: "json",
@@ -91,7 +93,8 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	showFilterEditor: false,
 	showAllRecords: true,
 	autoFetchData: true,
-	modalEditing: true
+	modalEditing: true,
+	autoFitWidth: true
 });
 
 isc.defineClass("myDynamicForm", "DynamicForm").addProperties({

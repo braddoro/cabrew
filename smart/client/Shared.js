@@ -150,3 +150,58 @@ isc.Members = {
 		]
 	})
 };
+isc.Tables = {
+	memberDS: isc.myDataSource.create({
+		dataURL: serverPath + "MemberTable.php",
+		fields:[
+			{name: "memberID", primaryKey: true, statusTypepe: "sequence", detail: true, canEdit: false},
+			{name: "statusTypeID_fk", type: "integer", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "firstName"},
+			{name: "midName"},
+			{name: "lastName"},
+			{name: "nickname"},
+			{name: "sex"},
+			{name: "renewalMonth", type: "integer"},
+			{name: "lastChangeDate", type: "datetime"}
+		]
+	}),
+	// , validators: [{type: "lengthRange", max: 1}, {type:"isOneOf", list: ["M","F"]}]
+	// , validators: [{type:"integerRange", min:1, max:12}]
+	contactDS: isc.myDataSource.create({
+		dataURL: serverPath + "MemberContactTable.php",
+		fields:[
+			{name: "memberContactID", primaryKey: true, statusTypepe: "sequence", detail: true, canEdit: false},
+			{name: "memberID_fk", detail: true},
+			{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID"},
+			{name: "memberContact"},
+			{name: "contactDetail"},
+			{name: "lastChangeDate"}
+		]
+	}),
+	dateDS: isc.myDataSource.create({
+		dataURL: serverPath + "MemberDateTable.php",
+		fields:[
+			{name: "memberDateID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
+			{name: "memberID_fk", detail: true},
+			{name: "dateTypeID", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
+			{name: "memberDate"},
+			{name: "dateDetail"},
+			{name: "lastChangeDate"},
+			{name: "Points"},
+			{name: "Year", type: "SelectItem", optionDataSource: isc.Shared.eventYearsDS, displayField: "Year", valueField: "Year"},
+			{name: "Month", type: "integer"},
+			{name: "Day", type: "integer"}
+		]
+	}),
+	noteDS: isc.myDataSource.create({
+		dataURL: serverPath + "MemberNoteTable.php",
+		fields:[
+			{name: "memberNoteID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
+			{name: "memberID_fk", detail: true},
+			{name: "noteTypeID_fk", title: "Type", optionDataSource: isc.Shared.noteTypesDS, displayField: "noteType", valueField: "noteTypeID"},
+			{name: "noteDate"},
+			{name: "memberNote"},
+			{name: "lastChangeDate"}
+		]
+	})
+};
