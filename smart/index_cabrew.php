@@ -33,6 +33,7 @@ $classes[] = "MemberStatus.js";
 $classes[] = "MemberDetails.js";
 $classes[] = "SendMessage.js";
 $classes[] = "ShowInfo.js";
+$classes[] = "Testing.js";
 echo "<html>
 <head>
 <script>var serverPath = '$server_path';</script>
