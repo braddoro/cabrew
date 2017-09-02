@@ -4,7 +4,8 @@ $params = array(
 	'baseTable' => 'memberNotes',
 	'ini_file' => realpath('../../lib/server.ini')
 );
-$lclass = New DataModel($params);
+$lclass = New DataModel();
+$lclass->init($params);
 if($lclass->status != 0){
 	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
 	echo json_encode($response);
