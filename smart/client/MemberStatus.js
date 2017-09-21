@@ -39,8 +39,7 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 			this.parent.setTitle = statusText;
 		},
 		recordClick: function (viewer, record, recordNum, field, fieldNum, value, rawValue){
-			console.log(record);
-			return true
+			return true;
 		}
 
 	});

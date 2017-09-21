@@ -1,7 +1,7 @@
 isc.defineClass("Preview", "myWindow").addProperties({
 	title: "Preview",
 	initWidget: function(initData){
-		console.log('initWidget');
+//		console.log('initWidget');
 
 		this.Super("initWidget", initData);
 		this.PreviewDS = isc.myDataSource.create({
@@ -16,10 +16,10 @@ isc.defineClass("Preview", "myWindow").addProperties({
 		this.transformRecord(initData);
 	},
 	transformRecord(record){
-		console.log('transformRecord');
-		console.log(record);
+//		console.log('transformRecord');
+//		console.log(record);
 		var fields = Object.keys(record).length;
-		console.log(fields);
+//		console.log(fields);
 		var newRec = new Array();
 		var newFld = new Array();
 		// for (i=0; i<fields; i++) {
