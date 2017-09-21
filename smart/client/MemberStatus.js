@@ -37,7 +37,12 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 			statusText += " - Rows: ";
 			statusText += this.getTotalRows();
 			this.parent.setTitle = statusText;
+		},
+		recordClick: function (viewer, record, recordNum, field, fieldNum, value, rawValue){
+			console.log(record);
+			return true
 		}
+
 	});
 	this.localContextMenu = isc.myChildMenu.create({
 		parent: this,
