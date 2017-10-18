@@ -1,5 +1,5 @@
 <?php
-$title = 'Other Club Contacts';
+$title = 'Member Attendance';
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,7 @@ $title = 'Other Club Contacts';
 </head>
 <span class="title"><?php echo $title; ?></span>
 <?php
+$year = (isset($_GET['y'])) ? intval($_GET['y']) : 'null';
 try {
 	$server_array  = parse_ini_file('../lib/server.ini',true);
 	$dbhost = $server_array['database']['hostname'];
@@ -22,32 +23,26 @@ try {
 		exit();
 	}
 	$sql = "
-	select
-		club.clubName,
-		club.clubAbbr,
-		club.city,
-		club.state,
-		contact.contactName,
-		points.contactPoint,
-		concat('<a href=\"',media.media,'\">url</a>') as 'web'
-	from
-		brew_clubs club
-		inner join brew_contacts contact on club.clubID = contact.clubID
-		inner join brew_contactPoints points on contact.contactID = points.contactID
-		inner join contactTypes cp on points.contactTypeID_fk = cp.contactTypeID
-		inner join brew_media media on club.clubID = media.clubID
-		inner join contactTypes cp2 on media.contactTypeID_fk = cp2.contactTypeID
-	where
-		points.contactTypeID_fk = 2
-		and contact.priority < 5
-		and media.priority = 1
-		and media.contactTypeID_fk = 5
-	order by
-		club.clubName,
-		club.clubAbbr,
-		contact.contactName,
-		cp.contactType;
-	";
+select
+	year(D.memberDate) as 'year',
+    count(*) as 'meetings',
+	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as 'FullName'
+from
+	members M
+inner join
+	memberDates D on M.memberID = D.memberID_fk
+where
+	M.statusTypeID_fk = 1
+	and D.dateTypeID_fk = 6
+	and year(D.memberDate) = coalesce($year,year(D.memberDate))
+group by
+	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' '),
+	year(D.memberDate)
+order by
+	year(D.memberDate) desc,
+	count(*) desc,
+    REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ')
+;";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";
 		exit();

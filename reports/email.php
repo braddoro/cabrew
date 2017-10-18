@@ -1,5 +1,5 @@
 <?php
-$title = 'Other Club Contacts';
+$title = 'Other Club Email List';
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,27 +21,18 @@ try {
 		printf("Connect failed: %s\n",$mysqli->connect_error);
 		exit();
 	}
+	// CONCAT(contact.contactName,' <',points.contactPoint,'>') as email
 	$sql = "
 	select
-		club.clubName,
-		club.clubAbbr,
-		club.city,
-		club.state,
-		contact.contactName,
-		points.contactPoint,
-		concat('<a href=\"',media.media,'\">url</a>') as 'web'
+		CONCAT(points.contactPoint, ', ') as email
 	from
 		brew_clubs club
 		inner join brew_contacts contact on club.clubID = contact.clubID
 		inner join brew_contactPoints points on contact.contactID = points.contactID
 		inner join contactTypes cp on points.contactTypeID_fk = cp.contactTypeID
-		inner join brew_media media on club.clubID = media.clubID
-		inner join contactTypes cp2 on media.contactTypeID_fk = cp2.contactTypeID
 	where
 		points.contactTypeID_fk = 2
-		and contact.priority < 5
-		and media.priority = 1
-		and media.contactTypeID_fk = 5
+		and contact.priority = 1
 	order by
 		club.clubName,
 		club.clubAbbr,
