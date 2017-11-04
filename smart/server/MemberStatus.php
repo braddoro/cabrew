@@ -27,6 +27,7 @@ case 'fetch':
 // M.memberID,
 // M.sex,
 // M.firstName,
+//
 	$argsIN['sql'] = "
 		select
 			M.memberID,
@@ -34,18 +35,21 @@ case 'fetch':
 			M.firstName,
 			M.lastName,
 			M.statusTypeID_fk,
-			M.renewalMonth,
-			M.renewalMonth as 'Month',
+			M.renewalYear,
+			M.renewalYear as 'Month',
 			M.lastChangeDate,
 			ST.statusType as 'Status',
+			TIMESTAMPDIFF(MONTH, max(D2.memberDate), now()) as 'Ratio',
 			REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
 			max(D.memberDate) as 'LastPayment',
 			max(D2.memberDate) as 'JoinedDate',
+			count(D3.memberDate) as 'Meetings',
 			floor(datediff(now(), max(D.memberDate))/30.4) as 'MonthsPaid'
 		from members M
 			inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID
 			left join memberDates D on M.memberID = D.memberID_fk and D.dateTypeID_fk = 3
 			left join memberDates D2 on M.memberID = D2.memberID_fk and D2.dateTypeID_fk = 1
+			left join memberDates D3 on M.memberID = D3.memberID_fk and D3.dateTypeID_fk = 6
 		where
 			M.memberID = coalesce(:id, M.memberID)
 			and M.statusTypeID_fk = coalesce({$statusTypeID},M.statusTypeID_fk)
@@ -55,7 +59,7 @@ case 'fetch':
 			M.firstName,
 			M.lastName,
 			M.statusTypeID_fk,
-			M.renewalMonth,
+			M.renewalYear,
 			M.lastChangeDate,
 			ST.statusType
 		order by

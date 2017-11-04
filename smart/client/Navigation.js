@@ -3,7 +3,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.membersMenu = isc.myMenu.create({
 			title: "Members",
 			items: [
-				{title: "By Status", click: "isc.MemberStatus.create({width: 550, height: \"95%\"})"},
+				{title: "By Status", click: "isc.MemberStatus.create({width: 800, height: \"95%\"})"},
 				{title: "By Date", click: "isc.MemberDates.create({hideNames: false, autoFetch: false})"},
 				{title: "By Points", click: "isc.MemberPoints.create()"},
 				{isSeparator: true},

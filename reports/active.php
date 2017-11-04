@@ -25,7 +25,7 @@ try {
 	select
 		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
 		ST.statusType,
-		M.renewalMonth,
+		M.renewalYear,
 		floor(datediff(now(), max(D.memberDate))/30.4) as 'MonthsSincePayment',
 		max(D.memberDate) as 'LastPaid',
 		C1.memberContact as 'Phone',
@@ -41,11 +41,11 @@ try {
 		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' '),
 		ST.statusType,
 		M.statusTypeID_fk,
-		M.renewalMonth
+		M.renewalYear
 	order by
 		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' '),
 		max(D.memberDate) desc,
-		M.renewalMonth
+		M.renewalYear
 		;
 	";
 	if (!$result = $mysqli->query($sql)) {
