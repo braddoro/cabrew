@@ -82,7 +82,7 @@ isc.Members = {
 			{name: "lastName", validators: [{type: "lengthRange", max: 45}]},
 			{name: "nickname", validators: [{type: "lengthRange", max: 45}]},
 			{name: "sex", validators: [{type: "lengthRange", max: 1}, {type:"isOneOf", list: ["M","F"]}]},
-			{name: "renewalYear", type: "integer", validators: [{type:"integerRange", min:1, max:12}]},
+			{name: "renewalYear", type: "integer", validators: [{type:"integerRange", min:2014, max:2030}]},
 			{name: "lastChangeDate", type: "datetime", canEdit: false}
 		]
 	}),

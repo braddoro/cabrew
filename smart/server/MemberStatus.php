@@ -21,6 +21,16 @@ case 'fetch':
 	}else{
 		$statusTypeID = 'NULL';
 	}
+	if(isset($argsIN['renewalYear'])) {
+		$renewalYear = ($argsIN['renewalYear'] > 0) ? $argsIN['renewalYear'] : NULL;
+	}else{
+		$renewalYear = 'NULL';
+	}
+	if(isset($argsIN['FullName'])) {
+		$fullName = ($argsIN['FullName'] > '') ? $argsIN['FullName'] : NULL;
+	}else{
+		$fullName = 'NULL';
+	}
 
 // M.statusTypeID_fk)
 // group by
@@ -36,7 +46,6 @@ case 'fetch':
 			M.lastName,
 			M.statusTypeID_fk,
 			M.renewalYear,
-			M.renewalYear as 'Month',
 			M.lastChangeDate,
 			ST.statusType as 'Status',
 			TIMESTAMPDIFF(MONTH, max(D2.memberDate), now()) as 'Ratio',
@@ -53,6 +62,8 @@ case 'fetch':
 		where
 			M.memberID = coalesce(:id, M.memberID)
 			and M.statusTypeID_fk = coalesce({$statusTypeID},M.statusTypeID_fk)
+			and M.renewalYear = coalesce({$renewalYear}, M.renewalYear)
+			and REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ') = coalesce({$fullName}, REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' '))
 		group by
 			M.memberID,
 			M.sex,

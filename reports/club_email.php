@@ -30,6 +30,7 @@ try {
 	where
 	M.statusTypeID_fk = 1
 	and C.contactTypeID_fk = 2
+	and renewalYear > 2017
 	order by
 	memberContact;";
 	if (!$result = $mysqli->query($sql)) {
