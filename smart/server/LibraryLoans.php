@@ -1,8 +1,8 @@
 <?php
 require_once('../../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'library',
-	'pk_col' => 'libraryID',
+	'baseTable' => 'library_loans',
+	'pk_col' => 'loanID',
 	'allowedOperations' => array('fetch', 'add', 'update', 'delete'),
 	'ini_file' => realpath('../../lib/server.ini')
 );
@@ -17,23 +17,27 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
-	if(isset($argsIN['libraryID'])) {
-		$libraryID = ($argsIN['libraryID'] > 0) ? $argsIN['libraryID'] : NULL;
+	if(isset($argsIN['loanID'])) {
+		$loanID = ($argsIN['loanID'] > 0) ? $argsIN['loanID'] : NULL;
 	}else{
-		$libraryID = 'NULL';
+		$loanID = 'NULL';
 	}
-	// if(isset($argsIN['Year'])) {
-	// 	$year = ($argsIN['Year'] > 0) ? $argsIN['Year'] : NULL;
-	// }else{
-	// 	$year = 'NULL';
-	// }
 	$argsIN['sql'] = "
 	select
-		l.libraryID, l.series, l.title, l.author, l.copyright, l.abstract
-	from
-		library l
+		ll.loanID,
+		me.memberID,
+		me.firstName,
+		me.lastName,
+		ll.requestDate,
+		ll.loanDate,
+		ll.returnDate,
+		lb.title,
+		ll.lastChangeDate
+	from library_loans ll
+		inner join members me on ll.memberID_fk = me.memberID
+		inner join library_books lb on lb.bookID = ll.libraryID_fk
 	where
-		l.libraryID = coalesce(:id, l.libraryID)
+		ll.loanID = coalesce(:id, ll.loanID)
 	";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
