@@ -24,6 +24,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			showShadow: true,
 			items: [
 				{title: "Member Detail", click: "isc.MemberDetails.create({width: 800, height: \"95%\"})"},
+				{title: "Library", click: "isc.LendingLibrary.create({width: \"95%\", height: \"95%\"})"},
 				{isSeparator: true},
 				{title: "Members", submenu: this.membersMenu},
 				{title: "Affiliate", submenu: this.AffiliatesMenu}

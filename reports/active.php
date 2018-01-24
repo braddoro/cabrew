@@ -32,7 +32,7 @@ try {
 		C2.memberContact as 'Email',
 		C3.memberContact as 'Address'
 	from members M
-		inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID and ST.statusTypeID not in (4,5)
+		inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID and ST.statusTypeID not in (4)
 		inner join memberDates D on M.memberID = D.memberID_fk and D.dateTypeID_fk = 3
 		left join memberContacts C1 on M.memberID = C1.memberID_fk and C1.contactTypeID_fk = 1
 		left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2

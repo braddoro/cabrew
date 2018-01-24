@@ -31,7 +31,7 @@ try {
 			inner join members M on M.memberID = d.memberID_fk
 			inner join dateTypes dt on d.dateTypeID_fk = dt.dateTypeID
 		where
-			year(d.memberDate) = 2017
+			year(d.memberDate) = 2018
 			and M.statusTypeID_fk = 1
 		group by
 			M.memberID,

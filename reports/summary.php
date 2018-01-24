@@ -23,6 +23,7 @@ try {
 	}
 	$sql = "
 	select
+		year(md.memberDate) 'Year',
 		DATE_FORMAT(md.memberDate, '%M') 'Month',
 		dt.dateType,
 		count(*) 'Total'
@@ -30,11 +31,13 @@ try {
 		memberDates md
 	inner join
 		dateTypes dt on md.dateTypeID_fk = dt.dateTypeID
-	where year(md.memberDate) = 2017
+	where year(md.memberDate) > 2017
 	group by
+		year(md.memberDate),
 		DATE_FORMAT(md.memberDate, '%M'),
 		dt.dateType
 	order by
+		year(md.memberDate),
 		md.memberDate,
 		month(md.memberDate),
 		dt.dateType;
