@@ -43,7 +43,6 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 		recordClick: function (viewer, record, recordNum, field, fieldNum, value, rawValue){
 			return true;
 		}
-
 	});
 	this.localContextMenu = isc.myChildMenu.create({
 		parent: this,

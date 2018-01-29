@@ -22,19 +22,7 @@ case 'fetch':
 	}else{
 		$bookID = 'NULL';
 	}
-	// if(isset($argsIN['Year'])) {
-	// 	$year = ($argsIN['Year'] > 0) ? $argsIN['Year'] : NULL;
-	// }else{
-	// 	$year = 'NULL';
-	// }
-	$argsIN['sql'] = "
-	select
-		l.bookID, l.series, l.title, l.author, l.copyright, l.abstract
-	from
-		library_books l
-	where
-		l.bookID = coalesce(:id, l.bookID)
-	";
+	$argsIN['sql'] = "select l.bookID, l.series, l.title, l.author, l.copyright, l.abstract from library_books l where l.bookID = coalesce(:id, l.bookID)";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

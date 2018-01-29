@@ -69,6 +69,17 @@ isc.Shared = {
 			{name: "FullName", type: "text"},
 			{name: "Status", type: "text"}
 		]
+	}),
+	libraryBooksDS: isc.myDataSource.create({
+		dataURL: serverPath + "LibraryBooks.php",
+		fields:[
+			{name: "bookID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "series", width: 150},
+			{name: "title", width: 250},
+			{name: "author", width: 300},
+			{name: "copyright", type: "integer", width: 100},
+			{name: "abstract"}
+		]
 	})
 };
 isc.Members = {

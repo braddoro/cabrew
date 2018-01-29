@@ -6,14 +6,32 @@ isc.defineClass("LibraryLoans", "myWindow").addProperties({
 	this.LibraryLoansDS = isc.myDataSource.create({
 		dataURL: serverPath + "LibraryLoans.php",
 		fields:[
-			{name: "loanID", primaryKey: true, detail: true, type: "sequence", width: 100},
-			{name: "memberID", detail: true, type: "integer", width: 100},
-			{name: "firstName", width: 120},
-			{name: "lastName", width: 120},
+			{name: "loanID",
+				primaryKey: true,
+				detail: true,
+				type: "sequence",
+				width: 100
+			},
+			{name: "memberID_fk",
+				title: "Member",
+				type: "text",
+				width: 120,
+				optionDataSource: isc.Shared.memberNamesDS,
+				optionCriteria: {Status: "Active"},
+				displayField: "FullName",
+				valueField: "memberID"
+			},
+			{name: "libraryID_fk",
+				title: "Book",
+				type: "text",
+				width: "*",
+				optionDataSource: isc.Shared.libraryBooksDS,
+				displayField: "title",
+				valueField: "bookID"
+			},
 			{name: "requestDate", width: 120, type: "date"},
 			{name: "loanDate", width: 120, type: "date"},
 			{name: "returnDate", width: 120, type: "date"},
-			{name: "title", width: "*"},
 			{name: "lastChangeDate", width: 150, detail: true}
 		]
 	});
@@ -24,6 +42,9 @@ isc.defineClass("LibraryLoans", "myWindow").addProperties({
 		rowContextClick: function(record, rowNum, colNum){
 			this.parent.localContextMenu.showContextMenu();
 			return false;
+		},
+		recordDoubleClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
+			this.startEditing(recordNum);
 		}
 	});
 	this.localContextMenu = isc.myContextMenu.create({

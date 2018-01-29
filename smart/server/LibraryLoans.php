@@ -22,23 +22,16 @@ case 'fetch':
 	}else{
 		$loanID = 'NULL';
 	}
-	$argsIN['sql'] = "
-	select
+	$argsIN['sql'] = "select
 		ll.loanID,
-		me.memberID,
-		me.firstName,
-		me.lastName,
+		ll.memberID_fk,
+		ll.libraryID_fk,
 		ll.requestDate,
 		ll.loanDate,
 		ll.returnDate,
-		lb.title,
 		ll.lastChangeDate
 	from library_loans ll
-		inner join members me on ll.memberID_fk = me.memberID
-		inner join library_books lb on lb.bookID = ll.libraryID_fk
-	where
-		ll.loanID = coalesce(:id, ll.loanID)
-	";
+		where ll.loanID = coalesce(:id, ll.loanID)";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':
