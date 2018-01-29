@@ -19,6 +19,8 @@ isc.defineClass("myWindow", "Window").addProperties({
 		// console.log("Title.: " + this.title);
 		// console.log("Width.: " + this.width);
 		// console.log("Height: " + this.height);
+		// console.log("Left..: " + this.left);
+		// console.log("Top...: " + this.top);
 	}
 });
 
