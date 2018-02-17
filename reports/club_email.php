@@ -65,7 +65,7 @@ try {
 		$loop++;
 	}
 	echo "</table>" . PHP_EOL;
-	echo "<span class='label'>$loop</span>" . PHP_EOL;
+	echo "<span class='footer'>$loop</span>" . PHP_EOL;
 	$result->free();
 	$mysqli->close();
 } catch (Exception $e) {

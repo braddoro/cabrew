@@ -1,5 +1,5 @@
 <?php
-$title = 'Club Summary Activity';
+$title = 'NCHI 2018 Schedule';
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,27 +21,8 @@ try {
 		printf("Connect failed: %s\n",$mysqli->connect_error);
 		exit();
 	}
-	$sql = "
-	select
-		year(md.memberDate) 'Year',
-		DATE_FORMAT(md.memberDate, '%M') 'Month',
-		dt.dateType,
-		count(*) 'Total'
-	from
-		memberDates md
-	inner join
-		dateTypes dt on md.dateTypeID_fk = dt.dateTypeID
-	where year(md.memberDate) > 2017
-	group by
-		year(md.memberDate),
-		DATE_FORMAT(md.memberDate, '%M'),
-		dt.dateType
-	order by
-		year(md.memberDate),
-		md.memberDate,
-		month(md.memberDate),
-		dt.dateType;
-	";
+	$sql = "select phase, dueDate, status, step, assignee, notes from bd7rbk520.nchi_checklist order by dueDate;";
+
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";
 		exit();

@@ -1,3 +1,4 @@
+/* Report style sheet */
 .odd{
 	background-color: #DCDCDC;
 	font-family: sans-serif;
@@ -11,8 +12,9 @@
 	font-weight: bold;
 	font-size: 2em;
 }
-.label{
+.footer{
 	background-color: #F5F5F5;
 	font-family: sans-serif;
-	font-weight: bold;
+	font-color: #DCDCDC;
+	font-size: .66em;
 }

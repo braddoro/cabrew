@@ -1,5 +1,5 @@
 <?php
-$title = 'Club Summary Activity';
+$title = 'Library Books';
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,26 +21,14 @@ try {
 		printf("Connect failed: %s\n",$mysqli->connect_error);
 		exit();
 	}
-	$sql = "
-	select
-		year(md.memberDate) 'Year',
-		DATE_FORMAT(md.memberDate, '%M') 'Month',
-		dt.dateType,
-		count(*) 'Total'
-	from
-		memberDates md
-	inner join
-		dateTypes dt on md.dateTypeID_fk = dt.dateTypeID
-	where year(md.memberDate) > 2017
-	group by
-		year(md.memberDate),
-		DATE_FORMAT(md.memberDate, '%M'),
-		dt.dateType
-	order by
-		year(md.memberDate),
-		md.memberDate,
-		month(md.memberDate),
-		dt.dateType;
+	$sql = "select
+trim(concat(ifnull(series,''), ' ', title)) as name,
+author,
+copyright,
+abstract
+from library_books
+order by
+trim(concat(ifnull(series,''), ' ', title));
 	";
 	if (!$result = $mysqli->query($sql)) {
 		echo "Error: " . $mysqli->error . "\n";

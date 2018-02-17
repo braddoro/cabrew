@@ -12,6 +12,13 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Send Message", click: "isc.SendMessage.create({width: 800, height: \"95%\"})"}
 			]
 		});
+		this.BookMenu = isc.myMenu.create({
+			title: "Books",
+			items: [
+				{title: "Books", click: "isc.LibraryBooks.create({width: \"95%\", height: \"95%\"})"},
+				{title: "Loans", click: "isc.LibraryLoans.create({width: 800, height: 400})"},
+			]
+		});
 		this.AffiliatesMenu = isc.myMenu.create({
 			title: "Affiliates",
 			items: [
@@ -19,20 +26,19 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Corporations", click: "isc.Corporations.create()"}
 			]
 		});
-		this.mainMenu = isc.myMenu.create({
+		this.MainMenu = isc.myMenu.create({
 			title: "...",
 			showShadow: true,
 			items: [
-				{title: "Member Detail", click: "isc.MemberDetails.create({width: 800, height: \"95%\"})"},
-				{title: "Books", click: "isc.LibraryBooks.create({width: \"95%\", height: \"95%\"})"},
-				{title: "Loans", click: "isc.LibraryLoans.create({width: 800, height: 400})"},
-				{isSeparator: true},
+//				{title: "Member Detail", click: "isc.MemberDetails.create({width: 800, height: \"95%\"})"},
 				{title: "Members", submenu: this.membersMenu},
+				{title: "Books", submenu: this.BookMenu},
+				{isSeparator: true},
 				{title: "Affiliate", submenu: this.AffiliatesMenu}
 			]
 		});
 		this.menuBar = isc.MenuBar.create({
-			menus: [this.mainMenu]
+			menus: [this.MainMenu]
 		});
 	}
 });
