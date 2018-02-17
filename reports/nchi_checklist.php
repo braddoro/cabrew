@@ -1,66 +1,22 @@
-<?php
-$title = 'NCHI 2018 Schedule';
-?>
 <!DOCTYPE html>
 <html>
 <body>
 <head>
-	<title><?php echo $title; ?></title>
-	<link rel="stylesheet" type="text/css"href="reports.css">
+<title>Tasks</title>
+<link rel="stylesheet" type"text/css" href="../lib/reporter.css">
 </head>
-<span class="title"><?php echo $title; ?></span>
+<body>
 <?php
-try {
-	$server_array  = parse_ini_file('../lib/server.ini',true);
-	$dbhost = $server_array['database']['hostname'];
-	$dbuser = $server_array['database']['username'];
-	$dbpass = $server_array['database']['password'];
-	$schema = $server_array['database']['dbname'];
-	$mysqli = new mysqli($dbhost,$dbuser,$dbpass,$schema);
-	if ($mysqli->connect_errno) {
-		printf("Connect failed: %s\n",$mysqli->connect_error);
-		exit();
-	}
-	$sql = "select phase, dueDate, status, step, assignee, notes from bd7rbk520.nchi_checklist order by dueDate;";
-
-	if (!$result = $mysqli->query($sql)) {
-		echo "Error: " . $mysqli->error . "\n";
-		exit();
-	}
-	echo "<table class='odd'>" . PHP_EOL;
-	$finfo = $result->fetch_fields();
-	echo "\t<tr>" . PHP_EOL;
-	foreach ($finfo as $val) {
-		$base = $val->name;
-		$fmt = '';
-		for($x=0;$x<strlen($base);$x++){
-			if(ctype_upper(substr($base,$x,1))){
-				if(!ctype_upper(substr($base,$x-1,1))){
-					$fmt .= ' ';
-				}
-			}
-			$fmt .= substr($base,$x,1);
-		}
-		echo "\t\t<th>" . ucfirst($fmt) . "</th>" . PHP_EOL;
-	}
-	echo "\t<tr>" . PHP_EOL;
-	$loop=0;
-	while ($row = $result->fetch_object()) {
-		$style = ($loop % 2 == 0) ? 'even' : 'odd';
-		echo "\t<tr class='$style'>" . PHP_EOL;
-		foreach($row as $field){
-			echo "\t\t<td>" . $field . "</td>" . PHP_EOL;
-		}
-		echo "\t</tr>" . PHP_EOL;
-		$loop++;
-	}
-	echo "</table>" . PHP_EOL;
-	echo "<span class='footer'>$loop</span>" . PHP_EOL;
-	$result->free();
-	$mysqli->close();
-} catch (Exception $e) {
-	echo "Caught exception: ",  $e->getMessage(), "\n";
-}
+$html = '';
+require_once('../lib/Reporter.php');
+$params['bind'] = array();
+$params['ini_file'] = '../lib/server.ini';
+$params['show_total'] = true;
+$params['title'] = 'NCHI 2018 Schedule';
+$params['sql'] = 'select phase, dueDate, status, step, assignee, notes from bd7rbk520.nchi_checklist order by dueDate;';
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+echo $html;
 ?>
 </body>
 </html>
