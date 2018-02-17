@@ -4,7 +4,7 @@ $params['bind'] = array();
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
 $params['title'] = 'NCHI 2018 Schedule';
-$params['sql'] = 'select phase, dueDate, step, assignee, status, notes from bd7rbk520.nchi_checklist order by dueDate;';
+$params['sql'] = 'select phase, dueDate, step, assignee, status, notes from bd7rbk520.nchi_checklist order by phase, dueDate;';
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

@@ -16,12 +16,13 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "Books",
 			items: [
 				{title: "Books", click: "isc.LibraryBooks.create({width: \"95%\", height: \"95%\"})"},
-				{title: "Loans", click: "isc.LibraryLoans.create({width: 800, height: 400})"},
+				{title: "Loans", click: "isc.LibraryLoans.create({width: 800, height: 400})"}
 			]
 		});
 		this.AffiliatesMenu = isc.myMenu.create({
-			title: "Affiliates",
+			title: "NCHI",
 			items: [
+				{title: "Schedule", click: "isc.NCHISchedule.create({width: 1000, height: \"95%\"})"},
 				{title: "Clubs", click: "isc.BrewClubs.create()"},
 				{title: "Corporations", click: "isc.Corporations.create()"}
 			]
@@ -34,7 +35,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Members", submenu: this.membersMenu},
 				{title: "Books", submenu: this.BookMenu},
 				{isSeparator: true},
-				{title: "Affiliate", submenu: this.AffiliatesMenu}
+				{title: "NCHI", submenu: this.AffiliatesMenu}
 			]
 		});
 		this.menuBar = isc.MenuBar.create({
