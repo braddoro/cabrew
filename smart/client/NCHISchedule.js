@@ -10,11 +10,9 @@ isc.defineClass("NCHISchedule", "myWindow").addProperties({
 			{name: "phase", width: 50, type: "integer", valueMap:["1","2","3","4","5"]},
 			{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},
-			{name: "status", width: 100, validators: [{type: "lengthRange", max: 45}]},
+			{name: "status", width: 100, validators: [{type: "lengthRange", max: 45}], valueMap:["", "not started","in process","blocked","complete"]},
 			{name: "assignee", width: 150, validators: [{type: "lengthRange", max: 45}]},
 			{name: "notes", width: "*", validators: [{type: "lengthRange", max: 1000}]},
-
-
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
 	});
@@ -39,8 +37,8 @@ isc.defineClass("NCHISchedule", "myWindow").addProperties({
 			statusText += this.getTotalRows();
 			this.parent.setTitle = statusText;
 		},
-		recordClick: function (viewer, record, recordNum, field, fieldNum, value, rawValue){
-			return true;
+		rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
+			this.startEditing(recordNum);
 		}
 	});
 	this.localContextMenu = isc.myContextMenu.create({
