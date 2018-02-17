@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html>
-<body>
-<head>
-<title>Tasks</title>
-<link rel="stylesheet" type"text/css" href="../lib/reporter.css">
-</head>
-<body>
 <?php
 $year = 2018;
-$html = '';
 require_once('../lib/Reporter.php');
 $params['bind'] = array(year => $year);
 $params['ini_file'] = '../lib/server.ini';
@@ -34,8 +25,16 @@ $params['sql'] = "
 			REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ');
 	";
 $lclass = New Reporter();
-$html .= $lclass->init($params);
-echo $html;
+$html = $lclass->init($params);
 ?>
+<!DOCTYPE html>
+<html>
+<body>
+<head>
+<title><?php echo $params['title'] ?></title>
+<link rel="stylesheet" type"text/css" href="../lib/reporter.css">
+</head>
+<body>
+<?php echo $html; ?>
 </body>
 </html>

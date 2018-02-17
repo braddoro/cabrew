@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<body>
-<head>
-<title>Tasks</title>
-<link rel="stylesheet" type"text/css" href="../lib/reporter.css">
-</head>
-<body>
 <?php
-$html = '';
 require_once('../lib/Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../lib/server.ini';
@@ -22,8 +13,16 @@ from library_books
 order by
 trim(concat(ifnull(series,''), ' ', title));";
 $lclass = New Reporter();
-$html .= $lclass->init($params);
-echo $html;
+$html = $lclass->init($params);
 ?>
+<!DOCTYPE html>
+<html>
+<body>
+<head>
+<title><?php echo $params['title'] ?></title>
+<link rel="stylesheet" type"text/css" href="../lib/reporter.css">
+</head>
+<body>
+<?php echo $html; ?>
 </body>
 </html>
