@@ -1,17 +1,3 @@
-// defaultValue: function() {
-// 	var today = new Date();
-// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
-// 	return datestring;
-// }
-// ,
-// windowInitialize: function(initData){
-// 	this.initData = initData;
-// 	var today = new Date();
-// 	console.log(today);
-// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
-// 	console.log(datestring);
-// 	this.AddEventDF.getItem("memberDate").defaultValue = datestring;
-// }
 isc.defineClass("AddEvent", "myWindow").addProperties({
 	showFooter: true,
 	showStatusBar: true,
@@ -36,7 +22,9 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		});
 		this.AddEventDF = isc.myDynamicForm.create({
 			parent: this,
-			dataSource: this.AddEventDS
+			autoFetchData: true,
+			dataSource: this.AddEventDS,
+			initialCriteria: {memberDate: "09/11/2018"}
 		});
 		this.AddEventLG = isc.myListGrid.create({
 			parent: this,
