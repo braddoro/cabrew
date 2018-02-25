@@ -23,7 +23,8 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "NCHI",
 			items: [
 				{title: "Schedule", click: "isc.NCHISchedule.create({width: 1000, height: \"95%\"})"},
-				{title: "Clubs", click: "isc.BrewClubs.create()"},
+				{title: "Clubs", click: "isc.BrewClubs.create({width: \"95%\", height: \"95%\"})"},
+
 				{title: "Corporations", click: "isc.Corporations.create()"}
 			]
 		});

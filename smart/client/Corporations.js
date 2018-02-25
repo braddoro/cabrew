@@ -4,30 +4,34 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 	hideNames: false,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
-		this.BrewClubsDS = isc.myDataSource.create({
-			dataURL: serverPath + "BrewClubs.php",
+		this.CorporationsDS = isc.myDataSource.create({
+			dataURL: serverPath + "Corporations.php",
 			showFilterEditor: true,
 			fields:[
-				{name: "clubID", primaryKey: true, type: "sequence", detail: true},
-				{name: "clubName"},
-				{name: "clubAbbr"},
-				{name: "city"},
-				{name: "state"}
+				{name: "corporationID", primaryKey: true, type: "sequence", detail: true},
+				{name: "name"},
+				{name: "contact"},
+				{name: "owner", editorType: "selectItem", valueMap: {"Yes":"Yes","No":"No"}},
+				{name: "type"},
+				{name: "phone"},
+				{name: "email"},
+				{name: "website"},
+				{name: "address"}
 			]
 		});
-		this.BrewClubsLG = isc.myListGrid.create({
+		this.CorporationsLG = isc.myListGrid.create({
 			parent: this,
-			dataSource: this.BrewClubsDS,
+			dataSource: this.CorporationsDS,
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
 				return false;
 			}
 		});
-		this.localContextMenu = isc.myClubMenu.create({
+		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,
-			callingListGrid: this.BrewClubsLG
+			callingListGrid: this.CorporationsLG
 		});
-		this.BrewClubsVL = isc.myVLayout.create({members: [this.BrewClubsLG]});
-		this.addItem(this.BrewClubsVL);
+		this.CorporationsVL = isc.myVLayout.create({members: [this.CorporationsLG]});
+		this.addItem(this.CorporationsVL);
 	}
 });

@@ -101,7 +101,10 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	showAllRecords: true,
 	autoFetchData: true,
 	modalEditing: true,
-	autoFitWidth: true
+	autoFitWidth: true,
+	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
+		this.startEditing(recordNum);
+	}
 });
 
 isc.defineClass("myDynamicForm", "DynamicForm").addProperties({
