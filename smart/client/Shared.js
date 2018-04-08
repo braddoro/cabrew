@@ -1,3 +1,16 @@
+isc.Clients = {
+	yesNoDS: isc.DataSource.create({
+		clientOnly: true,
+		fields: [
+			{name: "valueLOV", type: "sequence", primaryKey: true},
+			{name: "displayLOV", type: "text"}
+		],
+		testData:[
+			{valueLOV: "Yes", displayLOV: "Yes"},
+			{valueLOV: "No", displayLOV: "No"}
+		]
+	})
+};
 isc.Shared = {
 	messageTypesDS: isc.DataSource.create({
 		clientOnly: true,
@@ -35,7 +48,7 @@ isc.Shared = {
 		fields:[
 			{name: "dateTypeID", type: "sequence", primaryKey: true},
 			{name: "dateType", type: "text"},
-			{name: "active", type: "text"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
 	checklistTypesDS: isc.myDataSource.create({
@@ -43,7 +56,7 @@ isc.Shared = {
 		fields:[
 			{name: "checklistTypeID", type: "sequence", primaryKey: true},
 			{name: "checklistType", type: "text"},
-			{name: "active", type: "text"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
 	noteTypesDS: isc.myDataSource.create({
@@ -51,7 +64,7 @@ isc.Shared = {
 		fields:[
 			{name: "noteTypeID", type: "sequence", primaryKey: true},
 			{name: "noteType", type: "text"},
-			{name: "active", type: "text"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
 	contactTypesDS: isc.myDataSource.create({
@@ -59,7 +72,7 @@ isc.Shared = {
 		fields:[
 			{name: "contactTypeID", type: "sequence", primaryKey: true},
 			{name: "contactType", type: "text"},
-			{name: "active", type: "text"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
 	chairTypesDS: isc.myDataSource.create({
@@ -67,7 +80,7 @@ isc.Shared = {
 		fields:[
 			{name: "chairTypeID", type: "sequence", primaryKey: true},
 			{name: "chairType", type: "text"},
-			{name: "active", type: "text"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
 	memberNamesDS: isc.myDataSource.create({
