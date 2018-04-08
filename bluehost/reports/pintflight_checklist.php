@@ -3,7 +3,7 @@ require_once('inc/Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
-$params['title'] = 'NCHI 2018 Schedule';
+$params['title'] = 'Pint Flight 2018 Schedule';
 $params['sql'] = 'select
 	D.phase,
 	D.dueDate,
@@ -15,7 +15,7 @@ from
 	bd7rbk520.checklistData D
     inner join checklistTypes T on D.checklistTypeID = T.checklistTypeID
 where
-	D.checklistTypeID = 1
+	D.checklistTypeID = 2
 order by
 	T.checklistType,
 	D.phase,

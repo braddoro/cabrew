@@ -6,8 +6,9 @@ isc.defineClass("NCHISchedule", "myWindow").addProperties({
 		dataURL: serverPath + "NCHISchedule.php",
 		showFilterEditor: true,
 		fields:[
-			{name: "checklistID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "phase", width: 50, type: "integer", valueMap:["1","2","3","4","5"]},
+			{name: "checklistDataID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "checklistTypeID", width: 100, type: "integer", optionDataSource: isc.Shared.checklistTypesDS, displayField: "checklistType", valueField: "checklistTypeID"},
+			{name: "phase", width: 60, type: "integer", editorType: "spinner", valueMap:["1","2","3","4","5"]},
 			{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},
 			{name: "status", width: 100, validators: [{type: "lengthRange", max: 45}], valueMap:["", "not started","in process","blocked","complete"]},
@@ -20,7 +21,7 @@ isc.defineClass("NCHISchedule", "myWindow").addProperties({
 		parent: this,
 		id: "NCHIScheduleLG",
 		showFilterEditor: true,
-		canEdit: false,
+		autoFetchData: true,
 		dataSource: this.NCHIScheduleDS,
 		initialSort: [
 			{property: "phase", direction: "ascending"},
@@ -39,6 +40,25 @@ isc.defineClass("NCHISchedule", "myWindow").addProperties({
 		},
 		rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
 			this.startEditing(recordNum);
+		},
+		startEditingNew: function(newValues, suppressFocus){
+			var today;
+			var step;
+			var data;
+			var phase = 1;
+			var checklistTypeID;
+			if(this.anySelected()){
+				data = this.getSelectedRecord();
+				today = data.dueDate;
+				step = data.step;
+				checklistTypeID = data.checklistTypeID;
+				phase = data.phase;
+			}else{
+				today = new Date();
+			}
+			var rowDefaults = {step: step, phase: phase, dueDate: today, checklistTypeID: checklistTypeID};
+			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
+			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}
 	});
 	this.localContextMenu = isc.myContextMenu.create({

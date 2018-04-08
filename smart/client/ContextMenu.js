@@ -2,23 +2,7 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,
 	data: [
-		{title: "Copy Row",
-			click: function(target, item, menu, colNum){
-				var record;
-				var text = "";
-				if(menu.callingListGrid.anySelected()){
-					record = menu.callingListGrid.getSelectedRecord();
-					// for(var key in record) {
-					// 	let value = record[key];
-					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
-					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
-					// 	}
-					// }
 
-					isc.say(copyValues(record));
-				}
-			}
-		},
 		{title: "Add",
 			click: function(target, item, menu, colNum){
 				menu.callingListGrid.startEditingNew();
@@ -34,6 +18,23 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 		{title: "Refresh",
 			click: function(target, item, menu, colNum){
 				menu.callingListGrid.invalidateCache();
+			}
+		},
+		{title: "Copy Row",
+			click: function(target, item, menu, colNum){
+				var record;
+				var text = "";
+				if(menu.callingListGrid.anySelected()){
+					record = menu.callingListGrid.getSelectedRecord();
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+
+					isc.say(copyValues(record));
+				}
 			}
 		},
 		{title: "Delete",
@@ -206,23 +207,6 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 			}
 		},
 		{isSeparator: true},
-		{title: "Copy Row",
-			click: function(target, item, menu, colNum){
-				var record;
-				var text;
-				if(menu.callingListGrid.anySelected()){
-					record = menu.callingListGrid.getSelectedRecord();
-					// for(var key in record) {
-					// 	let value = record[key];
-					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
-					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
-					// 	}
-					// }
-					// isc.say(text);
-					isc.say(copyValues(record));
-				}
-			}
-		},
 		{title: "Add",
 			click: function(target, item, menu, colNum){
 				menu.callingListGrid.startEditingNew();
@@ -238,6 +222,23 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 		{title: "Refresh",
 			click: function(target, item, menu, colNum){
 				menu.callingListGrid.invalidateCache();
+			}
+		},
+		{title: "Copy Row",
+			click: function(target, item, menu, colNum){
+				var record;
+				var text;
+				if(menu.callingListGrid.anySelected()){
+					record = menu.callingListGrid.getSelectedRecord();
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+					// isc.say(text);
+					isc.say(copyValues(record));
+				}
 			}
 		},
 		{title: "Delete",

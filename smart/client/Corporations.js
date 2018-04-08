@@ -10,12 +10,20 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 			fields:[
 				{name: "corporationID", primaryKey: true, type: "sequence", detail: true},
 				{name: "name"},
-				{name: "contact"},
-				{name: "owner", editorType: "selectItem", valueMap: {"Yes":"Yes","No":"No"}},
-				{name: "type"},
-				{name: "phone"},
+				{name: "contact", width: 120},
+				{name: "owner", width: 50, editorType: "selectItem", valueMap: {"Yes":"Yes","No":"No"}},
+				{name: "type", width: 120},
+				{name: "phone", width: 100},
 				{name: "email"},
-				{name: "website"},
+				{name: "website",
+				formatCellValue: function (value) {
+					var formatted;
+					if (value) {
+						formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";
+					}
+					return formatted;
+				}
+			},
 				{name: "address"}
 			]
 		});

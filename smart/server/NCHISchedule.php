@@ -2,8 +2,8 @@
 <?php
 require_once('../../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'nchi_checklist',
-	'pk_col' => 'checklistID',
+	'baseTable' => 'checklistData',
+	'pk_col' => 'checklistDataID',
 	'allowedOperations' => array('fetch', 'add', 'update'),
 	'ini_file' => realpath('../../lib/server.ini')
 );

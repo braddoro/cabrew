@@ -11,8 +11,8 @@ isc.defineClass("myWindow", "Window").addProperties({
 	canDragResize: true,
 	edgeMarginSize:10,
 	showShadow: true,
-	height: "40%",
-	width: "60%",
+	height: "33%",
+	width: "66%",
 	left: 25,
 	top: 25,
 	resized: function(){

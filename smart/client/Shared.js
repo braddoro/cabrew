@@ -38,6 +38,14 @@ isc.Shared = {
 			{name: "active", type: "text"}
 		]
 	}),
+	checklistTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "ChecklistTypes.php",
+		fields:[
+			{name: "checklistTypeID", type: "sequence", primaryKey: true},
+			{name: "checklistType", type: "text"},
+			{name: "active", type: "text"}
+		]
+	}),
 	noteTypesDS: isc.myDataSource.create({
 		dataURL: serverPath + "NoteTypes.php",
 		fields:[
