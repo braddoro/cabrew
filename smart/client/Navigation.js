@@ -37,7 +37,8 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{isSeparator: true},
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"95%\", height: \"95%\"})"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"})"},
-				{title: "Scheduling", click: "isc.NCHISchedule.create({width: \"95%\", height: \"95%\"})"}
+				{title: "Scheduling", click: "isc.NCHISchedule.create({width: \"95%\", height: \"95%\"})"},
+				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"})"}
 			]
 		});
 		this.menuBar = isc.MenuBar.create({

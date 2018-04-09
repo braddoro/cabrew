@@ -35,6 +35,7 @@ $classes[] = "MemberStatus.js";
 $classes[] = "MemberDetails.js";
 $classes[] = "NCHISchedule.js";
 $classes[] = "Preview.js";
+$classes[] = "WebPosts.js";
 $classes[] = "SendMessage.js";
 $classes[] = "ShowInfo.js";
 echo "<html>
@@ -47,6 +48,7 @@ echo "<html>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Grids.js'></script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_RichTextEditor.js'></script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>$title</title>

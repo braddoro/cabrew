@@ -12,7 +12,9 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 				{name: "clubName"},
 				{name: "clubAbbr"},
 				{name: "city"},
-				{name: "state"}
+				{name: "state"},
+				{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+				{name: "lastChangeDate", type: "date", detail: true, canEdit: false}
 			]
 		});
 		this.BrewClubsLG = isc.myListGrid.create({

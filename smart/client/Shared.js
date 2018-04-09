@@ -6,8 +6,8 @@ isc.Clients = {
 			{name: "displayLOV", type: "text"}
 		],
 		testData:[
-			{valueLOV: "Yes", displayLOV: "Yes"},
-			{valueLOV: "No", displayLOV: "No"}
+			{valueLOV: "Y", displayLOV: "Yes"},
+			{valueLOV: "N", displayLOV: "No"}
 		]
 	})
 };

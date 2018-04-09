@@ -47,10 +47,21 @@ class Reporter {
 		$model_params['ini_file'] = $ini_file;
 		$data = $this->report_model($model_params);
 
-		$view_params['title'] = $title;
+		$skip_format = false;
+		if(isset($params['skip_format'])){
+			if(is_bool($params['skip_format']) && $params['skip_format']){
+				$skip_format = true;
+			}
+		}
+
 		$view_params['data'] = $data;
-		$view_params['show_total'] = $show_total;
-		$html = $this->report_view($view_params);
+		if($skip_format){
+			$html = $this->data_view($view_params);
+		}else{
+			$view_params['title'] = $title;
+			$view_params['show_total'] = $show_total;
+			$html = $this->report_view($view_params);
+		}
 
 		return $html;
 	}
@@ -110,6 +121,15 @@ class Reporter {
 			$out .= "<span class=\"tiny\">{$loop}</span>" . PHP_EOL;
 		}
 		$out .= "<br>" . PHP_EOL;
+		return $out;
+	}
+	private function data_view($params){
+		$stmt = $params['data'];
+		while($row = $stmt->fetch()) {
+			foreach($row as $col => $val){
+				$out .= $val;
+			}
+		}
 		return $out;
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 require_once('../../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'brew_clubs',
-	'pk_col' => 'clubID',
+	'baseTable' => 'web_posts',
+	'pk_col' => 'webPostID',
 	'allowedOperations' => array('fetch', 'add', 'update'),
 	'ini_file' => realpath('../../lib/server.ini')
 );
