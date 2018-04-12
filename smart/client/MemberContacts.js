@@ -3,6 +3,7 @@ isc.defineClass("MemberContacts", "myWindow").addProperties({
 		this.Super("initWidget", arguments);
 		this.MemberContactsLG = isc.myListGrid.create({
 			parent: this,
+			name: "Member Contacts",
 			dataSource: isc.Members.contactsDS,
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();

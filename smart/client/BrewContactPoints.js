@@ -14,6 +14,7 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 		});
 		this.BrewContactPointsLG = isc.myListGrid.create({
 			parent: this,
+			name: "Brew Contact Points",
 			dataSource: this.BrewContactPointsDS,
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();

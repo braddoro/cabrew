@@ -15,13 +15,10 @@ isc.defineClass("LibraryBooks", "myWindow").addProperties({
 		]
 	});
 	this.LibraryBooksLG = isc.myListGrid.create({
+		name: "Library Books",
 		parent: this,
 		dataSource: this.LibraryBooksDS,
-		showFilterEditor: true,
-		rowContextClick: function(record, rowNum, colNum){
-			this.parent.localContextMenu.showContextMenu();
-			return false;
-		}
+		showFilterEditor: true
 	});
 	this.localContextMenu = isc.myContextMenu.create({
 		parent: this,

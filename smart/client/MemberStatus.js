@@ -24,6 +24,7 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 	});
 	this.MemberStatusLG = isc.myListGrid.create({
 		parent: this,
+		name: "Member by Status",
 		id: "MemberStatusLG",
 		showFilterEditor: true,
 		canEdit: false,

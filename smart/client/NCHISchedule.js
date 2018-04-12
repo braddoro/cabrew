@@ -1,5 +1,5 @@
 isc.defineClass("NCHISchedule", "myWindow").addProperties({
-	title: "NCHI Planning Schedule",
+	title: "CABREW Event Planning Schedule",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.NCHIScheduleDS = isc.myDataSource.create({
@@ -19,6 +19,7 @@ isc.defineClass("NCHISchedule", "myWindow").addProperties({
 	});
 	this.NCHIScheduleLG = isc.myListGrid.create({
 		parent: this,
+		name: "CABREW Event Planning Schedule",
 		id: "NCHIScheduleLG",
 		showFilterEditor: true,
 		autoFetchData: true,

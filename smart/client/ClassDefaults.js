@@ -102,8 +102,23 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	autoFetchData: true,
 	modalEditing: true,
 	autoFitWidth: true,
+	rowContextClick: function(record, rowNum, colNum){
+		this.parent.localContextMenu.showContextMenu();
+		return false;
+	},
 	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
 		this.startEditing(recordNum);
+	},
+	updateStatus: function() {
+		if(this.name) {
+			this.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
+		}else{
+			this.parent.setTitle(": Rows - " + this.getTotalRows());
+		}
+		this.focus();
+	},
+	dataArrived: function(){
+		this.updateStatus();
 	}
 });
 

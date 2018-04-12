@@ -37,6 +37,7 @@ isc.defineClass("LibraryLoans", "myWindow").addProperties({
 	});
 	this.LibraryLoansLG = isc.myListGrid.create({
 		parent: this,
+		name: "Library Loans",
 		dataSource: this.LibraryLoansDS,
 		showFilterEditor: true,
 		rowContextClick: function(record, rowNum, colNum){

@@ -41,6 +41,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 		});
 		this.memberPointsLG = isc.myListGrid.create({
 			parent: this,
+			name: "Member Points",
 			margin: 1,
 			width: 300,
 			dataSource: this.memberPointsDS,

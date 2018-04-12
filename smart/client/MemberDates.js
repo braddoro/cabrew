@@ -4,6 +4,7 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 	this.Super("initWidget", arguments);
 		this.MemberDatesLG = isc.myListGrid.create({
 			parent: this,
+			name: "Members By Date",
 			showFilterEditor: true,
 			autoFetchData: false,
 			dataSource: isc.Members.datesDS,

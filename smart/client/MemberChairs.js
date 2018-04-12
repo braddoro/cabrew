@@ -13,7 +13,7 @@ isc.defineClass("MemberChairs", "myWindow").addProperties({
 				{name: "lastChangeDate", detail: true}
 			]
 		});
-		this.MemberChairsLG = isc.myListGrid.create({dataSource: this.MemberChairsDS});
+		this.MemberChairsLG = isc.myListGrid.create({dataSource: this.MemberChairsDS, name: "Member Chairs"});
 		this.MemberChairsVL = isc.myVLayout.create({members: [this.MemberChairsLG]});
 		this.addItem(this.MemberChairsVL);
 		this.MemberChairsLG.fetchData({memberID: initData.memberID});

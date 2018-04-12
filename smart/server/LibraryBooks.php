@@ -3,7 +3,7 @@ require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'library_books',
 	'pk_col' => 'bookID',
-	'allowedOperations' => array('fetch', 'add', 'update', 'delete'),
+	'allowedOperations' => array('fetch', 'add', 'update', 'remove'),
 	'ini_file' => realpath('../../lib/server.ini')
 );
 $lclass = New DataModel();

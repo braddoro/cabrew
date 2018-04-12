@@ -29,6 +29,7 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 		});
 		this.CorporationsLG = isc.myListGrid.create({
 			parent: this,
+			name: "Corporations",
 			dataSource: this.CorporationsDS,
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();

@@ -16,6 +16,7 @@ isc.defineClass("WebPosts", "myWindow").addProperties({
 	});
 	this.webPostsLG = isc.myListGrid.create({
 		parent: this,
+		name: "Static Web Posts",
 		id: "webPostsLG",
 		width: 200,
 		showHeader: false,
