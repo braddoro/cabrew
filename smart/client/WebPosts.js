@@ -22,6 +22,7 @@ isc.defineClass("WebPosts", "myWindow").addProperties({
 		showHeader: false,
 		autoFetchData: true,
 		canEdit: false,
+		sortField: 1,
 		dataSource: this.webPostsDS,
 		fields:[
 			{name: "webPostID", detail: true},
@@ -43,12 +44,12 @@ isc.defineClass("WebPosts", "myWindow").addProperties({
 		margin: 5,
 		titleSuffix: "",
 		fields: [
-			{name: "webPostID", title: "", titleOrientation: "top", type: "sequence", colSpan: 2, canEdit: false, visible: false},
+			{name: "webPostID", title: "", titleOrientation: "top", width: 50, type: "sequence", colSpan: 1, canEdit: false},
 			{name: "postName",
 				title: "",
 				titleOrientation: "top",
 				type: "text",
-				colSpan: 2,
+				colSpan: 1,
 				width: 300,
 				validators: [{type: "lengthRange", max: 45}]
 			},
