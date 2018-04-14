@@ -118,7 +118,7 @@ isc.Members = {
 			{name: "lastName", validators: [{type: "lengthRange", max: 45}]},
 			{name: "nickname", validators: [{type: "lengthRange", max: 45}]},
 			{name: "sex", validators: [{type: "lengthRange", max: 1}, {type:"isOneOf", list: ["M","F"]}]},
-			{name: "renewalYear", type: "integer", validators: [{type:"integerRange", min:2014, max:2030}]},
+			{name: "renewalYear", type: "integer", validators: [{type:"integerRange", min:2014, max:2030}], detail: true},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
@@ -158,8 +158,7 @@ isc.Members = {
 	nameListDS: isc.myDataSource.create({
 		dataURL: serverPath + "AddPayment.php",
 		fields: [
-			{
-				name: "memberID",
+			{name: "memberID",
 				title: "Member",
 				editorType: "SelectItem",
 				optionDataSource: isc.Shared.memberNamesDS,
