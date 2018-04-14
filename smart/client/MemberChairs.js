@@ -6,8 +6,8 @@ isc.defineClass("MemberChairs", "myWindow").addProperties({
 			fields:[
 				{name: "memberChairID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 				{name: "memberID_fk", required: true, detail: true},
-				{name: "chairTypeID_fk", title: "Chair Type", optionDataSource: isc.Shared.chairTypesDS, optionCriteria: {active: 'Y'}, displayField: "chairType", valueField: "chairTypeID"},
-				{name: "dateTypeID_fk", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, optionCriteria: {active: 'Y'}, displayField: "dateType", valueField: "dateTypeID"},
+				{name: "chairTypeID_fk", title: "Chair Type", optionDataSource: isc.Shared.chairTypesDS, optionCriteria: {active: "Y"}, displayField: "chairType", valueField: "chairTypeID"},
+				{name: "dateTypeID_fk", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, optionCriteria: {active: "Y"}, displayField: "dateType", valueField: "dateTypeID"},
 				{name: "chairDate"},
 				{name: "lastChangeDate", detail: true, canEdit: false}
 			]

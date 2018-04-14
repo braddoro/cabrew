@@ -5,7 +5,7 @@ isc.defineClass("DateTypes", "myWindow").addProperties({
 			parent: this,
 			dataSource: isc.Shared.dateTypesDS,
 			name: "Date Types",
-			showFilterEditor: true,
+			showFilterEditor: true
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,

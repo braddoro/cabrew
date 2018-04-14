@@ -22,7 +22,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 				{name: "datePoints", type: "integer", title: "Points", width: 75},
 				{name: "dateTypeID", title: "Event",
 				optionDataSource: isc.Shared.dateTypesDS,
-				optionCriteria: {active: 'Y'},
+				optionCriteria: {active: "Y"},
 				displayField: "dateType",
 				valueField: "dateTypeID"},
 				{name: "dateDetail", type: "string", title: "Detail", width: "*"}
