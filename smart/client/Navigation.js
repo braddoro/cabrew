@@ -4,7 +4,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "Members",
 			items: [
 				{title: "By Status", click: "isc.MemberStatus.create({width: 800, height: \"95%\"})"},
-				{title: "By Date", click: "isc.MemberDates.create({hideNames: false, autoFetch: false})"},
+				// {title: "By Date", click: "isc.MemberDates.create({hideNames: false, autoFetch: false})"},
 				{title: "By Points", click: "isc.MemberPoints.create()"},
 				{isSeparator: true},
 				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"})"},
@@ -15,6 +15,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.MiscMenu = isc.myMenu.create({
 			title: "Misc Tables",
 			items: [
+				{title: "Contact Types", click: "isc.ContactTypes.create()"},
 				{title: "Date Types", click: "isc.DateTypes.create()"},
 				{title: "Schedule Types", click: "isc.ScheduleTypes.create()"}
 			]

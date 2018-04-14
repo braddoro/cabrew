@@ -3,19 +3,15 @@ isc.defineClass("MemberContacts", "myWindow").addProperties({
 		this.Super("initWidget", arguments);
 		this.MemberContactsLG = isc.myListGrid.create({
 			parent: this,
-			name: "Member Contacts",
 			dataSource: isc.Members.contactsDS,
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
+			name: "Member Contacts",
+			startEditingNew: function(newValues, suppressFocus){
+				var newCriteria = isc.addProperties({}, newValues, {memberID_fk: initData.memberID});
+				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 			}
 		});
-		this.localContextMenu = isc.myContextMenu.create({
-			parent: this,
-			callingListGrid: this.MemberContactsLG
-		});
-		this.MemberContactsVL = isc.myVLayout.create({members: [this.MemberContactsLG]});
-		this.addItem(this.MemberContactsVL);
-		this.MemberContactsLG.fetchData({memberID: initData.memberID});
+		this.localContextMenu = isc.myContextMenu.create({parent: this, callingListGrid: this.MemberContactsLG});
+		this.addItem(isc.myVLayout.create({members: [this.MemberContactsLG]}));
+		this.MemberContactsLG.fetchData({memberID_fk: initData.memberID});
 	}
 });

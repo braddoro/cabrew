@@ -78,7 +78,7 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 			error = title;
 		}
 
-		message = title + "<br/>Error Code: " + status + "<br/>" + error;
+		message = title + "\nError Code: " + status + "\n" + error;
 
 		if(status === isc.RPCResponse.STATUS_SUCCESS){
 			newResponse = dsResponse;

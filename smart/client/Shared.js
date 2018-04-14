@@ -49,7 +49,8 @@ isc.Shared = {
 			{name: "dateTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "dateType", type: "text"},
 			{name: "datePoints", type: "integer", editorType: "spinner"},
-			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
 	checklistTypesDS: isc.myDataSource.create({
@@ -57,13 +58,14 @@ isc.Shared = {
 		fields:[
 			{name: "checklistTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "checklistType", type: "text"},
-			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
 	noteTypesDS: isc.myDataSource.create({
 		dataURL: serverPath + "NoteTypes.php",
 		fields:[
-			{name: "noteTypeID", type: "sequence", primaryKey: true},
+			{name: "noteTypeID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
 			{name: "noteType", type: "text"},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
@@ -71,15 +73,16 @@ isc.Shared = {
 	contactTypesDS: isc.myDataSource.create({
 		dataURL: serverPath + "ContactTypes.php",
 		fields:[
-			{name: "contactTypeID", type: "sequence", primaryKey: true},
+			{name: "contactTypeID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
 			{name: "contactType", type: "text"},
-			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
 	chairTypesDS: isc.myDataSource.create({
 		dataURL: serverPath + "ChairTypes.php",
 		fields:[
-			{name: "chairTypeID", type: "sequence", primaryKey: true},
+			{name: "chairTypeID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
 			{name: "chairType", type: "text"},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
@@ -87,7 +90,7 @@ isc.Shared = {
 	memberNamesDS: isc.myDataSource.create({
 		dataURL: serverPath + "MemberStatus.php",
 		fields:[
-			{name: "memberID", type: "sequence", primaryKey: true},
+			{name: "memberID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
 			{name: "FullName", type: "text"},
 			{name: "Status", type: "text"}
 		]
@@ -95,7 +98,7 @@ isc.Shared = {
 	libraryBooksDS: isc.myDataSource.create({
 		dataURL: serverPath + "LibraryBooks.php",
 		fields:[
-			{name: "bookID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "bookID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "series", width: 150},
 			{name: "title", width: 250},
 			{name: "author", width: 300},
@@ -108,7 +111,7 @@ isc.Members = {
 	membersDS: isc.myDataSource.create({
 		dataURL: serverPath + "EditMember.php",
 		fields:[
-			{name: "memberID", primaryKey: true, statusTypepe: "sequence", canEdit: false},
+			{name: "memberID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "statusTypeID_fk", type: "integer", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "firstName", validators: [{type: "lengthRange", max: 30}]},
 			{name: "midName", validators: [{type: "lengthRange", max: 30}]},
@@ -116,40 +119,40 @@ isc.Members = {
 			{name: "nickname", validators: [{type: "lengthRange", max: 45}]},
 			{name: "sex", validators: [{type: "lengthRange", max: 1}, {type:"isOneOf", list: ["M","F"]}]},
 			{name: "renewalYear", type: "integer", validators: [{type:"integerRange", min:2014, max:2030}]},
-			{name: "lastChangeDate", type: "datetime", canEdit: false}
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
 	contactsDS: isc.myDataSource.create({
 		dataURL: serverPath + "MemberContacts.php",
 		fields:[
-			{name: "memberContactID", primaryKey: true, detail: true},
-			{name: "memberID_fk", detail: true},
-			{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID"},
+			{name: "memberContactID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
+			{name: "memberID_fk", type: 'integer', detail: true, required: true},
+			{name: "contactTypeID_fk", type: 'integer', required: true, title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID"},
 			{name: "memberContact"},
 			{name: "contactDetail"},
-			{name: "lastChangeDate", detail: true}
+			{name: "lastChangeDate", canEdit: false, detail: true}
 		]
 	}),
 	datesDS: isc.myDataSource.create({
 		dataURL: serverPath + "MemberDates.php",
 		fields:[
-			{name: "memberDateID", primaryKey: true, type: "sequence", detail: true, visible: false},
-			{name: "memberID", type: "integer", detail: true},
-			{name: "dateTypeID", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
+			{name: "memberDateID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
+			{name: "memberID_fk", type: "integer", detail: true, required: true},
+			{name: "dateTypeID_fk", required: true, type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
 			{name: "memberDate"},
 			{name: "dateDetail"},
-			{name: "lastChangeDate", detail: true}
+			{name: "lastChangeDate", canEdit: false, detail: true}
 		]
 	}),
 	notesDS: isc.myDataSource.create({
 		dataURL: serverPath + "MemberNotes.php",
 		fields:[
-			{name: "memberNoteID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "memberID_fk", detail: true},
-			{name: "noteTypeID_fk", title: "Type", optionDataSource: isc.Shared.noteTypesDS, displayField: "noteType", valueField: "noteTypeID"},
+			{name: "memberNoteID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
+			{name: "memberID_fk", detail: true, required: true},
+			{name: "noteTypeID_fk", required: true, title: "Type", optionDataSource: isc.Shared.noteTypesDS, displayField: "noteType", valueField: "noteTypeID"},
 			{name: "noteDate"},
 			{name: "memberNote"},
-			{name: "lastChangeDate", detail: true}
+			{name: "lastChangeDate", canEdit: false, detail: true}
 		]
 	}),
 	nameListDS: isc.myDataSource.create({

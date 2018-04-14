@@ -52,28 +52,25 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,
 	data: [
-		{title: "Show Details",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberDetails.create({
-					title: "Activity for " + record.FullName,
-					memberID: record.memberID,
-					height: "95%",
-					width: 800,
-					left: 50,
-					top: 50
-				});
-			}
-		},
+		// {title: "Show Details",
+		// 	click: function(target, item, menu, colNum){
+		// 		var record = menu.callingListGrid.getSelectedRecord();
+		// 		isc.MemberDetails.create({
+		// 			title: "Activity for " + record.FullName,
+		// 			memberID: record.memberID,
+		// 			height: "95%",
+		// 			width: 800,
+		// 			left: 50,
+		// 			top: 50
+		// 		});
+		// 	}
+		// },
 		{title: "Show Dates",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.MemberDates.create({
 					title: "Activity for " + record.FullName,
 					memberID: record.memberID,
-					autoFetch: true,
-					hideNames: true,
-					width: 500,
 					left: 150,
 					top: 50
 				});
@@ -85,7 +82,6 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.MemberNotes.create({
 					title: "Notes for " + record.FullName,
 					memberID: record.memberID,
-					width: 500,
 					left: 170,
 					top: 70
 				});
@@ -97,8 +93,6 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.MemberContacts.create({
 					title: "Contacts for " + record.FullName,
 					memberID: record.memberID,
-					width: 600,
-					height: 300,
 					left: 190,
 					top: 90
 				});
@@ -110,8 +104,6 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.MemberChairs.create({
 					title: "Leadership for " + record.FullName,
 					memberID: record.memberID,
-					width: 600,
-					height: 200,
 					left: 210,
 					top: 110
 				});
@@ -148,8 +140,6 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 					title: "Activity for " + record.FullName,
 					memberID: record.memberID,
 					autoFetch: true,
-					hideNames: true,
-					width: 500,
 					left: 150,
 					top: 50
 				});
@@ -161,7 +151,6 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				isc.MemberNotes.create({
 					title: "Notes for " + record.FullName,
 					memberID: record.memberID,
-					width: 500,
 					left: 170,
 					top: 70
 				});
@@ -173,8 +162,6 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				isc.MemberContacts.create({
 					title: "Contacts for " + record.FullName,
 					memberID: record.memberID,
-					width: 600,
-					height: 300,
 					left: 190,
 					top: 90
 				});
@@ -186,8 +173,6 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				isc.MemberChairs.create({
 					title: "Leadership for " + record.FullName,
 					memberID: record.memberID,
-					width: 600,
-					height: 200,
 					left: 210,
 					top: 110
 				});

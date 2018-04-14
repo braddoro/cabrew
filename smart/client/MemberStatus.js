@@ -28,20 +28,7 @@ isc.defineClass("MemberStatus", "myWindow").addProperties({
 		id: "MemberStatusLG",
 		showFilterEditor: true,
 		canEdit: false,
-		dataSource: this.MemberStatusDS,
-		rowContextClick: function(record, rowNum, colNum){
-			this.parent.localContextMenu.showContextMenu();
-			return false;
-		},
-		dataArrived: function(){
-			var statusText = this.parent.baseTitle;
-			statusText += " - Rows: ";
-			statusText += this.getTotalRows();
-			this.parent.setTitle = statusText;
-		},
-		recordClick: function (viewer, record, recordNum, field, fieldNum, value, rawValue){
-			return true;
-		}
+		dataSource: this.MemberStatusDS
 	});
 	this.localContextMenu = isc.myChildMenu.create({
 		parent: this,
