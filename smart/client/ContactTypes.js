@@ -4,8 +4,7 @@ isc.defineClass("ContactTypes", "myWindow").addProperties({
 	this.ContactTypesLG = isc.myListGrid.create({
 		parent: this,
 		dataSource: isc.Shared.contactTypesDS,
-		name: "Contact Types",
-		autoFetchData: true
+		name: "Contact Types"
 	});
 	this.localContextMenu = isc.myContextMenu.create({
 		parent: this,

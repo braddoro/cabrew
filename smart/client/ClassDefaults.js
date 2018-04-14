@@ -34,8 +34,6 @@ isc.defineClass("myHLayout", "HLayout").addProperties({
 isc.defineClass("myDataSource", "DataSource").addProperties({
 	dataProtocol: "postParams",
 	dataFormat: "json",
-	autoFetchData: true,
-	showPrompt: true,
 	transformRequest: function(dsRequest){
 		var superClassArguments = this.Super("transformRequest", dsRequest);
 		var newProperties = {operationType: dsRequest.operationType};

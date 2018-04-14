@@ -22,7 +22,6 @@ isc.defineClass("NCHISchedule", "myWindow").addProperties({
 		name: "CABREW Event Planning Schedule",
 		id: "NCHIScheduleLG",
 		showFilterEditor: true,
-		autoFetchData: true,
 		dataSource: this.NCHIScheduleDS,
 		initialSort: [
 			{property: "phase", direction: "ascending"},

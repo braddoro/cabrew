@@ -20,7 +20,6 @@ isc.defineClass("WebPosts", "myWindow").addProperties({
 		id: "webPostsLG",
 		width: 200,
 		showHeader: false,
-		autoFetchData: true,
 		canEdit: false,
 		sortField: 1,
 		dataSource: this.webPostsDS,

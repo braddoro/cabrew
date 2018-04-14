@@ -112,7 +112,7 @@ isc.Members = {
 		dataURL: serverPath + "EditMember.php",
 		fields:[
 			{name: "memberID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
-			{name: "statusTypeID_fk", type: "integer", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "statusTypeID_fk", type: "integer", title: "Status", optionDataSource: isc.Shared.statusTypesDS, optionCriteria: {active: 'Y'}, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "firstName", validators: [{type: "lengthRange", max: 30}]},
 			{name: "midName", validators: [{type: "lengthRange", max: 30}]},
 			{name: "lastName", validators: [{type: "lengthRange", max: 45}]},
@@ -126,8 +126,8 @@ isc.Members = {
 		dataURL: serverPath + "MemberContacts.php",
 		fields:[
 			{name: "memberContactID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
-			{name: "memberID_fk", type: 'integer', detail: true, required: true},
-			{name: "contactTypeID_fk", type: 'integer', required: true, title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID"},
+			{name: "memberID_fk", type: "integer", detail: true, required: true},
+			{name: "contactTypeID_fk", type: "integer", required: true, title: "Type", optionDataSource: isc.Shared.contactTypesDS, optionCriteria: {active: 'Y'}, displayField: "contactType", valueField: "contactTypeID"},
 			{name: "memberContact"},
 			{name: "contactDetail"},
 			{name: "lastChangeDate", canEdit: false, detail: true}
@@ -138,7 +138,7 @@ isc.Members = {
 		fields:[
 			{name: "memberDateID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "memberID_fk", type: "integer", detail: true, required: true},
-			{name: "dateTypeID_fk", required: true, type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
+			{name: "dateTypeID_fk", required: true, type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, optionCriteria: {active: 'Y'}, displayField: "dateType", valueField: "dateTypeID"},
 			{name: "memberDate"},
 			{name: "dateDetail"},
 			{name: "lastChangeDate", canEdit: false, detail: true}
@@ -149,7 +149,7 @@ isc.Members = {
 		fields:[
 			{name: "memberNoteID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "memberID_fk", detail: true, required: true},
-			{name: "noteTypeID_fk", required: true, title: "Type", optionDataSource: isc.Shared.noteTypesDS, displayField: "noteType", valueField: "noteTypeID"},
+			{name: "noteTypeID_fk", required: true, title: "Type", optionDataSource: isc.Shared.noteTypesDS, optionCriteria: {active: 'Y'}, displayField: "noteType", valueField: "noteTypeID"},
 			{name: "noteDate"},
 			{name: "memberNote"},
 			{name: "lastChangeDate", canEdit: false, detail: true}
@@ -183,7 +183,7 @@ isc.Tables = {
 		dataURL: serverPath + "MemberTable.php",
 		fields:[
 			{name: "memberID", primaryKey: true, statusTypepe: "sequence", detail: true, canEdit: false},
-			{name: "statusTypeID_fk", type: "integer", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "statusTypeID_fk", type: "integer", title: "Status", optionDataSource: isc.Shared.statusTypesDS, optionCriteria: {active: 'Y'}, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "firstName"},
 			{name: "midName"},
 			{name: "lastName"},
@@ -200,7 +200,7 @@ isc.Tables = {
 		fields:[
 			{name: "memberContactID", primaryKey: true, statusTypepe: "sequence", detail: true, canEdit: false},
 			{name: "memberID_fk", detail: true},
-			{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID"},
+			{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, optionCriteria: {active: 'Y'}, displayField: "contactType", valueField: "contactTypeID"},
 			{name: "memberContact"},
 			{name: "contactDetail"},
 			{name: "lastChangeDate"}
@@ -211,7 +211,7 @@ isc.Tables = {
 		fields:[
 			{name: "memberDateID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
 			{name: "memberID_fk", detail: true},
-			{name: "dateTypeID", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
+			{name: "dateTypeID", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, optionCriteria: {active: 'Y'}, displayField: "dateType", valueField: "dateTypeID"},
 			{name: "memberDate"},
 			{name: "dateDetail"},
 			{name: "lastChangeDate"},
@@ -226,7 +226,7 @@ isc.Tables = {
 		fields:[
 			{name: "memberNoteID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
 			{name: "memberID_fk", detail: true},
-			{name: "noteTypeID_fk", title: "Type", optionDataSource: isc.Shared.noteTypesDS, displayField: "noteType", valueField: "noteTypeID"},
+			{name: "noteTypeID_fk", title: "Type", optionDataSource: isc.Shared.noteTypesDS, optionCriteria: {active: 'Y'}, displayField: "noteType", valueField: "noteTypeID"},
 			{name: "noteDate"},
 			{name: "memberNote"},
 			{name: "lastChangeDate"}

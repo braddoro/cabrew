@@ -3,7 +3,6 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.membersMenu = isc.myMenu.create({
 			title: "Members",
 			items: [
-				// {title: "By Date", click: "isc.MemberDates.create({hideNames: false, autoFetch: false})"},
 				{title: "By Points", click: "isc.MemberPoints.create()"},
 				{isSeparator: true},
 				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"})"},
@@ -14,6 +13,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.MiscMenu = isc.myMenu.create({
 			title: "Misc Tables",
 			items: [
+				{title: "Chair Types", click: "isc.ChairTypes.create()"},
 				{title: "Contact Types", click: "isc.ContactTypes.create()"},
 				{title: "Date Types", click: "isc.DateTypes.create()"},
 				{title: "Schedule Types", click: "isc.ScheduleTypes.create()"}
@@ -38,7 +38,6 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			items: [
 				{title: "Name Search", click: "isc.MemberSearch.create({width: 450, height: \"95%\"})"},
 				{isSeparator: true},
-//				{title: "Member Detail", click: "isc.MemberDetails.create({width: 800, height: \"95%\"})"},
 				{title: "Members", submenu: this.membersMenu},
 				{title: "Books", submenu: this.BookMenu},
 				{isSeparator: true},

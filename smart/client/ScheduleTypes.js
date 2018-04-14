@@ -5,8 +5,7 @@ isc.defineClass("ScheduleTypes", "myWindow").addProperties({
 	this.ScheduleTypesLG = isc.myListGrid.create({
 		parent: this,
 		dataSource: isc.Shared.checklistTypesDS,
-		name: "Schedule Types",
-		autoFetchData: true
+		name: "Schedule Types"
 	});
 	this.localContextMenu = isc.myContextMenu.create({
 		parent: this,

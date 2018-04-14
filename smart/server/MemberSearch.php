@@ -43,16 +43,6 @@ case 'fetch':
 	}else{
 		$fullName = 'NULL';
 	}
-//	REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' ')
-
-	// if(isset($argsIN['FullName'])) {
-	// 	$fullName = ($argsIN['FullName'] > '') ? $argsIN['FullName'] : NULL;
-	// }else{
-	// 	$fullName = 'NULL';
-	// }
-/*
-	and REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' ') = coalesce({$fullName}, REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' '))
-*/
 	$argsIN['sql'] = "
 select
 	M.memberID,
