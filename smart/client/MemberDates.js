@@ -19,13 +19,13 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 		});
 		this.MemberDatesVL = isc.myVLayout.create({members: [this.MemberDatesLG]});
 		this.addItem(this.MemberDatesVL);
-		if(initData.hideNames === true) {
-			this.MemberDatesLG.hideField("FullName");
-			this.MemberDatesLG.hideField("statusTypeID_fk");
-			this.MemberDatesLG.hideField("dateDetail");
-			this.MemberDatesLG.hideField("Year");
-			this.MemberDatesLG.setShowFilterEditor(false);
-		}
+		// if(initData.hideNames === true) {
+		// 	this.MemberDatesLG.hideField("FullName");
+		// 	this.MemberDatesLG.hideField("statusTypeID_fk");
+		// 	this.MemberDatesLG.hideField("dateDetail");
+		// 	this.MemberDatesLG.hideField("Year");
+		// 	this.MemberDatesLG.setShowFilterEditor(false);
+		// }
 		if(initData.autoFetch === true) {
 			this.MemberDatesLG.fetchData({memberID: initData.memberID});
 		}else{

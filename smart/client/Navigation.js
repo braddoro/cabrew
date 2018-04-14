@@ -12,6 +12,13 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Send Message", click: "isc.SendMessage.create({width: 800, height: \"95%\"})"}
 			]
 		});
+		this.MiscMenu = isc.myMenu.create({
+			title: "Misc Tables",
+			items: [
+				{title: "Date Types", click: "isc.DateTypes.create()"},
+				{title: "Schedule Types", click: "isc.ScheduleTypes.create()"}
+			]
+		});
 		this.BeerMenu = isc.myMenu.create({
 			title: "Beer",
 			items: [
@@ -38,7 +45,9 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"95%\", height: \"95%\"})"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"})"},
 				{title: "Scheduling", click: "isc.NCHISchedule.create({width: \"95%\", height: \"95%\"})"},
-				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"})"}
+				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"})"},
+				{isSeparator: true},
+				{title: "Misc Tables", submenu: this.MiscMenu}
 			]
 		});
 		this.menuBar = isc.MenuBar.create({

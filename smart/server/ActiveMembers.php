@@ -12,7 +12,7 @@ class ActiveMembers {
 		from
 			members M
 		where
-			M.statusTypeID_fk = 1
+			M.statusTypeID_fk in (1,5)
 		order by
 			M.firstName,
 			M.lastName";

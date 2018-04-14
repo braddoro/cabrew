@@ -31,6 +31,7 @@ $classes[] = "MemberContacts.js";
 $classes[] = "MemberDates.js";
 $classes[] = "MemberNotes.js";
 $classes[] = "MemberPoints.js";
+$classes[] = "DateTypes.js";
 $classes[] = "MemberStatus.js";
 $classes[] = "MemberDetails.js";
 $classes[] = "NCHISchedule.js";
@@ -38,6 +39,7 @@ $classes[] = "Preview.js";
 $classes[] = "WebPosts.js";
 $classes[] = "SendMessage.js";
 $classes[] = "ShowInfo.js";
+$classes[] = "ScheduleTypes.js";
 echo "<html>
 <head>
 <script>var serverPath = '$server_path';</script>

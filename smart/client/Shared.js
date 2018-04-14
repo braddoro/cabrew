@@ -46,15 +46,16 @@ isc.Shared = {
 	dateTypesDS: isc.myDataSource.create({
 		dataURL: serverPath + "DateTypes.php",
 		fields:[
-			{name: "dateTypeID", type: "sequence", primaryKey: true},
+			{name: "dateTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "dateType", type: "text"},
+			{name: "datePoints", type: "integer", editorType: "spinner"},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
 	checklistTypesDS: isc.myDataSource.create({
-		dataURL: serverPath + "ChecklistTypes.php",
+		dataURL: serverPath + "ScheduleTypes.php",
 		fields:[
-			{name: "checklistTypeID", type: "sequence", primaryKey: true},
+			{name: "checklistTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "checklistType", type: "text"},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
@@ -132,19 +133,12 @@ isc.Members = {
 	datesDS: isc.myDataSource.create({
 		dataURL: serverPath + "MemberDates.php",
 		fields:[
-			{name: "memberID", primaryKey: true, type: "sequence", detail: true},
-			{name: "FullName", width: 165},
-			{name: "lastName", detail: true},
-			{name: "firstName", detail: true},
-			{name: "sex", detail: true},
-			{name: "statusTypeID_fk", width: 75, title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "memberDateID", primaryKey: true, type: "sequence", detail: true, visible: false},
+			{name: "memberID", type: "integer", detail: true},
 			{name: "dateTypeID", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
-			{name: "Points", width: 75},
-			{name: "Year", width: 75, type: "SelectItem", optionDataSource: isc.Shared.eventYearsDS, displayField: "Year", valueField: "Year"},
-			{name: "Month", type: "integer", detail: true},
-			{name: "Day", type: "integer", detail: true},
 			{name: "memberDate"},
-			{name: "dateDetail"}
+			{name: "dateDetail"},
+			{name: "lastChangeDate", detail: true}
 		]
 	}),
 	notesDS: isc.myDataSource.create({

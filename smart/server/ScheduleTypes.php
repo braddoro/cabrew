@@ -1,8 +1,8 @@
 <?php
 require_once('../../lib/DataModel.php');
 $params = array(
-	'baseTable' => 'dateTypes',
-	'pk_col' => 'dateTypeID',
+	'baseTable' => 'checklistTypes',
+	'pk_col' => 'checklistTypeID',
 	'allowedOperations' => array('fetch', 'add', 'update','remove'),
 	'ini_file' => realpath('../../lib/server.ini')
 );
