@@ -75,7 +75,7 @@ group by
 	M.sex,
 	M.renewalYear,
 	M.lastChangeDate;";
-	echo "/* {$argsIN['sql']} */";
+	//echo "/* {$argsIN['sql']} */";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

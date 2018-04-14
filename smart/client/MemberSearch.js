@@ -8,7 +8,7 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 		showFilterEditor: true,
 		fields:[
 			{name: "memberID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
-			{name: "statusTypeID_fk", width: 75, title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "statusTypeID_fk", width: 75, title: "Status", optionDataSource: isc.Shared.statusTypesDS, optionCriteria: {active: "Y"}, displayField: "statusType", valueField: "statusTypeID"},
 			{name: "FullName", width: "*"},
 			{name: "firstName", detail: true},
 			{name: "midName", detail: true},

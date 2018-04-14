@@ -14,8 +14,7 @@ isc.defineClass("EditMember", "myWindow").addProperties({
 				this.parent.EditMemberDS.updateData(this.parent.EditMemberDF.getValues());
 			}
 		});
-		this.EditMemberVL = isc.myVLayout.create({members: [this.EditMemberDF, this.EditMemberBT]});
-		this.addItem(this.EditMemberVL);
+		this.addItem(isc.myVLayout.create({members: [this.EditMemberDF, this.EditMemberBT]}));
 		this.EditMemberDF.fetchData({memberID: initData.memberID});
 	}
 });

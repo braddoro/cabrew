@@ -16,7 +16,8 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Chair Types", click: "isc.ChairTypes.create()"},
 				{title: "Contact Types", click: "isc.ContactTypes.create()"},
 				{title: "Date Types", click: "isc.DateTypes.create()"},
-				{title: "Schedule Types", click: "isc.ScheduleTypes.create()"}
+				{title: "Schedule Types", click: "isc.ScheduleTypes.create()"},
+				{title: "Status Types", click: "isc.StatusTypes.create()"}
 			]
 		});
 		this.BeerMenu = isc.myMenu.create({

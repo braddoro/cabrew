@@ -41,6 +41,7 @@ $classes[] = "ScheduleTypes.js";
 $classes[] = "SendMessage.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
+$classes[] = "StatusTypes.js";
 $classes[] = "WebPosts.js";
 echo "<html>
 <head>
