@@ -16,6 +16,12 @@ if($lclass->status != 0){
 }
 $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+
+if($operationType === 'add' || $operationType === 'update'){
+	if($argsIN['milestone'] != 'Y'){
+		$argsIN['milestone'] = null;
+	}
+}
 switch($operationType){
 case 'fetch':
 	$response = $lclass->pdoFetch($argsIN);

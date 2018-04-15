@@ -18,13 +18,14 @@ $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : 
 switch($operationType){
 case 'fetch':
 	if(isset($argsIN['active'])) {
-		$active = ($argsIN['active'] > '') ? "'" .$argsIN['active'] . "'" : 'Y';
+		$active = ($argsIN['active'] > '') ? "'" . $argsIN['active'] . "'" : "'Y'";
 	}else{
 		$active = 'null';
 	}
 	$argsIN['sql'] = "select * from statusTypes where
 		statusTypeID = coalesce(:id, statusTypeID)
 		and active = coalesce({$active}, active);";
+		echo "/* {$argsIN['sql']} */";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':
