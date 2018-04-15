@@ -84,7 +84,7 @@ isc.Shared = {
 		]
 	}),
 	memberNamesDS: isc.myDataSource.create({
-		dataURL: serverPath + "MemberStatus.php",
+		dataURL: serverPath + "MemberSearch.php",
 		fields:[
 			{name: "memberID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
 			{name: "FullName", type: "text"},
