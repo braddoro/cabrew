@@ -1,11 +1,9 @@
 isc.defineClass("MemberSearch", "myWindow").addProperties({
-	title: "Member Search",
-	baseTitle: "Member Search",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.MemberSearchDS = isc.myDataSource.create({
 		dataURL: serverPath + "MemberSearch.php",
-		showFilterEditor: true,
+		canEdit: false,
 		fields:[
 			{name: "memberID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "statusTypeID_fk", width: 75, title: "Status", optionDataSource: isc.Shared.statusTypesDS, optionCriteria: {active: "Y"}, displayField: "statusType", valueField: "statusTypeID"},
@@ -23,17 +21,14 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 	this.MemberSearchLG = isc.myListGrid.create({
 		parent: this,
 		name: "Member Search",
-		id: "MemberSearchLG",
 		showFilterEditor: true,
-		canEdit: false,
 		dataSource: this.MemberSearchDS
 	});
 	this.localContextMenu = isc.myChildMenu.create({
 		parent: this,
 		callingListGrid: this.MemberSearchLG
 	});
-	this.MemberSearchVL = isc.myVLayout.create({members: [this.MemberSearchLG]});
-	this.addItem(this.MemberSearchVL);
+	this.addItem(isc.myVLayout.create({members: [this.MemberSearchLG]}));
 	this.MemberSearchLG.filterData({statusTypeID_fk: 1});
   }
 });

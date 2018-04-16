@@ -12,7 +12,7 @@ isc.defineClass("myWindow", "Window").addProperties({
 	edgeMarginSize:10,
 	showShadow: true,
 	height: "300",
-	width: "500",
+	width: "485",
 	title: "",
 	left: 25,
 	top: 25,
