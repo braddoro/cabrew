@@ -18,10 +18,6 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 			parent: this,
 			name: "Brew Club Attendance",
 			dataSource: this.BrewAttendanceDS,
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
-			},
 			startEditingNew: function(newValues, suppressFocus){
 				var moreCriteria = isc.addProperties({}, newValues, {clubID: initData.clubID});
 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
@@ -34,8 +30,6 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 		this.addItem(isc.myVLayout.create({members: [this.BrewAttendanceLG]}));
 		if(initData.clubID){
 			this.BrewAttendanceLG.fetchData({clubID: initData.clubID});
-		}else{
-			isc.warn("No Club ID passed.");
 		}
 	}
 });
