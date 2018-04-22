@@ -17,7 +17,10 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Contact Types", click: "isc.ContactTypes.create()"},
 				{title: "Date Types", click: "isc.DateTypes.create()"},
 				{title: "Schedule Types", click: "isc.ScheduleTypes.create()"},
-				{title: "Status Types", click: "isc.StatusTypes.create()"}
+				{title: "Status Types", click: "isc.StatusTypes.create()"},
+				{isSeparator: true},
+				{title: "Test", click: "isc.Test.create()"}
+
 			]
 		});
 		this.BeerMenu = isc.myMenu.create({
@@ -44,7 +47,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{isSeparator: true},
 				{title: "Beer", enabled: false, submenu: this.BeerMenu},
 				{isSeparator: true},
-				{title: "Clubs", click: "isc.BrewClubs.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Scheduling", click: "isc.EventSchedules.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},

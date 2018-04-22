@@ -6,8 +6,9 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 			dataURL: serverPath + "BrewContactPoints.php",
 			fields:[
 				{name: "contactPointID", primaryKey: true, type: "sequence", detail: true},
-				{name: "contactID", detail: true},
+				{name: "contactID", detail: true, required: true},
 				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
+				{name: "priority", type: "integer", editorType: "spinner"},
 				{name: "contactPoint"}
 			]
 		});
@@ -15,9 +16,17 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 			parent: this,
 			name: "Brew Contact Points",
 			dataSource: this.BrewContactPointsDS,
+			doubleClick: function(){
+				this.parent.localContextMenu.showContextMenu();
+				return true;
+			},
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
 				return false;
+			},
+			startEditingNew: function(newValues, suppressFocus){
+				var moreCriteria = isc.addProperties({}, newValues, {contactID: initData.contactID});
+				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
 			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({

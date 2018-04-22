@@ -6,7 +6,7 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 			dataURL: serverPath + "BrewMedia.php",
 			fields:[
 				{name: "mediaID", primaryKey: true, type: "sequence", detail: true},
-				{name: "clubID", detail: true},
+				{name: "clubID", detail: true, required: true},
 				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
 				{name: "priority", width: 75},
 				{name: "media"}
@@ -19,6 +19,10 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
 				return false;
+			},
+			startEditingNew: function(newValues, suppressFocus){
+				var moreCriteria = isc.addProperties({}, newValues, {clubID: initData.clubID});
+				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
 			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({

@@ -6,7 +6,7 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 			dataURL: serverPath + "BrewContacts.php",
 			fields:[
 				{name: "contactID", primaryKey: true, type: "sequence", detail: true},
-				{name: "clubID", detail: true},
+				{name: "clubID", detail: true, required: true},
 				{name: "contactName"},
 				{name: "priority", width: 75}
 			]
@@ -14,10 +14,15 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 		this.BrewContactsLG = isc.myListGrid.create({
 			parent: this,
 			name: "Brew Contacts",
+
 			dataSource: this.BrewContactsDS,
 			rowContextClick: function(record, rowNum, colNum){
 				this.parent.localContextMenu.showContextMenu();
 				return false;
+			},
+			startEditingNew: function(newValues, suppressFocus){
+				var moreCriteria = isc.addProperties({}, newValues, {clubID: initData.clubID});
+				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
 			}
 		});
 		this.localContextMenu = isc.myContactMenu.create({

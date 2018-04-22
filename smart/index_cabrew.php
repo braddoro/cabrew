@@ -13,7 +13,7 @@ $classes[] = "library.js";
 $classes[] = "AddEvent.js";
 $classes[] = "AddMember.js";
 $classes[] = "AddPayment.js";
-$classes[] = "BrewAttendence.js";
+$classes[] = "BrewAttendance.js";
 $classes[] = "BrewClubs.js";
 $classes[] = "BrewContactPoints.js";
 $classes[] = "BrewContacts.js";
@@ -42,6 +42,7 @@ $classes[] = "SendMessage.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
 $classes[] = "StatusTypes.js";
+$classes[] = "Test.js";
 $classes[] = "WebPosts.js";
 echo "<html>
 <head>

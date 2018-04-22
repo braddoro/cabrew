@@ -2,7 +2,8 @@
 require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'brew_contacts',
-	'pk_col' => 'clubID',
+	'pk_col' => 'contactID',
+	'allowedOperations' => array('fetch', 'add', 'update', 'remove'),
 	'ini_file' => realpath('../../lib/server.ini')
 );
 $lclass = New DataModel();
@@ -12,12 +13,18 @@ if($lclass->status != 0){
 	echo json_encode($response);
 	exit;
 }
-$response = array('status' => 0);
 $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
-	$argsIN['sql'] = "select * from brew_contacts where clubID = coalesce(:id, clubID) order by priority;";
+	if(isset($argsIN['clubID'])) {
+		$clubID = ($argsIN['clubID'] > 0) ? $argsIN['clubID'] : NULL;
+	}else{
+		$clubID = 'NULL';
+	}
+	$argsIN['sql'] = "select * from brew_contacts where
+	contactID = coalesce(:id, contactID)
+	and clubID = coalesce($clubID, clubID);";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

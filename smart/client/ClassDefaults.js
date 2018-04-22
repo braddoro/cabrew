@@ -112,6 +112,14 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		this.parent.localContextMenu.showContextMenu();
 		return false;
 	},
+	doubleClick: function(){
+		if(this.getTotalRows() > 0){
+
+		} else{
+			this.startEditingNew();
+		}
+		return true;
+	},
 	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
 		this.startEditing(recordNum);
 	},
