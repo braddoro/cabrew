@@ -9,7 +9,15 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 				{name: "clubID", detail: true, required: true},
 				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
 				{name: "priority", width: 75},
-				{name: "media"}
+				{name: "media",
+					formatCellValue: function (value) {
+						var formatted;
+						if (value) {
+							formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";
+						}
+						return formatted;
+					}
+				}
 			]
 		});
 		this.BrewMediaLG = isc.myListGrid.create({
