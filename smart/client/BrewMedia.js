@@ -11,6 +11,7 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 				{name: "priority", width: 75},
 				{name: "media",
 					formatCellValue: function (value) {
+						console.log(this.BrewMediaDS.name);
 						var formatted;
 						if (value) {
 							formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";

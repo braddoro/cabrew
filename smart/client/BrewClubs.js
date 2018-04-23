@@ -10,6 +10,7 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 				{name: "updated", type: "integer", width: 80},
 				{name: "clubName", width: "*"},
 				{name: "clubAbbr", width: 80},
+				{name: "distance", type: "integer", width: 80},
 				{name: "city", width: 150},
 				{name: "state", width: 80},
 				{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},

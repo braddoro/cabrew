@@ -6,13 +6,12 @@ $params['show_total'] = true;
 $params['title'] = 'Other Club Contacts';
 $params['sql'] = "
 select distinct
-	club.clubName,
+	concat('<a href=\"',media.media,'\" target=\"_blank\">',club.clubName,'</a>') as 'Club',
 	club.clubAbbr,
-	club.city,
-	club.state,
+	concat(club.city,', ',club.state) 'Location',
+	club.distance,
 	contact.contactName,
-	points.contactPoint,
-	concat('<a href=\"',media.media,'\">url</a>') as 'web'
+	points.contactPoint
 from
 	brew_clubs club
 	inner join brew_contacts contact on club.clubID = contact.clubID

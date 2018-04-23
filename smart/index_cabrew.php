@@ -32,6 +32,7 @@ $classes[] = "MemberChairs.js";
 $classes[] = "MemberContacts.js";
 $classes[] = "MemberDates.js";
 $classes[] = "MemberDetails.js";
+$classes[] = "MemberHistory.js";
 $classes[] = "MemberNotes.js";
 $classes[] = "MemberPoints.js";
 $classes[] = "MemberSearch.js";

@@ -25,7 +25,7 @@ $html = $lclass->init($params);
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 					<div class="site-heading">
-						<h1>2018 NCHI</h1>
+						<h1>NCHI 2018</h1>
 						<hr class="small">
 						<span class="subheading">North Carolina Homebrew Invitational</span>
 					</div>
@@ -34,7 +34,9 @@ $html = $lclass->init($params);
 		</div>
 	</header>
 	<div class="output" id="dateout"></div>
-	<div class="container"><?php echo $html;?></div>
+	<div class="container"><?php echo $html;?>
+<a href="media.php" target="_blank"><span style="font-size: 14pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">Follow this link for images and short videos from 2017.</span></a>
+	</div>
 </body>
 </html>
 <script type="text/javascript">
