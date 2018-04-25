@@ -11,7 +11,6 @@ isc.defineClass("ScheduleTypes", "myWindow").addProperties({
 		parent: this,
 		callingListGrid: this.ScheduleTypesLG
 	});
-	this.ScheduleTypesVL = isc.myVLayout.create({members: [this.ScheduleTypesLG]});
-	this.addItem(this.ScheduleTypesVL);
+	this.addItem(isc.myVLayout.create({members: [this.ScheduleTypesLG]}));
 	}
 });

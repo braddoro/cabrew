@@ -1,7 +1,5 @@
 isc.defineClass("Corporations", "myWindow").addProperties({
 	title: "Corporations",
-	autoFetch: true,
-	hideNames: false,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.CorporationsDS = isc.myDataSource.create({
@@ -16,14 +14,14 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 				{name: "phone", width: 100},
 				{name: "email"},
 				{name: "website",
-				formatCellValue: function (value) {
-					var formatted;
-					if (value) {
-						formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";
+					formatCellValue: function (value) {
+						var formatted;
+						if (value) {
+							formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";
+						}
+						return formatted;
 					}
-					return formatted;
-				}
-			},
+				},
 				{name: "address"}
 			]
 		});
@@ -36,7 +34,6 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 			parent: this,
 			callingListGrid: this.CorporationsLG
 		});
-		this.CorporationsVL = isc.myVLayout.create({members: [this.CorporationsLG]});
-		this.addItem(this.CorporationsVL);
+		this.addItem(isc.myVLayout.create({members: [this.CorporationsLG]}));
 	}
 });

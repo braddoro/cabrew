@@ -7,17 +7,13 @@ isc.defineClass("WebPosts", "myWindow").addProperties({
 		fields:[
 			{name: "webPostID", primaryKey: true, type: "sequence", canEdit: false},
 			{name: "postName", type: "text", validators: [{type: "lengthRange", max: 45}]},
-			{name: "postText",
-				type: "richText",
-				length: 10000
-			},
+			{name: "postText", type: "richText", length: 10000},
 			{name: "lastChangeDate", canEdit: false}
 		]
 	});
 	this.webPostsLG = isc.myListGrid.create({
 		parent: this,
 		name: "Static Web Posts",
-		id: "webPostsLG",
 		width: 200,
 		showHeader: false,
 		canEdit: false,
@@ -66,7 +62,6 @@ isc.defineClass("WebPosts", "myWindow").addProperties({
 			]
 		});
 		this.webPostsBT = isc.myIButton.create({
-			id: "webPostsBT",
 			parent: this,
 			title: "Save",
 			align: "center",

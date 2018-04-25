@@ -30,5 +30,5 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 	});
 	this.addItem(isc.myVLayout.create({members: [this.MemberSearchLG]}));
 	this.MemberSearchLG.filterData({statusTypeID_fk: 1});
-  }
+	}
 });

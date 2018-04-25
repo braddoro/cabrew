@@ -20,11 +20,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 				{name: "Month", type: "integer", width: 60},
 				{name: "Day", type: "integer", width: 50},
 				{name: "datePoints", type: "integer", title: "Points", width: 75},
-				{name: "dateTypeID", title: "Event",
-				optionDataSource: isc.Shared.dateTypesDS,
-				optionCriteria: {active: "Y"},
-				displayField: "dateType",
-				valueField: "dateTypeID"},
+				{name: "dateTypeID", title: "Event", optionDataSource: isc.Shared.dateTypesDS, optionCriteria: {active: "Y"}, displayField: "dateType", valueField: "dateTypeID"},
 				{name: "dateDetail", type: "string", title: "Detail", width: "*"}
 			]
 		});
@@ -59,10 +55,6 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			dataArrived: function(startRow, endRow){
 				this.selectSingleRecord(startRow);
 				this.recordClick(this,this.getRecord(startRow),"memberID",this.getFieldNum("memberID"));
-			},
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
 			}
 		});
 		this.localContextMenu = isc.myChildMenu.create({

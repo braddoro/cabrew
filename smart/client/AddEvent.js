@@ -13,11 +13,9 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 					optionCriteria: {active: "Y"},
 					displayField: "dateType",
 					valueField: "dateTypeID",
-					pickListProperties: {
-						showFilterEditor: true
-					}
+					pickListProperties: {showFilterEditor: true}
 				},
-				{name: "memberDate", type: "date",  title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
+				{name: "memberDate", type: "date", title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
 				{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
 			]
 		});

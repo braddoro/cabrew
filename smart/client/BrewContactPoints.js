@@ -16,14 +16,6 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 			parent: this,
 			name: "Brew Contact Points",
 			dataSource: this.BrewContactPointsDS,
-			doubleClick: function(){
-				this.parent.localContextMenu.showContextMenu();
-				return true;
-			},
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
-			},
 			startEditingNew: function(newValues, suppressFocus){
 				var moreCriteria = isc.addProperties({}, newValues, {contactID: initData.contactID});
 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
@@ -33,10 +25,7 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 			parent: this,
 			callingListGrid: this.BrewContactPointsLG
 		});
-		this.BrewContactPointsVL = isc.myVLayout.create({members: [this.BrewContactPointsLG]});
-		this.addItem(this.BrewContactPointsVL);
-		if(initData.contactID){
-			this.BrewContactPointsLG.fetchData({contactID: initData.contactID});
-		}
+		this.addItem(isc.myVLayout.create({members: [this.BrewContactPointsLG]}));
+		this.BrewContactPointsLG.fetchData({contactID: initData.contactID});
 	}
 });

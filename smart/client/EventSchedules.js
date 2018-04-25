@@ -21,7 +21,6 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 	this.EventScheduleLG = isc.myListGrid.create({
 		parent: this,
 		name: "Event Planning Schedule",
-		id: "EventScheduleLG",
 		showFilterEditor: true,
 		dataSource: this.EventScheduleDS,
 		initialSort: [{property: "dueDate", direction: "ascending"}],

@@ -28,8 +28,6 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 			callingListGrid: this.BrewAttendanceLG
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewAttendanceLG]}));
-		if(initData.clubID){
-			this.BrewAttendanceLG.fetchData({clubID: initData.clubID});
-		}
+		this.BrewAttendanceLG.fetchData({clubID: initData.clubID});
 	}
 });

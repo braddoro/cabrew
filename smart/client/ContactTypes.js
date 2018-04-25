@@ -10,7 +10,6 @@ isc.defineClass("ContactTypes", "myWindow").addProperties({
 		parent: this,
 		callingListGrid: this.ContactTypesLG
 	});
-	this.ContactTypesVL = isc.myVLayout.create({members: [this.ContactTypesLG]});
-	this.addItem(this.ContactTypesVL);
+	this.addItem(isc.myVLayout.create({members: [this.ContactTypesLG]}));
 	}
 });

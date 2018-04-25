@@ -14,12 +14,7 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 		this.BrewContactsLG = isc.myListGrid.create({
 			parent: this,
 			name: "Brew Contacts",
-
 			dataSource: this.BrewContactsDS,
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
-			},
 			startEditingNew: function(newValues, suppressFocus){
 				var moreCriteria = isc.addProperties({}, newValues, {clubID: initData.clubID});
 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
@@ -29,10 +24,7 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 			parent: this,
 			callingListGrid: this.BrewContactsLG
 		});
-		this.BrewContactsVL = isc.myVLayout.create({members: [this.BrewContactsLG]});
-		this.addItem(this.BrewContactsVL);
-		if(initData.clubID){
-			this.BrewContactsLG.fetchData({clubID: initData.clubID});
-		}
+		this.addItem(isc.myVLayout.create({members: [this.BrewContactsLG]}));
+		this.BrewContactsLG.fetchData({clubID: initData.clubID});
 	}
 });

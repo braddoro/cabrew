@@ -22,8 +22,7 @@ isc.defineClass("MemberChairs", "myWindow").addProperties({
 			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({parent: this, callingListGrid: this.MemberChairsLG});
-		this.MemberChairsVL = isc.myVLayout.create({members: [this.MemberChairsLG]});
-		this.addItem(this.MemberChairsVL);
+		this.addItem(isc.myVLayout.create({members: [this.MemberChairsLG]}));
 		this.MemberChairsLG.fetchData({memberID_fk: initData.memberID});
 	}
 });

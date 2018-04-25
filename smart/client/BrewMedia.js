@@ -33,10 +33,7 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 			parent: this,
 			callingListGrid: this.BrewMediaLG
 		});
-		this.BrewMediaVL = isc.myVLayout.create({members: [this.BrewMediaLG]});
-		this.addItem(this.BrewMediaVL);
-		if(initData.clubID){
-			this.BrewMediaLG.fetchData({clubID: initData.clubID});
-		}
+		this.addItem(isc.myVLayout.create({members: [this.BrewMediaLG]}));
+		this.BrewMediaLG.fetchData({clubID: initData.clubID});
 	}
 });

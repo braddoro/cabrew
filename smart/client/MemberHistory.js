@@ -25,5 +25,7 @@ isc.defineClass("MemberHistory", "myWindow").addProperties({
 		callingListGrid: this.MemberHistoryLG
 	});
 	this.addItem(isc.myVLayout.create({members: [this.MemberHistoryLG]}));
+	var current = new Date();
+	this.MemberHistoryLG.fetchData({YearDate: current.getFullYear()});
 	}
 });

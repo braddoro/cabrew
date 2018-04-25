@@ -1,6 +1,5 @@
 isc.defineClass("LibraryBooks", "myWindow").addProperties({
 	title: "Library Books",
-	baseTitle: "Library Books",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.LibraryBooksDS = isc.myDataSource.create({
@@ -24,7 +23,6 @@ isc.defineClass("LibraryBooks", "myWindow").addProperties({
 		parent: this,
 		callingListGrid: this.LibraryBooksLG
 	});
-	this.LibraryBooksVL = isc.myVLayout.create({members: [this.LibraryBooksLG]});
-	this.addItem(this.LibraryBooksVL);
+	this.addItem(isc.myVLayout.create({members: [this.LibraryBooksLG]}));
   }
 });

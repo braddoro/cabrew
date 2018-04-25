@@ -11,7 +11,6 @@ isc.defineClass("ChairTypes", "myWindow").addProperties({
 		parent: this,
 		callingListGrid: this.ChairTypesLG
 	});
-	this.ChairTypesVL = isc.myVLayout.create({members: [this.ChairTypesLG]});
-	this.addItem(this.ChairTypesVL);
+	this.addItem(isc.myVLayout.create({members: [this.ChairTypesLG]}));
 	}
 });

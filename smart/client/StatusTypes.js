@@ -10,7 +10,6 @@ isc.defineClass("StatusTypes", "myWindow").addProperties({
 			parent: this,
 			callingListGrid: this.StatusTypesLG
 		});
-		this.StatusTypesVL = isc.myVLayout.create({members: [this.StatusTypesLG]});
-		this.addItem(this.StatusTypesVL);
+		this.addItem(isc.myVLayout.create({members: [this.StatusTypesLG]}));
 	}
 });

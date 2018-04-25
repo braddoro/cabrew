@@ -11,7 +11,6 @@ isc.defineClass("DateTypes", "myWindow").addProperties({
 			parent: this,
 			callingListGrid: this.DateTypesLG
 		});
-		this.DateTypesVL = isc.myVLayout.create({members: [this.DateTypesLG]});
-		this.addItem(this.DateTypesVL);
+		this.addItem(isc.myVLayout.create({members: [this.DateTypesLG]}));
 	}
 });
