@@ -1,6 +1,4 @@
 isc.defineClass("AddEvent", "myWindow").addProperties({
-	showFooter: true,
-	showStatusBar: true,
 	title: "Add Event",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
@@ -8,8 +6,18 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			dataURL: serverPath + "AddEvent.php",
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
-				{name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, optionCriteria: {active: "Y"}, displayField: "dateType", valueField: "dateTypeID"},
-				{name: "memberDate", title: "Date", useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
+				{name: "dateTypeID_fk",
+					type: "integer",
+					title: "Date Type",
+					optionDataSource: isc.Shared.dateTypesDS,
+					optionCriteria: {active: "Y"},
+					displayField: "dateType",
+					valueField: "dateTypeID",
+					pickListProperties: {
+						showFilterEditor: true
+					}
+				},
+				{name: "memberDate", type: "date",  title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
 				{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
 			]
 		});
@@ -22,19 +30,13 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		});
 		this.AddEventDF = isc.myDynamicForm.create({
 			parent: this,
-			dataSource: this.AddEventDS,
-			initialCriteria: {memberDate: "09/11/2018"}
+			dataSource: this.AddEventDS
 		});
 		this.AddEventLG = isc.myListGrid.create({
 			parent: this,
 			showHeader: false,
 			autoSaveEdits: false,
-			dataSource: this.ActiveMembersDS,
-			recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
-				var selected = viewer.getSelectedRecords();
-				var count = selected.length;
-				viewer.parent.setStatus(count + " selected");
-			}
+			dataSource: this.ActiveMembersDS
 		});
 		this.AddEventBT = isc.myIButton.create({
 			parent: this,

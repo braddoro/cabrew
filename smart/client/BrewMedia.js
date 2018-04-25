@@ -11,7 +11,6 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 				{name: "priority", width: 75},
 				{name: "media",
 					formatCellValue: function (value) {
-						console.log(this.BrewMediaDS.name);
 						var formatted;
 						if (value) {
 							formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";
@@ -25,10 +24,6 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 			parent: this,
 			name: "Brew Media",
 			dataSource: this.BrewMediaDS,
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
-			},
 			startEditingNew: function(newValues, suppressFocus){
 				var moreCriteria = isc.addProperties({}, newValues, {clubID: initData.clubID});
 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);

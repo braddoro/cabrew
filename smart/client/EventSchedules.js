@@ -25,19 +25,6 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 		showFilterEditor: true,
 		dataSource: this.EventScheduleDS,
 		initialSort: [{property: "dueDate", direction: "ascending"}],
-		rowContextClick: function(record, rowNum, colNum){
-			this.parent.localContextMenu.showContextMenu();
-			return false;
-		},
-		dataArrived: function(){
-			var statusText = this.parent.baseTitle;
-			statusText += " - Rows: ";
-			statusText += this.getTotalRows();
-			this.parent.setTitle = statusText;
-		},
-		rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
-			this.startEditing(recordNum);
-		},
 		startEditingNew: function(newValues, suppressFocus){
 			var today;
 			var step;

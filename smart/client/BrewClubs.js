@@ -22,11 +22,7 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 			name: "Brew Clubs",
 			dataSource: this.BrewClubsDS,
 			showFilterEditor: true,
-			sortField: "clubName",
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
-			}
+			sortField: "clubName"
 		});
 		this.localContextMenu = isc.myClubMenu.create({
 			parent: this,

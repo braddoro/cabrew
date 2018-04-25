@@ -112,6 +112,19 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		this.parent.localContextMenu.showContextMenu();
 		return false;
 	},
+	recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
+		var selected = viewer.getSelectedRecords();
+		var count = selected.length;
+		if(count > 1){
+			viewer.parent.setTitle("Selected Rows - " + count);
+		}else{
+			if(this.name) {
+				viewer.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
+			}else{
+				viewer.parent.setTitle(": Rows - " + this.getTotalRows());
+			}
+		}
+	},
 	doubleClick: function(){
 		if(this.getTotalRows() > 0){
 

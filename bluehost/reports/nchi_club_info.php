@@ -19,10 +19,12 @@ from
 	inner join contactTypes cp on points.contactTypeID_fk = cp.contactTypeID
 	inner join brew_media media on club.clubID = media.clubID
 	inner join contactTypes cp2 on media.contactTypeID_fk = cp2.contactTypeID
+	inner join brew_attendence att on club.clubID = att.clubID
 where
 	media.priority = 1
     and points.priority = 1
     and points.contactTypeID_fk = 2
+    and att.year = 2018
 order by
 	club.clubName,
 	contact.contactName;

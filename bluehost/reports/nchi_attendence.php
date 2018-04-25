@@ -4,7 +4,7 @@ require_once('inc/Reporter.php');
 $params['ini_file'] = 'inc/server.ini';
 $params['bind'] = array('year' => $year);
 $params['show_total'] = true;
-$params['title'] = "NCHI {$year} Attendance";
+$params['title'] = "NCHI {$year} Attendance Status";
 $params['sql'] = "
 SELECT
 	c.clubName,
