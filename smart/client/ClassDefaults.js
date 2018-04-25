@@ -116,7 +116,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		var selected = viewer.getSelectedRecords();
 		var count = selected.length;
 		var single = 1;
-		if(viewer.getTotalRows() > single){
+		if(count > single){
 			viewer.parent.setTitle("Selected Rows - " + count);
 		}else{
 			if(viewer.name) {
