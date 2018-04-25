@@ -6,7 +6,7 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 			dataURL: serverPath + "BrewAttendance.php",
 			fields:[
 				{name: "attendenceID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
-				{name: "clubID", detail: true, required: true, detail: true, canEdit: false},
+				{name: "clubID", required: true, detail: true, canEdit: false},
 				{name: "year", required: true, type: "integer"},
 				{name: "interested", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "participated", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
