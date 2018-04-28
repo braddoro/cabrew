@@ -2,9 +2,12 @@
 require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'brew_media',
-	'pk_col' => 'clubID'
+	'pk_col' => 'mediaID',
+	'allowedOperations' => array('fetch', 'add', 'update', 'remove'),
+	'ini_file' => realpath('../../lib/server.ini')
 );
-$lclass = New DataModel($params);
+$lclass = New DataModel();
+$lclass->init($params);
 if($lclass->status != 0){
 	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
 	echo json_encode($response);
@@ -14,7 +17,14 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
-	$argsIN['sql'] = "select * from brew_media where clubID = coalesce(:id, clubID);";
+	if(isset($argsIN['clubID'])) {
+		$clubID = ($argsIN['clubID'] > 0) ? $argsIN['clubID'] : NULL;
+	}else{
+		$clubID = 'NULL';
+	}
+	$argsIN['sql'] = "select * from brew_media where
+	mediaID = coalesce(:id, mediaID)
+	and clubID = coalesce($clubID, clubID);";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

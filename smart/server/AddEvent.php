@@ -3,9 +3,11 @@ require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'memberDates',
 	'pk_col' => 'memberDateID',
-	'allowedOperations' => array('fetch','add')
+	'allowedOperations' => array('fetch','add'),
+	'ini_file' => realpath('../../lib/server.ini')
 );
-$lclass = New DataModel($params);
+$lclass = New DataModel();
+$lclass->init($params);
 if($lclass->status != 0){
 	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
 	echo json_encode($response);
@@ -38,7 +40,7 @@ case 'fetch':
 	$argsIN['sql'] = "
 	select
 		m.memberID,
-		REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
+		REPLACE(CONCAT(IFNULL(m.nickName,m.firstName), ' ', m.lastName),'  ',' ') as 'FullName',
 		dt.dateTypeID,
 		dt.datePoints,
 		year(d.memberDate) as 'Year',

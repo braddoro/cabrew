@@ -4,30 +4,28 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 		this.Super("initWidget", arguments);
 		this.BrewContactPointsDS = isc.myDataSource.create({
 			dataURL: serverPath + "BrewContactPoints.php",
-			autoFetchData: false,
 			fields:[
 				{name: "contactPointID", primaryKey: true, type: "sequence", detail: true},
-				{name: "contactID", detail: true},
+				{name: "contactID", detail: true, required: true},
 				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
+				{name: "priority", type: "integer", editorType: "spinner"},
 				{name: "contactPoint"}
 			]
 		});
 		this.BrewContactPointsLG = isc.myListGrid.create({
 			parent: this,
+			name: "Brew Contact Points",
 			dataSource: this.BrewContactPointsDS,
-			rowContextClick: function(record, rowNum, colNum){
-				this.parent.localContextMenu.showContextMenu();
-				return false;
+			startEditingNew: function(newValues, suppressFocus){
+				var moreCriteria = isc.addProperties({}, newValues, {contactID: initData.contactID});
+				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
 			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,
 			callingListGrid: this.BrewContactPointsLG
 		});
-		this.BrewContactPointsVL = isc.myVLayout.create({members: [this.BrewContactPointsLG]});
-		this.addItem(this.BrewContactPointsVL);
-		if(initData.contactID){
-			this.BrewContactPointsLG.fetchData({contactID: initData.contactID});
-		}
+		this.addItem(isc.myVLayout.create({members: [this.BrewContactPointsLG]}));
+		this.BrewContactPointsLG.fetchData({contactID: initData.contactID});
 	}
 });

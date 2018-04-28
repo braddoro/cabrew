@@ -1,4 +1,11 @@
-.odd{
+.table{
+	background-color: #787878;
+}
+.header{
+	background-color: #DCDCDC;
+		font-family: sans-serif;
+}
+.odd{ /* #DCDCDC  #b7ab9f #eeefea */
 	background-color: #DCDCDC;
 	font-family: sans-serif;
 }
@@ -7,12 +14,18 @@
 	font-family: sans-serif;
 }
 .title{
+	font-color: #B7C6EB;
 	font-family: sans-serif;
 	font-weight: bold;
-	font-size: 2em;
+	font-size: 1.25em;
 }
 .label{
 	background-color: #F5F5F5;
 	font-family: sans-serif;
 	font-weight: bold;
+}
+.tiny{
+	font-color: #787878;
+	font-family: sans-serif;
+	font-size: .75em;
 }

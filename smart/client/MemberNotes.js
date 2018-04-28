@@ -1,21 +1,17 @@
 isc.defineClass("MemberNotes", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
-		this.MemberNotesDS = isc.myDataSource.create({
-		dataURL: serverPath + "MemberNotes.php",
-		showFilterEditor: true,
-		fields:[
-			{name: "memberNoteID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "memberID_fk", detail: true},
-			{name: "noteTypeID_fk", title: "Type", optionDataSource: isc.Shared.noteTypesDS, displayField: "noteType", valueField: "noteTypeID"},
-			{name: "noteDate"},
-			{name: "memberNote"},
-			{name: "lastChangeDate", detail: true}
-		]
+		this.MemberNotesLG = isc.myListGrid.create({
+			parent: this,
+			dataSource: isc.Members.notesDS,
+			name: "Member Notes",
+			startEditingNew: function(newValues, suppressFocus){
+				var newCriteria = isc.addProperties({}, newValues, {memberID_fk: initData.memberID});
+				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
+			}
 		});
-		this.MemberNotesLG = isc.myListGrid.create({dataSource: this.MemberNotesDS});
-		this.MemberNotesVL = isc.myVLayout.create({members: [this.MemberNotesLG]});
-		this.addItem(this.MemberNotesVL);
-		this.MemberNotesLG.fetchData({memberID: initData.memberID});
+		this.localContextMenu = isc.myContextMenu.create({parent: this, callingListGrid: this.MemberNotesLG});
+		this.addItem(isc.myVLayout.create({members: [this.MemberNotesLG]}));
+		this.MemberNotesLG.fetchData({memberID_fk: initData.memberID});
 	}
 });

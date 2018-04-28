@@ -11,21 +11,36 @@ isc.defineClass("myWindow", "Window").addProperties({
 	canDragResize: true,
 	edgeMarginSize:10,
 	showShadow: true,
-	height: "40%",
-	width: "60%",
+	height: "300",
+	width: "485",
+	title: "",
 	left: 25,
-	top: 25
+	top: 25,
+	resized: function(){
+		// console.log("Title.: " + this.title);
+		// console.log("Width.: " + this.width);
+		// console.log("Height: " + this.height);
+		// console.log("Left..: " + this.left);
+		// console.log("Top...: " + this.top);
+	},
+	moved: function(){
+		// console.log("Title.: " + this.title);
+		// console.log("Width.: " + this.width);
+		// console.log("Height: " + this.height);
+		// console.log("Left..: " + this.left);
+		// console.log("Top...: " + this.top);
+	}
 });
 
 isc.defineClass("myVLayout", "VLayout").addProperties({
 	height: "100%"
 });
-
+isc.defineClass("myHLayout", "HLayout").addProperties({
+	//width: "99%"
+});
 isc.defineClass("myDataSource", "DataSource").addProperties({
 	dataProtocol: "postParams",
 	dataFormat: "json",
-	autoFetchData: true,
-	showPrompt: true,
 	transformRequest: function(dsRequest){
 		var superClassArguments = this.Super("transformRequest", dsRequest);
 		var newProperties = {operationType: dsRequest.operationType};
@@ -68,7 +83,7 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 			error = title;
 		}
 
-		message = title + "<br/>Error Code: " + status + "<br/>" + error;
+		message = title + "\nError Code: " + status + "\n" + error;
 
 		if(status === isc.RPCResponse.STATUS_SUCCESS){
 			newResponse = dsResponse;
@@ -91,7 +106,46 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	showFilterEditor: false,
 	showAllRecords: true,
 	autoFetchData: true,
-	modalEditing: true
+	modalEditing: true,
+	autoFitWidth: true,
+	rowContextClick: function(record, rowNum, colNum){
+		this.parent.localContextMenu.showContextMenu();
+		return false;
+	},
+	recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
+		var selected = viewer.getSelectedRecords();
+		var count = selected.length;
+		var single = 1;
+		if(count > single){
+			viewer.parent.setTitle("Selected Rows - " + count);
+		}else{
+			if(viewer.name) {
+				viewer.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
+			}
+		}
+	},
+	doubleClick: function(){
+		if(this.getTotalRows() > 0){
+
+		} else{
+			this.startEditingNew();
+		}
+		return true;
+	},
+	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
+		this.startEditing(recordNum);
+	},
+	updateStatus: function() {
+		if(this.name) {
+			this.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
+		}else{
+			this.parent.setTitle(": Rows - " + this.getTotalRows());
+		}
+		this.focus();
+	},
+	dataArrived: function(){
+		this.updateStatus();
+	}
 });
 
 isc.defineClass("myDynamicForm", "DynamicForm").addProperties({

@@ -2,9 +2,12 @@
 require_once('../../lib/DataModel.php');
 $params = array(
 	'baseTable' => 'brew_contactPoints',
-	'pk_col' => 'contactID'
+	'pk_col' => 'contactPointID',
+	'allowedOperations' => array('fetch', 'add', 'update', 'remove'),
+	'ini_file' => realpath('../../lib/server.ini')
 );
-$lclass = New DataModel($params);
+$lclass = New DataModel();
+$lclass->init($params);
 if($lclass->status != 0){
 	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
 	echo json_encode($response);
@@ -14,7 +17,14 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
-	$argsIN['sql'] = "select * from brew_contactPoints where contactID = coalesce(:id, contactID);";
+	if(isset($argsIN['contactID'])) {
+		$contactID = ($argsIN['contactID'] > 0) ? $argsIN['contactID'] : NULL;
+	}else{
+		$contactID = 'NULL';
+	}
+	$argsIN['sql'] = "select * from brew_contactPoints where
+	contactPointID = coalesce(:id, contactPointID)
+	and contactID = coalesce($contactID, contactID);";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

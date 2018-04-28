@@ -10,28 +10,41 @@ $server_path = $cabrew_array['application']['server_path'];
 $classes = array();
 $classes[] = "ClassDefaults.js";
 $classes[] = "library.js";
-$classes[] = "Desktop.js";
-$classes[] = "Navigation.js";
-$classes[] = "ContextMenu.js";
-$classes[] = "Shared.js";
 $classes[] = "AddEvent.js";
 $classes[] = "AddMember.js";
 $classes[] = "AddPayment.js";
-$classes[] = "BrewAttendence.js";
+$classes[] = "BrewAttendance.js";
 $classes[] = "BrewClubs.js";
 $classes[] = "BrewContactPoints.js";
 $classes[] = "BrewContacts.js";
 $classes[] = "BrewMedia.js";
+$classes[] = "ChairTypes.js";
+$classes[] = "ContactTypes.js";
+$classes[] = "ContextMenu.js";
 $classes[] = "Corporations.js";
+$classes[] = "DateTypes.js";
+$classes[] = "Desktop.js";
 $classes[] = "EditMember.js";
+$classes[] = "EventSchedules.js";
+$classes[] = "LibraryBooks.js";
+$classes[] = "LibraryLoans.js";
 $classes[] = "MemberChairs.js";
 $classes[] = "MemberContacts.js";
 $classes[] = "MemberDates.js";
+$classes[] = "MemberDetails.js";
+$classes[] = "MemberHistory.js";
 $classes[] = "MemberNotes.js";
 $classes[] = "MemberPoints.js";
-$classes[] = "MemberStatus.js";
+$classes[] = "MemberSearch.js";
+$classes[] = "Navigation.js";
+$classes[] = "Preview.js";
+$classes[] = "ScheduleTypes.js";
 $classes[] = "SendMessage.js";
+$classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
+$classes[] = "StatusTypes.js";
+$classes[] = "Test.js";
+$classes[] = "WebPosts.js";
 echo "<html>
 <head>
 <script>var serverPath = '$server_path';</script>
@@ -42,6 +55,7 @@ echo "<html>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Grids.js'></script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js'></script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js'></script>
+<script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_RichTextEditor.js'></script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/skins/{$skin}/load_skin.js'></script>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>$title</title>

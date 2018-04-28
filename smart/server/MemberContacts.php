@@ -1,39 +1,44 @@
 <?php
-require_once('../../lib/data_library.php');
-class MemberContact {
-	function __construct() {
+require_once('../../lib/DataModel.php');
+$params = array(
+	'baseTable' => 'memberContacts',
+	'pk_col' => 'memberContactID',
+	'allowedOperations' => array('fetch', 'add', 'update','remove'),
+	'ini_file' => realpath('../../lib/server.ini')
+);
+$lclass = New DataModel();
+$lclass->init($params);
+if($lclass->status != 0){
+	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
+	echo json_encode($response);
+	exit;
+}
+$argsIN = array_merge($_POST,$_GET);
+$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+switch($operationType){
+case 'fetch':
+	if(isset($argsIN['memberID_fk'])) {
+		$memberID = ($argsIN['memberID_fk'] > 0) ? $argsIN['memberID_fk'] : 'null';
+	}else{
+		$memberID = 'null';
 	}
-	public function doFetch($args = NULL) {
-		$rows = array();
-		$data = New DataLibrary();
-		$memberID = '0';
-		if(isset($args['memberID'])) {
-			$memberID = ($args['memberID'] > 0) ? $args['memberID'] : NULL;
-		}
-		$sql = "select * from memberContacts where memberID_fk = $memberID;";
-		$response = $data->getData($sql);
-		if(!$response['status']) {
-			$rows['status'] = -1;
-			$rows['errorMessage'] = $data->parseErrors($response['message']);
-			$rows['errors'] = $sql;
-			return json_encode($rows);
-		}
-		$result = $response['result'];
-		while ($row = $result->fetch()) {
-			$rows[] = array(
-				'memberContactID'	=> $row['memberContactID'],
-				'memberID_fk'		=> $row['memberID_fk'],
-				'contactTypeID_fk'	=> $row['contactTypeID_fk'],
-				'memberContact'		=> $row['memberContact'],
-				'contactDetail'		=> $row['contactDetail'],
-				'lastChangeDate'	=> $row['lastChangeDate']
-			);
-		}
-		$result->closeCursor();
-		unset($response);
-		return json_encode($rows);
-		}
-	}
-$Foo = New MemberContact();
-echo $Foo->doFetch($_POST);
+	$argsIN['sql'] = "select * from memberContacts c where
+		c.memberContactID = coalesce(:id, c.memberContactID)
+		and c.memberID_fk = coalesce($memberID, c.memberID_fk);";
+	$response = $lclass->pdoFetch($argsIN);
+	break;
+case 'add':
+	$response = $lclass->pdoAdd($argsIN);
+	break;
+case 'update':
+	$response = $lclass->pdoUpdate($argsIN);
+	break;
+case 'remove':
+	$response = $lclass->pdoRemove($argsIN);
+	break;
+default:
+	$response = array('status' => 0);
+	break;
+}
+echo json_encode($response);
 ?>

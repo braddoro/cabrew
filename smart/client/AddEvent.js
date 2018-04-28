@@ -1,17 +1,3 @@
-// defaultValue: function() {
-// 	var today = new Date();
-// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
-// 	return datestring;
-// }
-// ,
-// windowInitialize: function(initData){
-// 	this.initData = initData;
-// 	var today = new Date();
-// 	console.log(today);
-// 	var datestring = (today.getMonth()+1) + "/" + today.getDate() + "/" + today.getFullYear();
-// 	console.log(datestring);
-// 	this.AddEventDF.getItem("memberDate").defaultValue = datestring;
-// }
 isc.defineClass("AddEvent", "myWindow").addProperties({
 	title: "Add Event",
 	initWidget: function(initData){
@@ -20,8 +6,16 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			dataURL: serverPath + "AddEvent.php",
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
-				{name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.dateTypesDS, displayField: "dateType", valueField: "dateTypeID"},
-				{name: "memberDate", title: "Date", useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
+				{name: "dateTypeID_fk",
+					type: "integer",
+					title: "Date Type",
+					optionDataSource: isc.Shared.dateTypesDS,
+					optionCriteria: {active: "Y"},
+					displayField: "dateType",
+					valueField: "dateTypeID",
+					pickListProperties: {showFilterEditor: true}
+				},
+				{name: "memberDate", type: "date", title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
 				{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
 			]
 		});

@@ -1,41 +1,56 @@
 <?php
-require_once('../../lib/data_library.php');
-class MemberChair {
-	function __construct() {
-	}
-	public function doFetch($args = NULL) {
-		$rows = array();
-		$data = New DataLibrary();
-		$memberID = '0';
-		if(isset($args['memberID'])) {
-			$memberID = ($args['memberID'] > 0) ? $args['memberID'] : NULL;
-		}
-		$sql = "select * from memberChairs where memberID_fk = $memberID;";
-		$response = $data->getData($sql);
-		if(!$response['status']) {
-		  $rows['status'] = -1;
-		  $rows['errorMessage'] = $data->parseErrors($response['message']);
-		  $rows['errors'] = $sql;
-		  return json_encode($rows);
-		}
-		$result = $response['result'];
-		while ($row = $result->fetch()) {
-			$rows[] = array(
-			'memberchairID'		=> $row['memberchairID'],
-			'memberID_fk'		=> $row['memberID_fk'],
-			'chairTypeID_fk'	=> $row['chairTypeID_fk'],
-			'dateTypeID_fk'		=> $row['dateTypeID_fk'],
-			'chairDate'			=> $row['chairDate'],
-			'memberchair'		=> $row['memberchair'],
-			'lastChangeDate'	=> $row['lastChangeDate']
-		  );
-		}
-		$result->closeCursor();
-		unset($response);
-		return json_encode($rows);
-	}
+require_once('../../lib/DataModel.php');
+$params = array(
+	'baseTable' => 'memberChairs',
+	'pk_col' => 'memberChairID',
+	'allowedOperations' => array('fetch', 'add', 'update','remove'),
+	'ini_file' => realpath('../../lib/server.ini')
+);
+$lclass = New DataModel();
+$lclass->init($params);
+if($lclass->status != 0){
+	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
+	echo json_encode($response);
+	exit;
 }
-$argsIN = $_POST;
-$Foo = New MemberChair();
-echo $Foo->doFetch($argsIN);
+$argsIN = array_merge($_POST,$_GET);
+$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+switch($operationType){
+case 'fetch':
+	if(isset($argsIN['memberID_fk'])) {
+		$memberID_fk = ($argsIN['memberID_fk'] > 0) ? $argsIN['memberID_fk'] : null;
+	}else{
+		$memberID_fk = 'NULL';
+	}
+	if(isset($argsIN['dateTypeID_fk'])) {
+		$dateTypeID_fk = ($argsIN['dateTypeID_fk'] > 0) ? $argsIN['dateTypeID_fk'] : null;
+	}else{
+		$dateTypeID_fk = 'NULL';
+	}
+	if(isset($argsIN['chairTypeID_fk'])) {
+		$chairTypeID_fk = ($argsIN['chairTypeID_fk'] > 0) ? $argsIN['chairTypeID_fk'] : null;
+	}else{
+		$chairTypeID_fk = 'NULL';
+	}
+	$argsIN['sql'] = "select * from memberChairs where
+		memberChairID = coalesce(:id, memberChairID)
+		and memberID_fk = coalesce($memberID_fk, memberID_fk)
+		and dateTypeID_fk = coalesce($dateTypeID_fk, dateTypeID_fk)
+		and chairTypeID_fk = coalesce($chairTypeID_fk, chairTypeID_fk);";
+	$response = $lclass->pdoFetch($argsIN);
+	break;
+case 'add':
+	$response = $lclass->pdoAdd($argsIN);
+	break;
+case 'update':
+	$response = $lclass->pdoUpdate($argsIN);
+	break;
+case 'remove':
+	$response = $lclass->pdoRemove($argsIN);
+	break;
+default:
+	$response = array('status' => 0);
+	break;
+}
+echo json_encode($response);
 ?>

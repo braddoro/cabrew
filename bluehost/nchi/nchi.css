@@ -1,0 +1,15 @@
+.output {
+	color: red;
+	font-family: Arial;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+}
+.black-output {
+	color: black;
+	font-family: Arial;
+	font-size: 16px;
+	font-weight: bold;
+	white-space: pre-wrap;
+	margin-left: 16px;
+}

@@ -1,33 +1,44 @@
 <?php
-require_once('../../lib/data_library.php');
-class DateTypes {
-  function __construct() {}
-  public function doFetch() {
-	$rows = array();
-	$data = New DataLibrary();
-	$sql = "select * from dateTypes;";
-	$dataSet = $data->getData($sql);
-	if(!$dataSet['status']) {
-	  $rows['status'] = -1;
-	  $rows['errorMessage'] = $data->parseErrors($dataSet['message']);
-	  $rows['errors'] = $sql;
-	  return json_encode($rows);
-	}
-	$result = $dataSet['result'];
-	while ($row = $result->fetch()) {
-		$rows[] = array(
-		'dateTypeID'	=> $row['dateTypeID'],
-		'dateType'		=> $row['dateType'],
-		'active'		=> $row['active'],
-		'datePoints'	=> $row['datePoints']
-	  );
-	}
-	$result->closeCursor();
-	unset($dataSet);
-	return json_encode($rows);
-  }
+require_once('../../lib/DataModel.php');
+$params = array(
+	'baseTable' => 'dateTypes',
+	'pk_col' => 'dateTypeID',
+	'allowedOperations' => array('fetch', 'add', 'update','remove'),
+	'ini_file' => realpath('../../lib/server.ini')
+);
+$lclass = New DataModel();
+$lclass->init($params);
+if($lclass->status != 0){
+	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
+	echo json_encode($response);
+	exit;
 }
-$argsIN = $_POST;
-$Foo = New DateTypes();
-echo $Foo->doFetch();
+$argsIN = array_merge($_POST,$_GET);
+$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+switch($operationType){
+case 'fetch':
+	if(isset($argsIN['active'])) {
+		$active = ($argsIN['active'] > '') ? "'" .$argsIN['active'] . "'" : 'Y';
+	}else{
+		$active = 'null';
+	}
+	$argsIN['sql'] = "select * from dateTypes where
+		dateTypeID = coalesce(:id, dateTypeID)
+		and active = coalesce({$active}, active);";
+	$response = $lclass->pdoFetch($argsIN);
+	break;
+case 'add':
+	$response = $lclass->pdoAdd($argsIN);
+	break;
+case 'update':
+	$response = $lclass->pdoUpdate($argsIN);
+	break;
+case 'remove':
+	$response = $lclass->pdoRemove($argsIN);
+	break;
+default:
+	$response = array('status' => 0);
+	break;
+}
+echo json_encode($response);
 ?>

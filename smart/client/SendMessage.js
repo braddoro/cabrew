@@ -20,7 +20,7 @@ isc.defineClass("SendMessage", "myWindow").addProperties({
 			fields:[
 				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
 				{name: "FullName"},
-				{name: "statusTypeID_fk", title: "Status", optionDataSource: isc.Shared.statusTypesDS, displayField: "displayLOV", valueField: "valueLOV"}
+				{name: "statusTypeID_fk", title: "Status", optionDataSource: isc.Shared.statusTypesDS, optionCriteria: {active: "Y"}, displayField: "displayLOV", valueField: "valueLOV"}
 			]
 		});
 		this.AddEventDF = isc.myDynamicForm.create({
