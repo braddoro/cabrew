@@ -7,7 +7,7 @@ $params['title'] = 'NCHI 2018 Schedule';
 $params['sql'] = "select C.phase, C.dueDate, C.status,
 (select REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' ')
 from members M where C.memberID_fk = M.memberID) as 'FullName',
-C.step, C.notes
+C.step, C.cost, C.milestone, C.notes
 from checklistData C
 inner join checklistTypes T on C.checklistTypeID = T.checklistTypeID
 and C.checklistTypeID = 1

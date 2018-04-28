@@ -18,7 +18,7 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 
 if($operationType === 'add' || $operationType === 'update'){
-	if($argsIN['milestone'] != 'Y'){
+	if(isset($argsIN['milestone']) && $argsIN['milestone'] != 'Y'){
 		$argsIN['milestone'] = null;
 	}
 }

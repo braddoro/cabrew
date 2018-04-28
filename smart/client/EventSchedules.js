@@ -1,5 +1,5 @@
 isc.defineClass("EventSchedules", "myWindow").addProperties({
-	title: "Event Planning Schedule",
+	//title: "Event Planning Play List",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.EventScheduleDS = isc.myDataSource.create({
@@ -12,7 +12,8 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 			{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},
 			{name: "status", width: 100, validators: [{type: "lengthRange", max: 45}], valueMap:["", "not started","in process","blocked","complete"]},
-			{name: "memberID_fk", width: 120, title: "Member", type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
+			{name: "memberID_fk", width: 120, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
+			{name: "cost", width: 100, type: "float"},
 			{name: "milestone", width: 80, type: "text", editorType: "selectItem", defaultValue: "", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "notes", width: "*", validators: [{type: "lengthRange", max: 1000}]},
 			{name: "lastChangeDate", width: 100, detail: true}
@@ -20,7 +21,7 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 	});
 	this.EventScheduleLG = isc.myListGrid.create({
 		parent: this,
-		name: "Event Planning Schedule",
+		name: "Event Planning Play List",
 		showFilterEditor: true,
 		dataSource: this.EventScheduleDS,
 		initialSort: [{property: "dueDate", direction: "ascending"}],
