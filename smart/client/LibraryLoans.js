@@ -1,5 +1,4 @@
 isc.defineClass("LibraryLoans", "myWindow").addProperties({
-	title: "Library Books",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.LibraryLoansDS = isc.myDataSource.create({

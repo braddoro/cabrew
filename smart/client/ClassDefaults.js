@@ -116,13 +116,17 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		var selected = viewer.getSelectedRecords();
 		var count = selected.length;
 		var single = 1;
-		if(count > single){
-			viewer.parent.setTitle("Selected Rows - " + count);
-		}else{
-			if(viewer.name) {
-				viewer.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
-			}
+		var name = "";
+		var title = "";
+		if (viewer.name) {
+			name = viewer.name;
 		}
+		if(count > single){
+			title = name + " : Selected Rows - " + count;
+		}else{
+			title = name + " : Total Rows - " + this.getTotalRows();
+		}
+		viewer.parent.setTitle(title);
 	},
 	doubleClick: function(){
 		if(this.getTotalRows() > 0){

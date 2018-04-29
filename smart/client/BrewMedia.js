@@ -1,5 +1,4 @@
 isc.defineClass("BrewMedia", "myWindow").addProperties({
-	title: "Brew Media",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewMediaDS = isc.myDataSource.create({

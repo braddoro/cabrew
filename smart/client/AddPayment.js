@@ -1,5 +1,4 @@
 isc.defineClass("AddPayment", "myWindow").addProperties({
-	title: "Add Payment",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.AddPaymentDS = isc.myDataSource.create({

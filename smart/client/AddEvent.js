@@ -1,5 +1,4 @@
 isc.defineClass("AddEvent", "myWindow").addProperties({
-	title: "Add Event",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.AddEventDS = isc.myDataSource.create({

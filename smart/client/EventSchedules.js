@@ -1,5 +1,4 @@
 isc.defineClass("EventSchedules", "myWindow").addProperties({
-	//title: "Event Planning Play List",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.EventScheduleDS = isc.myDataSource.create({
@@ -21,7 +20,7 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 	});
 	this.EventScheduleLG = isc.myListGrid.create({
 		parent: this,
-		name: "Event Planning Play List",
+		name: "Event Planning Playlist",
 		showFilterEditor: true,
 		dataSource: this.EventScheduleDS,
 		initialSort: [{property: "dueDate", direction: "ascending"}],
