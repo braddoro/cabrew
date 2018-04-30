@@ -141,9 +141,9 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	},
 	updateStatus: function() {
 		if(this.name) {
-			this.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
+			this.parent.setTitle(this.name + " : Total Rows - " + this.getTotalRows());
 		}else{
-			this.parent.setTitle(": Rows - " + this.getTotalRows());
+			this.parent.setTitle("Total Rows - " + this.getTotalRows());
 		}
 		this.focus();
 	},
