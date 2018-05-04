@@ -7,6 +7,14 @@ $params['skip_format'] = true;
 $params['sql'] = "select postText from web_posts where webPostID = 1;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
+
+$d1 = fopen("countlog.txt","r");
+$count = fgets($d1,1000);
+fclose($d1);
+$count = intval($count)+1;
+$d2 = fopen("countlog.txt","w");
+fwrite($d2, "$count");
+fclose($d2);
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,6 +45,7 @@ $html = $lclass->init($params);
 	<div class="container"><?php echo $html;?>
 <a href="media.php" target="_blank"><span style="font-size: 14pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">Follow this link for images and short videos from 2017.</span></a>
 	</div>
+<br>
 </body>
 </html>
 <script type="text/javascript">
@@ -44,3 +53,13 @@ $html = $lclass->init($params);
 	var daysout = 'Only '+daystill+' days until the Invitational.  Are you ready?';
 	document.getElementById("dateout").innerHTML = daysout;
 </script>
+<?php
+// $datei = fopen("countlog.txt","r");
+// $count = fgets($datei,1000);
+// fclose($datei);
+// echo "-- {$count} --";
+// $count = intval($count)+1;
+// $datei = fopen("countlog.txt","w");
+// fwrite($datei, "$count");
+// fclose($datei);
+?>

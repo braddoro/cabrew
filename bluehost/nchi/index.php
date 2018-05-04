@@ -44,3 +44,13 @@ $html = $lclass->init($params);
 	var daysout = 'Only '+daystill+' days until the Invitational.  Are you ready?';
 	document.getElementById("dateout").innerHTML = daysout;
 </script>
+<?php
+$d1 = fopen("countlog.txt","r");
+$count = fgets($d1,1000);
+fclose($d1);
+$count = intval($count)+1;
+echo "<p style='font-size: .666em; font-family: Arial;'>{$count}</p>";
+$d2 = fopen("countlog.txt","w");
+fwrite($d2, "$count");
+fclose($d2);
+?>
