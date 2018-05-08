@@ -126,7 +126,9 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}else{
 			title = name + " : Total Rows - " + this.getTotalRows();
 		}
-		viewer.parent.setTitle(title);
+		if(viewer.parent){
+			viewer.parent.setTitle(title);
+		}
 	},
 	doubleClick: function(){
 		if(this.getTotalRows() > 0){

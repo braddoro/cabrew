@@ -23,13 +23,14 @@ $params['title'] = "NCHI {$year} Attendance Status";
 $params['sql'] = "
 SELECT
 	c.clubName,
+	c.clubAbb,
 	concat(c.city,', ',c.state) 'Location',
 	c.distance,
 	a.interested
 FROM brew_clubs c
 left join brew_attendence a on c.clubID = a.clubID
 where year = :year
-order by c.distance, c.clubName;";
+order by a.interested desc, c.clubName, c.distance;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
