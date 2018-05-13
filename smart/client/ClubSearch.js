@@ -12,6 +12,7 @@ isc.defineClass("ClubSearch", "myWindow").addProperties({
 			{name: "clubName", width: "*"},
 			{name: "clubAbbr", width: 80},
 			{name: "Location"},
+			{name: "distance"},
 			{name: "contactName"},
 			{name: "cp_contactType", title: "Contact Type"},
 			{name: "contactPoint"},
