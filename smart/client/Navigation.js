@@ -48,6 +48,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{isSeparator: true},
 				{title: "Beer", enabled: false, submenu: this.BeerMenu},
 				{isSeparator: true},
+				{title: "Club Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Scheduling", click: "isc.EventSchedules.create({width: \"95%\", height: \"95%\"});"},
