@@ -93,6 +93,27 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
+$params['bind'] = array('year' => $year);
+$params['show_total'] = true;
+$params['title'] = "NCHI {$year} Unresponsive Club RAW Email Addresses";
+$params['sql'] = "
+SELECT
+	concat(cp.contactPoint, ', ') 'email'
+FROM brew_clubs c
+left join brew_attendence ba on c.clubID = ba.clubID
+left join brew_contacts bc on c.clubID = bc.clubID
+left join brew_contactPoints cp on bc.contactID = cp.contactID
+left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
+where
+	ba.year = :year
+	and ba.interested = 'N'
+	and cp.contactTypeID_fk = 2
+order by
+	c.clubName,
+	bc.contactName;";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+
 ?>
 <!DOCTYPE html>
 <html>
