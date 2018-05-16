@@ -71,13 +71,18 @@ foreach($classes as $class) {
 	}
 }
 echo $content;
-$cmdret = '';
-exec("git status --short --branch", $cmdret);
-$str='';
-foreach ($cmdret as $key) {
-	$str .= $key . '<br/>';
-}
-echo 'isc.Desktop.create({gitInfo: "'. $str .'"});
+// $cmdret = '';
+// exec("git status --short --branch", $cmdret);
+// $str='';
+// foreach ($cmdret as $key) {
+// 	$str .= $key . '<br/>';
+// }
+// http://cabrew.org/
+// https://twitter.com/HomebrewCABREW
+// https://www.facebook.com/homebrewCABREW/
+//
+$str = "<strong>CABREW Links</strong><br><a href='http://cabrew.org/' target='_blank'>cabrew</a><br><a href='http://cabrew.org/reports/' target='_blank'>reports</a><br><a href='http://cabrew.org/nchi/' target='_blank'>nchi</a><br><br><a href='https://www.facebook.com/homebrewCABREW/' target='_blank'>faceboook</a><br><a href='https://twitter.com/HomebrewCABREW' target='_blank'>twitter</a>";
+echo 'isc.Desktop.create({data: "'. $str .'"});
 </script>';
 echo '
 </body>
