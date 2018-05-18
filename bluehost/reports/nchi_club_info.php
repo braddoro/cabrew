@@ -2,7 +2,7 @@
 require_once('inc/Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = 'inc/server.ini';
-$params['show_total'] = true;
+
 $params['title'] = 'Other Club Contacts';
 $params['sql'] = "
 select distinct
