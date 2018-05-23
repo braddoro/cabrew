@@ -1,6 +1,5 @@
-
 <?php
-require_once('../../lib/DataModel.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'checklistData',
 	'pk_col' => 'checklistDataID',
@@ -16,12 +15,11 @@ if($lclass->status != 0){
 }
 $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
-
-if($operationType === 'add' || $operationType === 'update'){
-	if(isset($argsIN['milestone']) && $argsIN['milestone'] != 'Y'){
-		$argsIN['milestone'] = null;
-	}
-}
+// if($operationType === 'add' || $operationType === 'update'){
+// 	if(isset($argsIN['milestone']) && $argsIN['milestone'] != 'Y'){
+// 		$argsIN['milestone'] = null;
+// 	}
+// }
 switch($operationType){
 case 'fetch':
 	$response = $lclass->pdoFetch($argsIN);

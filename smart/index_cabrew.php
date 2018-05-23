@@ -7,6 +7,7 @@ $source_path = $cabrew_array['application']['source_path'];
 $smart_ver = $cabrew_array['application']['smartclient_version'];
 $client_path = $cabrew_array['application']['client_path'];
 $server_path = $cabrew_array['application']['server_path'];
+$shared_path = $cabrew_array['application']['shared_path'];
 $classes = array();
 $classes[] = "ClassDefaults.js";
 $classes[] = "library.js";
@@ -48,6 +49,7 @@ $classes[] = "Test.js";
 $classes[] = "WebPosts.js";
 echo "<html>
 <head>
+<script>var isc = null;</script>
 <script>var serverPath = '$server_path';</script>
 <script>var isomorphicDir = '{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/';</script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Core.js'></script>

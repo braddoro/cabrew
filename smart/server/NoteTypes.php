@@ -1,5 +1,5 @@
 <?php
-require_once('../../lib/data_library.php');
+require_once('../../lib/DataModel_local.php');
 class NoteTypes {
   function __construct() {}
   public function doFetch() {

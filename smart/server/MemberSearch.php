@@ -1,6 +1,5 @@
-
 <?php
-require_once('../../lib/DataModel.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'members',
 	'pk_col' => 'memberID',
@@ -18,6 +17,7 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
+	$wheres = '';
 	if(isset($argsIN['statusTypeID_fk'])) {
 		$statusTypeID = ($argsIN['statusTypeID_fk'] > 0) ? $argsIN['statusTypeID_fk'] : NULL;
 	}else{
@@ -28,43 +28,26 @@ case 'fetch':
 	}else{
 		$renewalYear = 'NULL';
 	}
-	if(isset($argsIN['firstName'])) {
-		$firstName = ($argsIN['firstName'] > '') ? "LOWER('%" .$argsIN['firstName'] . "%')" : NULL;
-	}else{
-		$firstName = 'NULL';
-	}
-	if(isset($argsIN['lastName'])) {
-		$lastName = ($argsIN['lastName'] > '') ? "LOWER('%" .$argsIN['lastName'] . "%')" : NULL;
-	}else{
-		$lastName = 'NULL';
-	}
 	if(isset($argsIN['FullName'])) {
-		$fullName = ($argsIN['FullName'] > '') ? "LOWER('%" .$argsIN['FullName'] . "%')" : NULL;
-	}else{
-		$fullName = 'NULL';
+		$fullName = ($argsIN['FullName'] > '') ? "LOWER('%" . $argsIN['FullName'] . "%')" : NULL;
+		$wheres = "and LOWER(CONCAT(IFNULL(M.firstName, ''), ' ', IFNULL(M.midName, ''), ' ', IFNULL(M.lastName, ''), ' ', IFNULL(M.nickname, ''))) like '{$fullName}' ";
 	}
 	$argsIN['sql'] = "
 select
 	M.memberID,
 	M.statusTypeID_fk,
 	REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' ') as 'FullName',
-	M.firstName,
-	M.midName,
-	M.lastName,
-	M.nickname,
 	M.sex,
 	M.renewalYear,
-	M.lastChangeDate,
-	MIN(D1.memberDate) as 'JoinedDate'
+	MIN(D1.memberDate) as 'JoinedDate',
+	M.lastChangeDate
 from members M
 	left join memberDates D1 on M.memberID = D1.memberID_fk and D1.dateTypeID_fk = 1
 where
 	M.memberID = coalesce(:id, M.memberID)
 	and M.statusTypeID_fk = coalesce({$statusTypeID},M.statusTypeID_fk)
 	and M.renewalYear = coalesce({$renewalYear}, M.renewalYear)
-	and LOWER(M.firstName) like coalesce({$firstName}, M.firstName)
-	and LOWER(M.lastName) like coalesce({$lastName}, M.lastName)
-	and LOWER(REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' ')) like coalesce({$fullName}, REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' '))
+	{$wheres}
 group by
 	M.memberID,
 	M.statusTypeID_fk,
@@ -75,7 +58,7 @@ group by
 	M.sex,
 	M.renewalYear,
 	M.lastChangeDate;";
-	//echo "/* {$argsIN['sql']} */";
+	// echo "/* {$argsIN['sql']} */";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

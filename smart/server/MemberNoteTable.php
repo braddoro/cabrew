@@ -1,5 +1,5 @@
 <?php
-require_once('../../lib/DataModel2.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'memberNotes',
 	'ini_file' => realpath('../../lib/server.ini')

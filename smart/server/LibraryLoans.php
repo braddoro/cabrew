@@ -1,5 +1,5 @@
 <?php
-require_once('../../lib/DataModel.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'library_loans',
 	'pk_col' => 'loanID',
@@ -17,21 +17,21 @@ $argsIN = array_merge($_POST,$_GET);
 $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
 switch($operationType){
 case 'fetch':
-	if(isset($argsIN['loanID'])) {
-		$loanID = ($argsIN['loanID'] > 0) ? $argsIN['loanID'] : NULL;
-	}else{
-		$loanID = 'NULL';
-	}
-	$argsIN['sql'] = "select
-		ll.loanID,
-		ll.memberID_fk,
-		ll.libraryID_fk,
-		ll.requestDate,
-		ll.loanDate,
-		ll.returnDate,
-		ll.lastChangeDate
-	from library_loans ll
-		where ll.loanID = coalesce(:id, ll.loanID)";
+	// if(isset($argsIN['loanID'])) {
+	// 	$loanID = ($argsIN['loanID'] > 0) ? $argsIN['loanID'] : NULL;
+	// }else{
+	// 	$loanID = 'NULL';
+	// }
+	// $argsIN['sql'] = "select
+	// 	ll.loanID,
+	// 	ll.memberID_fk,
+	// 	ll.libraryID_fk,
+	// 	ll.requestDate,
+	// 	ll.loanDate,
+	// 	ll.returnDate,
+	// 	ll.lastChangeDate
+	// from library_loans ll
+	// 	where ll.loanID = coalesce(:id, ll.loanID)";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

@@ -1,5 +1,5 @@
 <?php
-require_once('../../lib/DataModel.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'statusTypes',
 	'pk_col' => 'statusTypeID',
@@ -22,10 +22,8 @@ case 'fetch':
 	}else{
 		$active = 'null';
 	}
-	$argsIN['sql'] = "select * from statusTypes where
-		statusTypeID = coalesce(:id, statusTypeID)
-		and active = coalesce({$active}, active);";
-		echo "/* {$argsIN['sql']} */";
+	$argsIN['sql'] = "select * from statusTypes st where st.statusTypeID = coalesce(:id, st.statusTypeID) and st.active = coalesce({$active}, st.active);";
+	 // echo "/* {$argsIN['sql']} */";
 	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':

@@ -1,5 +1,5 @@
 <?php
-require_once('../../lib/DataModel.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'library_books',
 	'pk_col' => 'bookID',

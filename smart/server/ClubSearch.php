@@ -1,6 +1,5 @@
-
 <?php
-require_once('../../lib/DataModel.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'brew_clubs',
 	'pk_col' => 'clubID',
@@ -77,7 +76,6 @@ left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
 left join contactTypes ct2 on bm.contactTypeID_fk = ct2.contactTypeID
 where
 	c.clubID = coalesce(:id, c.clubID)
-
 order by c.clubName, bc.contactName, cp.contactPoint;
 ";
 // and M.statusTypeID_fk = coalesce({$statusTypeID},M.statusTypeID_fk)

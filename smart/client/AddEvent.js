@@ -19,7 +19,7 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			]
 		});
 		this.ActiveMembersDS = isc.myDataSource.create({
-			dataURL: serverPath + "ActiveMembers.php",
+			dataURL: serverPath + "MemberSearch.php",
 			fields:[
 				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
 				{name: "FullName"}

@@ -1,5 +1,5 @@
 <?php
-require_once('../../lib/DataModel.php');
+require_once('../../lib/DataModel_local.php');
 $params = array(
 	'baseTable' => 'brew_contacts',
 	'pk_col' => 'contactID',
