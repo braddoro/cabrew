@@ -23,7 +23,10 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			fields:[
 				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
 				{name: "FullName"}
-			]
+			],
+			fetchData: function(criteria, callback, requestProperties){
+				return this.Super("fetchData", [{statusTypeID_fk: 1}, callback, requestProperties]);
+			}
 		});
 		this.AddEventDF = isc.myDynamicForm.create({
 			parent: this,
