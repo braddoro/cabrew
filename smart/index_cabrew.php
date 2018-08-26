@@ -86,8 +86,7 @@ echo $content;
 //
 $str = "<strong>CABREW Links</strong><br><a href='http://cabrew.org/' target='_blank'>cabrew</a><br><a href='http://cabrew.org/reports/' target='_blank'>reports</a><br><a href='http://cabrew.org/nchi/' target='_blank'>nchi</a><br><br><a href='https://www.facebook.com/homebrewCABREW/' target='_blank'>faceboook</a><br><a href='https://twitter.com/HomebrewCABREW' target='_blank'>twitter</a><br><a href='https://www.facebook.com/groups/371109786956/' target='_blank'>cabrew group</a><br><a href='https://www.facebook.com/groups/cabrew/' target='_blank'>members only</a>";
 echo 'isc.Desktop.create({data: "'. $str .'"});
-</script>';
-echo '
+</script>
 </body>
 </html>';
 ?>
