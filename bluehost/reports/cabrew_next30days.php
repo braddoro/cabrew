@@ -1,25 +1,35 @@
 <?php
+if(isset($_GET['m'])){
+	$id = intval($_GET['m']);
+}
 require_once('inc/Reporter.php');
-$params['bind'] = array();
+$params['bind'] = array(id => NULL);
+if(isset($id)){
+	$params['bind'] = array(id => $id);
+}
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
 $params['title'] = 'Todo Next 30 Days';
 $params['sql'] = "
 select
+	C.eventDataID,
 	CT.checklistType,
 	C.step,
 	C.dueDate,
 	CONCAT(M.firstName, ' ',M.lastName) AS 'Assignee',
 	C.cost,
 	C.status,
+	C.thread,
     C.notes
-from checklistData C
-	left join members M on M.memberID = C.memberID_fk
-	left join checklistTypes CT on C.checklistTypeID = CT.checklistTypeID
-where (C.status IS NULL OR  C.status <> 'complete')
+from eventData C
+	left join members M on M.memberID = C.memberID
+	left join checklistTypes CT on C.eventTypeID = CT.checklistTypeID
+where (C.status IS NULL or C.status <> 'complete')
 	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL 35 DAY)
+	and C.memberID = coalesce(:id, C.memberID)
 order by
-	C.dueDate;";
+	C.dueDate;
+";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

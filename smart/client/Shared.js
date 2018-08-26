@@ -12,7 +12,16 @@ isc.Clients = {
 	})
 };
 isc.Shared = {
-	messageTypesDS: isc.DataSource.create({
+	eventTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "ScheduleTypes.php",
+		fields:[
+			{name: "checklistTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "checklistType", type: "text"},
+			{name: "active", type: "text", width: 80},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
+		]
+	}),
+	messageTypesDS: isc.myDataSource.create({
 		clientOnly: true,
 		fields: [
 			{name: "valueLOV", type: "sequence", primaryKey: true},
@@ -45,15 +54,6 @@ isc.Shared = {
 			{name: "dateTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "dateType", type: "text"},
 			{name: "datePoints", type: "integer", editorType: "spinner"},
-			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
-			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
-		]
-	}),
-	checklistTypesDS: isc.myDataSource.create({
-		dataURL: serverPath + "ScheduleTypes.php",
-		fields:[
-			{name: "checklistTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "checklistType", type: "text"},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]

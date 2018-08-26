@@ -35,6 +35,7 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		this.AddEventLG = isc.myListGrid.create({
 			parent: this,
 			showHeader: false,
+			showFilterEditor: true,
 			autoSaveEdits: false,
 			dataSource: this.ActiveMembersDS
 		});

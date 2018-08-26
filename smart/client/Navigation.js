@@ -19,6 +19,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Date Types", click: "isc.DateTypes.create()"},
 				{title: "Schedule Types", click: "isc.ScheduleTypes.create()"},
 				{title: "Status Types", click: "isc.StatusTypes.create()"},
+				{title: "Thread Types", click: "isc.ThreadTypes.create()"},
 				{isSeparator: true},
 				{title: "Test", click: "isc.Test.create()"}
 
@@ -41,6 +42,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "...",
 			showShadow: true,
 			items: [
+				{title: "Scheduling", click: "isc.EventSchedules.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Name Search", click: "isc.MemberSearch.create({width: 400, height: \"95%\"});"},
 				{isSeparator: true},
 				{title: "Members", submenu: this.membersMenu},
@@ -51,7 +53,6 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Club Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Scheduling", click: "isc.EventSchedules.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
 				{isSeparator: true},
 				{title: "Misc Tables", submenu: this.MiscMenu}

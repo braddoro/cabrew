@@ -45,6 +45,7 @@ $classes[] = "SendMessage.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
 $classes[] = "StatusTypes.js";
+$classes[] = "ThreadTypes.js";
 $classes[] = "Test.js";
 $classes[] = "WebPosts.js";
 echo "<html>

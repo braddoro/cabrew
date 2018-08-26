@@ -104,9 +104,9 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	alternateRecordStyles: true,
 	leaveScrollbarGap: false,
 	showFilterEditor: false,
-	showAllRecords: true,
+	// showAllRecords: true,
 	autoFetchData: true,
-	modalEditing: true,
+	modalEditingS: true,
 	autoFitWidth: true,
 	rowContextClick: function(record, rowNum, colNum){
 		this.parent.localContextMenu.showContextMenu();

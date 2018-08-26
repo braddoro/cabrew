@@ -53,14 +53,18 @@ class DataModel extends Server {
 			return array('status' => -4, 'errorMessage' => "This view does not allow {$args['operationType']} operations.");
 		}
  		try{
+ 			$pkID = NULL;
+ 			$binding = array();
  			$return = array();
-			$pkID = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : NULL;
-			$binding[":id"] = $pkID;
-			$sql = "select * from {$this->table} where {$this->pk_col} = coalesce(:id, {$this->pk_col});";
+ 			$sql = "select * from {$this->table} where {$this->pk_col} = {$this->pk_col};";
+ 			if(isset($args["{$this->pk_col}"])){
+				$pkID = (isset($args["{$this->pk_col}"])) ? intval($args["{$this->pk_col}"]) : NULL;
+				$binding[":id"] = $pkID;
+				$sql = "select * from {$this->table} where {$this->pk_col} = coalesce(:id, {$this->pk_col});";
+			}
 			if(isset($args['sql'])){
 				$sql = $args['sql'];
 			}
-			//echo("/*" . $sql . "*/");
 			$rows = $this->pdoExecute($sql, $binding, $args['operationType'], $pkID);
 		}
 		catch(PDOException $e){
@@ -165,26 +169,11 @@ class DataModel extends Server {
 		return $return;
 	}
 	function pdoExecute($sql, $binding, $operationType, $pkID = NULL){
-		//echo("/*" . $sql . "*/");
-		// var_dump($binding);
-		if(!$this->conn){
-		 	$return['status'] = -111;
-		 	$return['errorMessage'] = 'No connection.';
-		 	return $return;
-		}
-		try{
+		echo "/* " . $sql . " */ " ;
+		// echo "/* " .  parseArray($binding) . " */ " ;
+		// try{
 			$stmt = $this->conn->prepare($sql);
-			if(!$stmt){
-				$return['status'] = $stmt->errorCode();
-				$return['errorMessage'] = $stmt->errorInfo() . $sql;
-				return $return;
-			}
 			$stmt->execute($binding);
-			if(!$stmt){
-				$return['status'] = $stmt->errorCode();
-				$return['errorMessage'] = $stmt->errorInfo();
-				return $return;
-			}
 			switch($operationType){
 				case 'fetch':
 					$result = $stmt->fetchAll();
@@ -228,12 +217,12 @@ class DataModel extends Server {
 				$stmt = NULL;
 				unset($stmt);
 			}
-		}
-		catch(PDOException $e){
-			$return['status'] = -110;
-			$return['errorMessage'] = parseArray($e);
-			return $return;
-		}
+		// }
+		// catch(PDOException $e){
+		// 	$return['status'] = -110;
+		// 	$return['errorMessage'] = $sql . '<br/>' . parseArray($e);
+		// 	return $return;
+		// }
 		return $return;
 	}
 }
