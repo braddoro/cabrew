@@ -1,46 +1,22 @@
 <?php
-require_once('../../lib/DataModel_local.php');
-$params = array(
-	'baseTable' => 'memberDates',
-	'pk_col' => 'memberDateID',
-	'allowedOperations' => array('fetch', 'add', 'update','remove'),
-	'ini_file' => realpath('../../lib/server.ini')
-);
-$lclass = New DataModel();
-$lclass->init($params);
-if($lclass->status != 0){
-	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
+require_once 'Connect.php';
+$conn = new Connect();
+$db = $conn->conn();
+$wheres = '';
+if(isset($_REQUEST['memberID'])) {
+	$wheres .= ' and d.memberID = ' . intval($_REQUEST['memberID']);
+}
+if(isset($_REQUEST['YearDate'])) {
+	$wheres .= ' and year(d.memberDate) = ' . intval($_REQUEST['YearDate']);
+}
+if(isset($_REQUEST['dateTypeID_fk'])) {
+	$wheres .= ' and d.dateTypeID_fk = ' . intval($_REQUEST['dateTypeID_fk']);
+}
+$sql = "select d.*, year(d.memberdate) as 'YearDate' from memberDates d where 1=1 $wheres order by d.memberdate desc";
+$response = $db->getAll($sql);
+if($response){
 	echo json_encode($response);
-	exit;
+}else{
+	echo $db->errorMsg();
 }
-$argsIN = array_merge($_POST,$_GET);
-$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
-switch($operationType){
-case 'fetch':
-	if(isset($argsIN['YearDate'])) {
-		$yearDate = 'YEAR(' .$argsIN['YearDate'] . ')';
-	}else{
-		$yearDate = 'NULL';
-	}
-	$argsIN['sql'] = "select md.*, year(md.memberdate) as 'YearDate'
-	from memberDates md
- 	where md.memberDateID = coalesce(:id, md.memberDateID)
- 	and YEAR(md.memberDate) = coalesce({$yearDate}, YEAR(md.memberDate))
-	order by md.memberdate desc";
-	$response = $lclass->pdoFetch($argsIN);
-	break;
-case 'add':
-	$response = $lclass->pdoAdd($argsIN);
-	break;
-case 'update':
-	$response = $lclass->pdoUpdate($argsIN);
-	break;
-case 'remove':
-	$response = $lclass->pdoRemove($argsIN);
-	break;
-default:
-	$response = array('status' => 0);
-	break;
-}
-echo json_encode($response);
 ?>

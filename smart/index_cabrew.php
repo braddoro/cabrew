@@ -1,6 +1,6 @@
 <?php
-// https://mattstauffer.co/blog/sublime-text-3-for-php-developers
-$cabrew_array  = parse_ini_file('cabrew.ini', true);
+require_once '../../adodb5/adodb.inc.php';
+$cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
 $source_path = $cabrew_array['application']['source_path'];
@@ -41,12 +41,9 @@ $classes[] = "MemberSearch.js";
 $classes[] = "Navigation.js";
 $classes[] = "Preview.js";
 $classes[] = "ScheduleTypes.js";
-$classes[] = "SendMessage.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
 $classes[] = "StatusTypes.js";
-$classes[] = "ThreadTypes.js";
-$classes[] = "Test.js";
 $classes[] = "WebPosts.js";
 echo "<html>
 <head>

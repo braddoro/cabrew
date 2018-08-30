@@ -1,32 +1,12 @@
 <?php
-require_once('../../lib/DataModel_local.php');
-class NoteTypes {
-  function __construct() {}
-  public function doFetch() {
-	$rows = array();
-	$data = New DataLibrary();
-	$sql = "select * from noteTypes;";
-	$dataSet = $data->getData($sql);
-	if(!$dataSet['status']) {
-	  $rows['status'] = -1;
-	  $rows['errorMessage'] = $data->parseErrors($dataSet['message']);
-	  $rows['errors'] = $sql;
-	  return json_encode($rows);
-	}
-	$result = $dataSet['result'];
-	while ($row = $result->fetch()) {
-		$rows[] = array(
-		'noteTypeID'	=> $row['noteTypeID'],
-		'noteType'		=> $row['noteType'],
-		'active'		=> $row['active']
-	  );
-	}
-	$result->closeCursor();
-	unset($dataSet);
-	return json_encode($rows);
-  }
+require_once 'Connect.php';
+$conn = new Connect();
+$db = $conn->conn();
+$sql = "select * from noteTypes where active = 'Y';";
+$response = $db->getAll($sql);
+if($response){
+	echo json_encode($response);
+}else{
+	echo $db->errorMsg();
 }
-$argsIN = $_POST;
-$Foo = New NoteTypes();
-echo $Foo->doFetch();
 ?>

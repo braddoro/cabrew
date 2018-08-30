@@ -1,61 +1,12 @@
 <?php
-require_once '../../../adodb5/adodb.inc.php';
-$table = 'dateTypes';
-$primaryKey = 'dateTypeID';
-$ini_array = parse_ini_file('../../lib/server.ini', true);
-$hostname = $ini_array['database']['hostname'];
-$username = $ini_array['database']['username'];
-$password = $ini_array['database']['password'];
-$database = $ini_array['database']['dbname'];
-$db = ADOnewConnection('mysqli');
-$db->connect($hostname, $username, $password, $database);
-$argsIN = array_merge($_POST,$_GET);
-$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
-$sql = "select * from $table where active = 'Y';";
-$db->setFetchMode(ADODB_FETCH_ASSOC);
+require_once 'Connect.php';
+$conn = new Connect();
+$db = $conn->conn();
+$sql = "select * from dateTypes where active = 'Y';";
 $response = $db->getAll($sql);
-echo json_encode($response);
-
-// require_once('../../lib/DataModel_local.php');
-// $params = array(
-// 	'baseTable' => 'dateTypes',
-// 	'pk_col' => 'dateTypeID',
-// 	'allowedOperations' => array('fetch', 'add', 'update','remove'),
-// 	'ini_file' => realpath('../../lib/server.ini')
-// );
-// $lclass = New DataModel();
-// $lclass->init($params);
-// if($lclass->status != 0){
-// 	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
-// 	echo json_encode($response);
-// 	exit;
-// }
-// $argsIN = array_merge($_POST,$_GET);
-// $operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
-// switch($operationType){
-// case 'fetch':
-// 	if(isset($argsIN['active'])) {
-// 		$active = ($argsIN['active'] > '') ? "'" .$argsIN['active'] . "'" : 'Y';
-// 	}else{
-// 		$active = 'null';
-// 	}
-// 	$argsIN['sql'] = "select * from dateTypes where
-// 		dateTypeID = coalesce(:id, dateTypeID)
-// 		and active = coalesce({$active}, active);";
-// 	$response = $lclass->pdoFetch($argsIN);
-// 	break;
-// case 'add':
-// 	$response = $lclass->pdoAdd($argsIN);
-// 	break;
-// case 'update':
-// 	$response = $lclass->pdoUpdate($argsIN);
-// 	break;
-// case 'remove':
-// 	$response = $lclass->pdoRemove($argsIN);
-// 	break;
-// default:
-// 	$response = array('status' => 0);
-// 	break;
-// }
-// echo json_encode($response);
+if($response){
+	echo json_encode($response);
+}else{
+	echo $db->errorMsg();
+}
 ?>

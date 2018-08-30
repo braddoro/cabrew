@@ -20,7 +20,6 @@ select
 	CONCAT(M.firstName, ' ',M.lastName) AS 'Assignee',
 	C.cost,
 	C.status,
-	C.thread,
     C.notes
 from eventData C
 	left join members M on M.memberID = C.memberID

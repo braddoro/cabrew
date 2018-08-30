@@ -1,42 +1,16 @@
 <?php
-require_once('../../lib/DataModel_local.php');
-class MemberNote {
-	function __construct() {
-	}
-	public function doFetch($args = NULL) {
-		$rows = array();
-		$data = New DataLibrary();
-		$memberID = '0';
-		if(isset($args['memberID'])) {
-			$memberID = ($args['memberID'] > 0) ? $args['memberID'] : NULL;
-		}
-		$sql = "select * from memberNotes where memberID_fk = $memberID;";
-		$response = $data->getData($sql);
-		if(!$response['status']) {
-			$rows['status'] = -1;
-			$rows['errorMessage'] = $data->parseErrors($response['message']);
-			$rows['errors'] = $sql;
-			return json_encode($rows);
-		}
-		$result = $response['result'];
-		while ($row = $result->fetch()) {
-			$rows[] = array(
-			'memberNoteID'		=> $row['memberNoteID'],
-			'memberID_fk'		=> $row['memberID_fk'],
-			'noteTypeID_fk'		=> $row['noteTypeID_fk'],
-			'noteDate'			=> $row['noteDate'],
-			'memberNote'		=> $row['memberNote'],
-			'lastChangeDate'	=> $row['lastChangeDate']
-		  );
-		}
-		$result->closeCursor();
-		unset($response);
-		return json_encode($rows);
-	}
+require_once 'Connect.php';
+$conn = new Connect();
+$db = $conn->conn();
+$wheres = '';
+if(isset($_REQUEST['memberID_fk'])) {
+	$wheres .= ' and memberID_fk = ' . intval($_REQUEST['memberID_fk']);
 }
-foreach($_POST as $var => $value) {
-	$argsIN[$var] = $value;
+$sql = "select * from memberNotes c where 1=1 $wheres;";
+$response = $db->getAll($sql);
+if($response){
+	echo json_encode($response);
+}else{
+	echo $db->errorMsg();
 }
-$Foo = New MemberNote();
-echo $Foo->doFetch($argsIN);
 ?>
