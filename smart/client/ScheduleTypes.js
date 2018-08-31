@@ -3,7 +3,7 @@ isc.defineClass("ScheduleTypes", "myWindow").addProperties({
 	this.Super("initWidget", arguments);
 	this.ScheduleTypesLG = isc.myListGrid.create({
 		parent: this,
-		dataSource: isc.Shared.checklistTypesDS,
+		dataSource: isc.Shared.eventTypesDS,
 		name: "Schedule Types"
 	});
 	this.localContextMenu = isc.myContextMenu.create({

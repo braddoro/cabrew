@@ -1,8 +1,8 @@
 <?php
 class Connect {
 	public function conn($params = NULL) {
-		require_once '../../../adodb5/adodb.inc.php';
-		$ini_array = parse_ini_file('../../lib/server.ini', true);
+		require_once '/home/brad/git/adodb5/adodb.inc.php';
+		$ini_array = parse_ini_file('/home/brad/git/cabrew/smart/server.ini', true);
 		$hostname = $ini_array['database']['hostname'];
 		$username = $ini_array['database']['username'];
 		$password = $ini_array['database']['password'];

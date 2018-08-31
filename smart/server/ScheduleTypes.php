@@ -1,7 +1,15 @@
 <?php
+session_start();
 require_once 'Connect.php';
-$conn = new Connect();
-$db = $conn->conn();
+if (isset($_SESSION['db'])){
+	$db = $_SESSION['db'];
+}else{
+	$conn = new Connect();
+	$db = $conn->conn();
+}
+if(!$db->isConnected()){
+	echo $db->errorMsg();
+}
 $sql = "select * from checklistTypes where active = 'Y';";
 $response = $db->getAll($sql);
 if($response){

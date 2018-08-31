@@ -1,80 +1,95 @@
 <?php
-require_once '../../../adodb5/adodb.inc.php';
+session_start();
+$response = array();
+require_once 'Connect.php';
+if (isset($_SESSION['db'])){
+	$db = $_SESSION['db'];
+	echo "/* Yes */";
+}else{
+	$conn = new Connect();
+	$db = $conn->conn();
+	echo "/* No */";
+
+}
+if(!$db->isConnected()){
+	echo $db->errorMsg();
+}
 $table = 'eventData';
 $primaryKey = 'eventDataID';
-$ini_array = parse_ini_file('../../lib/server.ini', true);
-$hostname = $ini_array['database']['hostname'];
-$username = $ini_array['database']['username'];
-$password = $ini_array['database']['password'];
-$database = $ini_array['database']['dbname'];
-$db = ADOnewConnection('mysqli');
-$db->connect($hostname, $username, $password, $database);
-$argsIN = array_merge($_POST,$_GET);
-$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+$operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
-	$sql = "select * from $table";
-	$db->setFetchMode(ADODB_FETCH_ASSOC);
+	$wheres = ' where 1=1 ';
+	if(isset($_REQUEST['status'])){
+		$qStr = $db->qStr($_REQUEST['status'], true);
+		if($_REQUEST['status'] == 'undone'){
+			$wheres .= " and (status <> 'complete' or status is null) ";
+		}else{
+			$wheres .= " and status = $qStr ";
+		}
+	}
+	if(isset($_REQUEST['eventTypeID'])){
+		$wheres .= ' and eventTypeID = ' .  intval($_REQUEST['eventTypeID']);
+	}
+	$sql = "select * from $table $wheres order by dueDate";
 	$response = $db->getAll($sql);
 	break;
 case 'add':
-	$record['eventTypeID'] = $argsIN['eventTypeID'];
-	$record['threadTypeID']  = $argsIN['threadTypeID'];
-	$record['statusTypeID']  = $argsIN['statusTypeID'];
-	$record['memberID']  = $argsIN['memberID'];
-	$record['dueDate']  = $argsIN['dueDate'];
-	$record['step']  = $argsIN['step'];
-	$record['thread']  = $argsIN['thread'];
-	$record['status']  = $argsIN['status'];
-	$record['cost']  = $argsIN['cost'];
-	$record['notes']  = $argsIN['notes'];
-	// $record['lastChangeDate']  = date("Y-m-d H:i:s");
+	$record['eventTypeID'] = intval($_REQUEST['eventTypeID']);
+	$record['memberID'] = intval($_REQUEST['memberID']);
+	$record['dueDate'] = $_REQUEST['dueDate'];
+	if(isset($_REQUEST['step'])){
+		$record['step'] = $db->qStr($_REQUEST['step']);
+	}
+	if(isset($_REQUEST['status'])){
+		$record['status'] = $db->qStr($_REQUEST['status']);
+	}
+	if(isset($_REQUEST['cost'])){
+		$record['cost'] = $db->qStr($_REQUEST['cost']);
+	}
+	if(isset($_REQUEST['notes'])){
+		$record['notes'] = $db->qStr($_REQUEST['notes']);
+	}
 	$db->AutoExecute($table, $record, 'INSERT');
+	echo $db->errorMsg();
 	break;
 case 'update':
-	if(isset($argsIN['eventTypeID'])){
-		$record['eventTypeID'] = $argsIN['eventTypeID'];
+	if(isset($_REQUEST['eventTypeID'])){
+		$record['eventTypeID'] = $_REQUEST['eventTypeID'];
 	}
-	if(isset($argsIN['threadTypeID'])){
-		$record['threadTypeID'] = $argsIN['threadTypeID'];
+	if(isset($_REQUEST['memberID'])){
+		$record['memberID'] = $_REQUEST['memberID'];
 	}
-	if(isset($argsIN['statusTypeID'])){
-		$record['statusTypeID'] = $argsIN['statusTypeID'];
+	if(isset($_REQUEST['dueDate'])){
+		$record['dueDate'] = $_REQUEST['dueDate'];
 	}
-	if(isset($argsIN['memberID'])){
-		$record['memberID'] = $argsIN['memberID'];
+	if(isset($_REQUEST['step'])){
+		$record['step'] = $_REQUEST['step'];
 	}
-	if(isset($argsIN['dueDate'])){
-		$record['dueDate'] = $argsIN['dueDate'];
+	if(isset($_REQUEST['status'])){
+		$record['status'] = $_REQUEST['status'];
 	}
-	if(isset($argsIN['step'])){
-		$record['step'] = $argsIN['step'];
+	if(isset($_REQUEST['cost'])){
+		$record['cost'] = $_REQUEST['cost'];
 	}
-	if(isset($argsIN['thread'])){
-		$record['thread'] = $argsIN['thread'];
-	}
-	if(isset($argsIN['status'])){
-		$record['status'] = $argsIN['status'];
-	}
-	if(isset($argsIN['cost'])){
-		$record['cost'] = $argsIN['cost'];
-	}
-	if(isset($argsIN['notes'])){
-		$record['notes'] = $argsIN['notes'];
+	if(isset($_REQUEST['notes'])){
+		$record['notes'] = $_REQUEST['notes'];
 	}
 	$record['lastChangeDate'] = date("Y-m-d H:i:s");
-	$where = $primaryKey . ' = ' . $argsIN[$primaryKey];
+	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
 	$db->AutoExecute($table, $record, 'UPDATE', $where);
 	$sql = "select * from $table where $where";
-	$db->setFetchMode(ADODB_FETCH_ASSOC);
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
  	break;
 case 'remove':
-	$where = $primaryKey . ' = ' . $argsIN[$primaryKey];
+	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
 	$sql = "delete from $table where $where";
 	$result = $db->execute($sql);
 	$sql = "select * from $table where $where";
-	$db->setFetchMode(ADODB_FETCH_ASSOC);
 	$response = $db->getAll($sql);
 	break;
 default:

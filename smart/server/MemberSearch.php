@@ -1,7 +1,15 @@
 <?php
+session_start();
 require_once 'Connect.php';
-$conn = new Connect();
-$db = $conn->conn();
+if (isset($_SESSION['db'])){
+	$db = $_SESSION['db'];
+}else{
+	$conn = new Connect();
+	$db = $conn->conn();
+}
+if(!$db->isConnected()){
+	echo $db->errorMsg();
+}
 $wheres = '';
 if(isset($_REQUEST['statusTypeID_fk'])){
 	$wheres .= ' and M.statusTypeID_fk = ' . intval($_REQUEST['statusTypeID_fk']);

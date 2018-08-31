@@ -1,5 +1,21 @@
 <?php
-require_once '../../adodb5/adodb.inc.php';
+require_once '/home/brad/git/adodb5/adodb.inc.php';
+require_once '/home/brad/git/adodb5/session/adodb-session2.php';
+
+$ini_array = parse_ini_file('/home/brad/git/cabrew/smart/server.ini', true);
+$driver = 'mysqli';
+$hostname = $ini_array['database']['hostname'];
+$username = $ini_array['database']['username'];
+$password = $ini_array['database']['password'];
+$database = $ini_array['database']['dbname'];
+
+ADOdb_Session::config($driver, $hostname, $username, $password, $database, $options=false);
+session_start();
+require_once 'server/Connect.php';
+$conn = new Connect();
+$db = $conn->conn();
+$_SESSION['db'] = $db;
+
 $cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
