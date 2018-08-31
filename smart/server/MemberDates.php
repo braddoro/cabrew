@@ -16,4 +16,5 @@ if($response){
 }else{
 	echo $db->errorMsg();
 }
+$db->close();
 ?>

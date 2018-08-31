@@ -6,7 +6,7 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 		showFilterEditor: true,
 		fields:[
 			{name: "eventDataID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "checklistType", valueField: "checklistTypeID"},
+			{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "checklistType", valueField: "checklistTypeID", optionCriteria: {active: 'Y'}},
 			{name: "memberID", width: 120, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
 			{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},

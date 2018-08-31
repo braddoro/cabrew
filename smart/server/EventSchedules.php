@@ -1,13 +1,8 @@
 <?php
-session_start();
-$response = array();
 require_once 'Connect.php';
-if (isset($_SESSION['db'])){
-	$db = $_SESSION['db'];
-}else{
-	$conn = new Connect();
-	$db = $conn->conn();
-}
+$response = array();
+$conn = new Connect();
+$db = $conn->conn();
 if(!$db->isConnected()){
 	echo $db->errorMsg();
 }
@@ -89,4 +84,5 @@ default:
 	break;
 }
 echo json_encode($response);
+$db->close();
 ?>

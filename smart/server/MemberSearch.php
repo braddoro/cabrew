@@ -1,12 +1,8 @@
 <?php
-session_start();
 require_once 'Connect.php';
-if (isset($_SESSION['db'])){
-	$db = $_SESSION['db'];
-}else{
-	$conn = new Connect();
-	$db = $conn->conn();
-}
+$response = array();
+$conn = new Connect();
+$db = $conn->conn();
 if(!$db->isConnected()){
 	echo $db->errorMsg();
 }
@@ -21,4 +17,5 @@ if($response){
 }else{
 	echo $db->errorMsg();
 }
+$db->close();
 ?>

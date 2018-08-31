@@ -13,7 +13,7 @@ isc.Clients = {
 };
 isc.Shared = {
 	eventTypesDS: isc.myDataSource.create({
-		dataURL: serverPath + "ScheduleTypes.php",
+		dataURL: serverPath + "EventTypes.php",
 		fields:[
 			{name: "checklistTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "checklistType", type: "text"},
@@ -149,28 +149,6 @@ isc.Members = {
 			{name: "noteDate"},
 			{name: "memberNote"},
 			{name: "lastChangeDate", canEdit: false, detail: true}
-		]
-	}),
-	nameListDS: isc.myDataSource.create({
-		dataURL: serverPath + "AddPayment.php",
-		fields: [
-			{name: "memberID",
-				title: "Member",
-				editorType: "SelectItem",
-				optionDataSource: isc.Shared.memberNamesDS,
-				wrapTitle: false,
-				displayField: "FullName",
-				valueField: "memberID",
-				pickListWidth: 300,
-				pickListProperties: {
-					showFilterEditor: true
-				},
-				pickListFields: [
-					{name: "FullName", width: "*"},
-					{name: "Status", width: 75},
-					{name: "Month", width: 50}
-				]
-			}
 		]
 	})
 };

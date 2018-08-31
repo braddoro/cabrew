@@ -1,20 +1,17 @@
 <?php
 require_once 'Connect.php';
+$table = 'library_loans';
 $conn = new Connect();
 $db = $conn->conn();
-$sql = "select
-	ll.loanID,
-	ll.memberID_fk,
-	ll.libraryID_fk,
-	ll.requestDate,
-	ll.loanDate,
-	ll.returnDate,
-	ll.lastChangeDate
-from library_loans ll";
+if(!$db->isConnected()){
+	echo $db->errorMsg();
+}
+$sql = "select * from $table";
 $response = $db->getAll($sql);
 if($response){
 	echo json_encode($response);
 }else{
 	echo $db->errorMsg();
 }
+$db->close();
 ?>
