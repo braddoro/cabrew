@@ -8,11 +8,6 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 			{name: "memberID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "statusTypeID_fk", width: 75, title: "Status", optionDataSource: isc.Shared.statusTypesDS, optionCriteria: {active: "Y"}, displayField: "statusType", valueField: "statusTypeID"},
 			{name: "FullName", width: "*"},
-			{name: "firstName", detail: true},
-			{name: "midName", detail: true},
-			{name: "lastName", detail: true},
-			{name: "nickName", detail: true},
-			{name: "JoinedDate", width: 100},
 			{name: "sex", width: 50},
 			{name: "renewalYear", width: 90, type: "integer", detail: true},
 			{name: "lastChangeDate", width: 100, canEdit: false, detail: true}

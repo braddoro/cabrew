@@ -1,12 +1,13 @@
 <?php
-// https://mattstauffer.co/blog/sublime-text-3-for-php-developers
-$cabrew_array  = parse_ini_file('cabrew.ini', true);
+require_once '/home/brad/git/adodb5/adodb.inc.php';
+$cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
 $source_path = $cabrew_array['application']['source_path'];
 $smart_ver = $cabrew_array['application']['smartclient_version'];
 $client_path = $cabrew_array['application']['client_path'];
 $server_path = $cabrew_array['application']['server_path'];
+$shared_path = $cabrew_array['application']['shared_path'];
 $classes = array();
 $classes[] = "ClassDefaults.js";
 $classes[] = "library.js";
@@ -40,14 +41,13 @@ $classes[] = "MemberSearch.js";
 $classes[] = "Navigation.js";
 $classes[] = "Preview.js";
 $classes[] = "ScheduleTypes.js";
-$classes[] = "SendMessage.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
 $classes[] = "StatusTypes.js";
-$classes[] = "Test.js";
 $classes[] = "WebPosts.js";
 echo "<html>
 <head>
+<script>var isc = null;</script>
 <script>var serverPath = '$server_path';</script>
 <script>var isomorphicDir = '{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/';</script>
 <script src='{$source_path}{$smart_ver}/smartclientRuntime/isomorphic/system/modules/ISC_Core.js'></script>
@@ -83,8 +83,7 @@ echo $content;
 //
 $str = "<strong>CABREW Links</strong><br><a href='http://cabrew.org/' target='_blank'>cabrew</a><br><a href='http://cabrew.org/reports/' target='_blank'>reports</a><br><a href='http://cabrew.org/nchi/' target='_blank'>nchi</a><br><br><a href='https://www.facebook.com/homebrewCABREW/' target='_blank'>faceboook</a><br><a href='https://twitter.com/HomebrewCABREW' target='_blank'>twitter</a><br><a href='https://www.facebook.com/groups/371109786956/' target='_blank'>cabrew group</a><br><a href='https://www.facebook.com/groups/cabrew/' target='_blank'>members only</a>";
 echo 'isc.Desktop.create({data: "'. $str .'"});
-</script>';
-echo '
+</script>
 </body>
 </html>';
 ?>

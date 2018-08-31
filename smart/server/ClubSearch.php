@@ -1,23 +1,11 @@
-
 <?php
-require_once('../../lib/DataModel.php');
-$params = array(
-	'baseTable' => 'brew_clubs',
-	'pk_col' => 'clubID',
-	'allowedOperations' => array('fetch'),
-	'ini_file' => realpath('../../lib/server.ini')
-);
-$lclass = New DataModel();
-$lclass->init($params);
-if($lclass->status != 0){
-	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
-	echo json_encode($response);
-	exit;
-}
-$argsIN = array_merge($_POST,$_GET);
-$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
-switch($operationType){
-case 'fetch':
+require_once 'Connect.php';
+$conn = new Connect();
+$db = $conn->conn();
+$wheres = '';
+// if(isset($_REQUEST['statusTypeID_fk'])){
+// 	$wheres .= ' and M.statusTypeID_fk = ' . intval($_REQUEST['statusTypeID_fk']);
+// }
 	// if(isset($argsIN['statusTypeID_fk'])) {
 	// 	$statusTypeID = ($argsIN['statusTypeID_fk'] > 0) ? $argsIN['statusTypeID_fk'] : NULL;
 	// }else{
@@ -43,16 +31,7 @@ case 'fetch':
 	// }else{
 	// 	$fullName = 'NULL';
 	// }
-
-	// M.memberID = coalesce(:id, M.memberID)
-	// and M.statusTypeID_fk = coalesce({$statusTypeID},M.statusTypeID_fk)
-	// and M.renewalYear = coalesce({$renewalYear}, M.renewalYear)
-	// and LOWER(M.firstName) like coalesce({$firstName}, M.firstName)
-	// and LOWER(M.lastName) like coalesce({$lastName}, M.lastName)
-	// and LOWER(REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' ')) like coalesce({$fullName}, REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' '))
-
-	$argsIN['sql'] = "
-select
+$sql = "select
 c.clubID,
 bc.contactID,
 cp.contactPointID,
@@ -75,27 +54,13 @@ left join brew_contactPoints cp on bc.contactID = cp.contactID
 left join brew_media bm on c.clubID = bm.clubID
 left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
 left join contactTypes ct2 on bm.contactTypeID_fk = ct2.contactTypeID
-where
-	c.clubID = coalesce(:id, c.clubID)
-
-order by c.clubName, bc.contactName, cp.contactPoint;
-";
-// and M.statusTypeID_fk = coalesce({$statusTypeID},M.statusTypeID_fk)
-	//echo "/* {$argsIN['sql']} */";
-	$response = $lclass->pdoFetch($argsIN);
-	break;
-case 'add':
-	$response = $lclass->pdoAdd($argsIN);
-	break;
-case 'update':
-	$response = $lclass->pdoUpdate($argsIN);
-	break;
-case 'remove':
-	$response = $lclass->pdoRemove($argsIN);
-	break;
-default:
-	$response = array('status' => 0);
-	break;
+where 1=1 $wheres
+order by c.clubName, bc.contactName, cp.contactPoint;";
+$response = $db->getAll($sql);
+if($response){
+	echo json_encode($response);
+}else{
+	echo $db->errorMsg();
 }
-echo json_encode($response);
+$db->close();
 ?>

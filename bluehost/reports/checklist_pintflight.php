@@ -4,10 +4,10 @@ $params['bind'] = array();
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
 $params['title'] = 'Pint Flight 2018 Schedule';
-$params['sql'] = "select C.phase, C.dueDate, C.status,
+$params['sql'] = "select C.dueDate, C.status,
 (select REPLACE(CONCAT(IFNULL(M.nickName,M.firstName), ' ',IFNULL(M.midName,''), ' ', M.lastName),'  ',' ')
 from members M where C.memberID_fk = M.memberID) as 'FullName',
-C.step, C.cost, C.milestone, C.notes
+C.step, C.cost, C.notes
 from checklistData C
 inner join checklistTypes T on C.checklistTypeID = T.checklistTypeID
 and C.checklistTypeID = 2

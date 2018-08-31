@@ -1,32 +1,22 @@
 <?php
-require_once('../../lib/data_library.php');
-class NoteTypes {
-  function __construct() {}
-  public function doFetch() {
-	$rows = array();
-	$data = New DataLibrary();
-	$sql = "select * from noteTypes;";
-	$dataSet = $data->getData($sql);
-	if(!$dataSet['status']) {
-	  $rows['status'] = -1;
-	  $rows['errorMessage'] = $data->parseErrors($dataSet['message']);
-	  $rows['errors'] = $sql;
-	  return json_encode($rows);
-	}
-	$result = $dataSet['result'];
-	while ($row = $result->fetch()) {
-		$rows[] = array(
-		'noteTypeID'	=> $row['noteTypeID'],
-		'noteType'		=> $row['noteType'],
-		'active'		=> $row['active']
-	  );
-	}
-	$result->closeCursor();
-	unset($dataSet);
-	return json_encode($rows);
-  }
+require_once 'Connect.php';
+$table = 'noteTypes';
+$conn = new Connect();
+$db = $conn->conn();
+if(!$db->isConnected()){
+	echo $db->errorMsg();
 }
-$argsIN = $_POST;
-$Foo = New NoteTypes();
-echo $Foo->doFetch();
+$wheres = '';
+if(isset($_REQUEST['active'])){
+	$qStr = $db->qStr($_REQUEST['active'], true);
+	$wheres .= " and active = $qStr ";
+}
+$sql = "select * from $table where 1=1 $wheres;";
+$response = $db->getAll($sql);
+if($response){
+	echo json_encode($response);
+}else{
+	echo $db->errorMsg();
+}
+$db->close();
 ?>

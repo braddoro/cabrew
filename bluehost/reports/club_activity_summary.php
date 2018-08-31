@@ -1,5 +1,9 @@
 <?php
-$year = 2018;
+if(isset($_GET['y'])){
+	$year = intval($_GET['y']);
+}else{
+	$year = date('Y');
+}
 require_once('inc/Reporter.php');
 $params['bind'] = array(year => $year);
 $params['ini_file'] = 'inc/server.ini';

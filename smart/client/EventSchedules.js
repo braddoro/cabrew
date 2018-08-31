@@ -5,15 +5,13 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 		dataURL: serverPath + "EventSchedules.php",
 		showFilterEditor: true,
 		fields:[
-			{name: "checklistDataID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "checklistTypeID", width: 150, type: "integer", optionDataSource: isc.Shared.checklistTypesDS, displayField: "checklistType", valueField: "checklistTypeID"},
-			{name: "phase", width: 60, type: "integer", editorType: "spinner", valueMap:["1","2","3","4","5"]},
+			{name: "eventDataID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "checklistType", valueField: "checklistTypeID", optionCriteria: {active: 'Y'}},
+			{name: "memberID", width: 120, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
 			{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},
-			{name: "status", width: 100, validators: [{type: "lengthRange", max: 45}], valueMap:["", "not started","in process","blocked","complete"]},
-			{name: "memberID_fk", width: 120, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
-			{name: "cost", width: 100, type: "float"},
-			{name: "milestone", width: 80, type: "text", editorType: "selectItem", defaultValue: "", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "status", width: 75, validators: [{type: "lengthRange", max: 45}], valueMap:["not started","in process","blocked","complete","not needed"]},
+			{name: "cost", width: 50, type: "float"},
 			{name: "notes", width: "*", validators: [{type: "lengthRange", max: 1000}]},
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
@@ -28,18 +26,17 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 			var today;
 			var step;
 			var data;
-			var phase = 1;
 			var checklistTypeID;
 			if(this.anySelected()){
 				data = this.getSelectedRecord();
 				today = data.dueDate;
 				step = data.step;
+				thread = data.thread;
 				checklistTypeID = data.checklistTypeID;
-				phase = data.phase;
 			}else{
 				today = new Date();
 			}
-			var rowDefaults = {step: step, phase: phase, dueDate: today, checklistTypeID: checklistTypeID};
+			var rowDefaults = {step: step, thread: thread, dueDate: today, checklistTypeID: checklistTypeID};
 			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}
@@ -49,6 +46,6 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 		callingListGrid: this.EventScheduleLG
 	});
 	this.addItem(isc.myVLayout.create({members: [this.EventScheduleLG]}));
-	this.EventScheduleLG.filterData({statusTypeID_fk: 1});
+	this.EventScheduleLG.filterData();
   }
 });
