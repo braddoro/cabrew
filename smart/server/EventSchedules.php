@@ -4,12 +4,9 @@ $response = array();
 require_once 'Connect.php';
 if (isset($_SESSION['db'])){
 	$db = $_SESSION['db'];
-	echo "/* Yes */";
 }else{
 	$conn = new Connect();
 	$db = $conn->conn();
-	echo "/* No */";
-
 }
 if(!$db->isConnected()){
 	echo $db->errorMsg();
@@ -22,14 +19,10 @@ case 'fetch':
 	$wheres = ' where 1=1 ';
 	if(isset($_REQUEST['status'])){
 		$qStr = $db->qStr($_REQUEST['status'], true);
-		if($_REQUEST['status'] == 'undone'){
-			$wheres .= " and (status <> 'complete' or status is null) ";
-		}else{
-			$wheres .= " and status = $qStr ";
-		}
+		$wheres .= " and status = $qStr ";
 	}
 	if(isset($_REQUEST['eventTypeID'])){
-		$wheres .= ' and eventTypeID = ' .  intval($_REQUEST['eventTypeID']);
+		$wheres .= ' and eventTypeID = ' . intval($_REQUEST['eventTypeID']);
 	}
 	$sql = "select * from $table $wheres order by dueDate";
 	$response = $db->getAll($sql);
