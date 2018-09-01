@@ -1,19 +1,40 @@
 <?php
-$member = "";
-if(isset($_GET['m'])){
-	$member = ' and C.memberID = ' . intval($_GET['m']) . ' ';
-}
-$todo = "";
-if(isset($_GET['c'])){
-	$todo = " and (C.status not in ('complete', 'not needed') or C.status is null) ";
-}
 require_once('inc/Reporter.php');
+$wheres = '';
+$eventID = (isset($_GET['e'])) ? intval($_GET['e']) : 1;
+if(isset($_GET['e'])){
+	$wheres .= ' and (C.eventTypeID = ' . intval($_GET['e']) . ') ';
+}else{
+	$wheres .= ' and (C.eventTypeID = 1) ';
+}
+if(isset($_GET['m'])){
+	$wheres .= ' and (C.memberID = ' . intval($_GET['m']) . ') ';
+}
+if(isset($_GET['c'])){
+	$wheres .= " and (C.status not in ('complete', 'not needed') or C.status is null) ";
+}
+
+// Get a custom title.
+//
+$params['bind'] = array();
+$params['ini_file'] = 'inc/server.ini';
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = $eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()) {
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+
+$params = array();
 $params['bind'] = array();
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
-$params['title'] = 'NCHI 2018 Playbook';
-$params['sql'] = "
-select
+$params['title'] = $title . ' Event Schedule';
+$params['sql'] = "select
 	C.eventDataID,
 	C.step,
 	C.dueDate,
@@ -23,17 +44,14 @@ select
     C.notes
 from eventData C
 	left join members M on M.memberID = C.memberID
-where
-	C.eventTypeID = 1
-	{$member}
-	{$todo}
+	where 1=1
+	{$wheres}
 order by
 	C.dueDate,
-	M.lastName;
-	";
-//echo $params['sql'];
+	M.lastName;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
+//echo $params['sql'];
 ?>
 <!DOCTYPE html>
 <html>

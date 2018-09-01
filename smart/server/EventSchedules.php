@@ -27,26 +27,30 @@ case 'add':
 	$record['memberID'] = intval($_REQUEST['memberID']);
 	$record['dueDate'] = $_REQUEST['dueDate'];
 	if(isset($_REQUEST['step'])){
-		$record['step'] = $db->qStr($_REQUEST['step']);
+		$record['step'] = $_REQUEST['step'];
 	}
 	if(isset($_REQUEST['status'])){
-		$record['status'] = $db->qStr($_REQUEST['status']);
+		$record['status'] = $_REQUEST['status'];
 	}
 	if(isset($_REQUEST['cost'])){
-		$record['cost'] = $db->qStr($_REQUEST['cost']);
+		$record['cost'] = floatval($_REQUEST['cost']);
 	}
 	if(isset($_REQUEST['notes'])){
-		$record['notes'] = $db->qStr($_REQUEST['notes']);
+		$record['notes'] = $_REQUEST['notes'];
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
 	echo $db->errorMsg();
 	break;
 case 'update':
+	if(!isset($_REQUEST[$primaryKey])){
+		echo 'Missing primary key reference for update operation.';
+		exit(-1);
+	}
 	if(isset($_REQUEST['eventTypeID'])){
-		$record['eventTypeID'] = $_REQUEST['eventTypeID'];
+		$record['eventTypeID'] = intval($_REQUEST['eventTypeID']);
 	}
 	if(isset($_REQUEST['memberID'])){
-		$record['memberID'] = $_REQUEST['memberID'];
+		$record['memberID'] = intval($_REQUEST['memberID']);
 	}
 	if(isset($_REQUEST['dueDate'])){
 		$record['dueDate'] = $_REQUEST['dueDate'];
@@ -58,7 +62,7 @@ case 'update':
 		$record['status'] = $_REQUEST['status'];
 	}
 	if(isset($_REQUEST['cost'])){
-		$record['cost'] = $_REQUEST['cost'];
+		$record['cost'] = floatval($_REQUEST['cost']);
 	}
 	if(isset($_REQUEST['notes'])){
 		$record['notes'] = $_REQUEST['notes'];

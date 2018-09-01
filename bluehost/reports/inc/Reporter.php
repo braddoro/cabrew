@@ -7,7 +7,7 @@ class Reporter {
 
 		// Set up the title.
 		//
-		$title = 'Unnamed Query';
+		$title = '';
 		if(isset($params['title'])){
 			$title = $params['title'];
 		}
@@ -41,11 +41,13 @@ class Reporter {
 				$show_total = (isset($params['show_total'])) ? $params['show_total'] : false;
 			}
 		}
-
 		$model_params['sql'] = $params['sql'];
 		$model_params['bind'] = $params['bind'];
 		$model_params['ini_file'] = $ini_file;
 		$data = $this->report_model($model_params);
+		if(isset($params['skip_format']) && $params['skip_format'] === true){
+			return $data;
+		}
 
 		$view_params['title'] = $title;
 		$view_params['data'] = $data;
