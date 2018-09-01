@@ -15,8 +15,8 @@ isc.Shared = {
 	eventTypesDS: isc.myDataSource.create({
 		dataURL: serverPath + "EventTypes.php",
 		fields:[
-			{name: "checklistTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "checklistType", type: "text"},
+			{name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "eventType", type: "text"},
 			{name: "active", type: "text", width: 80},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
