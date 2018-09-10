@@ -6,17 +6,21 @@ $params['bind'] = array();
 $params['title'] = "Active Club Members";
 $params['sql'] = "select
     M.memberID,
-	M.firstName,
-	M.midName,
+    M.firstName,
+    M.midName,
     M.lastName,
     M.nickname,
     M.sex,
     MD.memberDate as 'joinDate',
     LM.lastMeeting,
-    C.memberContact as 'Email'
+    C1.memberContact as 'Phone',
+    C2.memberContact as 'Email',
+    C3.memberContact as 'Address'
 from
-	members M
-    left join memberContacts C on M.memberID = C.memberID_fk
+    members M
+    left join memberContacts C1 on M.memberID = C1.memberID_fk and C1.contactTypeID_fk = 1 -- Phone
+    left join memberContacts C2 on M.memberID = C2.memberID_fk and C2.contactTypeID_fk = 2 -- Email
+    left join memberContacts C3 on M.memberID = C3.memberID_fk and C3.contactTypeID_fk = 3 -- Address
     left join memberDates MD on M.memberID = MD.memberID_fk
     left join (
         select MD.memberID_fk,
@@ -26,13 +30,11 @@ from
         group by MD.memberID_fk
     ) LM on M.memberID = LM.memberID_fk
 where
-	M.statusTypeID_fk = 1 -- Active
-    and C.contactTypeID_fk = 2 -- Email
+    M.statusTypeID_fk = 1 -- Active
     and MD.dateTypeID_fk = 1 -- Join Date
 order by
-	M.firstName,
-    M.lastName
-;";
+    M.firstName,
+    M.lastName;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

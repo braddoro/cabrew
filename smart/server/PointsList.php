@@ -35,7 +35,7 @@ $response = $db->getAll($sql);
 if($response){
 	echo json_encode($response);
 }else{
-	echo $db->errorMsg();
+	echo json_encode(array());
 }
 $db->close();
 ?>

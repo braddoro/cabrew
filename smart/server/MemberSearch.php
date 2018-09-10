@@ -10,6 +10,9 @@ $wheres = '';
 if(isset($_REQUEST['statusTypeID_fk'])){
 	$wheres .= ' and M.statusTypeID_fk = ' . intval($_REQUEST['statusTypeID_fk']);
 }
+if(isset($_REQUEST['FullName'])){
+	$wheres .= " and REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', IFNULL(M.midName, ''), ' ', M.lastName),'  ',' ') like '%" . $_REQUEST['FullName'] . "%' ";
+}
 $sql = "select M.memberID, M.statusTypeID_fk, REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', IFNULL(M.midName, ''), ' ', M.lastName),'  ',' ') as 'FullName', M.sex, M.renewalYear, M.lastChangeDate from members M where 1=1 $wheres order by M.firstName;";
 $response = $db->getAll($sql);
 if($response){

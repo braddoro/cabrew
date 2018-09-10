@@ -19,6 +19,9 @@ case 'fetch':
 	if(isset($_REQUEST['eventTypeID'])){
 		$wheres .= ' and eventTypeID = ' . intval($_REQUEST['eventTypeID']);
 	}
+	if(isset($_REQUEST['step'])){
+		$wheres .= " and step like '%" . $_REQUEST['step'] . "%' ";
+	}
 	$sql = "select * from $table $wheres order by dueDate";
 	$response = $db->getAll($sql);
 	break;

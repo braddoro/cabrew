@@ -33,8 +33,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Contact Types", click: "isc.ContactTypes.create()"},
 				{title: "Date Types", click: "isc.DateTypes.create()"},
 				{title: "Event Types", click: "isc.EventTypes.create()"},
-				{title: "Status Types", click: "isc.StatusTypes.create()"},
-				{title: "Thread Types", click: "isc.ThreadTypes.create()"}
+				{title: "Status Types", click: "isc.StatusTypes.create()"}
 			]
 		});
 		this.MainMenu = isc.myMenu.create({

@@ -66,6 +66,7 @@ where
 	ba.year = :year
 	and ba.interested = 'Y'
 	and cp.contactTypeID_fk = 2
+	and cp.priority > 0
 order by
 	c.clubName,
 	bc.contactName;";
@@ -87,6 +88,7 @@ where
 	ba.year = :year
 	and ba.interested = 'Y'
 	and cp.contactTypeID_fk = 2
+	and cp.priority > 0
 order by
 	c.clubName,
 	bc.contactName;";
