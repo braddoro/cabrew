@@ -6,9 +6,9 @@ isc.defineClass("EventTeams", "myWindow").addProperties({
 		showFilterEditor: true,
 		fields:[
 			{name: "eventTeamID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "eventID", width: 100, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: 'Y'}},
+			{name: "eventID", width: 100, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
 			{name: "eventDay", type: "date", title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
-			{name: "eventTeamNameID", width: 100, type: "integer", title: "Team", optionDataSource: isc.Shared.eventTeamNamesDS, displayField: "teamName", valueField: "eventTeamNameID", optionCriteria: {active: 'Y'}},
+			{name: "eventTeamNameID", width: 100, type: "integer", title: "Team", optionDataSource: isc.Shared.eventTeamNamesDS, displayField: "teamName", valueField: "eventTeamNameID", optionCriteria: {active: "Y"}},
 			{name: "startTime", width: 100},
 			{name: "endTime", width: 100},
 			{name: "teamMember", width: "*", validators: [{type: "lengthRange", max: 45}]},

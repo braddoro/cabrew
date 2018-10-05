@@ -19,7 +19,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Event Steps", click: "isc.EventSteps.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Event Teams", click: "isc.EventTeams.create({width: 750, height: \"95%\"});"},
 				{title: "Beer List", click: "isc.BeerList.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});
 		this.BookMenu = isc.myMenu.create({
