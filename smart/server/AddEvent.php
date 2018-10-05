@@ -1,44 +1,16 @@
 <?php
-require_once('../../lib/DataModel.php');
-$params = array(
-	'baseTable' => 'memberDates',
-	'pk_col' => 'memberDateID',
-	'allowedOperations' => array('fetch','add'),
-	'ini_file' => realpath('../../lib/server.ini')
-);
-$lclass = New DataModel();
-$lclass->init($params);
-if($lclass->status != 0){
-	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
-	echo json_encode($response);
-	exit;
+require_once 'Connect.php';
+$table = 'memberDates';
+$primaryKey = 'memberDateID';
+$conn = new Connect();
+$db = $conn->conn();
+if(!$db->isConnected()){
+	echo $db->errorMsg();
 }
-$argsIN = array_merge($_POST,$_GET);
-$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+$operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
-	if(isset($argsIN['Year'])) {
-		$year = ($argsIN['Year'] > 0) ? $argsIN['Year'] : NULL;
-	}else{
-		$year = 'NULL';
-	}
-	if(isset($argsIN['memberID'])) {
-		$memberID = ($argsIN['memberID'] > 0) ? $argsIN['memberID'] : NULL;
-	}else{
-		$memberID = 'NULL';
-	}
-	if(isset($argsIN['dateTypeID'])) {
-		$dateTypeID = ($argsIN['dateTypeID'] > 0) ? $argsIN['dateTypeID'] : NULL;
-	}else{
-		$dateTypeID = 'NULL';
-	}
-	if(isset($argsIN['$points'])) {
-		$points = ($argsIN['$points'] > 0) ? $argsIN['$points'] : NULL;
-	}else{
-		$points = '-1';
-	}
-	$argsIN['sql'] = "
-	select
+	$sql = "select
 		m.memberID,
 		REPLACE(CONCAT(IFNULL(m.nickName,m.firstName), ' ', m.lastName),'  ',' ') as 'FullName',
 		dt.dateTypeID,
@@ -55,29 +27,57 @@ case 'fetch':
 		inner join members m on m.memberID = d.memberID_fk
 		inner join dateTypes dt on d.dateTypeID_fk = dt.dateTypeID
 	where
-		d.memberDateID = coalesce(:id, d.memberDateID)
-		and dt.datePoints > $points
-		and year(d.memberDate) = coalesce($year,year(d.memberDate))
-		and m.memberID = coalesce($memberID,m.memberID)
-		and dt.dateTypeID = coalesce($dateTypeID,dt.dateTypeID)
+		dt.datePoints > 1
+		and year(d.memberDate) = 2018
 	order by
 		d.memberDate,
-		dt.dateType;
-	";
-	$response = $lclass->pdoFetch($argsIN);
+		dt.dateType;";
+	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(-1);
+	}
 	break;
 case 'add':
-	$response = $lclass->pdoAdd($argsIN);
+	$record['memberID_fk'] = $_REQUEST['memberID_fk'];
+	$record['dateTypeID_fk'] = $_REQUEST['dateTypeID_fk'];
+	$record['memberDate'] = $_REQUEST['memberDate'];
+	$record['dateDetail'] = $_REQUEST['dateDetail'];
+	$db->AutoExecute($table, $record, 'INSERT');
+	echo $db->errorMsg();
 	break;
 case 'update':
-	$response = $lclass->pdoUpdate($argsIN);
-	break;
+	if(isset($_REQUEST['memberID'])){
+		$record['memberID'] = $_REQUEST['memberID'];
+	}
+	if(isset($_REQUEST['dateTypeID_fk'])){
+		$record['dateTypeID_fk'] = $_REQUEST['dateTypeID_fk'];
+	}
+	if(isset($_REQUEST['memberDate'])){
+		$record['memberDate'] = $_REQUEST['memberDate'];
+	}
+	if(isset($_REQUEST['dateDetail'])){
+		$record['dateDetail'] = $_REQUEST['dateDetail'];
+	}
+	$record['lastChangeDate'] = date("Y-m-d H:i:s");
+	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
+	$db->AutoExecute($table, $record, 'UPDATE', $where);
+	$sql = "select * from $table where $where";
+	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
+ 	break;
 case 'remove':
-	$response = $lclass->pdoRemove($argsIN);
+	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
+	$sql = "delete from $table where $where";
+	$result = $db->execute($sql);
+	$sql = "select * from $table where $where";
+	$response = $db->getAll($sql);
 	break;
 default:
-	$response = array('status' => 0);
 	break;
 }
 echo json_encode($response);
-?>
+$db->close();

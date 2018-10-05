@@ -1,50 +1,51 @@
 <?php
-require_once('../../lib/DataModel.php');
-$params = array(
-	'baseTable' => 'memberDates',
-	'pk_col' => 'memberDateID',
-	'allowedOperations' => array('fetch', 'add', 'update','remove'),
-	'ini_file' => realpath('../../lib/server.ini')
-);
-$lclass = New DataModel();
-$lclass->init($params);
-if($lclass->status != 0){
-	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
-	echo json_encode($response);
-	exit;
-}
-$argsIN = array_merge($_POST,$_GET);
-$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+require_once 'Connect.php';
+$conn = new Connect();
+$db = $conn->conn();
+$table = 'memberDates';
+$primaryKey = 'memberDateID';
+$operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
+$response = array();
 switch($operationType){
 case 'fetch':
-	if(isset($argsIN['memberID_fk'])) {
-		$memberID_fk = ($argsIN['memberID_fk'] > 0) ? $argsIN['memberID_fk'] : NULL;
-	}else{
-		$memberID_fk = 'NULL';
+	$wheres = ' where 1=1 ';
+	if(isset($_REQUEST['memberID_fk'])) {
+		$wheres .= ' and memberID_fk = ' . intval($_REQUEST['memberID_fk']);
 	}
-	if(isset($argsIN['dateTypeID_fk'])) {
-		$dateTypeID_fk = ($argsIN['dateTypeID_fk'] > 0) ? $argsIN['dateTypeID_fk'] : NULL;
-	}else{
-		$dateTypeID_fk = 'NULL';
+	if(isset($_REQUEST['dateTypeID_fk'])) {
+		$wheres .= ' and dateTypeID_fk = ' . intval($_REQUEST['dateTypeID_fk']);
 	}
-	$argsIN['sql'] = "select * from memberDates where
-		memberDateID = coalesce(:id, memberDateID)
-		and memberID_fk = coalesce($memberID_fk, memberID_fk)
-		and dateTypeID_fk = coalesce($dateTypeID_fk, dateTypeID_fk)";
-	$response = $lclass->pdoFetch($argsIN);
+	$sql = "select * from memberDates $wheres;";
+	$response = $db->getAll($sql);
 	break;
 case 'add':
-	$response = $lclass->pdoAdd($argsIN);
-	break;
-case 'update':
-	$response = $lclass->pdoUpdate($argsIN);
+	$record['memberID_fk'] = intval($_REQUEST['memberID_fk']);
+	$record['dateTypeID_fk'] = intval($_REQUEST['dateTypeID_fk']);
+	$record['memberDate'] = $_REQUEST['memberDate'];
+	if(isset($_REQUEST['dateDetail'])){
+		$record['dateDetail'] = $_REQUEST['dateDetail'];
+	}
+	$db->AutoExecute($table, $record, 'INSERT');
+	echo $db->errorMsg();
 	break;
 case 'remove':
-	$response = $lclass->pdoRemove($argsIN);
+	if(!isset($_REQUEST[$primaryKey])){
+		echo 'Missing primary key reference for remove operation.';
+		exit(-1);
+	}
+	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
+	$sql = "delete from $table where $where";
+	$result = $db->execute($sql);
+	$sql = "select * from $table where $where";
+	$response = $db->getAll($sql);
 	break;
 default:
-	$response = array('status' => 0);
 	break;
 }
-echo json_encode($response);
+if($response){
+	echo json_encode($response);
+}else{
+	echo json_encode(array());
+}
+$db->close();
 ?>

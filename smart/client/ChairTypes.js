@@ -1,5 +1,4 @@
 isc.defineClass("ChairTypes", "myWindow").addProperties({
-	title: "Chair Types",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.ChairTypesLG = isc.myListGrid.create({

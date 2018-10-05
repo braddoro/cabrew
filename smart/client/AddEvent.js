@@ -1,5 +1,4 @@
 isc.defineClass("AddEvent", "myWindow").addProperties({
-	title: "Add Event",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.AddEventDS = isc.myDataSource.create({
@@ -20,11 +19,14 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			]
 		});
 		this.ActiveMembersDS = isc.myDataSource.create({
-			dataURL: serverPath + "ActiveMembers.php",
+			dataURL: serverPath + "MemberSearch.php",
 			fields:[
 				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
 				{name: "FullName"}
-			]
+			],
+			fetchData: function(criteria, callback, requestProperties){
+				return this.Super("fetchData", [{statusTypeID_fk: 1}, callback, requestProperties]);
+			}
 		});
 		this.AddEventDF = isc.myDynamicForm.create({
 			parent: this,
@@ -33,6 +35,7 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		this.AddEventLG = isc.myListGrid.create({
 			parent: this,
 			showHeader: false,
+			showFilterEditor: true,
 			autoSaveEdits: false,
 			dataSource: this.ActiveMembersDS
 		});

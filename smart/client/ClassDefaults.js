@@ -116,12 +116,18 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		var selected = viewer.getSelectedRecords();
 		var count = selected.length;
 		var single = 1;
+		var name = "";
+		var title = "";
+		if (viewer.name) {
+			name = viewer.name;
+		}
 		if(count > single){
-			viewer.parent.setTitle("Selected Rows - " + count);
+			title = name + " : Selected Rows - " + count;
 		}else{
-			if(viewer.name) {
-				viewer.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
-			}
+			title = name + " : Total Rows - " + this.getTotalRows();
+		}
+		if(viewer.parent){
+			viewer.parent.setTitle(title);
 		}
 	},
 	doubleClick: function(){
@@ -137,9 +143,9 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	},
 	updateStatus: function() {
 		if(this.name) {
-			this.parent.setTitle(this.name + " : Rows - " + this.getTotalRows());
+			this.parent.setTitle(this.name + " : Total Rows - " + this.getTotalRows());
 		}else{
-			this.parent.setTitle(": Rows - " + this.getTotalRows());
+			this.parent.setTitle("Total Rows - " + this.getTotalRows());
 		}
 		this.focus();
 	},

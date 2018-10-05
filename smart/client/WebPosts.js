@@ -1,5 +1,4 @@
 isc.defineClass("WebPosts", "myWindow").addProperties({
-	title: "Static Web Posts",
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.webPostsDS = isc.myDataSource.create({
