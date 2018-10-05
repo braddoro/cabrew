@@ -9,6 +9,7 @@ if(isset($_GET['e'])){
 }
 if(isset($_GET['m'])){
 	$wheres .= ' and (C.memberID = ' . intval($_GET['m']) . ') ';
+	// $wheres .= ' and C.memberID in (201,57,222) ';
 }
 if(isset($_GET['c'])){
 	$wheres .= " and (C.status not in ('complete', 'not needed') or C.status is null) ";

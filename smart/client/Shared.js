@@ -12,59 +12,13 @@ isc.Clients = {
 	})
 };
 isc.Shared = {
-	eventTypesDS: isc.myDataSource.create({
-		dataURL: serverPath + "EventTypes.php",
+	brewClubsDS: isc.myDataSource.create({
+		dataURL: serverPath + "BrewClubs.php",
 		fields:[
-			{name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "eventType", type: "text"},
-			{name: "description", type: "text"},
-			{name: "active", type: "text", width: 80},
-			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
-		]
-	}),
-	messageTypesDS: isc.myDataSource.create({
-		clientOnly: true,
-		fields: [
-			{name: "valueLOV", type: "sequence", primaryKey: true},
-			{name: "displayLOV", type: "text"}
-		],
-		testData:[
-			{valueLOV: 1, displayLOV: "SMS"},
-			{valueLOV: 2, displayLOV: "Email"}
-		]
-	}),
-	statusTypesDS: isc.myDataSource.create({
-		dataURL: serverPath + "StatusTypes.php",
-		fields:[
-			{name: "statusTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "statusType", type: "text"},
-			{name: "statusCode", type: "text"},
-			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
-			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
-		]
-	}),
-	eventYearsDS: isc.myDataSource.create({
-		dataURL: serverPath + "EventYears.php",
-		fields:[
-			{name: "Year", type: "sequence", primaryKey: true}
-		]
-	}),
-	dateTypesDS: isc.myDataSource.create({
-		dataURL: serverPath + "DateTypes.php",
-		fields:[
-			{name: "dateTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "dateType", type: "text"},
-			{name: "datePoints", type: "integer", editorType: "spinner"},
-			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
-			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
-		]
-	}),
-	noteTypesDS: isc.myDataSource.create({
-		dataURL: serverPath + "NoteTypes.php",
-		fields:[
-			{name: "noteTypeID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
-			{name: "noteType", type: "text"},
-			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
+			{name: "clubID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "clubAbbr", type: "text"},
+			{name: "clubName", type: "text"},
+			{name: "active", type: "text", width: 80}
 		]
 	}),
 	contactTypesDS: isc.myDataSource.create({
@@ -84,12 +38,39 @@ isc.Shared = {
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
-	memberNamesDS: isc.myDataSource.create({
-		dataURL: serverPath + "MemberSearch.php",
+	dateTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "DateTypes.php",
 		fields:[
-			{name: "memberID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
-			{name: "FullName", type: "text"},
-			{name: "Status", type: "text"}
+			{name: "dateTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "dateType", type: "text"},
+			{name: "datePoints", type: "integer", editorType: "spinner"},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
+		]
+	}),
+	eventYearsDS: isc.myDataSource.create({
+		dataURL: serverPath + "EventYears.php",
+		fields:[
+			{name: "Year", type: "sequence", primaryKey: true}
+		]
+	}),
+	eventTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "EventTypes.php",
+		fields:[
+			{name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "eventType", type: "text"},
+			{name: "description", type: "text"},
+			{name: "active", type: "text", width: 80},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
+		]
+	}),
+	eventTeamNamesDS: isc.myDataSource.create({
+		dataURL: serverPath + "EventTeamNames.php",
+		fields:[
+			{name: "eventTeamNameID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "teamName", type: "text"},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
 	libraryBooksDS: isc.myDataSource.create({
@@ -101,6 +82,43 @@ isc.Shared = {
 			{name: "author", width: 300},
 			{name: "copyright", type: "integer", width: 100},
 			{name: "abstract"}
+		]
+	}),
+	memberNamesDS: isc.myDataSource.create({
+		dataURL: serverPath + "MemberSearch.php",
+		fields:[
+			{name: "memberID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
+			{name: "FullName", type: "text"},
+			{name: "Status", type: "text"}
+		]
+	}),
+	messageTypesDS: isc.myDataSource.create({
+		clientOnly: true,
+		fields: [
+			{name: "valueLOV", type: "sequence", primaryKey: true},
+			{name: "displayLOV", type: "text"}
+		],
+		testData:[
+			{valueLOV: 1, displayLOV: "SMS"},
+			{valueLOV: 2, displayLOV: "Email"}
+		]
+	}),
+	noteTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "NoteTypes.php",
+		fields:[
+			{name: "noteTypeID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
+			{name: "noteType", type: "text"},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
+		]
+	}),
+	statusTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "StatusTypes.php",
+		fields:[
+			{name: "statusTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "statusType", type: "text"},
+			{name: "statusCode", type: "text"},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	})
 };
