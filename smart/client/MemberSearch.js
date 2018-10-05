@@ -17,6 +17,7 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 		parent: this,
 		name: "Member Search",
 		showFilterEditor: true,
+		canEdit: false,
 		dataSource: this.MemberSearchDS
 	});
 	this.localContextMenu = isc.myChildMenu.create({

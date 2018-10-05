@@ -24,6 +24,10 @@ case 'fetch':
 	}
 	$sql = "select * from $table $wheres order by dueDate";
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 case 'add':
 	$record['eventTypeID'] = intval($_REQUEST['eventTypeID']);
@@ -42,7 +46,6 @@ case 'add':
 		$record['notes'] = $_REQUEST['notes'];
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
-	echo $db->errorMsg();
 	break;
 case 'update':
 	if(!isset($_REQUEST[$primaryKey])){

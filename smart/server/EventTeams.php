@@ -23,6 +23,10 @@ case 'fetch':
 	}
 	$sql = "select * from $table $wheres;";
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 case 'add':
 	$record['eventTeamID'] = intval($_REQUEST['eventTeamID']);

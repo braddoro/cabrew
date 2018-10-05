@@ -12,18 +12,15 @@ $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'
 switch($operationType){
 case 'fetch':
 	$wheres = ' where 1=1 ';
-	// if(isset($_REQUEST['status'])){
-	// 	$qStr = $db->qStr($_REQUEST['status'], true);
-	// 	$wheres .= " and status = $qStr ";
-	// }
-	// if(isset($_REQUEST['eventTypeID'])){
-	// 	$wheres .= ' and eventTypeID = ' . intval($_REQUEST['eventTypeID']);
-	// }
 	if(isset($_REQUEST['active'])){
 		$wheres .= " and active = '" . $_REQUEST['active'] . "' ";
 	}
 	$sql = "select * from $table $wheres;";
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 case 'add':
 	$record['beerListID'] = intval($_REQUEST['beerListID']);
@@ -42,7 +39,6 @@ case 'add':
 		$record['beerStory'] = $_REQUEST['beerStory'];
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
-	echo $db->errorMsg();
 	break;
 case 'update':
 	if(!isset($_REQUEST[$primaryKey])){

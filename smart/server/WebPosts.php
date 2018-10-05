@@ -14,6 +14,10 @@ case 'fetch':
 	$wheres = ' where 1=1 ';
 	$sql = "select * from $table $wheres;";
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 case 'add':
 	$record['postName'] = $_REQUEST['postName'];
