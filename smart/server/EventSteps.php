@@ -20,20 +20,17 @@ case 'fetch':
 	}
 	break;
 case 'add':
-	$record['beerListID'] = intval($_REQUEST['beerListID']);
+	$record['dayID'] = intval($_REQUEST['dayID']);
+	$record['typeID'] = intval($_REQUEST['typeID']);
 	$record['eventID'] = intval($_REQUEST['eventID']);
-	$record['clubID'] = intval($_REQUEST['clubID']);
-	if(isset($_REQUEST['brewerName'])){
-		$record['brewerName'] = trim($_REQUEST['brewerName']);
+	if(isset($_REQUEST['stepStart'])){
+		$record['stepStart'] = trim($_REQUEST['stepStart']);
 	}
-	if(isset($_REQUEST['beerStyle'])){
-		$record['beerStyle'] = trim($_REQUEST['beerStyle']);
+	if(isset($_REQUEST['step'])){
+		$record['step'] = trim($_REQUEST['step']);
 	}
-	if(isset($_REQUEST['beerName'])){
-		$record['beerName'] = trim($_REQUEST['beerName']);
-	}
-	if(isset($_REQUEST['beerStory'])){
-		$record['beerStory'] = $_REQUEST['beerStory'];
+	if(isset($_REQUEST['stepDetails'])){
+		$record['stepDetails'] = trim($_REQUEST['stepDetails']);
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
 	break;
@@ -42,23 +39,21 @@ case 'update':
 		echo 'Missing primary key reference for update operation.';
 		exit(-1);
 	}
+	$record['dayID'] = intval($_REQUEST['dayID']);
+	if(isset($_REQUEST['typeID'])){
+		$record['typeID'] = intval($_REQUEST['typeID']);
+	}
 	if(isset($_REQUEST['eventID'])){
 		$record['eventID'] = intval($_REQUEST['eventID']);
 	}
-	if(isset($_REQUEST['clubID'])){
-		$record['clubID'] = intval($_REQUEST['clubID']);
+	if(isset($_REQUEST['stepStart'])){
+		$record['stepStart'] = trim($_REQUEST['stepStart']);
 	}
-	if(isset($_REQUEST['brewerName'])){
-		$record['brewerName'] = trim($_REQUEST['brewerName']);
+	if(isset($_REQUEST['step'])){
+		$record['step'] = trim($_REQUEST['step']);
 	}
-	if(isset($_REQUEST['beerStyle'])){
-		$record['beerStyle'] = trim($_REQUEST['beerStyle']);
-	}
-	if(isset($_REQUEST['beerName'])){
-		$record['beerName'] = trim($_REQUEST['beerName']);
-	}
-	if(isset($_REQUEST['beerStory'])){
-		$record['beerStory'] = $_REQUEST['beerStory'];
+	if(isset($_REQUEST['stepDetails'])){
+		$record['stepDetails'] = trim($_REQUEST['stepDetails']);
 	}
 	$record['lastChangeDate'] = date("Y-m-d H:i:s");
 	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
