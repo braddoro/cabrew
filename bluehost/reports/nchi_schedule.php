@@ -7,7 +7,7 @@ $year = 2018;
 require_once('inc/Reporter.php');
 $params['ini_file'] = 'inc/server.ini';
 $params['bind'] = array("eventID" => 1, "type" => $type);
-$params['show_total'] = true;
+$params['show_total'] = false;
 $params['title'] = "NCHI {$year} Schedule of Events";
 $params['sql'] = "SELECT
 TIME_FORMAT(stepStart, '%h:%i %p') Start,

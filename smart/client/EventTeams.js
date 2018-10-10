@@ -9,13 +9,14 @@ isc.defineClass("EventTeams", "myWindow").addProperties({
 			{name: "eventID", width: 100, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
 			{name: "eventDay", type: "date", title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "eventTeamNameID", width: 100, type: "integer", title: "Team", optionDataSource: isc.Shared.eventTeamNamesDS, displayField: "teamName", valueField: "eventTeamNameID", optionCriteria: {active: "Y"}},
+			{name: "memberID", width: 120, allowEmptyValue: true, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
 			{name: "startTime", width: 100},
 			{name: "endTime", width: 100},
 			{name: "teamMember", width: "*", validators: [{type: "lengthRange", max: 45}]},
 			{name: "notes", width: 300, validators: [{type: "lengthRange", max: 1000}], detail: true},
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
-	});
+	});;
 	this.EventTeamsLG = isc.myListGrid.create({
 		parent: this,
 		name: "Beer list",
@@ -33,13 +34,15 @@ isc.defineClass("EventTeams", "myWindow").addProperties({
 			var eventDay;
 			var eventID;
 			var workTeam;
+			var memberID;
 			if(this.anySelected()){
 				data = this.getSelectedRecord();
 				eventDay = data.eventDay;
 				eventID = data.eventID;
 				workTeam = data.workTeam;
+				memberID = data.memberID;
 			}
-			var rowDefaults = {workTeam: workTeam, eventDay: eventDay, eventID: eventID};
+			var rowDefaults = {workTeam: workTeam, eventDay: eventDay, eventID: eventID, memberID: memberID};
 			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}

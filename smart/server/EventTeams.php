@@ -15,6 +15,9 @@ case 'fetch':
 	if(isset($_REQUEST['eventID'])){
 		$wheres .= " and eventID = " . intval($_REQUEST['eventID']) . " ";
 	}
+	if(isset($_REQUEST['memberID'])){
+		$wheres .= " and memberID = " . intval($_REQUEST['memberID']) . " ";
+	}
 	if(isset($_REQUEST['eventTeamNameID'])){
 		$wheres .= " and eventTeamNameID = " . intval($_REQUEST['eventTeamNameID']) . " ";
 	}
@@ -39,6 +42,9 @@ case 'add':
 	}
 	if(isset($_REQUEST['teamMember'])){
 		$record['teamMember'] = trim($_REQUEST['teamMember']);
+	}
+	if(isset($_REQUEST['memberID'])){
+		$record['memberID'] = intval($_REQUEST['memberID']);
 	}
 	if(isset($_REQUEST['startTime'])){
 		$record['startTime'] = trim($_REQUEST['startTime']);
@@ -68,6 +74,9 @@ case 'update':
 	}
 	if(isset($_REQUEST['eventDay'])){
 		$record['eventDay'] = trim($_REQUEST['eventDay']);
+	}
+	if(isset($_REQUEST['memberID'])){
+		$record['memberID'] = intval($_REQUEST['memberID']);
 	}
 	if(isset($_REQUEST['eventTeamNameID'])){
 		$record['eventTeamNameID'] = intval($_REQUEST['eventTeamNameID']);
