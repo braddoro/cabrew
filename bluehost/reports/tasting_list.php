@@ -3,7 +3,7 @@ $year = 2018;
 require_once('inc/Reporter.php');
 $params['ini_file'] = 'inc/server.ini';
 $params['bind'] = array("eventID" => 1);
-$params['show_total'] = true;
+$params['show_total'] = false;
 $params['title'] = "NCHI {$year} Beer Tasting List";
 $params['sql'] = "SELECT
 bl.beerCode, bl.beerName, bl.beerStyle, bc.clubAbbr as Tent

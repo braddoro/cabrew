@@ -2,6 +2,7 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewClubsDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "BrewClubs.php",
 			showFilterEditor: true,
 			fields:[

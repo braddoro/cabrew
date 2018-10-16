@@ -2,6 +2,7 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewMediaDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "BrewMedia.php",
 			fields:[
 				{name: "mediaID", primaryKey: true, type: "sequence", detail: true},

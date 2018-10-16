@@ -3,7 +3,7 @@ $year = 2018;
 require_once('inc/Reporter.php');
 $params['ini_file'] = 'inc/server.ini';
 $params['bind'] = array();
-$params['show_total'] = true;
+$params['show_total'] = false;
 $params['title'] = "NCHI Event Teams for {$year}";
 $params['sql'] = "
 select

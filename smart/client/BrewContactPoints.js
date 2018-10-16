@@ -2,13 +2,14 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewContactPointsDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "BrewContactPoints.php",
 			fields:[
 				{name: "contactPointID", primaryKey: true, type: "sequence", detail: true},
 				{name: "contactID", detail: true, required: true},
-				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
-				{name: "priority", type: "integer", editorType: "spinner"},
-				{name: "contactPoint"}
+				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75, defaultValue: 1},
+				{name: "priority", type: "integer", editorType: "spinner", defaultValue: 1},
+				{name: "contactPoint", type: "text"}
 			]
 		});
 		this.BrewContactPointsLG = isc.myListGrid.create({

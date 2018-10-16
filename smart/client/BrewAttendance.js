@@ -2,15 +2,16 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewAttendanceDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "BrewAttendance.php",
 			fields:[
+				{name: "attended", type: "integer"},
 				{name: "attendenceID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
+				{name: "beers", type: "integer"},
 				{name: "clubID", required: true, detail: true, canEdit: false},
-				{name: "year", required: true, type: "integer"},
 				{name: "interested", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "participated", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
-				{name: "attended", type: "integer"},
-				{name: "beers", type: "integer"}
+				{name: "year", required: true, type: "integer"}
 			]
 		});
 		this.BrewAttendanceLG = isc.myListGrid.create({

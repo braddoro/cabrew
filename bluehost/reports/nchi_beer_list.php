@@ -29,6 +29,16 @@ $params['title'] = "NCHI Beer List by Style for {$year}";
 $params['sql'] = "SELECT bl.beerListID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerStyle, bl.beerName, bl.brewerName FROM bd7rbk520.beerList bl inner join bd7rbk520.brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID order by bl.beerStyle, bl.beerName, bl.brewerName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
+
+$cutoff = 5;
+$params['bind'] = array("eventID" => 1, "votes" => $cutoff);
+$params['show_total'] = false;
+$params['title'] = "NCHI {$year} Voting results of {$cutoff} votes or more";
+$params['sql'] = "SELECT
+bl.beerListID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerStyle, bl.beerName, bl.votes, bl.brewerName FROM bd7rbk520.beerList bl inner join bd7rbk520.brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID and bl.votes >= :votes order by bl.votes desc, bl.beerStyle, bl.beerName, bl.brewerName;";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+
 ?>
 <!DOCTYPE html>
 <html>

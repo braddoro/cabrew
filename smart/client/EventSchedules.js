@@ -2,6 +2,7 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.EventScheduleDS = isc.myDataSource.create({
+		cacheAllData: false,
 		dataURL: serverPath + "EventSchedules.php",
 		showFilterEditor: true,
 		fields:[

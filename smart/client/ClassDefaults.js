@@ -1,4 +1,4 @@
-//isc.setAutoDraw(false);
+	//isc.setAutoDraw(false);
 isc.RPCResponse.STATUS_ERROR_DATA_ACCESS = -110;
 isc.RPCResponse.STATUS_SERVER_CONNECTION_ERROR = -111;
 isc.RPCResponse.STATUS_SETUP_DATA_ERROR = -112;
@@ -39,8 +39,10 @@ isc.defineClass("myHLayout", "HLayout").addProperties({
 	//width: "99%"
 });
 isc.defineClass("myDataSource", "DataSource").addProperties({
-	dataProtocol: "postParams",
+	cacheAllData: true,
+	cacheMaxAge: 86400,
 	dataFormat: "json",
+	dataProtocol: "postParams",
 	transformRequest: function(dsRequest){
 		var superClassArguments = this.Super("transformRequest", dsRequest);
 		var newProperties = {operationType: dsRequest.operationType};
