@@ -8,7 +8,7 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 				{name: "contactID", primaryKey: true, type: "sequence", detail: true},
 				{name: "clubID", detail: true, required: true},
 				{name: "contactName"},
-				{name: "priority", width: 75}
+				{name: "priority", editorType: "spinner", width: 100, defaultValue: 1}
 			]
 		});
 		this.BrewContactsLG = isc.myListGrid.create({

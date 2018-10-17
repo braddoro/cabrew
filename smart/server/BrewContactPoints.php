@@ -27,10 +27,10 @@ case 'fetch':
 	}
 	$sql = "select * from $table $wheres";
 	$response = $db->getAll($sql);
-	if(!$response){
-		echo $db->errorMsg();
-		exit(1);
-	}
+	// if(!$response){
+	// 	echo $db->errorMsg();
+	// 	exit(1);
+	// }
 	break;
 case 'add':
 	if(isset($_REQUEST['contactID'])){

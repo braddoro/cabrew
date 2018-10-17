@@ -7,12 +7,12 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 			showFilterEditor: true,
 			fields:[
 				{name: "clubID", primaryKey: true, type: "sequence", detail: true},
-				{name: "updated", type: "integer", width: 80},
 				{name: "clubName", width: "*"},
 				{name: "clubAbbr", width: 80},
-				{name: "distance", type: "integer", width: 80},
-				{name: "city", width: 150},
-				{name: "state", width: 80},
+				{name: "distance", type: "integer", width: 80, detail: true},
+				{name: "city", width: 150, detail: true},
+				{name: "state", width: 80, detail: true},
+				{name: "updated", type: "integer", width: 80, detail: true},
 				{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "lastChangeDate", type: "date", detail: true, canEdit: false}
 			]

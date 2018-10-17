@@ -237,16 +237,16 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 			}
 		},
 		{isSeparator: true},
-		{title: "Show Contact Types",
+		{title: "Show Contact Points",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.BrewContactPoints.create({
-					title: "Contact Types for " + record.contactName,
+					title: "Contact Points for " + record.contactName,
 					contactID: record.contactID,
 					width: 400,
 					height: 200,
 					left: 190,
-					top: 90
+					top: 150
 				});
 			}
 		}

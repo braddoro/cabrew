@@ -33,7 +33,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "Clubs",
 			items: [
 				{title: "Club Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
+				{title: "Clubs", click: "isc.BrewClubs.create({width: \"400\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});
