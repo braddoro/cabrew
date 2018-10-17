@@ -6,23 +6,13 @@ $db = $conn->conn();
 if(!$db->isConnected()){
 	echo $db->errorMsg();
 }
-$table = 'eventData';
-$primaryKey = 'eventDataID';
+$table = 'eventSchedules';
+$primaryKey = 'eventScheduleID';
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
 	$wheres = ' where 1=1 ';
-	if(isset($_REQUEST['status'])){
-		$qStr = $db->qStr($_REQUEST['status'], true);
-		$wheres .= " and status = $qStr ";
-	}
-	if(isset($_REQUEST['eventTypeID'])){
-		$wheres .= ' and eventTypeID = ' . intval($_REQUEST['eventTypeID']);
-	}
-	if(isset($_REQUEST['step'])){
-		$wheres .= " and step like '%" . $_REQUEST['step'] . "%' ";
-	}
-	$sql = "select * from $table $wheres order by dueDate";
+	$sql = "select * from $table $wheres;";
 	$response = $db->getAll($sql);
 	if(!$response){
 		echo $db->errorMsg();
@@ -30,20 +20,17 @@ case 'fetch':
 	}
 	break;
 case 'add':
-	$record['eventTypeID'] = intval($_REQUEST['eventTypeID']);
-	$record['memberID'] = intval($_REQUEST['memberID']);
-	$record['dueDate'] = $_REQUEST['dueDate'];
+	$record['dayID'] = intval($_REQUEST['dayID']);
+	$record['typeID'] = intval($_REQUEST['typeID']);
+	$record['eventID'] = intval($_REQUEST['eventID']);
+	if(isset($_REQUEST['stepStart'])){
+		$record['stepStart'] = trim($_REQUEST['stepStart']);
+	}
 	if(isset($_REQUEST['step'])){
-		$record['step'] = $_REQUEST['step'];
+		$record['step'] = trim($_REQUEST['step']);
 	}
-	if(isset($_REQUEST['status'])){
-		$record['status'] = $_REQUEST['status'];
-	}
-	if(isset($_REQUEST['cost'])){
-		$record['cost'] = floatval($_REQUEST['cost']);
-	}
-	if(isset($_REQUEST['notes'])){
-		$record['notes'] = $_REQUEST['notes'];
+	if(isset($_REQUEST['stepDetails'])){
+		$record['stepDetails'] = trim($_REQUEST['stepDetails']);
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
 	break;
@@ -52,26 +39,21 @@ case 'update':
 		echo 'Missing primary key reference for update operation.';
 		exit(-1);
 	}
-	if(isset($_REQUEST['eventTypeID'])){
-		$record['eventTypeID'] = intval($_REQUEST['eventTypeID']);
+	$record['dayID'] = intval($_REQUEST['dayID']);
+	if(isset($_REQUEST['typeID'])){
+		$record['typeID'] = intval($_REQUEST['typeID']);
 	}
-	if(isset($_REQUEST['memberID'])){
-		$record['memberID'] = intval($_REQUEST['memberID']);
+	if(isset($_REQUEST['eventID'])){
+		$record['eventID'] = intval($_REQUEST['eventID']);
 	}
-	if(isset($_REQUEST['dueDate'])){
-		$record['dueDate'] = $_REQUEST['dueDate'];
+	if(isset($_REQUEST['stepStart'])){
+		$record['stepStart'] = trim($_REQUEST['stepStart']);
 	}
 	if(isset($_REQUEST['step'])){
-		$record['step'] = $_REQUEST['step'];
+		$record['step'] = trim($_REQUEST['step']);
 	}
-	if(isset($_REQUEST['status'])){
-		$record['status'] = $_REQUEST['status'];
-	}
-	if(isset($_REQUEST['cost'])){
-		$record['cost'] = floatval($_REQUEST['cost']);
-	}
-	if(isset($_REQUEST['notes'])){
-		$record['notes'] = $_REQUEST['notes'];
+	if(isset($_REQUEST['stepDetails'])){
+		$record['stepDetails'] = trim($_REQUEST['stepDetails']);
 	}
 	$record['lastChangeDate'] = date("Y-m-d H:i:s");
 	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
