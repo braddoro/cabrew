@@ -58,8 +58,8 @@ isc.Shared = {
 		dataURL: serverPath + "EventTypes.php",
 		fields:[
 			{name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "eventType", type: "text"},
-			{name: "description", type: "text"},
+			{name: "eventType", type: "text", width: 120},
+			{name: "description", type: "text", width: "*"},
 			{name: "active", type: "text", width: 80},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]

@@ -3,7 +3,7 @@ require_once('inc/Reporter.php');
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
 $params['bind'] = array();
-$params['title'] = "Active Club Members";
+$params['title'] = "Club Member Contacts";
 $params['sql'] = "select
     M.memberID,
     M.firstName,

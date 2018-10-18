@@ -11,18 +11,18 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			{name: "memberID", width: 120, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
 			{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},
-			{name: "status", width: 75, validators: [{type: "lengthRange", max: 45}], valueMap:["not started","in process","blocked","complete","not needed"]},
+			{name: "status", width: 75, validators: [{type: "lengthRange", max: 45}], valueMap:["not started","in process","blocked","complete","not needed", "milestone"]},
 			{name: "cost", width: 50, type: "float"},
 			{name: "notes", width: "*", validators: [{type: "lengthRange", max: 1000}]},
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
 	});
 	this.EventPlanLG = isc.myListGrid.create({
-		parent: this,
-		name: "Event Planning Playlist",
-		showFilterEditor: true,
 		dataSource: this.EventPlanDS,
 		initialSort: [{property: "dueDate", direction: "ascending"}],
+		name: "Event Planning",
+		parent: this,
+		showFilterEditor: true,
 		startEditingNew: function(newValues, suppressFocus){
 			var today;
 			var step;
@@ -33,6 +33,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 				today = data.dueDate;
 				step = data.step;
 				thread = data.thread;
+				status = 'not started',
 				eventTypeID = data.eventTypeID;
 			}else{
 				today = new Date();

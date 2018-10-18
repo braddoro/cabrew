@@ -15,11 +15,11 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 		]
 	});
 	this.EventScheduleLG = isc.myListGrid.create({
-		parent: this,
-		name: "Event Day",
-		showFilterEditor: true,
 		dataSource: this.EventScheduleDS,
-		initialSort: [{property: "eventID", direction: "ascending"},{property: "date", direction: "ascending"},{property: "stepStart", direction: "ascending"}]
+		initialSort: [{property: "eventID", direction: "ascending"},{property: "date", direction: "ascending"},{property: "stepStart", direction: "ascending"}],
+		name: "Event Scheduling",
+		parent: this,
+		showFilterEditor: true
 	});
 	this.localContextMenu = isc.myContextMenu.create({
 		parent: this,

@@ -18,7 +18,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Event Planning", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Event Scheduling", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},
 				{title: "Event Teams", click: "isc.EventTeams.create({width: 750, height: \"95%\"});"},
-				{title: "Beer List", click: "isc.BeerList.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Event Beers", click: "isc.EventBeers.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});

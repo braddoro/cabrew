@@ -36,14 +36,14 @@ $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
 $params['title'] = $title . ' Event Schedule';
 $params['sql'] = "select
-	C.eventDataID,
+	C.eventPlanID,
 	C.step,
 	C.dueDate,
 	CONCAT(M.firstName, ' ',M.lastName) AS 'Assignee',
 	C.cost,
 	C.status,
     C.notes
-from eventData C
+from eventPlans C
 	left join members M on M.memberID = C.memberID
 	where 1=1
 	{$wheres}

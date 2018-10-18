@@ -6,8 +6,8 @@ $db = $conn->conn();
 if(!$db->isConnected()){
 	echo $db->errorMsg();
 }
-$table = 'beerList';
-$primaryKey = 'beerListID';
+$table = 'eventBeers';
+$primaryKey = 'eventBeerID';
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
@@ -23,7 +23,7 @@ case 'fetch':
 	}
 	break;
 case 'add':
-	$record['beerListID'] = intval($_REQUEST['beerListID']);
+	$record[$primaryKey] = intval($_REQUEST[$primaryKey]);
 	$record['eventID'] = intval($_REQUEST['eventID']);
 	$record['clubID'] = intval($_REQUEST['clubID']);
 	if(isset($_REQUEST['brewerName'])){

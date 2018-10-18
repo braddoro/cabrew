@@ -12,7 +12,7 @@ $params['show_total'] = true;
 $params['title'] = 'Todo Next 30 Days';
 $params['sql'] = "
 select
-	C.eventDataID,
+	C.eventPlanID,
 	CT.eventType,
 	C.step,
 	C.dueDate,
@@ -20,15 +20,14 @@ select
 	C.cost,
 	C.status,
     C.notes
-from eventData C
+from eventPlans C
 	left join members M on M.memberID = C.memberID
 	left join eventTypes CT on C.eventTypeID = CT.eventTypeID
 where (C.status IS NULL or C.status <> 'complete')
 	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL 35 DAY)
 	and C.memberID = coalesce(:id, C.memberID)
 order by
-	C.dueDate;
-";
+	C.dueDate;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

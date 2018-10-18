@@ -14,7 +14,7 @@ if(isset($_GET['p1'])){
 }
 $params['bind'] = array('priority1' => $priority1, 'priority2' => $priority2, 'active' => $active);
 $params['ini_file'] = 'inc/server.ini';
-$params['title'] = 'Other Club Contacts';
+$params['title'] = 'Brew Club Contacts';
 $params['sql'] = "
 select distinct
 	concat('<a href=\"',media.media,'\" target=\"_blank\">',club.clubName,'</a>') as 'Club',
