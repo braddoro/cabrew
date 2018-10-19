@@ -23,7 +23,12 @@ case 'add':
 	$record['postName'] = $_REQUEST['postName'];
 	$record['postText'] = $_REQUEST['postText'];
 	$db->AutoExecute($table, $record, 'INSERT');
-	echo $db->errorMsg();
+	$sql = "select * from $table where $primaryKey = " . $db->insert_Id();
+	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 case 'update':
 	if(!isset($_REQUEST[$primaryKey])){
@@ -48,6 +53,10 @@ case 'remove':
 	$result = $db->execute($sql);
 	$sql = "select * from $table where $where";
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 default:
 	break;

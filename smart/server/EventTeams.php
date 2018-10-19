@@ -56,6 +56,8 @@ case 'add':
 		$record['notes'] = trim($_REQUEST['notes']);
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
+	$sql = "select * from $table where $primaryKey = " . $db->insert_Id();
+	$response = $db->getAll($sql);
 	if(!$response){
 		echo $db->errorMsg();
 		exit(1);
@@ -109,6 +111,10 @@ case 'remove':
 	$result = $db->execute($sql);
 	$sql = "select * from $table where $where";
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 default:
 	break;

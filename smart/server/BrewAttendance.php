@@ -56,6 +56,12 @@ case 'add':
 		$record['participated'] = trim($_REQUEST['participated']);
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
+	$sql = "select * from $table where $primaryKey = " . $db->insert_Id();
+	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 case 'update':
 	if(!isset($_REQUEST[$primaryKey])){
@@ -96,6 +102,10 @@ case 'remove':
 	$result = $db->execute($sql);
 	$sql = "select * from $table where $where";
 	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 default:
 	break;

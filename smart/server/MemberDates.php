@@ -30,6 +30,12 @@ case 'add':
 		$record['dateDetail'] = $_REQUEST['dateDetail'];
 	}
 	$db->AutoExecute($table, $record, 'INSERT');
+	$sql = "select * from $table where $primaryKey = " . $db->insert_Id();
+	$response = $db->getAll($sql);
+	if(!$response){
+		echo $db->errorMsg();
+		exit(1);
+	}
 	break;
 case 'remove':
 	if(!isset($_REQUEST[$primaryKey])){
