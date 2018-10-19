@@ -38,7 +38,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			}else{
 				today = new Date();
 			}
-			var rowDefaults = {step: step, thread: thread, dueDate: today, eventTypeID: eventTypeID};
+			var rowDefaults = {step: step, thread: thread, dueDate: today, eventTypeID: eventTypeID, status: "not started"};
 			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}
