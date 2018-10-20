@@ -23,23 +23,26 @@ class Connect {
 				switch($meta->type){
 					case 'int':
 						if(!$meta->primary_key){
-							$record[$key] = intval($value); // $data['newvals'][$key]
+							$record[$key] = intval($value);
 						}
 						break;
 					case 'varchar':
-						// $record[$key] = $this->dbo->qStr(substr($value,0,$meta->max_length), false); // $data['newvals'][$key]
-						$record[$key] = substr($value,0,$meta->max_length);
+						$record[$key] = substr(trim($value),0,$meta->max_length);
+						// if(!$meta->not_null && strlen(trim($value)) == 0){
+						// 	$record[$key] = NULL;
+						// }
 						break;
 					default:
-						$skipup = true;
-						echo "/* Unknown column type:\n ".
+						$err = "Unknown column type:\n " .
 							$value . '~' .
-							$meta->name . '~' .
 							$meta->type . '~' .
+							$meta->name . '~' .
 							$meta->not_null . '~' .
 							$meta->primary_key . '~' .
 							$meta->max_length . '~' .
-							"*/\n";
+							"\n";
+						$response = array('status' => -1, 'errorMessage' => $err);
+						return $response;
 						break;
 				}
 			}
@@ -47,5 +50,17 @@ class Connect {
 		$record['lastChangeDate'] = date("Y-m-d H:i:s");
 		return $record;
 	}
+	public function getMessage($errorNumber, $data = null) {
+		switch ($errorNumber) {
+			case 1:
+				$error = 'No Primary Key sent on {$data} action.  This is not desirable. F5 is your friend right now.';
+				break;
+			default:
+				$error = '';
+				break;
+		}
+		return $error;
+	}
+
 }
 ?>

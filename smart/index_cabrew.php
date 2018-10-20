@@ -49,6 +49,7 @@ $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
 $classes[] = "StatusTypes.js";
 $classes[] = "WebPosts.js";
+$classes[] = "test.js";
 echo "<html>
 <head>
 <script>var isc = null;</script>

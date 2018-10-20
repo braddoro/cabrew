@@ -2,13 +2,13 @@ isc.defineClass("ContactTypes", "myWindow").addProperties({
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.ContactTypesLG = isc.myListGrid.create({
-		parent: this,
 		dataSource: isc.Shared.contactTypesDS,
-		name: "Contact Types"
+		name: "Contact Types",
+		parent: this
 	});
 	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.ContactTypesLG
+		callingListGrid: this.ContactTypesLG,
+		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.ContactTypesLG]}));
 	}
