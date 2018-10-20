@@ -23,76 +23,40 @@ case 'fetch':
 	}
 	break;
 case 'add':
-	$record['eventType'] = $_REQUEST['eventType'];
-	if(isset($_REQUEST['description'])){
-		$record['description'] = $_REQUEST['description'];
-	}
-	$db->AutoExecute($table, $record, 'INSERT');
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
 	$sql = "select * from $table where $primaryKey = " . $db->insert_Id();
 	$response = $db->getAll($sql);
 	if(!$response){
-		echo $db->errorMsg();
+		$response = array('status' => -1, 'errormessage' => $db->errorMsg());
 		exit(1);
 	}
 	break;
 case 'update':
-	$cols = $db->metaColumns($table);
-	$pksent = true;
-	$skipup = false;
-	foreach($_REQUEST as $key => $value){
-		if(array_key_exists(strtoupper($key), $cols)){
-			$meta = $cols[strtoupper($key)];
-			switch($meta->type){
-				case 'int':
-					if(!$meta->primary_key){
-						$record[$key] = intval($_REQUEST[$key]);
-					}else{
-						if ($meta->name == $primaryKey) {
-							$pksent = true;
-						}
-					}
-					break;
-				case 'varchar':
-					$record[$key] = $db->qStr(substr($_REQUEST[$key],0,$meta->max_length), false);
-					break;
-				default:
-					$skipup = true;
-					echo "/* Unknown column type:\n ".
-						$value . '~' .
-						$meta->name . '~' .
-						$meta->type . '~' .
-						$meta->not_null . '~' .
-						$meta->primary_key . '~' .
-						$meta->max_length . '~' .
-						"*/\n";
-					break;
-			}
-		}
+	if(!isset($_REQUEST[$primaryKey])){
+		$response = array('status' => -1, 'errormessage' => 'No Primary Key sent.');
+		echo json_encode($response);
+		exit(1)
 	}
-	if(!$pksent){
-		$result = array('status' => -1, 'errormessage' => 'No Primary Key sent.');
-	}
-	$record['lastChangeDate'] = date("Y-m-d H:i:s");
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	if(!$skipup){
-		$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
-		$sql = "select * from $table where $where";
-		$response = $db->getAll($sql);
-		if(!$response){
-			$response = array('status' => -1, 'errormessage' => $db->errorMsg());
-			echo json_encode($response);
-			exit(1);
-		}
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
+	$sql = "select * from $table where {$primaryKey} = " . intval($_REQUEST[$primaryKey]);
+	$response = $db->getAll($sql);
+	if(!$response){
+		$response = array('status' => -1, 'errormessage' => $db->errorMsg());
+		echo json_encode($response);
+		exit(1);
 	}
  	break;
 case 'remove':
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$sql = "delete from $table where $where";
+	$sql = "delete from {$table} where {$primaryKey} = " . intval($_REQUEST[$primaryKey]);
 	$result = $db->execute($sql);
-	$sql = "select * from $table where $where";
+	$sql = "select * from {$table} where {$primaryKey} = " . intval($_REQUEST[$primaryKey]);
 	$response = $db->getAll($sql);
 	if(!$response){
-		echo $db->errorMsg();
+		$response = array('status' => -1, 'errormessage' => $db->errorMsg());
 		exit(1);
 	}
 	break;

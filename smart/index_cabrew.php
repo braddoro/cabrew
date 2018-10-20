@@ -1,5 +1,5 @@
 <?php
-require_once '/home/brad/git/adodb5/adodb.inc.php';
+require_once '../../adodb5/adodb.inc.php';
 $cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];

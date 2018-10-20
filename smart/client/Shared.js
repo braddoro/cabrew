@@ -60,7 +60,7 @@ isc.Shared = {
 			{name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "eventType", type: "text", width: 120},
 			{name: "description", type: "text", width: "*"},
-			{name: "active", type: "text", width: 80},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
