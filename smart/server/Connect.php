@@ -15,7 +15,6 @@ class Connect {
 		return $dbo;
 	}
 	public function buildRecordset($data) {
-		$retval =  array();
 		$cols = $this->dbo->metaColumns($data['table']);
 		foreach($data['newvals'] as $key => $value){
 			if(array_key_exists(strtoupper($key), $cols)){
