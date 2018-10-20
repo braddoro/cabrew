@@ -20,6 +20,7 @@ class Connect {
 			if(array_key_exists(strtoupper($key), $cols)){
 				$meta = $cols[strtoupper($key)];
 				switch($meta->type){
+					case 'bigint': // Planned fall through.
 					case 'int':
 						if(!$meta->primary_key){
 							$record[$key] = intval($value);
@@ -27,9 +28,9 @@ class Connect {
 						break;
 					case 'varchar':
 						$record[$key] = substr(trim($value),0,$meta->max_length);
-						// if(!$meta->not_null && strlen(trim($value)) == 0){
-						// 	$record[$key] = NULL;
-						// }
+						if(!$meta->not_null && strlen(trim($value)) == 0){
+							$record[$key] = 'NULL';
+						}
 						break;
 					default:
 						$err = "Unknown column type:\n " .
@@ -52,7 +53,10 @@ class Connect {
 	public function getMessage($errorNumber, $data = null) {
 		switch ($errorNumber) {
 			case 1:
-				$error = 'No Primary Key sent on {$data} action.  This is not desirable. F5 is your friend right now.';
+				$error = "No Primary Key sent on {$data} action.  This is not desirable. F5 is your friend right now.";
+				break;
+			case 2:
+				$error = "Operation types of {$data} are not allowed on this dataset.";
 				break;
 			default:
 				$error = '';

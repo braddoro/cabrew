@@ -2,35 +2,12 @@
 require_once 'Connect.php';
 $conn = new Connect();
 $db = $conn->conn();
-$wheres = '';
-// if(isset($_REQUEST['statusTypeID_fk'])){
-// 	$wheres .= ' and M.statusTypeID_fk = ' . intval($_REQUEST['statusTypeID_fk']);
-// }
-	// if(isset($argsIN['statusTypeID_fk'])) {
-	// 	$statusTypeID = ($argsIN['statusTypeID_fk'] > 0) ? $argsIN['statusTypeID_fk'] : NULL;
-	// }else{
-	// 	$statusTypeID = 'NULL';
-	// }
-	// if(isset($argsIN['renewalYear'])) {
-	// 	$renewalYear = ($argsIN['renewalYear'] > 0) ? $argsIN['renewalYear'] : NULL;
-	// }else{
-	// 	$renewalYear = 'NULL';
-	// }
-	// if(isset($argsIN['firstName'])) {
-	// 	$firstName = ($argsIN['firstName'] > '') ? "LOWER('%" .$argsIN['firstName'] . "%')" : NULL;
-	// }else{
-	// 	$firstName = 'NULL';
-	// }
-	// if(isset($argsIN['lastName'])) {
-	// 	$lastName = ($argsIN['lastName'] > '') ? "LOWER('%" .$argsIN['lastName'] . "%')" : NULL;
-	// }else{
-	// 	$lastName = 'NULL';
-	// }
-	// if(isset($argsIN['FullName'])) {
-	// 	$fullName = ($argsIN['FullName'] > '') ? "LOWER('%" .$argsIN['FullName'] . "%')" : NULL;
-	// }else{
-	// 	$fullName = 'NULL';
-	// }
+$operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
+if(($operationType != 'fetch')){
+	$response = array('status' => -1, 'errorMessage' => $conn->getMessage(2, $operationType));
+	echo json_encode($response);
+	exit(1);
+}
 $sql = "select
 	c.clubID,
 	bc.contactID,
@@ -57,7 +34,6 @@ left join brew_media bm on c.clubID = bm.clubID
 left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
 left join contactTypes ct2 on bm.contactTypeID_fk = ct2.contactTypeID
 left join brew_attendence ba on c.clubID = ba.clubID and participated = 'Y'
-where 1=1 $wheres
 group by
 	c.clubID,
 	bc.contactID,

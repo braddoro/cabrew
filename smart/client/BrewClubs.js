@@ -12,7 +12,6 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 				{name: "distance", type: "integer", width: 80},
 				{name: "city", width: 150},
 				{name: "state", width: 80},
-				{name: "updated", type: "integer", width: 80},
 				{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "lastChangeDate", type: "date", detail: true, canEdit: false}
 			]

@@ -2,7 +2,6 @@ isc.defineClass("ClubSearch", "myWindow").addProperties({
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
 	this.ClubSearchDS = isc.myDataSource.create({
-		canEdit: false,
 		dataURL: serverPath + "ClubSearch.php",
 		fields:[
 			{name: "clubID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
@@ -29,7 +28,7 @@ isc.defineClass("ClubSearch", "myWindow").addProperties({
 		parent: this,
 		showFilterEditor: true
 	});
-	this.localContextMenu = isc.myChildMenu.create({
+	this.localContextMenu = isc.myClubMenu.create({
 		callingListGrid: this.ClubSearchLG,
 		parent: this
 	});

@@ -13,14 +13,14 @@ isc.defineClass("LibraryBooks", "myWindow").addProperties({
 		]
 	});
 	this.LibraryBooksLG = isc.myListGrid.create({
+		dataSource: this.LibraryBooksDS,
 		name: "Library Books",
 		parent: this,
-		dataSource: this.LibraryBooksDS,
 		showFilterEditor: true
 	});
 	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.LibraryBooksLG
+		callingListGrid: this.LibraryBooksLG,
+		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.LibraryBooksLG]}));
   }

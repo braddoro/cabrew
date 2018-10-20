@@ -15,17 +15,17 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 			]
 		});
 		this.BrewAttendanceLG = isc.myListGrid.create({
-			parent: this,
-			name: "Brew Club Attendance",
 			dataSource: this.BrewAttendanceDS,
+			name: "Brew Club Attendance",
+			parent: this,
 			startEditingNew: function(newValues, suppressFocus){
 				var moreCriteria = isc.addProperties({}, newValues, {clubID: initData.clubID});
 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
 			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
-			parent: this,
-			callingListGrid: this.BrewAttendanceLG
+			callingListGrid: this.BrewAttendanceLG,
+			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewAttendanceLG]}));
 		this.BrewAttendanceLG.fetchData({clubID: initData.clubID});

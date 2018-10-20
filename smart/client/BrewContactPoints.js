@@ -13,17 +13,17 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 			]
 		});
 		this.BrewContactPointsLG = isc.myListGrid.create({
-			parent: this,
-			name: "Brew Contact Points",
 			dataSource: this.BrewContactPointsDS,
+			name: "Brew Contact Points",
+			parent: this,
 			startEditingNew: function(newValues, suppressFocus){
 				var moreCriteria = isc.addProperties({}, newValues, {contactID: initData.contactID});
 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
 			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
-			parent: this,
-			callingListGrid: this.BrewContactPointsLG
+			callingListGrid: this.BrewContactPointsLG,
+			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewContactPointsLG]}));
 		this.BrewContactPointsLG.fetchData({contactID: initData.contactID});

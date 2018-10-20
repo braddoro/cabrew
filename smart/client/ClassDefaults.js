@@ -133,6 +133,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}
 	},
 	doubleClick: function(){
+		// ToDo: This is bad.
 		if(this.getTotalRows() > 0){
 
 		} else{
@@ -141,7 +142,10 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		return true;
 	},
 	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
-		this.startEditing(recordNum);
+		// ToDo: Figure out how to make a grid disabled.
+		// if(this.canEdit){
+			this.startEditing(recordNum);
+		// }
 	},
 	updateStatus: function() {
 		if(this.name) {

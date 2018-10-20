@@ -12,7 +12,7 @@ if(!$db->isConnected()){
 $pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 if(($operationType == 'update' || $operationType == 'remove') && is_null($pkval)){
-	$response = array('status' => -1, 'errorMessage' => $conn->getMessage(1), $operationType);
+	$response = array('status' => -1, 'errorMessage' => $conn->getMessage(1, $operationType));
 	echo json_encode($response);
 	exit(1);
 }
@@ -34,6 +34,7 @@ case 'add':
 case 'update':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
+	// echo json_encode($record);
 	$where = $primaryKey . '=' . $pkval;
 	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
@@ -46,7 +47,7 @@ default:
 	break;
 }
 $sql = "select * from {$table} where {$where};";
-echo "/* {$sql} */";
+// echo "/* {$sql} */";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

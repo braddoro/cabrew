@@ -8,7 +8,7 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 				{name: "mediaID", primaryKey: true, type: "sequence", detail: true},
 				{name: "clubID", detail: true, required: true},
 				{name: "contactTypeID_fk", title: "Type", optionDataSource: isc.Shared.contactTypesDS, displayField: "contactType", valueField: "contactTypeID", width: 75},
-				{name: "priority", width: 75},
+				{name: "priority", editorType: "spinner", width: 100, defaultValue: 1},
 				{name: "media",
 					formatCellValue: function (value) {
 						var formatted;
@@ -21,17 +21,17 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 			]
 		});
 		this.BrewMediaLG = isc.myListGrid.create({
-			parent: this,
-			name: "Brew Media",
 			dataSource: this.BrewMediaDS,
+			name: "Brew Media",
+			parent: this,
 			startEditingNew: function(newValues, suppressFocus){
 				var moreCriteria = isc.addProperties({}, newValues, {clubID: initData.clubID});
 				return this.Super("startEditingNew", [moreCriteria, suppressFocus]);
 			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
-			parent: this,
-			callingListGrid: this.BrewMediaLG
+			callingListGrid: this.BrewMediaLG,
+			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewMediaLG]}));
 		this.BrewMediaLG.fetchData({clubID: initData.clubID});
