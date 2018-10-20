@@ -21,8 +21,8 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 			}
 		});
 		this.localContextMenu = isc.myContactMenu.create({
-			parent: this,
-			callingListGrid: this.BrewContactsLG
+			callingListGrid: this.BrewContactsLG,
+			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewContactsLG]}));
 		this.BrewContactsLG.fetchData({clubID: initData.clubID});

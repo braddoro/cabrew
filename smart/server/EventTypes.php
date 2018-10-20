@@ -36,23 +36,53 @@ case 'add':
 	}
 	break;
 case 'update':
-	if(isset($_REQUEST['eventType'])){
-		$record['eventType'] = $_REQUEST['eventType'];
+	$cols = $db->metaColumns($table);
+	$pksent = true;
+	$skipup = false;
+	foreach($_REQUEST as $key => $value){
+		if(array_key_exists(strtoupper($key), $cols)){
+			$meta = $cols[strtoupper($key)];
+			switch($meta->type){
+				case 'int':
+					if(!$meta->primary_key){
+						$record[$key] = intval($_REQUEST[$key]);
+					}else{
+						if ($meta->name == $primaryKey) {
+							$pksent = true;
+						}
+					}
+					break;
+				case 'varchar':
+					$record[$key] = $db->qStr(substr($_REQUEST[$key],0,$meta->max_length), false);
+					break;
+				default:
+					$skipup = true;
+					echo "/* Unknown column type:\n ".
+						$value . '~' .
+						$meta->name . '~' .
+						$meta->type . '~' .
+						$meta->not_null . '~' .
+						$meta->primary_key . '~' .
+						$meta->max_length . '~' .
+						"*/\n";
+					break;
+			}
+		}
 	}
-	if(isset($_REQUEST['active'])){
-		$record['active'] = $_REQUEST['active'];
-	}
-	if(isset($_REQUEST['description'])){
-		$record['description'] = $_REQUEST['description'];
+	if(!$pksent){
+		$result = array('status' => -1, 'errormessage' => 'No Primary Key sent.');
 	}
 	$record['lastChangeDate'] = date("Y-m-d H:i:s");
 	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$db->AutoExecute($table, $record, 'UPDATE', $where);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
-	if(!$response){
-		echo $db->errorMsg();
-		exit(1);
+	if(!$skipup){
+		$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
+		$sql = "select * from $table where $where";
+		$response = $db->getAll($sql);
+		if(!$response){
+			$response = array('status' => -1, 'errormessage' => $db->errorMsg());
+			echo json_encode($response);
+			exit(1);
+		}
 	}
  	break;
 case 'remove':

@@ -245,7 +245,7 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 					contactID: record.contactID,
 					width: 400,
 					height: 200,
-					left: 190,
+					left: 250,
 					top: 150
 				});
 			}

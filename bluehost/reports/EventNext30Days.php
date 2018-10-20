@@ -9,7 +9,7 @@ if(isset($id)){
 }
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
-$params['title'] = 'Todo Next 30 Days';
+$params['title'] = 'Todo Next 45 Days';
 $params['sql'] = "
 select
 	C.eventPlanID,
@@ -24,7 +24,7 @@ from eventPlans C
 	left join members M on M.memberID = C.memberID
 	left join eventTypes CT on C.eventTypeID = CT.eventTypeID
 where (C.status IS NULL or C.status <> 'complete')
-	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL 35 DAY)
+	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL 45 DAY)
 	and C.memberID = coalesce(:id, C.memberID)
 order by
 	C.dueDate;";
