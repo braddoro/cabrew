@@ -3,6 +3,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.memberPointsDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "MemberPoints.php",
 			fields:[
 				{name: "memberID", type: "sequence", primaryKey: true, detail: true, foreignKey: "this.pointListDS.memberID"},
@@ -12,6 +13,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			]
 		});
 		this.pointListDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "PointsList.php",
 			fields:[
 				{name: "memberID", type: "sequence", primaryKey: true, detail: true},

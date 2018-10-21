@@ -26,6 +26,8 @@ case 'fetch':
 	$where = '1=1';
 	if(isset($_REQUEST['year'])){
 		$where .= ' and year(d.memberDate) = ' . intval($_REQUEST['year']);
+	}else{
+		$where .= ' and year(d.memberDate) = ' . date('Y');
 	}
 	if(isset($_REQUEST['memberID_fk'])){
 		$where .= " and d.memberID_fk = " . intval($_REQUEST['memberID_fk']);
