@@ -1,5 +1,6 @@
 <?php
-require_once '../adodb5/adodb.inc.php';
+// require_once '../adodb5/adodb.inc.php'; // cabrew.org
+require_once '../../adodb5/adodb.inc.php'; // localhost
 $cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
@@ -12,7 +13,6 @@ $classes = array();
 $classes[] = "ClassDefaults.js";
 $classes[] = "library.js";
 $classes[] = "AddEvent.js";
-$classes[] = "AddMember.js";
 $classes[] = "AddPayment.js";
 $classes[] = "BrewAttendance.js";
 $classes[] = "BrewClubs.js";

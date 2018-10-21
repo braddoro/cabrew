@@ -11,6 +11,13 @@ if(!$db->isConnected()){
 }
 $pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
+$access_array = parse_ini_file('access.ini', true);
+$accesslist = $access_array['access'][basename(__FILE__)];
+if((!substr_count($accesslist,$operationType))){
+	$response = array('status' => -4, 'errorMessage' => $conn->getMessage(2, $operationType));
+	echo json_encode($response);
+	exit(1);
+}
 if(($operationType == 'update' || $operationType == 'remove') && is_null($pkval)){
 	$response = array('status' => -1, 'errorMessage' => $conn->getMessage(1, $operationType));
 	echo json_encode($response);
