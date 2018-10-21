@@ -10,8 +10,8 @@ class Connect {
 		$database = $ini_array['database']['dbname'];
 		$dbo = ADOnewConnection('mysqli');
 		$dbo->setFetchMode(ADODB_FETCH_ASSOC);
-		$dbo->setCharset('utf8');
 		$dbo->connect($hostname, $username, $password, $database);
+		$dbo->setCharset('utf8');
 		$this->dbo = $dbo;
 		return $dbo;
 	}
