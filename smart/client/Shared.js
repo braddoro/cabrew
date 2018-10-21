@@ -89,7 +89,7 @@ isc.Shared = {
 		fields:[
 			{name: "memberID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
 			{name: "FullName", type: "text"},
-			{name: "Status", type: "text"}
+			{name: "statusTypeID_fk", type: "integer", canEdit: false, detail: true}
 		]
 	}),
 	messageTypesDS: isc.myDataSource.create({

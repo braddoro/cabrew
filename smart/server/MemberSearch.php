@@ -54,7 +54,17 @@ default:
 	break;
 }
 // $sql = "select * from {$table} where {$where};";
-$sql = "select M.memberID, M.statusTypeID_fk, REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', IFNULL(M.midName, ''), ' ', M.lastName),'  ',' ') as 'FullName', M.sex, M.renewalYear, M.lastChangeDate from members M where {$where} order by M.firstName;";
+$sql = "select
+	M.memberID,
+	M.statusTypeID_fk,
+	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', IFNULL(M.midName, ''), ' ', M.lastName),'  ',' ') as 'FullName',
+	M.sex,
+	M.renewalYear,
+	M.lastChangeDate
+	from
+	members M
+	where {$where}
+	order by M.firstName;";
 // echo "/* {$sql} */";
 $response = $db->getAll($sql);
 if(!$response){

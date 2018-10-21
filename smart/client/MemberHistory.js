@@ -3,7 +3,6 @@ isc.defineClass("MemberHistory", "myWindow").addProperties({
 	this.Super("initWidget", arguments);
 	this.MemberHistoryDS = isc.myDataSource.create({
 		dataURL: serverPath + "MemberHistory.php",
-		canEdit: false,
 		fields:[
 			{name: "memberDateID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "memberID_fk", width: 120, title: "Full Name", optionDataSource: isc.Shared.memberNamesDS, displayField: "FullName", valueField: "memberID"},
@@ -15,14 +14,15 @@ isc.defineClass("MemberHistory", "myWindow").addProperties({
 		]
 	});
 	this.MemberHistoryLG = isc.myListGrid.create({
-		parent: this,
+		canEdit: false,
+		dataSource: this.MemberHistoryDS,
 		name: "Member History",
-		showFilterEditor: true,
-		dataSource: this.MemberHistoryDS
+		parent: this,
+		showFilterEditor: true
 	});
 	this.localContextMenu = isc.myChildMenu.create({
-		parent: this,
-		callingListGrid: this.MemberHistoryLG
+		callingListGrid: this.MemberHistoryLG,
+		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.MemberHistoryLG]}));
 	var current = new Date();
