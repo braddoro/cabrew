@@ -16,9 +16,9 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "Events",
 			items: [
 				{title: "Beers", click: "isc.EventBeers.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Planning", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Plans", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Scheduling", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},
+				{title: "Schedules", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},
 				{title: "Teams", click: "isc.EventTeams.create({width: 750, height: \"95%\"});"}
 			]
 		});
@@ -32,7 +32,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.ClubMenu = isc.myMenu.create({
 			title: "Clubs",
 			items: [
-				{title: "Club Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"}
 			]
