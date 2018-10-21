@@ -33,23 +33,23 @@ isc.defineClass("EventTeams", "myWindow").addProperties({
 			var data;
 			var eventDay;
 			var eventID;
-			var workTeam;
 			var memberID;
+			var workTeam;
 			if(this.anySelected()){
 				data = this.getSelectedRecord();
 				eventDay = data.eventDay;
 				eventID = data.eventID;
-				workTeam = data.workTeam;
 				memberID = data.memberID;
+				workTeam = data.workTeam;
 			}
-			var rowDefaults = {workTeam: workTeam, eventDay: eventDay, eventID: eventID, memberID: memberID};
+			var rowDefaults = {eventDay: eventDay, eventID: eventID, memberID: memberID, workTeam: workTeam};
 			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}
 	});
 	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.EventTeamsLG
+		callingListGrid: this.EventTeamsLG,
+		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.EventTeamsLG]}));
   }

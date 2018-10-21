@@ -19,11 +19,38 @@ class Connect {
 		foreach($data['newvals'] as $key => $value){
 			if(array_key_exists(strtoupper($key), $cols)){
 				$meta = $cols[strtoupper($key)];
+				// echo "/* {$key} = {$meta->type} */";
 				switch($meta->type){
+					case 'timestamp': // Swallow it.
+						break;
+					case 'decimal':
+						$record[$key] = floatval($value);
+						break;
 					case 'bigint': // Planned fall through.
 					case 'int':
 						if(!$meta->primary_key){
 							$record[$key] = intval($value);
+						}
+						break;
+					case 'datetime':
+						$date = date("Y-m-d H:i:s",strtotime($value));
+						$record[$key] = $date;
+						if(!$meta->not_null && strlen(trim($value)) == 0){
+							$record[$key] = 'NULL';
+						}
+						break;
+					case 'time':
+						$date = date("H:i:s",strtotime($value));
+						$record[$key] = $date;
+						if(!$meta->not_null && strlen(trim($value)) == 0){
+							$record[$key] = 'NULL';
+						}
+						break;
+					case 'date':
+						$date = date("Y-m-d H:i:s",strtotime($value));
+						$record[$key] = $date;
+						if(!$meta->not_null && strlen(trim($value)) == 0){
+							$record[$key] = 'NULL';
 						}
 						break;
 					case 'varchar':

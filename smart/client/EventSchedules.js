@@ -8,7 +8,7 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 			{name: "eventScheduleID", primaryKey: true, detail: true, type: "sequence"},
 			{name: "typeID", width: 120, type: "integer", title: "Type"},
 			{name: "eventID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
-			{name: "stepStart", type: "date", title: "Start", editorType: "TimeItem"},
+			{name: "stepStart", type: "time", title: "Start", editorType: "TimeItem"},
 			{name: "step", width: "*", validators: [{type: "lengthRange", max: 100}]},
 			{name: "stepDetails", width: 300, validators: [{type: "lengthRange", max: 1000}], detail: true},
 			{name: "lastChangeDate", width: 100, detail: true}
@@ -22,8 +22,8 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 		showFilterEditor: true
 	});
 	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.EventScheduleLG
+		callingListGrid: this.EventScheduleLG,
+		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.EventScheduleLG]}));
   }

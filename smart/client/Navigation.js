@@ -3,23 +3,23 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.MembersMenu = isc.myMenu.create({
 			title: "Members",
 			items: [
-				{title: "Name Search", click: "isc.MemberSearch.create({width: 400, height: \"95%\"});"},
+				{title: "Search", click: "isc.MemberSearch.create({width: 400, height: \"95%\"});"},
 				{title: "Points", click: "isc.MemberPoints.create({width: 900, height: 300});"},
 				{title: "History", click: "isc.MemberHistory.create({width: 900, height: 300});"},
 				{isSeparator: true},
 				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"});"},
-				{title: "Add Payment", click: "isc.AddPayment.create({width: 800, height: 275});"},
-				{title: "Send Message", click: "isc.SendMessage.create({width: 800, height: \"95%\"});"}
+				{title: "Add Payment", click: "isc.AddPayment.create({width: 800, height: 275});"}
+				// {title: "Send Message", click: "isc.SendMessage.create({width: 800, height: \"95%\"});"}
 			]
 		});
 		this.EventMenu = isc.myMenu.create({
 			title: "Events",
 			items: [
-				{title: "Event Planning", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Event Scheduling", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},
-				{title: "Event Teams", click: "isc.EventTeams.create({width: 750, height: \"95%\"});"},
-				{title: "Event Beers", click: "isc.EventBeers.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Web Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"}
+				{title: "Beers", click: "isc.EventBeers.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Planning", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Scheduling", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},
+				{title: "Teams", click: "isc.EventTeams.create({width: 750, height: \"95%\"});"}
 			]
 		});
 		this.BookMenu = isc.myMenu.create({
@@ -40,12 +40,13 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.MiscMenu = isc.myMenu.create({
 			title: "Misc Tables",
 			items: [
-				{title: "Chair Types", click: "isc.ChairTypes.create()"},
-				{title: "Contact Types", click: "isc.ContactTypes.create()"},
-				{title: "Date Types", click: "isc.DateTypes.create()"},
+				{title: "Chairs", click: "isc.ChairTypes.create()"},
+				{title: "Contacts", click: "isc.ContactTypes.create()"},
+				{title: "Dates", click: "isc.DateTypes.create()"},
 				{title: "Event Team Names", click: "isc.EventTeamNames.create()"},
-				{title: "Event Types", click: "isc.EventTypes.create()"},
-				{title: "Status Types", click: "isc.StatusTypes.create()"}
+				{title: "Events", click: "isc.EventTypes.create()"},
+				{title: "Notes", click: "isc.NoteTypes.create()"},
+				{title: "Status", click: "isc.StatusTypes.create()"}
 			]
 		});
 		this.MainMenu = isc.myMenu.create({

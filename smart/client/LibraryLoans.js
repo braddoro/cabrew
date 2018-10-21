@@ -4,18 +4,13 @@ isc.defineClass("LibraryLoans", "myWindow").addProperties({
 	this.LibraryLoansDS = isc.myDataSource.create({
 		dataURL: serverPath + "LibraryLoans.php",
 		fields:[
-			{name: "loanID",
-				primaryKey: true,
-				detail: true,
-				type: "sequence",
-				width: 100
-			},
+			{name: "loanID", type: "sequence", primaryKey: true, width: 100, detail: true},
 			{name: "memberID_fk",
 				title: "Member",
 				type: "text",
 				width: 120,
 				optionDataSource: isc.Shared.memberNamesDS,
-				optionCriteria: {Status: "Active"},
+				optionCriteria: {statusTypeID_fk: 1},
 				displayField: "FullName",
 				valueField: "memberID"
 			},
@@ -34,9 +29,9 @@ isc.defineClass("LibraryLoans", "myWindow").addProperties({
 		]
 	});
 	this.LibraryLoansLG = isc.myListGrid.create({
-		parent: this,
-		name: "Library Loans",
 		dataSource: this.LibraryLoansDS,
+		name: "Library Loans",
+		parent: this,
 		showFilterEditor: true,
 		rowContextClick: function(record, rowNum, colNum){
 			this.parent.localContextMenu.showContextMenu();
@@ -47,8 +42,8 @@ isc.defineClass("LibraryLoans", "myWindow").addProperties({
 		}
 	});
 	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.LibraryLoansLG
+		callingListGrid: this.LibraryLoansLG,
+		parent: this
 	});
 	this.LibraryLoansVL = isc.myVLayout.create({members: [this.LibraryLoansLG]});
 	this.addItem(this.LibraryLoansVL);

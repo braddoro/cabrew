@@ -23,6 +23,9 @@ case 'fetch':
 		$qStr = $db->qStr($_REQUEST['active'], true);
 		$where .= " and active = $qStr ";
 	}
+	if(isset($_REQUEST['memberID'])){
+		$where .= " and memberID = " . intval($_REQUEST['memberID']);
+	}
 	break;
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);

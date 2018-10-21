@@ -1,6 +1,7 @@
 isc.defineClass("WebPosts", "myWindow").addProperties({
 	initWidget: function(initData){
 	this.Super("initWidget", arguments);
+	// ToDo: Come up with a better richtext editor.
 	this.webPostsDS = isc.myDataSource.create({
 		dataURL: serverPath + "WebPosts.php",
 		fields:[

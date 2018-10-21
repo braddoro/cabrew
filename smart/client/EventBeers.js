@@ -11,16 +11,18 @@ isc.defineClass("EventBeers", "myWindow").addProperties({
 			{name: "beerStyle", width: 300, validators: [{type: "lengthRange", max: 100}]},
 			{name: "beerName", width: "*", validators: [{type: "lengthRange", max: 100}]},
 			{name: "brewerName", width: 300, validators: [{type: "lengthRange", max: 100}]},
+			{name: "abv", title: "ABV", width: 80, type: "float"},
+			{name: "votes", width: 80, type: "integer", editorType: "spinner"},
 			{name: "beerStory", width: 300, validators: [{type: "lengthRange", max: 1000}], detail: true},
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
 	});
 	this.EventBeerLG = isc.myListGrid.create({
-		parent: this,
-		name: "Beer list",
-		showFilterEditor: true,
 		dataSource: this.EventBeerDS,
 		initialSort: [{property: "dueDate", direction: "ascending"}],
+		name: "Beer list",
+		parent: this,
+		showFilterEditor: true,
 		startEditingNew: function(newValues, suppressFocus){
 			var data;
 			var clubID;
@@ -36,10 +38,9 @@ isc.defineClass("EventBeers", "myWindow").addProperties({
 		}
 	});
 	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.EventBeerLG
+		callingListGrid: this.EventBeerLG,
+		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.EventBeerLG]}));
-	// this.EventBeerLG.filterData();
   }
 });

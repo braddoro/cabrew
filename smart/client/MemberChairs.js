@@ -13,9 +13,9 @@ isc.defineClass("MemberChairs", "myWindow").addProperties({
 			]
 		});
 		this.MemberChairsLG = isc.myListGrid.create({
-			parent: this,
 			dataSource: this.MemberChairsDS,
 			name: "Member Chairs",
+			parent: this,
 			startEditingNew: function(newValues, suppressFocus){
 				var newCriteria = isc.addProperties({}, newValues, {memberID_fk: initData.memberID});
 				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
