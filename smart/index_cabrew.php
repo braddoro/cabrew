@@ -1,6 +1,6 @@
 <?php
-// require_once '../adodb5/adodb.inc.php'; // cabrew.org
-require_once '../../adodb5/adodb.inc.php'; // localhost
+require_once '../adodb5/adodb.inc.php'; // cabrew.org
+// require_once '../../adodb5/adodb.inc.php'; // localhost
 $cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
@@ -87,7 +87,8 @@ echo $content;
 // https://twitter.com/HomebrewCABREW
 // https://www.facebook.com/homebrewCABREW/
 //
-$str = "<strong>CABREW Links</strong><br><a href='http://cabrew.org/' target='_blank'>cabrew</a><br><a href='http://cabrew.org/reports/' target='_blank'>reports</a><br><a href='http://cabrew.org/nchi/' target='_blank'>nchi</a><br><br><a href='https://www.facebook.com/homebrewCABREW/' target='_blank'>faceboook</a><br><a href='https://twitter.com/HomebrewCABREW' target='_blank'>twitter</a><br><a href='https://www.facebook.com/groups/371109786956/' target='_blank'>cabrew group</a><br><a href='https://www.facebook.com/groups/cabrew/' target='_blank'>members only</a>";
+$now = date(DATE_RFC2822);
+$str = "<strong>CABREW Links</strong><br><a href='http://cabrew.org/' target='_blank'>cabrew</a><br><a href='http://cabrew.org/reports/' target='_blank'>reports</a><br><a href='http://cabrew.org/nchi/' target='_blank'>nchi</a><br><br><a href='https://www.facebook.com/homebrewCABREW/' target='_blank'>faceboook</a><br><a href='https://twitter.com/HomebrewCABREW' target='_blank'>twitter</a><br><a href='https://www.facebook.com/groups/371109786956/' target='_blank'>cabrew group</a><br><a href='https://www.facebook.com/groups/cabrew/' target='_blank'>members only</a><br><br>{$now}<br>";
 echo 'isc.Desktop.create({data: "'. $str .'"});
 </script>
 </body>
