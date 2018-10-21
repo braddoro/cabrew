@@ -1,5 +1,9 @@
 <?php
-$year = 2018;
+if(isset($_GET['y'])){
+	$year = intval($_GET['y']);
+}else{
+	$year = date('Y');
+}
 require_once('inc/Reporter.php');
 $params['ini_file'] = 'inc/server.ini';
 $params['bind'] = array();
@@ -12,7 +16,7 @@ $html = $lclass->init($params);
 $params['bind'] = array("eventID" => 1);
 $params['show_total'] = true;
 $params['title'] = "NCHI Beer List by Club for {$year}";
-$params['sql'] = "SELECT bl.eventBeerID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerName, bl.beerStyle, bl.brewerName FROM eventBeers bl inner join brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID order by bc.clubAbbr, bl.brewerName, bl.beerStyle, bl.beerName;";
+$params['sql'] = "SELECT bl.eventBeerID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerName, bl.beerStyle, bl.brewerName, bl.abv FROM eventBeers bl inner join brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID order by bc.clubAbbr, bl.brewerName, bl.beerStyle, bl.beerName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
@@ -26,7 +30,7 @@ $html .= $lclass->init($params);
 $params['bind'] = array("eventID" => 1);
 $params['show_total'] = true;
 $params['title'] = "NCHI Beer List by Style for {$year}";
-$params['sql'] = "SELECT bl.eventBeerID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerStyle, bl.beerName, bl.brewerName FROM eventBeers bl inner join brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID order by bl.beerStyle, bl.beerName, bl.brewerName;";
+$params['sql'] = "SELECT bl.eventBeerID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerStyle, bl.beerName, bl.brewerName, bl.abv FROM eventBeers bl inner join brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID order by bl.beerStyle, bl.beerName, bl.brewerName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
@@ -35,7 +39,7 @@ $params['bind'] = array("eventID" => 1, "votes" => $cutoff);
 $params['show_total'] = false;
 $params['title'] = "NCHI {$year} Voting results of {$cutoff} votes or more";
 $params['sql'] = "SELECT
-bl.eventBeerID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerStyle, bl.beerName, bl.votes, bl.brewerName FROM eventBeers bl inner join brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID and bl.votes >= :votes order by bl.votes desc, bl.beerStyle, bl.beerName, bl.brewerName;";
+bl.eventBeerID, bl.beerCode, bc.clubName, bc.clubAbbr, bl.beerStyle, bl.beerName, bl.votes, bl.brewerName, bl.abv FROM eventBeers bl inner join brew_clubs bc on bl.clubID = bc.clubID where bl.eventID = :eventID and bl.votes >= :votes order by bl.votes desc, bl.beerStyle, bl.beerName, bl.brewerName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 ?>

@@ -8,13 +8,12 @@ if(isset($_GET['e'])){
 }else{
 	$wheres .= ' and (C.eventTypeID = 1) ';
 }
-
 $params['ini_file'] = 'inc/server.ini';
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
 $params['title'] = "NCHI {$year} Beer Tasting List by Style";
 $params['sql'] = "SELECT
-bl.beerCode, bl.beerName, bl.beerStyle, bc.clubAbbr as Tent
+bl.beerCode, bl.beerName, bl.beerStyle, bl.abv, bc.clubAbbr as Tent
 FROM eventBeers bl
 inner join brew_clubs bc
 on bl.clubID = bc.clubID
@@ -28,7 +27,7 @@ $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
 $params['title'] = "NCHI {$year} Beer Tasting List by Club";
 $params['sql'] = "SELECT
-bl.beerCode, bl.beerName, bl.beerStyle, bc.clubAbbr as Tent
+bl.beerCode, bl.beerName, bl.beerStyle, bl.abv, bc.clubAbbr as Tent
 FROM eventBeers bl
 inner join brew_clubs bc
 on bl.clubID = bc.clubID
