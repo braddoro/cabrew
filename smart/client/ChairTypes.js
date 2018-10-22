@@ -7,8 +7,8 @@ isc.defineClass("ChairTypes", "myWindow").addProperties({
 		name: "Chair Types"
 	});
 	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.ChairTypesLG
+		callingListGrid: this.ChairTypesLG,
+		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.ChairTypesLG]}));
 	}

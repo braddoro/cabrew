@@ -104,12 +104,13 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 
 isc.defineClass("myListGrid", "ListGrid").addProperties({
 	alternateRecordStyles: true,
-	leaveScrollbarGap: false,
-	showFilterEditor: false,
-	showAllRecords: true,
 	autoFetchData: true,
-	modalEditing: true,
 	autoFitWidth: true,
+	canEdit: true,
+	leaveScrollbarGap: false,
+	modalEditing: true,
+	showAllRecords: true,
+	showFilterEditor: false,
 	rowContextClick: function(record, rowNum, colNum){
 		this.parent.localContextMenu.showContextMenu();
 		return false;
@@ -133,19 +134,15 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}
 	},
 	doubleClick: function(){
-		// ToDo: This is bad.
-		if(this.getTotalRows() > 0){
-
-		} else{
+		if(this.getTotalRows() == 0 && this.canEdit){
 			this.startEditingNew();
 		}
 		return true;
 	},
 	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
-		// ToDo: Figure out how to make a grid disabled.
-		// if(this.canEdit){
+		if(this.canEdit){
 			this.startEditing(recordNum);
-		// }
+		}
 	},
 	updateStatus: function() {
 		if(this.name) {

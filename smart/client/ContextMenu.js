@@ -4,14 +4,14 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				menu.callingListGrid.doubleClick();
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(record, row);
 			}
 		},
 		{title: "Refresh",
@@ -25,21 +25,21 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 				var text = "";
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
+					isc.say(copyValues(record));
+					// ToDo: Fix this so it only shows proper values.
 					// for(var key in record) {
 					// 	let value = record[key];
 					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
 					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
 					// 	}
 					// }
-
-					isc.say(copyValues(record));
 				}
 			}
 		},
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
@@ -180,14 +180,14 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 		{isSeparator: true},
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				menu.callingListGrid.doubleClick();
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(record, row);
 			}
 		},
 		{title: "Refresh",
@@ -198,7 +198,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
@@ -212,14 +212,14 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				menu.callingListGrid.doubleClick();
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(row, record);
 			}
 		},
 		{title: "Refresh",
@@ -230,7 +230,7 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
@@ -258,14 +258,14 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				menu.callingListGrid.doubleClick();
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(record, row);
 			}
 		},
 		{title: "Refresh",
@@ -276,7 +276,7 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
