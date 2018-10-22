@@ -3,9 +3,9 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.MembersMenu = isc.myMenu.create({
 			title: "Members",
 			items: [
-				{title: "Search", click: "isc.MemberSearch.create({width: 400, height: \"95%\"});"},
-				{title: "Points", click: "isc.MemberPoints.create({width: 900, height: 300});"},
 				{title: "History", click: "isc.MemberHistory.create({width: 900, height: 300});"},
+				{title: "Points", click: "isc.MemberPoints.create({width: 900, height: 300});"},
+				{title: "Search", click: "isc.MemberSearch.create({width: 400, height: \"95%\"});"},
 				{isSeparator: true},
 				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"});"}
 				// {title: "Add Payment", click: "isc.AddPayment.create({width: 800, height: 275});"}
@@ -32,9 +32,9 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.ClubMenu = isc.myMenu.create({
 			title: "Clubs",
 			items: [
-				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
-				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"}
+				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});
 		this.MiscMenu = isc.myMenu.create({
@@ -53,12 +53,12 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "...",
 			showShadow: true,
 			items: [
-				{title: "Members", submenu: this.MembersMenu},
-				{title: "Events", submenu: this.EventMenu},
 				{title: "Books", submenu: this.BookMenu},
 				{title: "Clubs", submenu: this.ClubMenu},
-				{isSeparator: true},
+				{title: "Events", submenu: this.EventMenu},
+				{title: "Members", submenu: this.MembersMenu},
 				{title: "Misc Tables", submenu: this.MiscMenu},
+				{isSeparator: true},
 				{title: "Test Code", click: "isc.test.create({width: 800})"}
 			]
 		});
