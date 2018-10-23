@@ -43,10 +43,10 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Chairs", click: "isc.ChairTypes.create()"},
 				{title: "Contacts", click: "isc.ContactTypes.create()"},
 				{title: "Dates", click: "isc.DateTypes.create()"},
-				{title: "Teams", click: "isc.EventTeamNames.create()"},
 				{title: "Events", click: "isc.EventTypes.create()"},
 				{title: "Notes", click: "isc.NoteTypes.create()"},
-				{title: "Status", click: "isc.StatusTypes.create()"}
+				{title: "Status", click: "isc.StatusTypes.create()"},
+				{title: "Teams", click: "isc.EventTeamNames.create()"}
 			]
 		});
 		this.MainMenu = isc.myMenu.create({

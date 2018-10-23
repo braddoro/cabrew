@@ -51,29 +51,7 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,
 	data: [
-		{title: "Show Dates",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberDates.create({
-					title: "Activity for " + record.FullName,
-					memberID: record.memberID,
-					left: 150,
-					top: 50
-				});
-			}
-		},
-		{title: "Show Notes",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberNotes.create({
-					title: "Notes for " + record.FullName,
-					memberID: record.memberID,
-					left: 170,
-					top: 70
-				});
-			}
-		},
-		{title: "Show Contacts",
+		{title: "Contacts",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.MemberContacts.create({
@@ -84,20 +62,15 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				});
 			}
 		},
-		{title: "Show Leadership",
+		{title: "Dates",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberChairs.create({
-					title: "Leadership for " + record.FullName,
+				isc.MemberDates.create({
+					title: "Activity for " + record.FullName,
 					memberID: record.memberID,
-					left: 210,
-					top: 110
+					left: 150,
+					top: 50
 				});
-			}
-		},
-		{title: "Refresh",
-			click: function(target, item, menu, colNum){
-				menu.callingListGrid.invalidateCache();
 			}
 		},
 		{title: "Edit Member",
@@ -112,6 +85,33 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 					top: 110
 				});
 			}
+		},
+		{title: "Leadership",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberChairs.create({
+					title: "Leadership for " + record.FullName,
+					memberID: record.memberID,
+					left: 210,
+					top: 110
+				});
+			}
+		},
+		{title: "Notes",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberNotes.create({
+					title: "Notes for " + record.FullName,
+					memberID: record.memberID,
+					left: 170,
+					top: 70
+				});
+			}
+		},
+		{title: "Refresh",
+			click: function(target, item, menu, colNum){
+				menu.callingListGrid.invalidateCache();
+			}
 		}
 	]
 });
@@ -119,7 +119,18 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,
 	data: [
-		{title: "Show Dates",
+		{title: "Contacts",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberContacts.create({
+					title: "Contacts for " + record.FullName,
+					memberID: record.memberID,
+					left: 190,
+					top: 90
+				});
+			}
+		},
+		{title: "Dates",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.MemberDates.create({
@@ -131,39 +142,6 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				});
 			}
 		},
-		{title: "Show Notes",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberNotes.create({
-					title: "Notes for " + record.FullName,
-					memberID: record.memberID,
-					left: 170,
-					top: 70
-				});
-			}
-		},
-		{title: "Show Contacts",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberContacts.create({
-					title: "Contacts for " + record.FullName,
-					memberID: record.memberID,
-					left: 190,
-					top: 90
-				});
-			}
-		},
-		{title: "Show Leadership",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberChairs.create({
-					title: "Leadership for " + record.FullName,
-					memberID: record.memberID,
-					left: 210,
-					top: 110
-				});
-			}
-		},
 		{title: "Edit Member",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
@@ -174,6 +152,28 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 					height: 300,
 					left: 210,
 					top: 110
+				});
+			}
+		},
+		{title: "Leadership",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberChairs.create({
+					title: "Leadership for " + record.FullName,
+					memberID: record.memberID,
+					left: 210,
+					top: 110
+				});
+			}
+		},
+		{title: "Notes",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberNotes.create({
+					title: "Notes for " + record.FullName,
+					memberID: record.memberID,
+					left: 170,
+					top: 70
 				});
 			}
 		},
@@ -283,20 +283,7 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 			}
 		},
 		{isSeparator: true},
-		{title: "Show Contacts",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.BrewContacts.create({
-					title: "Contacts for " + record.clubName,
-					clubID: record.clubID,
-					width: 400,
-					height: 200,
-					left: 190,
-					top: 90
-				});
-			}
-		},
-		{title: "Show Attendance",
+		{title: "Attendance",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.BrewAttendance.create({
@@ -309,7 +296,20 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 				});
 			}
 		},
-		{title: "Show Media",
+		{title: "Contacts",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewContacts.create({
+					title: "Contacts for " + record.clubName,
+					clubID: record.clubID,
+					width: 400,
+					height: 200,
+					left: 190,
+					top: 90
+				});
+			}
+		},
+		{title: "Media",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.BrewMedia.create({
