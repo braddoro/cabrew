@@ -134,7 +134,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}
 	},
 	doubleClick: function(){
-		if(this.getTotalRows() == 0 || this.canEdit){
+		if(this.getTotalRows() == 0 && this.canEdit){
 			this.startEditingNew();
 		}
 		return true;

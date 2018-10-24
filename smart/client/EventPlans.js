@@ -31,14 +31,12 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			if(this.anySelected()){
 				data = this.getSelectedRecord();
 				today = data.dueDate;
-				step = data.step;
-				thread = data.thread;
 				status = "not started",
 				eventTypeID = data.eventTypeID;
 			}else{
 				today = new Date();
 			}
-			var rowDefaults = {step: step, thread: thread, dueDate: today, eventTypeID: eventTypeID, status: "not started"};
+			var rowDefaults = {dueDate: today, eventTypeID: eventTypeID, status: "not started"};
 			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}

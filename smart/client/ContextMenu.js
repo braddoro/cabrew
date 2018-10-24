@@ -4,7 +4,9 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.doubleClick();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
@@ -180,7 +182,9 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 		{isSeparator: true},
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.doubleClick();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
@@ -212,7 +216,9 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.doubleClick();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
@@ -258,7 +264,9 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.doubleClick();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
