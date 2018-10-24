@@ -48,6 +48,5 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 		callingListGrid: this.EventPlanLG
 	});
 	this.addItem(isc.myVLayout.create({members: [this.EventPlanLG]}));
-	this.EventPlanLG.filterData();
-  }
+	}
 });
