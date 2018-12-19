@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+require_once 'SiteLog.php';
 $table = 'brew_attendence';
 $primaryKey = 'attendenceID';
 $conn = new Connect();
@@ -27,21 +28,24 @@ switch($operationType){
 case 'fetch':
 	$where = '1=1';
 	if(isset($_REQUEST['clubID'])){
-		$where .= ' and clubID = ' . intval($_REQUEST['clubID']);
+		$where .= ' and ba.clubID = ' . intval($_REQUEST['clubID']);
+	}
+	if(isset($_REQUEST['eventID'])){
+		$where .= ' and ba.eventID = ' . intval($_REQUEST['eventID']);
 	}
 	if(isset($_REQUEST['year'])){
-		$where .= ' and year = ' . intval($_REQUEST['year']);
+		$where .= ' and ba.year = ' . intval($_REQUEST['year']);
 	}
 	if(isset($_REQUEST['attended'])){
-		$where .= ' and attended = ' . intval($_REQUEST['attended']);
+		$where .= ' and ba.attended = ' . intval($_REQUEST['attended']);
 	}
 	if(isset($_REQUEST['interested'])){
 		$qStr = $db->qStr($_REQUEST['interested'], true);
-		$where .= " and interested = '{$qStr}' ";
+		$where .= " and ba.interested = '{$qStr}' ";
 	}
 	if(isset($_REQUEST['participated'])){
 		$qStr = $db->qStr($_REQUEST['participated'], true);
-		$where .= " and participated = '{$qStr}' ";
+		$where .= " and ba.participated = '{$qStr}' ";
 	}
 	break;
 case 'add':
@@ -66,8 +70,16 @@ case 'remove':
 default:
 	break;
 }
-$sql = "select * from {$table} where {$where};";
-// echo "/* {$sql} */";
+$arr = array(
+	"pageName" => basename(__FILE__),
+	"action" => $operationType,
+	"tableName" => $table,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"primaryKey" => $primaryKey,
+	"fieldsVals" => var_export($_REQUEST, true)
+);
+$r = siteLog($conn, $db, $arr);
+$sql = "select ba.*, bc.distance from {$table} ba left join brew_clubs bc on ba.clubID = bc.clubID where {$where};";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

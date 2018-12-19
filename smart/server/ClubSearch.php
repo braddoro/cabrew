@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+require_once 'SiteLog.php';
 $conn = new Connect();
 $db = $conn->conn();
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';

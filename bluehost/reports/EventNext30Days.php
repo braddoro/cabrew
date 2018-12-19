@@ -2,6 +2,10 @@
 if(isset($_GET['m'])){
 	$id = intval($_GET['m']);
 }
+$days = 30;
+if(isset($_GET['d'])){
+	$days = intval($_GET['d']);
+}
 require_once('inc/Reporter.php');
 $params['bind'] = array(id => NULL);
 if(isset($id)){
@@ -9,7 +13,7 @@ if(isset($id)){
 }
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
-$params['title'] = 'Todo Next 45 Days';
+$params['title'] = "Todo Next {$days} Days";
 $params['sql'] = "
 select
 	C.eventPlanID,
@@ -21,10 +25,10 @@ select
 	C.status,
     C.notes
 from eventPlans C
+	inner join eventTypes CT on C.eventTypeID = CT.eventTypeID and CT.active = 'Y'
 	left join members M on M.memberID = C.memberID
-	left join eventTypes CT on C.eventTypeID = CT.eventTypeID
 where (C.status IS NULL or C.status <> 'complete')
-	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL 45 DAY)
+	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL {$days} DAY)
 	and C.memberID = coalesce(:id, C.memberID)
 order by
 	C.dueDate;";

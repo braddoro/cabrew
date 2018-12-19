@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+require_once 'SiteLog.php';
 $table = 'brew_contactPoints';
 $primaryKey = 'contactPointID';
 $conn = new Connect();
@@ -15,11 +16,6 @@ $access_array = parse_ini_file('access.ini', true);
 $accesslist = $access_array['access'][basename(__FILE__)];
 if((!substr_count($accesslist,$operationType))){
 	$response = array('status' => -4, 'errorMessage' => $conn->getMessage(2, $operationType));
-	echo json_encode($response);
-	exit(1);
-}
-if(($operationType == 'update' || $operationType == 'remove') && is_null($pkval)){
-	$response = array('status' => -1, 'errorMessage' => $conn->getMessage(1, $operationType));
 	echo json_encode($response);
 	exit(1);
 }
@@ -50,7 +46,6 @@ case 'add':
 case 'update':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
-	// echo json_encode($record);
 	$where = $primaryKey . '=' . $pkval;
 	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
@@ -62,8 +57,16 @@ case 'remove':
 default:
 	break;
 }
+$arr = array(
+	"pageName" => basename(__FILE__),
+	"action" => $operationType,
+	"tableName" => $table,
+	"primaryKey" => $primaryKey,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"request" => var_export($_REQUEST, true),
+);
+$r = siteLog($conn, $db, $arr);
 $sql = "select * from {$table} where {$where};";
-// echo "/* {$sql} */";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

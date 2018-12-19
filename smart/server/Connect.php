@@ -16,7 +16,7 @@ class Connect {
 		$this->dbo = $dbo;
 		return $dbo;
 	}
-	public function buildRecordset($data) {
+	public function buildRecordset($data, $skipUpdate = false) {
 		$cols = $this->dbo->metaColumns($data['table']);
 		foreach($data['newvals'] as $key => $value){
 			if(array_key_exists(strtoupper($key), $cols)){
@@ -60,6 +60,12 @@ class Connect {
 						if(!$meta->not_null && strlen(trim($value)) == 0){
 							$record[$key] = 'NULL';
 						}
+						// if(!is_null($value)){
+						// 	$record[$key] = substr(trim($value),0,$meta->max_length);
+						// 	if(!$meta->not_null && strlen(trim($value)) == 0){
+						// 		$record[$key] = 'NULL';
+						// 	}
+						// }
 						break;
 					default:
 						$err = "Unknown column type:\n " .
@@ -76,7 +82,9 @@ class Connect {
 				}
 			}
 		}
-		$record['lastChangeDate'] = date("Y-m-d H:i:s");
+		if(!$skipUpdate){
+			$record['lastChangeDate'] = date("Y-m-d H:i:s");
+		}
 		return $record;
 	}
 	public function getMessage($errorNumber, $data = null) {

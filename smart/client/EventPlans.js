@@ -14,6 +14,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			{name: "status", width: 75, validators: [{type: "lengthRange", max: 45}], valueMap:["not started","in process","blocked","complete","not needed","milestone"]},
 			{name: "cost", width: 50, type: "float"},
 			{name: "notes", width: "*", validators: [{type: "lengthRange", max: 1000}]},
+			{name: "stepURL", width: "*", validators: [{type: "lengthRange", max: 250}]},
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
 	});

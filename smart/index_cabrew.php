@@ -27,6 +27,7 @@ $classes[] = "Corporations.js";
 $classes[] = "DateTypes.js";
 $classes[] = "Desktop.js";
 $classes[] = "EditMember.js";
+$classes[] = "EventAttendance.js";
 $classes[] = "EventBeers.js";
 $classes[] = "EventPlans.js";
 $classes[] = "EventSchedules.js";

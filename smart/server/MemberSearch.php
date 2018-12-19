@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+require_once 'SiteLog.php';
 $table = 'members';
 $primaryKey = 'memberID';
 $conn = new Connect();
@@ -55,7 +56,15 @@ case 'remove':
 default:
 	break;
 }
-// $sql = "select * from {$table} where {$where};";
+$arr = array(
+	"pageName" => basename(__FILE__),
+	"action" => $operationType,
+	"tableName" => $table,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"primaryKey" => $primaryKey,
+	"fieldsVals" => var_export($_REQUEST, true)
+);
+$r = siteLog($conn, $db, $arr);
 $sql = "select
 	M.memberID,
 	M.statusTypeID_fk,
@@ -67,7 +76,6 @@ $sql = "select
 	members M
 	where {$where}
 	order by M.firstName;";
-// echo "/* {$sql} */";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

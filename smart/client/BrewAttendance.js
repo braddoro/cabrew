@@ -7,6 +7,7 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 			fields:[
 				{name: "attended", type: "integer"},
 				{name: "attendenceID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
+				{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
 				{name: "beers", type: "integer"},
 				{name: "clubID", required: true, detail: true, canEdit: false},
 				{name: "interested", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},

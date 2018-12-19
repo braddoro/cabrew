@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+require_once 'SiteLog.php';
 $table = 'memberDates';
 $primaryKey = 'memberDateID';
 $conn = new Connect();
@@ -55,6 +56,15 @@ case 'remove':
 default:
 	break;
 }
+$arr = array(
+	"pageName" => basename(__FILE__),
+	"action" => $operationType,
+	"tableName" => $table,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"primaryKey" => $primaryKey,
+	"fieldsVals" => var_export($_REQUEST, true)
+);
+$r = siteLog($conn, $db, $arr);
 $sql = "select
 		m.memberID,
 		d.memberDate,
@@ -76,7 +86,6 @@ $sql = "select
 		day(d.memberDate) desc,
 		dt.datePoints,
 		dt.dateType;";
-// echo "/* {$sql} */";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();
