@@ -26,18 +26,18 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 		showFilterEditor: true,
 		startEditingNew: function(newValues, suppressFocus){
 			var today;
-			var step;
 			var data;
+			var status = "not started";
 			var eventTypeID;
 			if(this.anySelected()){
 				data = this.getSelectedRecord();
 				today = data.dueDate;
-				status = "not started";
 				eventTypeID = data.eventTypeID;
+				status = data.status;
 			}else{
 				today = new Date();
 			}
-			var rowDefaults = {dueDate: today, eventTypeID: eventTypeID, status: "not started"};
+			var rowDefaults = {dueDate: today, eventTypeID: eventTypeID, status: status};
 			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}
