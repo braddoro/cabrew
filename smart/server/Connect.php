@@ -5,7 +5,7 @@ class Connect {
 		$hostname = gethostname();
 		if($hostname == 'chimera'){
 			require_once '../../../adodb5/adodb.inc.php'; //local
-		else{
+		}else{
 			require_once '../../adodb5/adodb.inc.php'; // cabrew.org
 		}
 		$ini_array = parse_ini_file('../server.ini', true);
