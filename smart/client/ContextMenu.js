@@ -49,6 +49,36 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 		}
 	]
 });
+
+isc.defineClass("myRefreshMenu", "myMenu").addProperties({
+	parent: this,
+	callingListGrid: null,
+	data: [
+		{title: "Refresh",
+			click: function(target, item, menu, colNum){
+				menu.callingListGrid.invalidateCache();
+			}
+		},
+		{title: "Copy Row",
+			click: function(target, item, menu, colNum){
+				var record;
+				var text = "";
+				if(menu.callingListGrid.anySelected()){
+					record = menu.callingListGrid.getSelectedRecord();
+					isc.say(copyValues(record));
+					// ToDo: Fix this so it only shows proper values.
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+				}
+			}
+		}
+	]
+});
+
 isc.defineClass("myChildMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,

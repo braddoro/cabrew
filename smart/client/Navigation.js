@@ -60,7 +60,8 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Members", submenu: this.MembersMenu},
 				{title: "Misc Tables", submenu: this.MiscMenu},
 				{isSeparator: true},
-				{title: "Test Code", click: "isc.test.create({width: 800})"}
+				{title: "Test Code", click: "isc.test.create({width: 800})"},
+				{title: "Show Log", click: "isc.ShowLog.create({width: 1200, height: \"95%\"})"}
 			]
 		});
 		this.menuBar = isc.MenuBar.create({

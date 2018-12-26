@@ -2,8 +2,12 @@
 class Connect {
 	protected $dbo;
 	public function conn() {
-		require_once '../../../adodb5/adodb.inc.php'; //local
-		// require_once '../../adodb5/adodb.inc.php'; // cabrew.org
+		$hostname = gethostname();
+		if($hostname == 'chimera'){
+			require_once '../../../adodb5/adodb.inc.php'; //local
+		else{
+			require_once '../../adodb5/adodb.inc.php'; // cabrew.org
+		}
 		$ini_array = parse_ini_file('../server.ini', true);
 		$hostname = $ini_array['database']['hostname'];
 		$username = $ini_array['database']['username'];

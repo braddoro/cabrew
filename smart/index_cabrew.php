@@ -1,6 +1,10 @@
 <?php
-// require_once '../adodb5/adodb.inc.php'; // cabrew.org
-require_once '../../adodb5/adodb.inc.php'; // localhost
+$hostname = gethostname();
+if($hostname == 'chimera'){
+	require_once '../../adodb5/adodb.inc.php'; // localhost
+}else{
+	require_once '../adodb5/adodb.inc.php'; // cabrew.org
+}
 $cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];;
 $title = $cabrew_array['application']['title'];
@@ -49,6 +53,7 @@ $classes[] = "Navigation.js";
 $classes[] = "Preview.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
+$classes[] = "ShowLog.js";
 $classes[] = "StatusTypes.js";
 $classes[] = "WebPosts.js";
 $classes[] = "test.js";
