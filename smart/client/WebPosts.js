@@ -67,8 +67,8 @@ isc.defineClass("WebPosts", "myWindow").addProperties({
 			align: "center",
 			click: function(){
 				var newValues = this.parent.webPostsDF.getValues();
-				var newData = {webPostID: newValues.webPostID, postName: newValues.postName, postText: newValues.postText};
-				this.parent.webPostsDS.updateData(newData);
+				// var newData = {webPostID: newValues.webPostID, postName: newValues.postName, postText: newValues.postText, };
+				this.parent.webPostsDS.updateData(newValues);
 			}
 		});
 	this.webPostsDVL = isc.myVLayout.create({

@@ -71,6 +71,13 @@ class Connect {
 						// 	}
 						// }
 						break;
+
+					case 'longtext':
+						$record[$key] = substr(trim($value),0,$meta->max_length);
+						if(!$meta->not_null && strlen(trim($value)) == 0){
+							$record[$key] = 'NULL';
+						}
+						break;
 					default:
 						$err = "Unknown column type:\n " .
 							$value . '~' .

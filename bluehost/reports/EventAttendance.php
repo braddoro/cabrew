@@ -1,4 +1,5 @@
 <?php
+$title = 'Club Event Attendence';
 if(isset($_GET['y'])){
 	$year = intval($_GET['y']);
 }else{
@@ -23,23 +24,6 @@ $html = $lclass->init($params);
 
 $params['bind'] = array('year' => $year);
 $params['show_total'] = true;
-$params['title'] = "NCHI {$year} Club Reserveration Status";
-$params['sql'] = "
-SELECT
-	c.clubName,
-	c.clubAbbr,
-	concat(c.city,', ',c.state) 'Location',
-	c.distance,
-	a.interested as 'Reserved'
-FROM brew_clubs c
-left join brew_attendence a on c.clubID = a.clubID
-where year = :year
-order by a.interested desc, c.clubName, c.distance;";
-$lclass = New Reporter();
-$html .= $lclass->init($params);
-
-$params['bind'] = array('year' => $year);
-$params['show_total'] = true;
 $params['title'] = "NCHI {$year} Confirmed Clubs";
 $params['sql'] = "
 SELECT
@@ -55,25 +39,77 @@ $html .= $lclass->init($params);
 
 $params['bind'] = array('year' => $year);
 $params['show_total'] = true;
-$params['title'] = "NCHI {$year} Confirmed Club Email Contacts";
+$params['title'] = "NCHI {$year} Invited Club Status";
 $params['sql'] = "
 SELECT
 	c.clubName,
-	bc.contactName,
-	cp.contactPoint
+	c.clubAbbr,
+	concat(c.city,', ',c.state) 'Location',
+	c.distance,
+	ba.verified,
+	ba.interested as 'Reserved'
+FROM brew_clubs c
+left join brew_attendence ba on c.clubID = ba.clubID
+where year = :year
+order by
+	ba.verified desc,
+	ba.interested desc,
+    c.distance,
+    c.clubName;";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+
+
+// $params['bind'] = array('year' => $year);
+// $params['show_total'] = true;
+// $params['title'] = "NCHI {$year} Unconfirmed Club Contacts";
+// $params['sql'] = "
+// SELECT
+// 	c.clubName,
+// 	bc.contactName,
+// 	cp.contactPoint,
+// 	ba.verified
+// FROM brew_clubs c
+// left join brew_attendence ba on c.clubID = ba.clubID
+// left join brew_contacts bc on c.clubID = bc.clubID
+// left join brew_contactPoints cp on bc.contactID = cp.contactID
+// left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
+// where
+// 	ba.year = :year
+// 	and ba.interested = 'N'
+// 	and ct1.contactType in ('nchi', 'facebook')
+// order by
+// 	c.clubName,
+// 	bc.contactName;";
+// $lclass = New Reporter();
+// $html .= $lclass->init($params);
+
+$params['bind'] = array('year' => $year);
+$params['show_total'] = true;
+$params['title'] = "NCHI {$year} Contact Info";
+//  'facebook'
+$params['sql'] = "
+SELECT
+	c.clubName,
+	c.clubAbbr,
+	concat(c.city,', ',c.state) 'Location',
+	c.distance,
+    ba.verified,
+	ba.interested as 'Reserved',
+    bc.contactName,
+    cp.contactPoint
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
 left join brew_contacts bc on c.clubID = bc.clubID
 left join brew_contactPoints cp on bc.contactID = cp.contactID
 left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
-where
-	ba.year = :year
-	and ba.interested = 'Y'
-	and cp.contactTypeID_fk = 2
-	and cp.priority > 0
+where year = :year
+	and ct1.contactType in ('nchi')
 order by
-	c.clubName,
-	bc.contactName;";
+	ba.verified desc,
+	ba.interested desc,
+    c.distance,
+    c.clubName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
@@ -91,17 +127,15 @@ left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
 where
 	ba.year = :year
 	and ba.interested = 'Y'
-	and cp.contactTypeID_fk = 2
-	and cp.priority > 0
+	and ct1.contactType = 'nchi'
 order by
-	c.clubName,
-	bc.contactName;";
+	cp.contactPoint;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
 $params['bind'] = array('year' => $year);
 $params['show_total'] = true;
-$params['title'] = "NCHI {$year} Unresponsive Club RAW Email Addresses";
+$params['title'] = "NCHI {$year} Unconfirmed Club RAW Email Addresses";
 $params['sql'] = "
 SELECT
 	concat(cp.contactPoint, ', ') 'email'
@@ -113,10 +147,9 @@ left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
 where
 	ba.year = :year
 	and ba.interested = 'N'
-	and cp.contactTypeID_fk = 2
+	and ct1.contactType = 'nchi'
 order by
-	c.clubName,
-	bc.contactName;";
+	cp.contactPoint;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
@@ -125,7 +158,7 @@ $html .= $lclass->init($params);
 <html>
 <body>
 <head>
-<title><?php echo $params['title'] ?></title>
+<title><?php echo $title ?></title>
 <link rel="stylesheet" type"text/css" href="reporter.css">
 </head>
 <body>

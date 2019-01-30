@@ -18,7 +18,7 @@ $con = mysqli_connect($hostname,$username,$password,$database,$dbport);
 if (mysqli_connect_errno()) {
 	die ("Failed to connect to MySQL using the PHP mysqli extension: " . mysqli_connect_error());
 }
-$query = 'select postText from web_posts where webPostID = 1;';
+$query = 'select postText from web_posts where webPostID = 7;';
 $result = mysqli_query($con, $query);
 $html = '';
 while($row = mysqli_fetch_array($result)) {
@@ -38,7 +38,7 @@ fclose($d2);
 <html>
 <body>
 <head>
-<title>NCHI - North Carolina Homebrew Invitational 2018</title>
+<title>NCHI - North Carolina Homebrew Invitational 2019</title>
 <script src="cabrew.js" type="text/javascript"></script>
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/invite.css" rel="stylesheet">
@@ -51,7 +51,7 @@ fclose($d2);
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 					<div class="site-heading">
-						<h1>NCHI 2018</h1>
+						<h1>NCHI 2019</h1>
 						<hr class="small">
 						<span class="subheading">North Carolina Homebrew Invitational</span>
 					</div>

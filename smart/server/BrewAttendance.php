@@ -43,6 +43,10 @@ case 'fetch':
 		$qStr = $db->qStr($_REQUEST['interested'], true);
 		$where .= " and ba.interested = '{$qStr}' ";
 	}
+	if(isset($_REQUEST['verified'])){
+		$qStr = $db->qStr($_REQUEST['verified'], true);
+		$where .= " and ba.verified = '{$qStr}' ";
+	}
 	if(isset($_REQUEST['participated'])){
 		$qStr = $db->qStr($_REQUEST['participated'], true);
 		$where .= " and ba.participated = '{$qStr}' ";

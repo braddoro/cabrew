@@ -29,24 +29,26 @@ while($row = $data->fetch()) {
 		$title = $val;
 	}
 }
-
 $params = array();
 $params['bind'] = array(eventTypeID => $eventID);
 $params['ini_file'] = 'inc/server.ini';
 $params['show_total'] = true;
 $params['title'] = $title . ' Event Schedule';
+	// coalesce() as step1,
+	// case LENGTH(LTRIM(C.stepURL))
+	//    when 0 then C.step
+	// else
+	//    concat('<a href=\"', C.stepURL ,'\" target=\"_blank\">', C.step , '</a>')
+	// end as step,
 $params['sql'] = "
 select
 	C.eventPlanID,
 	C.dueDate,
 	CONCAT(M.firstName, ' ',M.lastName) AS 'Assignee',
-	case LENGTH(LTRIM(C.stepURL))
-    when 0 then C.step
-	else
-    concat('<a href=\"', C.stepURL ,'\" target=\"_blank\">', C.step , '</a>')
-	end as step,
+	C.step,
 	C.cost,
 	C.status,
+	C.stepURL,
     C.notes
 from eventPlans C
 	left join members M on M.memberID = C.memberID

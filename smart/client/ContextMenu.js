@@ -327,8 +327,8 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 				isc.BrewAttendance.create({
 					title: "Attendance for " + record.clubName,
 					clubID: record.clubID,
-					width: 400,
-					height: 200,
+					width: 600,
+					height: 300,
 					left: 190,
 					top: 90
 				});
