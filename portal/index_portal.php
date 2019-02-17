@@ -16,9 +16,10 @@ $shared_path = $cabrew_array['application']['shared_path'];
 $classes = array();
 $classes[] = "ClassDefaults.js";
 $classes[] = "library.js";
-$classes[] = "AddEvent.js";
 $classes[] = "Desktop.js";
+$classes[] = "AddEvent.js";
 $classes[] = "MemberSearch.js";
+$classes[] = "SaveEntry.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
 echo "<html>
@@ -47,12 +48,12 @@ foreach($classes as $class) {
 	}
 }
 echo $content;
-$cmdret = '';
-exec("git status --short --branch", $cmdret);
-$str='';
-foreach ($cmdret as $key) {
-	$str .= $key . '<br/>';
-}
+// $cmdret = '';
+// exec("git status --short --branch", $cmdret);
+// foreach ($cmdret as $key) {
+// 	$str .= $key . '<br/>';
+// }
+$str = '';
 echo 'isc.Desktop.create({data: "'. $str .'"});
 </script>
 </body>

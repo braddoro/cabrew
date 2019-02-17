@@ -104,7 +104,7 @@ left join brew_contacts bc on c.clubID = bc.clubID
 left join brew_contactPoints cp on bc.contactID = cp.contactID
 left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
 where year = :year
-	and ct1.contactType in ('nchi')
+	and ct1.contactType in ('nchi', 'facebook')
 order by
 	ba.verified desc,
 	ba.interested desc,

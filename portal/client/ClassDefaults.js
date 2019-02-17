@@ -39,7 +39,7 @@ isc.defineClass("myHLayout", "HLayout").addProperties({
 	//width: "99%"
 });
 isc.defineClass("myDataSource", "DataSource").addProperties({
-	cacheAllData: true,
+	cacheAllData: false,
 	cacheMaxAge: 86400,
 	dataFormat: "json",
 	dataProtocol: "postParams",
@@ -104,17 +104,17 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 
 isc.defineClass("myListGrid", "ListGrid").addProperties({
 	alternateRecordStyles: true,
-	autoFetchData: true,
+	// autoFetchData: true,
 	autoFitWidth: true,
 	canEdit: true,
 	leaveScrollbarGap: false,
 	modalEditing: true,
 	showAllRecords: true,
 	showFilterEditor: false,
-	rowContextClick: function(record, rowNum, colNum){
-		this.parent.localContextMenu.showContextMenu();
-		return false;
-	},
+	// rowContextClick: function(record, rowNum, colNum){
+	// 	this.parent.localContextMenu.showContextMenu();
+	// 	return false;
+	// },
 	recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
 		var selected = viewer.getSelectedRecords();
 		var count = selected.length;
@@ -133,12 +133,12 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 			viewer.parent.setTitle(title);
 		}
 	},
-	doubleClick: function(){
-		if(this.getTotalRows() == 0 && this.canEdit){
-			this.startEditingNew();
-		}
-		return true;
-	},
+	// doubleClick: function(){
+	// 	if(this.getTotalRows() == 0 && this.canEdit){
+	// 		this.startEditingNew();
+	// 	}
+	// 	return true;
+	// },
 	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
 		if(this.canEdit){
 			this.startEditing(recordNum);
@@ -146,7 +146,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 	},
 	updateStatus: function() {
 		if(this.name) {
-			this.parent.setTitle(this.name + " : Total Rows - " + this.getTotalRows());
+			this.parent.setTitle(this.name + " - " + this.getTotalRows());
 		}else{
 			this.parent.setTitle("Total Rows - " + this.getTotalRows());
 		}

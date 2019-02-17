@@ -1,5 +1,6 @@
 <?php
 require_once 'Connect.php';
+// require_once 'SiteLog.php';
 $table = 'members';
 $primaryKey = 'memberID';
 $conn = new Connect();
@@ -11,13 +12,23 @@ if(!$db->isConnected()){
 }
 $pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
+$access_array = parse_ini_file('access.ini', true);
+$accesslist = $access_array['access'][basename(__FILE__)];
+if((!substr_count($accesslist,$operationType))){
+	$response = array('status' => -4, 'errorMessage' => $conn->getMessage(2, $operationType));
+	echo json_encode($response);
+	exit(1);
+}
+if(($operationType == 'update' || $operationType == 'remove') && is_null($pkval)){
+	$response = array('status' => -1, 'errorMessage' => $conn->getMessage(1, $operationType));
+	echo json_encode($response);
+	exit(1);
+}
 switch($operationType){
 case 'fetch':
-	$where = ' M.statusTypeID_fk = 1 ';
-	if(isset($_REQUEST['FullName'])){
-		$where .= " AND REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') LIKE '%" . $_REQUEST['FullName'] . "%' ";
-	// }else{
-	// 	$where .= ' AND M.statusTypeID_fk = 0 ';
+	$where = '1=1';
+	if(isset($_REQUEST['memberID'])){
+		$where .= " and memberID = " . intval($_REQUEST['memberID']) . " ";
 	}
 	break;
 case 'add':
@@ -30,7 +41,7 @@ case 'add':
 case 'update':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
-	// echo json_encode($record);
+	echo json_encode($record);
 	$where = $primaryKey . '=' . $pkval;
 	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
@@ -42,18 +53,16 @@ case 'remove':
 default:
 	break;
 }
-$sql = "select
-	M.memberID,
-	M.statusTypeID_fk,
-	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
-	M.sex,
-	M.renewalYear,
-	M.lastChangeDate
-	from
-	members M
-	where {$where}
-	order by M.firstName;";
-echo "/* $sql */";
+// $arr = array(
+// 	"pageName" => basename(__FILE__),
+// 	"action" => $operationType,
+// 	"tableName" => $table,
+// 	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+// 	"primaryKey" => $primaryKey,
+// 	"fieldsVals" => var_export($_REQUEST, true)
+// );
+// $r = siteLog($conn, $db, $arr);
+$sql = "select * from {$table} where {$where};";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

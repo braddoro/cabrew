@@ -3,7 +3,7 @@ $year = 2018;
 require_once('reports/inc/Reporter.php');
 $params['ini_file'] = 'reports/inc/server.ini';
 $params['bind'] = array("eventTypeID" => 7);
-$params['show_total'] = true;
+$params['show_total'] = false;
 $params['title'] = "CABREW Competion Schedule";
 $params['sql'] = "
 
