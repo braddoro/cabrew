@@ -6,12 +6,12 @@ $days = 30;
 if(isset($_GET['d'])){
 	$days = intval($_GET['d']);
 }
-require_once('inc/Reporter.php');
+require_once('../Reporter.php');
 $params['bind'] = array(id => NULL);
 if(isset($id)){
 	$params['bind'] = array(id => $id);
 }
-$params['ini_file'] = 'inc/server.ini';
+$params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
 $params['title'] = "Todo Next {$days} Days";
 $params['sql'] = "
@@ -40,7 +40,7 @@ $html = $lclass->init($params);
 <body>
 <head>
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html; ?>

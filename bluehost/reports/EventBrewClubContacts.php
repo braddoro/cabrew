@@ -1,7 +1,7 @@
 <?php
-require_once('inc/Reporter.php');
+require_once('../Reporter.php');
 $params['bind'] = array();
-$params['ini_file'] = 'inc/server.ini';
+$params['ini_file'] = '../server.ini';
 $params['title'] = 'Event Brew Club Contacts';
 $params['sql'] = "
 select distinct
@@ -36,7 +36,7 @@ $html = $lclass->init($params);
 <body>
 <head>
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html; ?>

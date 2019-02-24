@@ -3,8 +3,8 @@ $eventID = 1;
 if(isset($_GET['e'])){
 	$eventID = intval($_GET['e']);
 }
-require_once('inc/Reporter.php');
-$params['ini_file'] = 'inc/server.ini';
+require_once('../Reporter.php');
+$params['ini_file'] = '../server.ini';
 $params['bind'] = array(eventID => $eventID);
 $params['show_total'] = false;
 $params['title'] = "NCHI Event Teams for {$year}";
@@ -39,7 +39,7 @@ $html = $lclass->init($params);
 <body>
 <head>
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html;?>

@@ -8,8 +8,8 @@ if(isset($_GET['y'])){
 }else{
 	$year = date('Y');
 }
-require_once('inc/Reporter.php');
-$params['ini_file'] = 'inc/server.ini';
+require_once('../Reporter.php');
+$params['ini_file'] = '../server.ini';
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
 $params['title'] = "NCHI {$year} Schedule of Events";
@@ -29,7 +29,7 @@ $html .= $lclass->init($params);
 <head>
 <meta http-equiv="refresh" content="60">
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html;?>

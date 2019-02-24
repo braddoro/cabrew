@@ -4,8 +4,8 @@ if(isset($_GET['y'])){
 }else{
 	$year = date('Y');
 }
-require_once('inc/Reporter.php');
-$params['ini_file'] = 'inc/server.ini';
+require_once('../Reporter.php');
+$params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
 $params['bind'] = array('year' => $year);
 $params['title'] = "Member Attendance for {$year}";
@@ -38,7 +38,7 @@ $html = $lclass->init($params);
 <body>
 <head>
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html;?>

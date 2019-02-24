@@ -1,5 +1,5 @@
 <?php
-require_once('inc/Reporter.php');
+require_once('../Reporter.php');
 $wheres = '';
 $eventID = (isset($_GET['e'])) ? intval($_GET['e']) : 7;
 if(isset($_GET['e'])){
@@ -18,7 +18,7 @@ if(isset($_GET['e'])){
 // Get a custom title.
 //
 $params['bind'] = array();
-$params['ini_file'] = 'inc/server.ini';
+$params['ini_file'] = '../server.ini';
 $params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = $eventID;";
 $params['skip_format'] = true;
 $lclass = New Reporter();
@@ -32,7 +32,7 @@ while($row = $data->fetch()) {
 
 $params = array();
 $params['bind'] = array(eventTypeID => $eventID);
-$params['ini_file'] = 'inc/server.ini';
+$params['ini_file'] = '../server.ini';
 $params['show_total'] = false;
 $params['title'] = $title;
 $params['sql'] = "select
@@ -59,7 +59,7 @@ $html = $lclass->init($params);
 <body>
 <head>
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html; ?>

@@ -1,5 +1,5 @@
 <?php
-require_once('inc/Reporter.php');
+require_once('../Reporter.php');
 $active = 'Y';
 if(isset($_GET['a'])){
 	$active = $_GET['a'];
@@ -13,7 +13,7 @@ if(isset($_GET['p1'])){
 	$priority2 = intval($_GET['p2']);
 }
 $params['bind'] = array('priority1' => $priority1, 'priority2' => $priority2, 'active' => $active);
-$params['ini_file'] = 'inc/server.ini';
+$params['ini_file'] = '../server.ini';
 $params['title'] = 'Brew Club Contacts';
 $params['sql'] = "
 select distinct
@@ -49,7 +49,7 @@ $html = $lclass->init($params);
 <body>
 <head>
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html; ?>

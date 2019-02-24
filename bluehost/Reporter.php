@@ -95,14 +95,18 @@ class Reporter {
 			if($loop === 0){
 				$out .= "\t<tr class=\"header\">" . PHP_EOL;
 				foreach($row as $col => $val){
-					$out .= "\t\t<th>" . $this->prettyColumn($col) . "</th>" . PHP_EOL;
+					if(substr($col,0,1) != '_'){
+						$out .= "\t\t<th>" . $this->prettyColumn($col) . "</th>" . PHP_EOL;
+					}
 				}
 				$out .= "\t</tr>" . PHP_EOL;
 			}
 			$style = ($loop % 2 == 0) ? 'even' : 'odd';
 			$out .= "\t<tr class=\"{$style}\">" . PHP_EOL;
 			foreach($row as $col => $val){
-				$out .= "\t\t<td>" . $val . "</td>" . PHP_EOL;
+				if(substr($col,0,1) != '_'){
+					$out .= "\t\t<td>" . $val . "</td>" . PHP_EOL;
+				}
 			}
 			$out .= "\t</tr>" . PHP_EOL;
 			$loop++;

@@ -5,8 +5,8 @@ if(isset($_GET['y'])){
 }else{
 	$year = date('Y');
 }
-require_once('inc/Reporter.php');
-$params['ini_file'] = 'inc/server.ini';
+require_once('../Reporter.php');
+$params['ini_file'] = '../server.ini';
 $params['bind'] = array('year' => $year);
 $params['show_total'] = false;
 $params['title'] = "NCHI {$year} Summary";
@@ -159,7 +159,7 @@ $html .= $lclass->init($params);
 <body>
 <head>
 <title><?php echo $title ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html;?>
