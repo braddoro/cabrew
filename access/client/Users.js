@@ -1,4 +1,6 @@
 isc.defineClass("Users", "myWindow").addProperties({
+	top: 50,
+	left: 50,
 	height: 300,
 	width: 600,
 	initWidget: function(initData){
@@ -17,7 +19,8 @@ isc.defineClass("Users", "myWindow").addProperties({
 			]
 		});
 		this.UserLG = isc.myListGrid.create({
-			dataSource: this.UserDS,
+			autoFetchData: true,
+			dataSource: isc.Shared.UserDS,
 			name: "Users",
 			parent: this,
 			showFilterEditor: true

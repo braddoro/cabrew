@@ -1,4 +1,6 @@
 isc.defineClass("ItemGroups", "myWindow").addProperties({
+	top: 150,
+	left: 150,
 	height: 300,
 	width: 600,
 	initWidget: function(initData){
@@ -15,6 +17,7 @@ isc.defineClass("ItemGroups", "myWindow").addProperties({
 			]
 		});
 		this.ItemGroupLG = isc.myListGrid.create({
+			autoFetchData: true,
 			dataSource: this.ItemGroupDS,
 			name: "Item Groups",
 			parent: this,

@@ -17,6 +17,7 @@ $classes = array();
 $classes[] = "ClassDefaults.js";
 $classes[] = "library.js";
 $classes[] = "ContextMenu.js";
+$classes[] = "Navigation.js";
 $classes[] = "Desktop.js";
 $classes[] = "Shared.js";
 $classes[] = "Users.js";

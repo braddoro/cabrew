@@ -1,20 +1,12 @@
 isc.defineClass("Groups", "myWindow").addProperties({
+	top: 100,
+	left: 100,
 	height: 300,
 	width: 600,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
-		// this.GroupDS = isc.myDataSource.create({
-		// 	cacheAllData: false,
-		// 	dataURL: serverPath + "Groups.php",
-		// 	showFilterEditor: true,
-		// 	fields:[
-		// 		{name: "secGroupID", primaryKey: true, detail: true, type: "sequence"},
-		// 		{name: "groupName", width: 300, validators: [{type: "lengthRange", max: 200}]},
-		// 		{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
-		// 		{name: "lastChangeDate", width: 100, detail: true}
-		// 	]
-		// });
 		this.GroupLG = isc.myListGrid.create({
+			autoFetchData: true,
 			dataSource: isc.Shared.GroupDS,
 			name: "Groups",
 			parent: this,
