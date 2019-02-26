@@ -25,8 +25,8 @@ group by
 	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ')
 order by
 	sum(DT.datePoints) desc,
-	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ')
-;";
+	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ');
+";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

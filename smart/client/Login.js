@@ -33,16 +33,18 @@ isc.defineClass("Login", "myWindow").addProperties({
 	submitData: function(){
 		var formData = this.LoginDF.getValues();
 		if(formData.USER_NAME > ""){
-			this.LoginDS.addData(formData,{target: this, methodName: "submitData_callback"});
+			newCriteria = isc.addProperties({},{PASSWORD: formData.PASSWORD, USER_NAME: formData.USER_NAME});
+			this.LoginDS.addData(newCriteria, {target: this, methodName: "submitData_callback"});
 		} else{
-			isc.warn("A username is necessary.");
+			isc.warn("A username usually a good iden when wanting to log into things. Or not. I don't really care. You can do it your way if you want.");
 		}
 	},
 	submitData_callback: function(rpcResponse){
 		var userData = rpcResponse.data[0];
-		if(userData === undefined){
-			isc.warn("Improper Credentials");
-		} else {
+		console.log(userData.error);
+		if(userData.error == 'bad data'){
+			isc.warn("So in theory that should have worked but one of us did something wrong. Probably it was you.");
+		}else{
 			isc.userData = userData;
 			this.destroy();
 		}

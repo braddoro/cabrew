@@ -121,7 +121,7 @@ class Reporter {
 }
 // require_once('Reporter.php');
 $year = 2019;
-$params['ini_file'] = 'reports/inc/server.ini';
+$params['ini_file'] = 'server.ini';
 $params['bind'] = array("eventTypeID" => 7);
 $params['show_total'] = false;
 $params['title'] = "CABREW Competion Schedule";

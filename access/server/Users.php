@@ -12,6 +12,11 @@ if(!$db->isConnected()){
 }
 $pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
+
+// require_once 'Access.php';
+// $access = new Access();
+// $access->Check();
+
 // $access_array = parse_ini_file('access.ini', true);
 // $accesslist = $access_array['access'][basename(__FILE__)];
 // if((!substr_count($accesslist,$operationType))){

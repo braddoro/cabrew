@@ -1,14 +1,6 @@
 <?php
 $year = 2019;
-// require_once('../reports/inc/Reporter.php');
-// $params['bind'] = array();
-// $params['ini_file'] = '../reports/inc/server.ini';
-// $params['skip_format'] = true;
-// $params['sql'] = "select postText from web_posts where webPostID = 1;";
-// $lclass = New Reporter();
-// $html = $lclass->init($params);
-
-$ini_array = parse_ini_file('../reports/inc/server.ini', true);
+$ini_array = parse_ini_file('../server.ini', true);
 $hostname = $ini_array['database']['hostname'];
 $username = $ini_array['database']['username'];
 $password = $ini_array['database']['password'];
@@ -25,7 +17,6 @@ while($row = mysqli_fetch_array($result)) {
 	$html = $row[0];
 }
 mysqli_close($con);
-
 ?>
 <!DOCTYPE html>
 <html>
