@@ -1,13 +1,15 @@
 <?php
 require_once 'Connect.php';
 Class Access {
-	public function Check($user = null, $item = null){
+    function __construct() {}
+	private function Check($params){
 		$conn = new Connect();
+		$user = $params->user;
+		$item = $params->item;
 		$db = $conn->conn();
 		if(!$db->isConnected()){
 			$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
-			echo json_encode($response);
-			exit(1);
+			return $response;
 		}
 		$item = (isset($_REQUEST['item'])) ? $_REQUEST['item'] : 'no item';
 		$user = (isset($_REQUEST['user'])) ? $_REQUEST['user'] : 'no user';
@@ -28,7 +30,7 @@ Class Access {
 		if(!$response){
 			$response = array();
 		}
-		echo json_encode($response);
+		return $response;
 		$db->close();
 	}
 }

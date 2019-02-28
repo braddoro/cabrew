@@ -31,6 +31,7 @@ isc.defineClass("Login", "myWindow").addProperties({
 		this.addItem(this.LoginVL);
 	},
 	submitData: function(){
+		console.log('submitData');
 		var formData = this.LoginDF.getValues();
 		if(formData.USER_NAME > ""){
 			newCriteria = isc.addProperties({},{PASSWORD: formData.PASSWORD, USER_NAME: formData.USER_NAME});
@@ -40,13 +41,22 @@ isc.defineClass("Login", "myWindow").addProperties({
 		}
 	},
 	submitData_callback: function(rpcResponse){
+		console.log('submitData_callback');
 		var userData = rpcResponse.data[0];
-		console.log(userData.error);
 		if(userData.error == 'bad data'){
 			isc.warn("So in theory that should have worked but one of us did something wrong. Probably it was you.");
 		}else{
 			isc.userData = userData;
-			this.destroy();
+			RPCManager.sendRequest({
+				data: {operationType: 'fetch', userID: userData.secUserID},
+				callback: {target: this, methodName: "sendRequest_callback"},
+				actionURL: serverPath + "Pages.php"
+			});
 		}
+	},
+	sendRequest_callback: function(rpcResponse){
+		console.log('submitData_callback_callback');
+		console.log(rpcResponse);
+		this.destroy();
 	}
 });
