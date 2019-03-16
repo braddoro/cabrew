@@ -34,5 +34,6 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.CorporationsLG]}));
+		this.CorporationsLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

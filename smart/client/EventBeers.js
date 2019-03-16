@@ -42,5 +42,6 @@ isc.defineClass("EventBeers", "myWindow").addProperties({
 		parent: this
 	});
 	this.addItem(isc.myVLayout.create({members: [this.EventBeerLG]}));
+	this.EventBeerLG.canEdit = checkPerms(this.getClassName() + ".js");
   }
 });

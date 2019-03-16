@@ -68,6 +68,7 @@ isc.defineClass("AddPayment", "myWindow").addProperties({
 			this.AddPaymentBT
 		]});
 		this.addItem(this.AddPaymentVL);
+		this.AddPaymentBT.canEdit = checkPerms(this.getClassName() + ".js");
 	},
 	submitData: function(){
 		this.AddPaymentDS.addData(this.AddPaymentDF.getValues());

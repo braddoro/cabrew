@@ -34,6 +34,7 @@ isc.defineClass("BrewMedia", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewMediaLG]}));
+		this.BrewContactPointsLG.canEdit = checkPerms(this.getClassName() + ".js");
 		this.BrewMediaLG.fetchData({clubID: initData.clubID});
 	}
 });

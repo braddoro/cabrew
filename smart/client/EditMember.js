@@ -19,5 +19,6 @@ isc.defineClass("EditMember", "myWindow").addProperties({
 		});
 		this.addItem(isc.myVLayout.create({members: [this.EditMemberDF, this.EditMemberBT]}));
 		this.EditMemberDF.fetchData({memberID: initData.memberID});
+		this.EditMemberDF.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

@@ -27,5 +27,6 @@ isc.defineClass("BrewContactPoints", "myWindow").addProperties({
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewContactPointsLG]}));
 		this.BrewContactPointsLG.fetchData({contactID: initData.contactID});
+		this.BrewContactPointsLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

@@ -12,5 +12,6 @@ isc.defineClass("DateTypes", "myWindow").addProperties({
 			callingListGrid: this.DateTypesLG
 		});
 		this.addItem(isc.myVLayout.create({members: [this.DateTypesLG]}));
+		this.DateTypesLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

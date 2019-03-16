@@ -24,6 +24,12 @@ if(($operationType == 'update' || $operationType == 'remove') && is_null($pkval)
 	echo json_encode($response);
 	exit(1);
 }
+
+$_REQUEST['done'] = 'N';
+if($_REQUEST['status'] == 'complete'){
+	$_REQUEST['done'] = 'Y';
+}
+
 switch($operationType){
 case 'fetch':
 	$where = '1=1';

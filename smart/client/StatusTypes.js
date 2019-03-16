@@ -11,5 +11,6 @@ isc.defineClass("StatusTypes", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.StatusTypesLG]}));
+		this.StatusTypesLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

@@ -85,5 +85,6 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 		var current = new Date(now);
 		this.yearChooserDF.setValue("Year",current.getFullYear());
 		this.addItem(this.memberPointsScreenVL);
+		this.pointListDS.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

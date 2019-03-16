@@ -13,6 +13,7 @@ isc.defineClass("MemberDates", "myWindow").addProperties({
 		});
 		this.localContextMenu = isc.myContextMenu.create({parent: this, callingListGrid: this.MemberDatesLG});
 		this.addItem(isc.myVLayout.create({members: [this.MemberDatesLG]}));
+		this.MemberDatesLG.canEdit = checkPerms(this.getClassName() + ".js");
 		this.MemberDatesLG.fetchData({memberID_fk: initData.memberID});
 	}
 });

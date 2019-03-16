@@ -31,32 +31,42 @@ isc.defineClass("Login", "myWindow").addProperties({
 		this.addItem(this.LoginVL);
 	},
 	submitData: function(){
-		console.log('submitData');
 		var formData = this.LoginDF.getValues();
+		var newCriteria;
 		if(formData.USER_NAME > ""){
-			newCriteria = isc.addProperties({},{PASSWORD: formData.PASSWORD, USER_NAME: formData.USER_NAME});
+			newCriteria = isc.addProperties({}, {operationType: "fetch", PASSWORD: formData.PASSWORD, USER_NAME: formData.USER_NAME});
 			this.LoginDS.addData(newCriteria, {target: this, methodName: "submitData_callback"});
 		} else{
 			isc.warn("A username usually a good iden when wanting to log into things. Or not. I don't really care. You can do it your way if you want.");
 		}
 	},
 	submitData_callback: function(rpcResponse){
-		console.log('submitData_callback');
 		var userData = rpcResponse.data[0];
-		if(userData.error == 'bad data'){
+		if(userData === undefined){
 			isc.warn("So in theory that should have worked but one of us did something wrong. Probably it was you.");
-		}else{
+		} else {
 			isc.userData = userData;
-			RPCManager.sendRequest({
-				data: {operationType: 'fetch', userID: userData.secUserID},
-				callback: {target: this, methodName: "sendRequest_callback"},
-				actionURL: serverPath + "Pages.php"
-			});
+			// this.destroy();
 		}
+		RPCManager.sendRequest({
+			clientContext: 'login',
+			showPrompt: true,
+			useStrictJSON: true,
+			params: {operationType: 'fetch', userID: userData.secUserID},
+			callback: {target: this, methodName: "sendRequest_callback"},
+			actionURL: serverPath + "Pages.php"
+		});
 	},
 	sendRequest_callback: function(rpcResponse){
-		console.log('submitData_callback_callback');
-		console.log(rpcResponse);
+		var json = JSON.parse(rpcResponse.data);
+		var pages = [];
+		for(var i = 0; i < json.length; i++){
+			var obj = json[i];
+			for (var key in obj){
+				pages.push(obj[key]);
+			}
+		}
+        isc.userPages = isc.addProperties({}, pages);
 		this.destroy();
 	}
 });

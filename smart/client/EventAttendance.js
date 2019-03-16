@@ -32,6 +32,7 @@ isc.defineClass("EventAttendance", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.EventAttendanceLG]}));
+		this.EventAttendanceLG.canEdit = checkPerms(this.getClassName() + ".js");
 		this.EventAttendanceLG.fetchData();
 	}
 });

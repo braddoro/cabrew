@@ -25,6 +25,7 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewContactsLG]}));
+		this.BrewContactsLG.canEdit = checkPerms(this.getClassName() + ".js");
 		this.BrewContactsLG.fetchData({clubID: initData.clubID});
 	}
 });

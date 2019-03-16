@@ -22,5 +22,6 @@ isc.defineClass("test", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.testLG]}));
+		this.testLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

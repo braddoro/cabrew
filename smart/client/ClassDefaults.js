@@ -45,7 +45,15 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 	dataProtocol: "postParams",
 	transformRequest: function(dsRequest){
 		var superClassArguments = this.Super("transformRequest", dsRequest);
-		var newProperties = {operationType: dsRequest.operationType};
+		var userID = 0;
+		if(typeof isc !== 'undefined'){
+			if(typeof isc.userData !== 'undefined'){
+				if(typeof isc.userData.secUserID !== 'undefined'){
+					userID = isc.userData.secUserID;
+				}
+			}
+		}
+		var newProperties = {operationType: dsRequest.operationType, userID: userID};
 		return isc.addProperties({}, superClassArguments, newProperties);
 	},
 	transformResponse: function(dsResponse, dsRequest, data){

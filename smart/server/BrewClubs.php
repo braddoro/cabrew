@@ -1,6 +1,7 @@
 <?php
 require_once 'Connect.php';
 require_once 'SiteLog.php';
+require_once 'Access.php';
 $table = 'brew_clubs';
 $primaryKey = 'clubID';
 $conn = new Connect();
@@ -12,6 +13,11 @@ if(!$db->isConnected()){
 }
 $pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
+
+// $Access = new Access();
+// $params = array('user' => $_REQUEST['userID'], 'item' => $_REQUEST['']);
+// $check = $Access->Check($params);
+
 $access_array = parse_ini_file('access.ini', true);
 $accesslist = $access_array['access'][basename(__FILE__)];
 if((!substr_count($accesslist,$operationType))){
@@ -24,6 +30,7 @@ if(($operationType == 'update' || $operationType == 'remove') && is_null($pkval)
 	echo json_encode($response);
 	exit(1);
 }
+
 switch($operationType){
 case 'fetch':
 	$where = '1=1';

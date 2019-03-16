@@ -36,6 +36,7 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		]});
 		this.addItem(this.AddEventVL);
 		this.AddEventLG.fetchData({statusTypeID_fk: 1});
+		this.AddEventDF.canEdit = checkPerms(this.getClassName() + ".js");
 	},
 	submitData: function(){
 		var formData = this.AddEventDF.getValues();

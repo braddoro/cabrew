@@ -11,5 +11,6 @@ isc.defineClass("NoteTypes", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.NoteTypesLG]}));
+		this.NoteTypesLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });
