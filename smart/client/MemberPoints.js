@@ -65,7 +65,6 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			parent: this
 		});
 		this.pointListLG = isc.myListGrid.create({
-			canEdit: false,
 			dataSource: this.pointListDS,
 			margin: 1,
 			sortDirection: "descending",

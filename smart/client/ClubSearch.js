@@ -22,7 +22,6 @@ isc.defineClass("ClubSearch", "myWindow").addProperties({
 			]
 		});
 		this.ClubSearchLG = isc.myListGrid.create({
-			canEdit: false,
 			dataSource: this.ClubSearchDS,
 			name: "Club Search",
 			parent: this,
@@ -33,5 +32,6 @@ isc.defineClass("ClubSearch", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.ClubSearchLG]}));
+		this.ClubSearchLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

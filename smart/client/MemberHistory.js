@@ -14,7 +14,6 @@ isc.defineClass("MemberHistory", "myWindow").addProperties({
 			]
 		});
 		this.MemberHistoryLG = isc.myListGrid.create({
-			canEdit: false,
 			dataSource: this.MemberHistoryDS,
 			name: "Member History",
 			parent: this,
@@ -25,6 +24,7 @@ isc.defineClass("MemberHistory", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.MemberHistoryLG]}));
+		this.MemberHistoryLG.canEdit = checkPerms(this.getClassName() + ".js");
 		var current = new Date();
 		this.MemberHistoryLG.fetchData({YearDate: current.getFullYear()});
 	}
