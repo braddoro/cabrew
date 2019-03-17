@@ -25,7 +25,7 @@ $arr = array(
 	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
 	"tableName" => $table
 );
-// $r = siteLog($conn, $db, $arr, true);
+$r = siteLog($conn, $db, $arr, true);
 $sql = "select secUserID, userName from sec_users where LOWER(userName) = LOWER('{$username}') and LOWER(password) = LOWER('{$password}') and active = 'Y';";
 $response = $db->getAll($sql);
 if(!$response){
