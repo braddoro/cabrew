@@ -36,14 +36,14 @@ isc.defineClass("Login", "myWindow").addProperties({
 		if(formData.user_name > ""){
 			newCriteria = isc.addProperties({}, {operationType: "fetch", password: formData.password, user_name: formData.user_name}); this.LoginDS.addData(newCriteria, {target: this, methodName: "submitData_callback"});
 		}else{
-			isc.warn("A username usually a good iden when wanting to log into things. Or not. I don't really care. You can do it your way if you want.");
+			isc.warn(this.mm_missingUserName);
 		}
 	},
 	submitData_callback: function(rpcResponse){
 		var userData = rpcResponse.data[0];
 		// userData === undefined ||
 		if(userData.secUserID === undefined){
-			isc.warn("So in theory that should have worked but one of us did something wrong. Probably it was you.");
+			isc.warn(this.mm_badPassword);
 		}else{
 			isc.userData = userData;
 			RPCManager.sendRequest({

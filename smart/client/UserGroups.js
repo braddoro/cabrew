@@ -1,10 +1,10 @@
 isc.defineClass("UserGroups", "myWindow").addProperties({
-	top: 125,
-	left: 125,
-	height: 300,
-	width: 600,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
+		if(!checkPerms(this.getClassName() + ".js")){
+			isc.warn(this.mm_accessFail);
+			this.close();
+		}
 		this.UserGroupDS = isc.myDataSource.create({
 			cacheAllData: false,
 			dataURL: serverPath + "UserGroups.php",
@@ -28,5 +28,6 @@ isc.defineClass("UserGroups", "myWindow").addProperties({
 			callingListGrid: this.UserGroupLG
 		});
 		this.addItem(isc.myVLayout.create({members: [this.UserGroupLG]}));
+		this.UserGroupLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

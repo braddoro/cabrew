@@ -1,6 +1,10 @@
 isc.defineClass("ItemGroups", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
+		if(!checkPerms(this.getClassName() + ".js")){
+			isc.warn(this.mm_accessFail);
+			this.close();
+		}
 		this.ItemGroupDS = isc.myDataSource.create({
 			cacheAllData: false,
 			dataURL: serverPath + "ItemGroups.php",
@@ -24,5 +28,6 @@ isc.defineClass("ItemGroups", "myWindow").addProperties({
 			callingListGrid: this.ItemGroupLG
 		});
 		this.addItem(isc.myVLayout.create({members: [this.ItemGroupLG]}));
+		this.ItemGroupLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

@@ -138,7 +138,7 @@ isc.Shared = {
 		showFilterEditor: true,
 		fields:[
 			{name: "secItemID", primaryKey: true, detail: true, type: "sequence"},
-			{name: "itemName", width: 300, validators: [{type: "lengthRange", max: 200}]},
+			{name: "itemName", width: "*", validators: [{type: "lengthRange", max: 200}]},
 			{name: "itemType", width: 100, validators: [{type: "lengthRange", max: 45}]},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "lastChangeDate", width: 100, detail: true}

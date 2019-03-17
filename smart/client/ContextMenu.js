@@ -89,8 +89,7 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.MemberContacts.create({
 					title: "Contacts for " + record.FullName,
 					memberID: record.memberID,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -100,8 +99,7 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.MemberDates.create({
 					title: "Activity for " + record.FullName,
 					memberID: record.memberID,
-					left: 150,
-					top: 50
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -111,10 +109,9 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.EditMember.create({
 					title: "Editing " + record.FullName,
 					memberID: record.memberID,
+					left: isc.Math.random(200), top: isc.Math.random(150),
 					width: 400,
-					height: 300,
-					left: 210,
-					top: 110
+					height: 300
 				});
 			}
 		},
@@ -124,8 +121,7 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.MemberChairs.create({
 					title: "Leadership for " + record.FullName,
 					memberID: record.memberID,
-					left: 210,
-					top: 110
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -135,8 +131,7 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.MemberNotes.create({
 					title: "Notes for " + record.FullName,
 					memberID: record.memberID,
-					left: 170,
-					top: 70
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -157,8 +152,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				isc.MemberContacts.create({
 					title: "Contacts for " + record.FullName,
 					memberID: record.memberID,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -169,8 +163,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 					title: "Activity for " + record.FullName,
 					memberID: record.memberID,
 					autoFetch: true,
-					left: 150,
-					top: 50
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -182,8 +175,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 					memberID: record.memberID,
 					width: 400,
 					height: 300,
-					left: 210,
-					top: 110
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -193,8 +185,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				isc.MemberChairs.create({
 					title: "Leadership for " + record.FullName,
 					memberID: record.memberID,
-					left: 210,
-					top: 110
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -204,8 +195,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 				isc.MemberNotes.create({
 					title: "Notes for " + record.FullName,
 					memberID: record.memberID,
-					left: 170,
-					top: 70
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -281,8 +271,7 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 					contactID: record.contactID,
 					width: 400,
 					height: 200,
-					left: 250,
-					top: 150
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		}
@@ -329,8 +318,7 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 					clubID: record.clubID,
 					width: 600,
 					height: 300,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -342,8 +330,7 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 					clubID: record.clubID,
 					width: 400,
 					height: 200,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -355,8 +342,7 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 					clubID: record.clubID,
 					width: 500,
 					height: 200,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		}

@@ -16,6 +16,9 @@ isc.defineClass("myWindow", "Window").addProperties({
 	title: "",
 	left: 25,
 	top: 25,
+	mm_accessFail: "It's unfortunate, mostly for you, that you don't have clearance to view this page.",
+	mm_badPassword: "So in theory that should have worked but one of us did something wrong. Probably it was you.",
+	mm_missingUserName: "A username usually a good idea when wanting to log into things. Or not. I don't really care. You can do it your way if you want.",
 	resized: function(){
 		// console.log("Title.: " + this.title);
 		// console.log("Width.: " + this.width);
@@ -124,22 +127,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		return false;
 	},
 	recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
-		var selected = viewer.getSelectedRecords();
-		var count = selected.length;
-		var single = 1;
-		var name = "";
-		var title = "";
-		if (viewer.name) {
-			name = viewer.name;
-		}
-		if(count > single){
-			title = name + " : Selected Rows - " + count;
-		}else{
-			title = name + " : Total Rows - " + this.getTotalRows();
-		}
-		if(viewer.parent){
-			viewer.parent.setTitle(title);
-		}
+		this.updateStatus();
 	},
 	doubleClick: function(){
 		if(this.getTotalRows() == 0 && this.canEdit){
@@ -153,19 +141,25 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}
 	},
 	updateStatus: function() {
-		var rows = this.getTotalRows();
+		var countStr = "Total Rows - " + rows;
 		var name = this.name;
+		var nameStr = "";
+		var rows = this.getTotalRows();
+		var selected = this.getSelectedRecords();
+		var single = 1;
 		var state = this.canEdit;
-		var rowsStr = "Total Rows";
 		var stateStr = "";
+		if(selected.length > single){
+			countStr = "Selected Rows - " + selected.length;
+		}
 		if(!state){
 			stateStr = "(read only)";
 		}
-		var nameStr = "";
 		if(this.name) {
 			nameStr = this.name + " | ";
 		}
-		var title = nameStr + "" + rowsStr + ": " + rows + " " + stateStr;
+		var title = nameStr + "" + countStr + " " + stateStr;
+		console.log(title);
 		this.parent.setTitle(title);
 		this.focus();
 	},

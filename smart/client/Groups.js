@@ -1,6 +1,10 @@
 isc.defineClass("Groups", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
+		if(!checkPerms(this.getClassName() + ".js")){
+			isc.warn(this.mm_accessFail);
+			this.close();
+		}
 		this.GroupLG = isc.myListGrid.create({
 			autoFetchData: true,
 			dataSource: isc.Shared.GroupDS,
@@ -13,5 +17,6 @@ isc.defineClass("Groups", "myWindow").addProperties({
 			callingListGrid: this.GroupLG
 		});
 		this.addItem(isc.myVLayout.create({members: [this.GroupLG]}));
+		this.GroupLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });
