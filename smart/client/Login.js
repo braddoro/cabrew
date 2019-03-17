@@ -50,7 +50,6 @@ isc.defineClass("Login", "myWindow").addProperties({
 		}
 		RPCManager.sendRequest({
 			clientContext: 'login',
-			showPrompt: true,
 			useStrictJSON: true,
 			params: {operationType: 'fetch', userID: userData.secUserID},
 			callback: {target: this, methodName: "sendRequest_callback"},

@@ -1,22 +1,17 @@
 <?php
 require_once 'Connect.php';
 require_once 'SiteLog.php';
-require_once 'Access.php';
 $table = 'brew_clubs';
 $primaryKey = 'clubID';
 $conn = new Connect();
-$db = $conn->conn();
-if(!$db->isConnected()){
-	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+$dbconn = $conn->conn();
+if(!$dbconn->isConnected()){
+	$response = array('status' => -1, 'errorMessage' => $dbconn->errorMsg());
 	echo json_encode($response);
 	exit(1);
 }
 $pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
-
-// $Access = new Access();
-// $params = array('user' => $_REQUEST['userID'], 'item' => $_REQUEST['']);
-// $check = $Access->Check($params);
 
 $access_array = parse_ini_file('access.ini', true);
 $accesslist = $access_array['access'][basename(__FILE__)];
@@ -35,34 +30,34 @@ switch($operationType){
 case 'fetch':
 	$where = '1=1';
 	if(isset($_REQUEST['active'])){
-		$qStr = $db->qStr($_REQUEST['active'], true);
+		$qStr = $dbconn->qStr($_REQUEST['active'], true);
 		$where .= " and active = $qStr ";
 	}
 	if(isset($_REQUEST['distance'])){
 		$where .= ' and distance <= ' . intval($_REQUEST['distance']);
 	}
 	if(isset($_REQUEST['clubName'])){
-		$qStr = $db->qStr($_REQUEST['clubName'], true);
+		$qStr = $dbconn->qStr($_REQUEST['clubName'], true);
 		$where .= " and clubName like '%" . $qStr . "%' ";
 	}
 	break;
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
-	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
-	$pkval = $db->insert_Id();
+	$dbconn->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $dbconn->insert_Id();
 	$where = $primaryKey . '=' . $pkval;
 	break;
 case 'update':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
 	$where = $primaryKey . '=' . $pkval;
-	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
+	$dbconn->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
 case 'remove':
 	$where = $primaryKey . '=' . $pkval;
 	$sql = "delete from {$table} where {$where};";
-	$db->execute($sql);
+	$dbconn->execute($sql);
 	break;
 default:
 	break;
@@ -75,12 +70,12 @@ $arr = array(
 	"primaryKey" => $primaryKey,
 	"fieldsVals" => var_export($_REQUEST, true)
 );
-$r = siteLog($conn, $db, $arr);
+$r = siteLog($conn, $dbconn, $arr);
 $sql = "select * from {$table} where {$where};";
-$response = $db->getAll($sql);
+$response = $dbconn->getAll($sql);
 if(!$response){
 	$response = array();
 }
+$dbconn->close();
 echo json_encode($response);
-$db->close();
 ?>

@@ -28,7 +28,7 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewClubsLG]}));
-		this.AddEventLG.canEdit = checkPerms(this.getClassName() + ".js");
+		this.BrewClubsLG.canEdit = checkPerms(this.getClassName() + ".js");
 		this.BrewClubsLG.filterData({active: "Y"});
 	}
 });

@@ -1,18 +1,21 @@
 <?php
+// $Access = new Access();
+// $params = array('user' => $_REQUEST['userID'], 'item' => $_REQUEST['']);
+// $check = $Access->Check($params);
 require_once 'Connect.php';
 Class Access {
-    function __construct() {}
-	private function Check($params){
+    fuction __construct() {}
+	private function CheckAccess($params){
 		$conn = new Connect();
 		$user = $params->user;
 		$item = $params->item;
-		$db = $conn->conn();
-		if(!$db->isConnected()){
-			$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+		$dbconn = $conn->conn();
+		if(!$dbconn->isConnected()){
+			$response = array('status' => -1, 'errorMessage' => $dbconn->errorMsg());
 			return $response;
 		}
-		$item = (isset($_REQUEST['item'])) ? $_REQUEST['item'] : 'no item';
-		$user = (isset($_REQUEST['user'])) ? $_REQUEST['user'] : 'no user';
+		$item = (isset($params['item'])) ? $params['item'] : 'no item';
+		$user = (isset($params['user'])) ? $params['user'] : 'no user';
 		$sql = "
 		select ISNULL(si.secItemID,0) as access
 		from sec_users su
@@ -26,12 +29,12 @@ Class Access {
 		and su.userName = '$user'
 		and si.itemName = '$item';
 		";
-		$response = $db->getAll($sql);
+		$response = $dbconn->getAll($sql);
 		if(!$response){
 			$response = array();
 		}
 		return $response;
-		$db->close();
+		$dbconn->close();
 	}
 }
 ?>
