@@ -4,9 +4,9 @@ require_once 'SiteLog.php';
 $table = 'eventPlans';
 $primaryKey = 'eventPlanID';
 $conn = new Connect();
-$db = $conn->conn();
-if(!$db->isConnected()){
-	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+$dbconn = $conn->conn();
+if(!$dbconn->isConnected()){
+	$response = array('status' => -1, 'errorMessage' => $dbconn->errorMsg());
 	echo json_encode($response);
 	exit(1);
 }
@@ -34,7 +34,7 @@ switch($operationType){
 case 'fetch':
 	$where = '1=1';
 	if(isset($_REQUEST['status'])){
-		$qStr = $db->qStr($_REQUEST['status'], true);
+		$qStr = $dbconn->qStr($_REQUEST['status'], true);
 		$where .= " and status = $qStr ";
 	}
 	if(isset($_REQUEST['eventTypeID'])){
@@ -47,8 +47,8 @@ case 'fetch':
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
-	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
-	$pkval = $db->insert_Id();
+	$dbconn->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $dbconn->insert_Id();
 	$where = $primaryKey . '=' . $pkval;
 	break;
 case 'update':
@@ -56,30 +56,30 @@ case 'update':
 	$record = $conn->buildRecordset($data);
 	// echo json_encode($record);
 	$where = $primaryKey . '=' . $pkval;
-	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
+	$dbconn->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
 case 'remove':
 	$where = $primaryKey . '=' . $pkval;
 	$sql = "delete from {$table} where {$where};";
-	$db->execute($sql);
+	$dbconn->execute($sql);
 	break;
 default:
 	break;
 }
 $arr = array(
-	"pageName" => basename(__FILE__),
 	"action" => $operationType,
-	"tableName" => $table,
-	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"pageName" => basename(__FILE__),
 	"primaryKey" => $primaryKey,
-	"fieldsVals" => var_export($_REQUEST, true)
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table
 );
-$r = siteLog($conn, $db, $arr);
+$r = siteLog($conn, $dbconn, $arr);
 $sql = "select * from {$table} where {$where};";
-$response = $db->getAll($sql);
+$response = $dbconn->getAll($sql);
 if(!$response){
 	$response = array();
 }
 echo json_encode($response);
-$db->close();
+$dbconn->close();
 ?>

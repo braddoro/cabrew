@@ -11,8 +11,8 @@ isc.defineClass("Login", "myWindow").addProperties({
 		this.LoginDS = isc.myDataSource.create({
 			dataURL: serverPath + "Login.php",
 			fields:[
-				{name: "USER_NAME", type: "text", width: 150},
-				{name: "PASSWORD", type: "text", width: 150}
+				{name: "user_name", type: "text", width: 150},
+				{name: "password", type: "text", width: 150}
 			]
 		});
 		this.LoginDF = isc.myDynamicForm.create({
@@ -33,9 +33,8 @@ isc.defineClass("Login", "myWindow").addProperties({
 	submitData: function(){
 		var formData = this.LoginDF.getValues();
 		var newCriteria;
-		if(formData.USER_NAME > ""){
-			newCriteria = isc.addProperties({}, {operationType: "fetch", PASSWORD: formData.PASSWORD, USER_NAME: formData.USER_NAME});
-			this.LoginDS.addData(newCriteria, {target: this, methodName: "submitData_callback"});
+		if(formData.user_name > ""){
+			newCriteria = isc.addProperties({}, {operationType: "fetch", password: formData.password, user_name: formData.user_name}); this.LoginDS.addData(newCriteria, {target: this, methodName: "submitData_callback"});
 		} else{
 			isc.warn("A username usually a good iden when wanting to log into things. Or not. I don't really care. You can do it your way if you want.");
 		}

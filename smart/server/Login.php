@@ -12,18 +12,20 @@ if(!$db->isConnected()){
 	exit(1);
 }
 $operationType = 'fetch';
-$username = $_REQUEST['USER_NAME'];
-$password = $_REQUEST['PASSWORD'];
+$username = $_REQUEST['user_name'];
+$password = $_REQUEST['password'];
 
+$mask = $_REQUEST;
+$mask['password'] = '************';
 $arr = array(
-	"pageName" => basename(__FILE__),
 	"action" => $operationType,
-	"tableName" => $table,
-	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"fieldsVals" => var_export($mask, true),
+	"pageName" => basename(__FILE__),
 	"primaryKey" => $primaryKey,
-	"fieldsVals" => var_export($_REQUEST, true)
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table
 );
-$r = siteLog($conn, $db, $arr);
+$r = siteLog($conn, $db, $arr, true);
 $sql = "select secUserID, userName from sec_users where LOWER(userName) = LOWER('{$username}') and LOWER(password) = LOWER('{$password}') and active = 'Y';";
 $response = $db->getAll($sql);
 if(!$response){

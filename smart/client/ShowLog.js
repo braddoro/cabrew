@@ -18,7 +18,8 @@ isc.defineClass("ShowLog", "myWindow").addProperties({
 			dataSource: this.ShowLogDS,
 			name: "Show Log",
 			canEdit: false,
-			parent: this
+			parent: this,
+			showFilterEditor: true
 		});
 		this.localContextMenu = isc.myRefreshMenu.create({
 			callingListGrid: this.ShowLogLG,

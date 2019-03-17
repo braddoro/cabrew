@@ -49,13 +49,16 @@ case 'remove':
 default:
 	break;
 }
+
+$mask = $_REQUEST;
+$mask['password'] = '************';
 $arr = array(
-	"pageName" => basename(__FILE__),
 	"action" => $operationType,
-	"tableName" => $table,
-	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"fieldsVals" => var_export($mask, true),
+	"pageName" => basename(__FILE__),
 	"primaryKey" => $primaryKey,
-	"fieldsVals" => var_export($_REQUEST, true)
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table
 );
 $r = siteLog($conn, $db, $arr);
 $sql = "select * from {$table} where {$where};";
