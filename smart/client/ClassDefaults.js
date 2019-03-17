@@ -141,16 +141,16 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}
 	},
 	updateStatus: function() {
-		var countStr = "Total Rows - " + rows;
 		var name = this.name;
 		var nameStr = "";
 		var rows = this.getTotalRows();
+		var rowsStr = "Total Rows - " + rows;
 		var selected = this.getSelectedRecords();
 		var single = 1;
 		var state = this.canEdit;
 		var stateStr = "";
 		if(selected.length > single){
-			countStr = "Selected Rows - " + selected.length;
+			rowsStr = "Selected Rows - " + selected.length;
 		}
 		if(!state){
 			stateStr = "(read only)";
@@ -158,7 +158,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		if(this.name) {
 			nameStr = this.name + " | ";
 		}
-		var title = nameStr + "" + countStr + " " + stateStr;
+		var title = nameStr + "" + rowsStr + " " + stateStr;
 		console.log(title);
 		this.parent.setTitle(title);
 		this.focus();
