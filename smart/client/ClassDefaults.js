@@ -153,11 +153,20 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}
 	},
 	updateStatus: function() {
-		if(this.name) {
-			this.parent.setTitle(this.name + " : Total Rows - " + this.getTotalRows());
-		}else{
-			this.parent.setTitle("Total Rows - " + this.getTotalRows());
+		var rows = this.getTotalRows();
+		var name = this.name;
+		var state = this.canEdit;
+		var rowsStr = "Total Rows";
+		var stateStr = "";
+		if(!state){
+			stateStr = "(read only)";
 		}
+		var nameStr = "";
+		if(this.name) {
+			nameStr = this.name + " | ";
+		}
+		var title = nameStr + "" + rowsStr + ": " + rows + " " + stateStr;
+		this.parent.setTitle(title);
 		this.focus();
 	},
 	dataArrived: function(){

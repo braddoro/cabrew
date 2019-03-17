@@ -20,7 +20,7 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 		});
 		this.MemberSearchLG = isc.myListGrid.create({
 			dataSource: this.MemberSearchDS,
-			name: "Members",
+			name: "Member Search",
 			parent: this,
 			showFilterEditor: true,
 			rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {

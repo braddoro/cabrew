@@ -1,5 +1,16 @@
 isc.defineClass("Navigation", "Menu").addProperties({
 	initWidget: function(initData){
+		this.AccessMenu = isc.myMenu.create({
+			title: "Access Security",
+			items: [
+				{title: "Users", click: "isc.Users.create({title: 'Users', top: 75, left: 75, height: 300, width: 550});"},
+				{title: "Items", click: "isc.Items.create({title: 'Items', top: 100, left: 75, height: 300, width: 500});"},
+				{title: "Groups", click: "isc.Groups.create({title: 'Groups', top: 150, left: 75, height: 300, width: 400});"},
+				{isSeparator: true},
+				{title: "User Groups", click: "isc.UserGroups.create({title: 'User Groups', top: 100, left: 150, height: 300, width: 400});"},
+				{title: "Item Groups", click: "isc.ItemGroups.create({title: 'Item Groups', top: 150, left: 100, height: 300, width: 400});"}
+			]
+		});
 		this.MembersMenu = isc.myMenu.create({
 			title: "Members",
 			items: [
@@ -59,6 +70,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Events", submenu: this.EventMenu},
 				{title: "Members", submenu: this.MembersMenu},
 				{title: "Misc Tables", submenu: this.MiscMenu},
+				{title: "Access", submenu: this.AccessMenu},
 				{isSeparator: true},
 				{title: "Test Code", click: "isc.test.create({width: 800})"},
 				{title: "Show Log", click: "isc.ShowLog.create({width: 1200, height: \"95%\"})"}

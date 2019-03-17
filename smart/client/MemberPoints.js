@@ -65,6 +65,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			parent: this
 		});
 		this.pointListLG = isc.myListGrid.create({
+			canEdit: false,
 			dataSource: this.pointListDS,
 			margin: 1,
 			sortDirection: "descending",
@@ -84,6 +85,5 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 		var current = new Date(now);
 		this.yearChooserDF.setValue("Year",current.getFullYear());
 		this.addItem(this.memberPointsScreenVL);
-		this.pointListDS.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

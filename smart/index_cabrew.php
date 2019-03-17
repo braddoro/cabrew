@@ -58,6 +58,11 @@ $classes[] = "ShowLog.js";
 $classes[] = "StatusTypes.js";
 $classes[] = "WebPosts.js";
 $classes[] = "test.js";
+$classes[] = "Users.js";
+$classes[] = "Items.js";
+$classes[] = "Groups.js";
+$classes[] = "UserGroups.js";
+$classes[] = "ItemGroups.js";
 echo "<html>
 <head>
 <script>var isc = null;</script>

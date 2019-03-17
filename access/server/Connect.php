@@ -1,1 +1,0 @@
-../../smart/server/Connect.php

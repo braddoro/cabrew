@@ -1,8 +1,4 @@
 isc.defineClass("Items", "myWindow").addProperties({
-	top: 75,
-	left: 75,
-	height: 300,
-	width: 600,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.ItemLG = isc.myListGrid.create({

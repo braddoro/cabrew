@@ -1,8 +1,4 @@
 isc.defineClass("Users", "myWindow").addProperties({
-	top: 50,
-	left: 50,
-	height: 300,
-	width: 600,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.UserDS = isc.myDataSource.create({
