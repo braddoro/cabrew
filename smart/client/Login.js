@@ -1,11 +1,11 @@
 isc.defineClass("Login", "myWindow").addProperties({
-	title: "Login",
 	autoCenter: true,
-	showHeader: false,
 	height: 100,
-	width: 300,
-	margin: 1,
 	isModal: true,
+	margin: 1,
+	showHeader: false,
+	title: "Login",
+	width: 300,
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.LoginDS = isc.myDataSource.create({
@@ -35,32 +35,32 @@ isc.defineClass("Login", "myWindow").addProperties({
 		var newCriteria;
 		if(formData.user_name > ""){
 			newCriteria = isc.addProperties({}, {operationType: "fetch", password: formData.password, user_name: formData.user_name}); this.LoginDS.addData(newCriteria, {target: this, methodName: "submitData_callback"});
-		} else{
+		}else{
 			isc.warn("A username usually a good iden when wanting to log into things. Or not. I don't really care. You can do it your way if you want.");
 		}
 	},
 	submitData_callback: function(rpcResponse){
 		var userData = rpcResponse.data[0];
-		if(userData === undefined){
+		// userData === undefined ||
+		if(userData.secUserID === undefined){
 			isc.warn("So in theory that should have worked but one of us did something wrong. Probably it was you.");
-		} else {
+		}else{
 			isc.userData = userData;
-			// this.destroy();
+			RPCManager.sendRequest({
+				actionURL: serverPath + "Pages.php",
+				callback: {target: this, methodName: "sendRequest_callback"},
+				clientContext: 'login',
+				params: {operationType: 'fetch', userID: userData.secUserID},
+				useStrictJSON: true
+			});
 		}
-		RPCManager.sendRequest({
-			clientContext: 'login',
-			useStrictJSON: true,
-			params: {operationType: 'fetch', userID: userData.secUserID},
-			callback: {target: this, methodName: "sendRequest_callback"},
-			actionURL: serverPath + "Pages.php"
-		});
 	},
 	sendRequest_callback: function(rpcResponse){
 		var json = JSON.parse(rpcResponse.data);
 		var pages = [];
 		for(var i = 0; i < json.length; i++){
 			var obj = json[i];
-			for (var key in obj){
+			for(var key in obj){
 				pages.push(obj[key]);
 			}
 		}

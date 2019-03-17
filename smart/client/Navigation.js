@@ -65,7 +65,8 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			]
 		});
 		this.menuBar = isc.MenuBar.create({
-			height: 32,
+			height: 16,
+			width: 16,
 			menus: [this.MainMenu]
 		});
 	}
