@@ -8,6 +8,7 @@ isc.defineClass("ShowLog", "myWindow").addProperties({
 				{name: "siteLogTimeStamp", type: "datetime", width: "120"},
 				{name: "pageName", type: "text", width: "100"},
 				{name: "action", type: "text", width: "60"},
+				{name: "ip_address", type: "text", width: "60"},
 				{name: "tableName", type: "text", width: "100"},
 				{name: "primaryKey", type: "text", width: "100"},
 				{name: "primaryKeyID", type: "text", width: "75"},

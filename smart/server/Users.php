@@ -55,6 +55,7 @@ $mask['password'] = '************';
 $arr = array(
 	"action" => $operationType,
 	"fieldsVals" => var_export($mask, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
 	"pageName" => basename(__FILE__),
 	"primaryKey" => $primaryKey,
 	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,

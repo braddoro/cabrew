@@ -75,12 +75,13 @@ default:
 	break;
 }
 $arr = array(
-	"pageName" => basename(__FILE__),
 	"action" => $operationType,
-	"tableName" => $table,
-	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
+	"pageName" => basename(__FILE__),
 	"primaryKey" => $primaryKey,
-	"fieldsVals" => var_export($_REQUEST, true)
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table
 );
 $r = siteLog($conn, $db, $arr);
 $sql = "select ba.*, bc.distance from {$table} ba left join brew_clubs bc on ba.clubID = bc.clubID where {$where};";
