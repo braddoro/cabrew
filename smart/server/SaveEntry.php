@@ -59,7 +59,8 @@ default:
 // 	"tableName" => $table,
 // 	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
 // 	"primaryKey" => $primaryKey,
-// 	"fieldsVals" => var_export($_REQUEST, true)
+// 	"fieldsVals" => var_export($_REQUEST, true),
+//	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 // );
 // $r = siteLog($conn, $db, $arr);
 $sql = "select * from {$table} where {$where};";

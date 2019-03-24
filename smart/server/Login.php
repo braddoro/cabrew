@@ -14,7 +14,6 @@ if(!$db->isConnected()){
 $operationType = 'fetch';
 $username = $_REQUEST['user_name'];
 $password = $_REQUEST['password'];
-
 $mask = $_REQUEST;
 $mask['password'] = '************';
 $arr = array(
@@ -24,7 +23,8 @@ $arr = array(
 	"pageName" => basename(__FILE__),
 	"primaryKey" => $primaryKey,
 	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
-	"tableName" => $table
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 );
 $r = siteLog($conn, $db, $arr, true);
 $sql = "select secUserID, userName from sec_users where LOWER(userName) = LOWER('{$username}') and LOWER(password) = LOWER('{$password}') and active = 'Y';";

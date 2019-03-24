@@ -49,12 +49,8 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 	transformRequest: function(dsRequest){
 		var superClassArguments = this.Super("transformRequest", dsRequest);
 		var userID = 0;
-		if(typeof isc !== 'undefined'){
-			if(typeof isc.userData !== 'undefined'){
-				if(typeof isc.userData.secUserID !== 'undefined'){
-					userID = isc.userData.secUserID;
-				}
-			}
+		if(typeof saveUserID !== 'undefined'){
+			userID = saveUserID;
 		}
 		var newProperties = {operationType: dsRequest.operationType, userID: userID};
 		return isc.addProperties({}, superClassArguments, newProperties);
@@ -159,7 +155,6 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 			nameStr = this.name + " | ";
 		}
 		var title = nameStr + "" + rowsStr + " " + stateStr;
-		console.log(title);
 		this.parent.setTitle(title);
 		this.focus();
 	},

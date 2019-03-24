@@ -41,11 +41,11 @@ isc.defineClass("Login", "myWindow").addProperties({
 	},
 	submitData_callback: function(rpcResponse){
 		var userData = rpcResponse.data[0];
-		// userData === undefined ||
 		if(userData.secUserID === undefined){
 			isc.warn(this.mm_badPassword);
 		}else{
 			isc.userData = userData;
+			saveUserID = userData.secUserID;
 			RPCManager.sendRequest({
 				actionURL: serverPath + "Pages.php",
 				callback: {target: this, methodName: "sendRequest_callback"},

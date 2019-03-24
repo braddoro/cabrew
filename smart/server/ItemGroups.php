@@ -67,7 +67,8 @@ $arr = array(
 	"pageName" => basename(__FILE__),
 	"primaryKey" => $primaryKey,
 	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
-	"tableName" => $table
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 );
 $r = siteLog($conn, $db, $arr);
 $sql = "select * from {$table} where {$where};";
