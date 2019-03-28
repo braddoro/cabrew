@@ -8,7 +8,7 @@ $yearw = ' and year(D.memberDate) = ' . $year . ' ';
 $params['bind'] = array();
 $params['ini_file'] = 'server.ini';
 $params['show_total'] = false;
-$params['title'] = "<br/>Competition Leader Board for {$year}";
+$params['title'] = "Competition Leader Board for {$year}";
 $params['sql'] = "
 select
 	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as Name,
@@ -38,7 +38,7 @@ $html = $lclass->init($params);
 <link rel="stylesheet" type"text/css" href="reporter.css">
 </head>
 <body>
-<img src="CABREW_Logo_new.png" height="133" width="200">
+<img src="CABREW_Logo_new.png" height="133" width="200"><br/>
 <?php echo $html;?>
 </body>
 </html>
