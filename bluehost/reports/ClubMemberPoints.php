@@ -3,9 +3,9 @@ $year = date('Y');
 if(isset($_GET['y'])){
 	$year = intval($_GET['y']);
 }
-require_once('inc/Reporter.php');
+require_once('../Reporter.php');
 $params['bind'] = array(year => $year);
-$params['ini_file'] = 'inc/server.ini';
+$params['ini_file'] = '../server.ini';
 $params['title'] = "Member Point Totals for {$year}";
 $params['sql'] = "
 	select
@@ -33,7 +33,7 @@ $html = $lclass->init($params);
 <body>
 <head>
 <title><?php echo $params['title'] ?></title>
-<link rel="stylesheet" type"text/css" href="reporter.css">
+<link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
 <?php echo $html; ?>

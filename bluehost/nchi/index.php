@@ -45,7 +45,7 @@ mysqli_close($con);
 	</header>
 	<div class="output" id="dateout"></div>
 	<div class="container"><?php echo $html;?></div>
-<!-- <a href="media.php" target="_blank"><span style="font-size: 14pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">Follow this link for images and short videos from 2017.</span></a>	 -->
+<span style="font-size: 14pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">Here is a link to a 3 minute video of NCHI from last year: <a href="https://youtu.be/3oIpssv4Cy0" target="_blank">NCHI 2018</a></style>&nbsp;<span style="font-size: 12pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;"></style>
 </body>
 </html>
 <script type="text/javascript">

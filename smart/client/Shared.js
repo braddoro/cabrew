@@ -38,7 +38,15 @@ isc.Shared = {
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
+	userDateTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "DateTypesUser.php",
+		fields:[
+			{name: "dateType", type: "text"},
+			{name: "dateTypeID", type: "sequence", primaryKey: true}
+		]
+	}),
 	dateTypesDS: isc.myDataSource.create({
+		cacheAllData: false,
 		dataURL: serverPath + "DateTypes.php",
 		fields:[
 			{name: "dateTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},

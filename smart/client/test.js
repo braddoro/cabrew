@@ -20,7 +20,28 @@ isc.defineClass("test", "myWindow").addProperties({
 		this.testLG = isc.myListGrid.create({
 			dataSource: this.testDS,
 			name: "Test",
-			parent: this
+			parent: this,
+			baseStyle: "cell",
+			getBaseStyle: function (record, rowNum, colNum){
+				var today = new Date();
+				var yyyy = today.getFullYear();
+				var mm = today.getMonth();
+				var dd = today.getDate();
+				var newdate = '' + yyyy + '-' + mm + '-' + dd;
+				// console.log(newdate);
+				// console.log(today);
+				// console.log(record.dueDate);
+				if(record.status == 'complete'){
+					console.log('complete');
+					return "myHighGridCell";
+				}else if(record.status == 'in process'){
+					console.log('in process');
+					return "myLowGridCell";
+				}else{
+					console.log('misc');
+					return this.baseStyle;
+				}
+			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			callingListGrid: this.testLG,

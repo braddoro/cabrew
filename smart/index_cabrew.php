@@ -60,6 +60,7 @@ $classes[] = "ShowInfo.js";
 $classes[] = "ShowLog.js";
 $classes[] = "StatusTypes.js";
 $classes[] = "test.js";
+$classes[] = "UserDateTypes.js";
 $classes[] = "UserGroups.js";
 $classes[] = "Users.js";
 $classes[] = "WebPosts.js";

@@ -8,6 +8,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Groups", click: "isc.Groups.create({title: 'Groups', left: isc.Math.random(340), top: isc.Math.random(240), height: 300, width: 400});"},
 				{isSeparator: true},
 				{title: "User Groups", click: "isc.UserGroups.create({title: 'User Groups', left: isc.Math.random(340), top: isc.Math.random(240), height: 300, width: 400});"},
+				{title: "User Date Types", click: "isc.UserDateTypes.create({left: isc.Math.random(340), top: isc.Math.random(240), height: 300, width: 400});"},
 				{title: "Item Groups", click: "isc.ItemGroups.create({title: 'Item Groups', left: isc.Math.random(340), top: isc.Math.random(240), height: \"90%\", width: 400});"}
 			]
 		});
