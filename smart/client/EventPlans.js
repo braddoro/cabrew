@@ -44,10 +44,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			},
 			dataArrived: function(startRow, endRow){}
 		});
-		this.localContextMenu = isc.myContextMenu.create({
-			parent: this,
-			callingListGrid: this.EventPlanLG
-		});
+		this.localContextMenu = isc.myContextMenu.create({parent: this, callingListGrid: this.EventPlanLG});
 		this.addItem(isc.myVLayout.create({members: [this.EventPlanLG]}));
 		this.EventPlanLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}

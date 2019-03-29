@@ -66,7 +66,7 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		for (i = zero; i < loop; i++) {
 			newData = {
 				dateDetail: formData["dateDetail"],
-				dateTypeID_fk: formData["dateTypeID"],
+				dateTypeID_fk: formData["dateTypeID_fk"],
 				memberDate: formData["memberDate"],
 				memberID_fk: selectedData[i]["memberID"]
 			};

@@ -85,7 +85,7 @@ function checkPerms(stringIn){
 	for(var key in isc.userPages){
 		if(isc.userPages.hasOwnProperty(key)){
 			if(isc.userPages[key] == stringIn){
-				retval = true;
+				return true;
 			}
 		}
 	}
