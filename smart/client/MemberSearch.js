@@ -8,6 +8,7 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 				{name: "statusTypeID_fk", width: 75, title: "Status", optionDataSource: isc.Shared.statusTypesDS, optionCriteria: {active: "Y"}, displayField: "statusType", valueField: "statusTypeID"},
 				{name: "FullName", width: "*"},
 				{name: "sex", width: 50},
+				{name: "LastAttended", width: 105, type: "text"},
 				{name: "renewalYear", width: 90, type: "integer", detail: true},
 				{name: "lastChangeDate", width: 100, canEdit: false, detail: true}
 			]

@@ -209,7 +209,7 @@ isc.Members = {
 			{name: "memberNoteID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "memberID_fk", detail: true, required: true},
 			{name: "noteTypeID_fk", required: true, title: "Type", optionDataSource: isc.Shared.noteTypesDS, optionCriteria: {active: "Y"}, displayField: "noteType", valueField: "noteTypeID"},
-			{name: "noteDate"},
+			{name: "noteDate", type: "date", width: 120, title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "memberNote"},
 			{name: "lastChangeDate", canEdit: false, detail: true}
 		]

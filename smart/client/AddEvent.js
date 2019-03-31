@@ -10,25 +10,6 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 				{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
 			]
 		});
-		// this.AddEventDS = isc.myDataSource.create({
-		// 	dataURL: serverPath + "AddEvent.php",
-		// 	fields:[
-		// 		{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
-		// 		{
-		// 			name: "dateTypeID",
-		// 			title: "Date Type",
-		// 			type: "integer",
-		// 			editorType: "selectItem",
-		// 			optionDataSource: isc.Shared.userDateTypesDS,
-		// 			optionCriteria: {active: "Y"},
-		// 			pickListProperties: {showFilterEditor: true},
-		// 			displayField: "dateType",
-		// 			valueField: "dateTypeID"
-		// 		},
-		// 		{name: "memberDate", type: "date", title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
-		// 		{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
-		// 	]
-		// });
 		this.AddEventDF = isc.myDynamicForm.create({
 			dataSource: this.AddEventDS,
 			parent: this

@@ -9,8 +9,7 @@ if(!$db->isConnected()){
 	echo json_encode($response);
 	exit(1);
 }
-$where = '1=1';
-$sql = "select * from {$table} where {$where} order by {$primaryKey} desc;";
+$sql = "select l.* , u.fullName from siteLog l left join sec_users u on l.userID = u.secUserID order by siteLogID desc;";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

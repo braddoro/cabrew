@@ -17,7 +17,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			items: [
 				{title: "History", click: "isc.MemberHistory.create({width: 900, height: 300});"},
 				{title: "Points", click: "isc.MemberPoints.create({width: 900, height: 300});"},
-				{title: "Search", click: "isc.MemberSearch.create({width: 400, height: \"95%\"});"},
+				{title: "Search", click: "isc.MemberSearch.create({width: 600, height: \"95%\"});"},
 				{isSeparator: true},
 				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"});"}
 				// {title: "Add Payment", click: "isc.AddPayment.create({width: 800, height: 275});"}

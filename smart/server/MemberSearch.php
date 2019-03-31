@@ -61,14 +61,27 @@ $sql = "select
 	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', IFNULL(M.midName, ''), ' ', M.lastName),'  ',' ') as 'FullName',
 	M.sex,
 	M.renewalYear,
-	M.lastChangeDate
+	M.lastChangeDate,
+	max(coalesce(d.memberDate,'2010-12-31')) 'LastAttended'
 	from
 	members M
+	left join memberDates d on M.memberID = d.memberID_fk and d.dateTypeID_fk = 6
 	where {$where}
-	order by M.firstName;";
+	group by
+		M.memberID,
+		M.statusTypeID_fk,
+		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', IFNULL(M.midName, ''), ' ', M.lastName),'  ',' '),
+		M.sex,
+		M.renewalYear,
+		M.lastChangeDate
+	order by
+		M.firstName;";
 $response = $db->getAll($sql);
 if(!$response){
-	$response = array();
+	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+	echo json_encode($response);
+	exit(1);
+	// $response = array();
 }
 echo json_encode($response);
 $db->close();
