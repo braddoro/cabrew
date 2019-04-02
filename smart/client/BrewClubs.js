@@ -6,13 +6,14 @@ isc.defineClass("BrewClubs", "myWindow").addProperties({
 			dataURL: serverPath + "BrewClubs.php",
 			showFilterEditor: true,
 			fields:[
-				{name: "clubID", primaryKey: true, type: "sequence", detail: true},
+				{name: "clubID", primaryKey: true, type: "sequence", detail: true, canEdit: false},
+				{name: "LastYear", width: 75, prompt: "The last year this club as invited.", canEdit: false},
 				{name: "clubName", width: "*"},
-				{name: "clubAbbr", width: 80},
-				{name: "distance", type: "integer", width: 80},
+				{name: "clubAbbr", width: 75},
+				{name: "distance", type: "integer", width: 65},
 				{name: "city", width: 150},
-				{name: "state", width: 80},
-				{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+				{name: "state", width: 50},
+				{name: "active", type: "text", width: 50, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "lastChangeDate", type: "date", detail: true, canEdit: false}
 			]
 		});

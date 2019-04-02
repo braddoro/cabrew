@@ -13,7 +13,13 @@ isc.defineClass("MemberSearch", "myWindow").addProperties({
 				{name: "lastChangeDate", width: 100, canEdit: false, detail: true}
 			]
 		});
+
+// ResultSet:isc_ResultSet_10 (dataSource: isc_myDataSource_16,
+// created by: (cacheAllData fetch)):Update operation - submitted record with primary key value[s]:{memberID: 233}
+// returned with modified primary key:{}. This may indicate bad server logic. Updating cache to reflect new primary key.
+
 		this.MemberSearchLG = isc.myListGrid.create({
+			cacheAllData: false,
 			canEdit: false,
 			dataSource: this.MemberSearchDS,
 			name: "Member Search",

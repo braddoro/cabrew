@@ -15,10 +15,10 @@ select
 	sum(DT.datePoints) as Total
 from members M
 	inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID
-	inner join memberDates D on M.memberID = D.memberID_fk
+	inner join memb	erDates D on M.memberID = D.memberID_fk
 	inner join dateTypes DT on D.dateTypeID_fk = DT.dateTypeID
 where
-	D.dateTypeID_fk in (16,14,18,32)
+	D.dateTypeID_fk in (14,16,18,32,33)
     and M.statusTypeID_fk = 1
 	{$yearw}
 group by

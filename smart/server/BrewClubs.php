@@ -60,6 +60,33 @@ $arr = array(
 );
 $r = siteLog($conn, $dbconn, $arr);
 $sql = "select * from {$table} where {$where};";
+$sql = "select
+	max(a.year) LastYear,
+	c.clubID,
+	c.clubName,
+	c.clubAbbr,
+	c.city,
+	c.state,
+	c.distance,
+	c.active,
+	c.lastChangeDate
+from brew_clubs c
+left join
+	brew_attendence a on c.clubID = a.clubID
+where
+	{$where}
+group by
+	c.clubID,
+	c.clubName,
+	c.clubAbbr,
+	c.city,
+	c.state,
+	c.distance,
+	c.active,
+	c.lastChangeDate
+order by
+	a.year desc,
+    c.clubName;";
 $response = $dbconn->getAll($sql);
 if(!$response){
 	$response = array();

@@ -62,7 +62,7 @@ $sql = "select
 	M.sex,
 	M.renewalYear,
 	M.lastChangeDate,
-	max(coalesce(d.memberDate,'2010-12-31')) 'LastAttended'
+	max(coalesce(d.memberDate,'')) 'LastAttended'
 	from
 	members M
 	left join memberDates d on M.memberID = d.memberID_fk and d.dateTypeID_fk = 6
