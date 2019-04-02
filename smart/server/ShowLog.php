@@ -9,7 +9,7 @@ if(!$db->isConnected()){
 	echo json_encode($response);
 	exit(1);
 }
-$sql = "select l.* , u.fullName from siteLog l left join sec_users u on l.userID = u.secUserID order by siteLogID desc;";
+$sql = "select l.* , u.fullName from siteLog l left join sec_users u on l.userID = u.secUserID where (ip_address is null or ip_address <> '::1') order by siteLogID desc;";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

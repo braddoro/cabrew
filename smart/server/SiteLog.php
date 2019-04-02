@@ -1,5 +1,5 @@
 <?php
-function siteLog($conn, $dbconn, $arguments, $logFlag = false){
+function siteLog($conn, $dbconn, $arguments, $logFlag = true){
 	$table = 'siteLog';
 	$primaryKey = 'siteLogID';
 	if($arguments['action'] != 'fetch' || $logFlag){
