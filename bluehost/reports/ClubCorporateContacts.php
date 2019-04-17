@@ -3,7 +3,8 @@ require_once('../Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
-$params['title'] = 'CABREW Corporation Contacts';
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['title'] = 'Corporation Contacts';
 $params['sql'] = "select
 	name,
 	contact,

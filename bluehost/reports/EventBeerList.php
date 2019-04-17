@@ -8,11 +8,13 @@ require_once('../Reporter.php');
 $params['ini_file'] = '../server.ini';
 $params['bind'] = array();
 $params['show_total'] = true;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "NCHI Beer Summary for {$year}";
 $params['sql'] = "SELECT b.clubAbbr as Club, count(c.clubID) as Beers FROM brew_attendence a inner join brew_clubs b on a.clubID = b.clubID left join eventBeers c on c.clubID = b.clubID where a.year = 2018 and a.interested = 'Y' group by b.clubAbbr;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 
+unset($params['maintitle']);
 $params['bind'] = array("eventID" => 1);
 $params['show_total'] = true;
 $params['title'] = "NCHI Beer List by Club for {$year}";

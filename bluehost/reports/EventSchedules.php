@@ -12,6 +12,7 @@ require_once('../Reporter.php');
 $params['ini_file'] = '../server.ini';
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "NCHI {$year} Schedule of Events";
 $params['sql'] = "SELECT
 TIME_FORMAT(stepStart, '%h:%i %p') Start,

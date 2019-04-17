@@ -3,8 +3,9 @@ $year = 2018;
 require_once('../Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../server.ini';
-$params['title'] = 'CABREW Point Values';
-$params['sql'] = "select dateType, datePoints as 'Points' from dateTypes where datePoints > 0 and active = 'Y' order by dateType;";
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['title'] = 'CABROINT Values';
+$params['sql'] = "select dateTypeID, dateType, datePoints as 'Points' from dateTypes where datePoints > 0 and active = 'Y' order by dateType;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

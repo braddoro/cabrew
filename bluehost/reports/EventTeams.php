@@ -7,6 +7,7 @@ require_once('../Reporter.php');
 $params['ini_file'] = '../server.ini';
 $params['bind'] = array(eventID => $eventID);
 $params['show_total'] = false;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "NCHI Event Teams for {$year}";
 $params['sql'] = "
 select

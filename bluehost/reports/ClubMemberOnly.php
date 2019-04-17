@@ -4,6 +4,7 @@ $params['ini_file'] = '../server.ini';
 
 $params['bind'] = array();
 $params['show_total'] = true;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "Club Members NOT Added to Members Only";
 $params['sql'] = "
 select
@@ -29,7 +30,7 @@ order by
 	";
 $lclass = New Reporter();
 $html = $lclass->init($params);
-
+unset($params['maintitle']);
 $params['bind'] = array();
 $params['show_total'] = true;
 $params['title'] = "Active Club Members Confirmed Added to Members Only";

@@ -34,6 +34,7 @@ $params = array();
 $params['bind'] = array(eventTypeID => $eventID);
 $params['ini_file'] = '../server.ini';
 $params['show_total'] = false;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = $title;
 $params['sql'] = "select
 	C.dueDate,

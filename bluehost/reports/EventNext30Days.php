@@ -13,6 +13,7 @@ if(isset($id)){
 }
 $params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "Todo Next {$days} Days";
 $params['sql'] = "
 select

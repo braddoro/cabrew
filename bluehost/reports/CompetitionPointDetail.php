@@ -8,6 +8,7 @@ require_once('../Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "Competition Point Detail for {$year}";
 $params['sql'] = "
 select
@@ -17,11 +18,10 @@ select
 	DT.datePoints,
     D.dateDetail
 from members M
-	inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID
 	inner join memberDates D on M.memberID = D.memberID_fk
 	inner join dateTypes DT on D.dateTypeID_fk = DT.dateTypeID
 where
-	D.dateTypeID_fk in (14,16,18,32,33)
+	D.dateTypeID_fk in (14,15,16,17,18,34,35,36,37,38,39,40)
     and M.statusTypeID_fk = 1
 	{$yearw}
 order by

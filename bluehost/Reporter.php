@@ -49,6 +49,9 @@ class Reporter {
 			return $data;
 		}
 
+		if(isset($params['maintitle'])){
+			$view_params['maintitle'] = $params['maintitle'];
+		}
 		$view_params['title'] = $title;
 		$view_params['data'] = $data;
 		$view_params['show_total'] = $show_total;
@@ -86,8 +89,13 @@ class Reporter {
 		return ucfirst(trim($fmt));
 	}
 	private function report_view($params){
+		$out = "";
 		$title = $params['title'];
-		$out = "<span class=\"title\">{$title}</span>" . PHP_EOL;
+		if(isset($params['maintitle'])){
+			$maintitle = $params['maintitle'];
+			$out .= "<div class=\"maintitle\">{$maintitle}</div>" . PHP_EOL;
+		}
+		$out .= "<span class=\"title\">{$title}</span>" . PHP_EOL;
 		$out .= "<table class=\"table\">"  . PHP_EOL;
 		$loop = 0;
 		$stmt = $params['data'];

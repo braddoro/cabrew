@@ -14,6 +14,7 @@ if(isset($_GET['p1'])){
 }
 $params['bind'] = array('priority1' => $priority1, 'priority2' => $priority2, 'active' => $active);
 $params['ini_file'] = '../server.ini';
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = 'Brew Club Contacts';
 $params['sql'] = "
 select distinct

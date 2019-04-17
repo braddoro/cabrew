@@ -3,7 +3,8 @@ require_once('../Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
-$params['title'] = 'CABREW Library Books';
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['title'] = 'Library Books';
 $params['sql'] = "select
 trim(concat(ifnull(series,''), ' ', title)) as name,
 author,

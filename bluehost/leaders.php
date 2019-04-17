@@ -14,11 +14,10 @@ select
 	REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as Name,
 	sum(DT.datePoints) as Total
 from members M
-	inner join statusTypes ST on M.statusTypeID_fk = ST.statusTypeID
-	inner join memb	erDates D on M.memberID = D.memberID_fk
+	inner join memberDates D on M.memberID = D.memberID_fk
 	inner join dateTypes DT on D.dateTypeID_fk = DT.dateTypeID
 where
-	D.dateTypeID_fk in (14,16,18,32,33)
+	D.dateTypeID_fk in (14,15,16,17,18,34,35,36,37,38,39,40)
     and M.statusTypeID_fk = 1
 	{$yearw}
 group by

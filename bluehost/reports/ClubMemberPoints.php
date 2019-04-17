@@ -6,6 +6,7 @@ if(isset($_GET['y'])){
 require_once('../Reporter.php');
 $params['bind'] = array(year => $year);
 $params['ini_file'] = '../server.ini';
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "Member Point Totals for {$year}";
 $params['sql'] = "
 	select

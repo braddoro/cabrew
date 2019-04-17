@@ -9,6 +9,7 @@ require_once('../Reporter.php');
 $params['ini_file'] = '../server.ini';
 $params['bind'] = array('year' => $year);
 $params['show_total'] = false;
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "NCHI {$year} Summary";
 $params['sql'] = "
 SELECT
@@ -22,6 +23,7 @@ group by
 $lclass = New Reporter();
 $html = $lclass->init($params);
 
+unset($params['maintitle']);
 $params['bind'] = array('year' => $year);
 $params['show_total'] = true;
 $params['title'] = "NCHI {$year} Confirmed Clubs";

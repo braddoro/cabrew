@@ -47,18 +47,18 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			margin: 1,
 			name: "Member Points",
 			parent: this,
-			width: 300,
-			recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
-				if(viewer.anySelected()){
-					this.parent.pointListLG.fetchData({memberID: record.memberID, year: this.parent.yearChooserDF.getValue("Year")});
-				}else{
-					this.parent.pointListLG.setData([]);
-				}
-			},
-			dataArrived: function(startRow, endRow){
-				this.selectSingleRecord(startRow);
-				this.recordClick(this,this.getRecord(startRow),"memberID",this.getFieldNum("memberID"));
-			}
+			width: 300
+			// recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
+			// 	if(viewer.anySelected()){
+			// 		this.parent.pointListLG.fetchData({memberID: record.memberID, year: this.parent.yearChooserDF.getValue("Year")});
+			// 	}else{
+			// 		this.parent.pointListLG.setData([]);
+			// 	}
+			// },
+			// dataArrived: function(startRow, endRow){
+			// 	this.selectSingleRecord(startRow);
+			// 	this.recordClick(this,this.getRecord(startRow),"memberID",this.getFieldNum("memberID"));
+			// }
 		});
 		this.localContextMenu = isc.myChildMenu.create({
 			callingListGrid: this.memberPointsLG,

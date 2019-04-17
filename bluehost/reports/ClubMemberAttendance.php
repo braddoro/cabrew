@@ -8,6 +8,7 @@ require_once('../Reporter.php');
 $params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
 $params['bind'] = array('year' => $year);
+$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = "Member Attendance for {$year}";
 $params['sql'] = "
 select
