@@ -1,25 +1,22 @@
 <?php
-require_once('../Reporter.php');
-$wheres = '';
-$eventID = (isset($_GET['e'])) ? intval($_GET['e']) : 1;
+$eventTypeID = 6;
 if(isset($_GET['e'])){
-	$wheres .= ' and (C.eventTypeID = ' . intval($_GET['e']) . ') ';
-}else{
-	$wheres .= ' and (C.eventTypeID = 1) ';
+	$eventTypeID = intval($_GET['e']);
 }
+$wheres = '';
 if(isset($_GET['m'])){
 	$wheres .= ' and (C.memberID = ' . intval($_GET['m']) . ') ';
-	// $wheres .= ' and C.memberID in (201,57,222) ';
 }
 if(isset($_GET['c'])){
-	$wheres .= " and (C.status not in ('complete', 'not needed') or C.status is null) ";
+	$wheres .= " and (C.done <> 'Y') ";
 }
 
 // Get a custom title.
 //
-$params['bind'] = array();
+require_once('../Reporter.php');
+$params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['ini_file'] = '../server.ini';
-$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = $eventID;";
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventTypeID;";
 $params['skip_format'] = true;
 $lclass = New Reporter();
 $data = $lclass->init($params);
@@ -30,7 +27,7 @@ while($row = $data->fetch()) {
 	}
 }
 $params = array();
-$params['bind'] = array(eventTypeID => $eventID);
+$params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['ini_file'] = '../server.ini';
 $params['show_total'] = true;
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
@@ -53,14 +50,15 @@ select
     C.notes
 from eventPlans C
 	left join members M on M.memberID = C.memberID
-	where eventTypeID = :eventTypeID
+	where C.eventTypeID = :eventTypeID
+	{$wheres}
 order by
 	C.dueDate,
 	M.lastName;
 ";
 $lclass = New Reporter();
 $html = $lclass->init($params);
-//echo $params['sql'];
+// echo $params['sql'];
 ?>
 <!DOCTYPE html>
 <html>
