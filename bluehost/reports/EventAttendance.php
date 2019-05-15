@@ -30,7 +30,8 @@ $params['title'] = "NCHI {$year} Confirmed Clubs";
 $params['sql'] = "
 SELECT
 	c.clubName,
-	concat(c.city,', ',c.state) 'Location'
+	concat(c.city,', ',c.state) 'Location',
+	c.distance
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
 where year = :year
@@ -41,20 +42,20 @@ $html .= $lclass->init($params);
 
 $params['bind'] = array('year' => $year);
 $params['show_total'] = true;
-$params['title'] = "NCHI {$year} Invited Club Status";
+$params['title'] = "NCHI {$year} Unresponsive Clubs";
+// ba.interested as 'Reserved'
 $params['sql'] = "
 SELECT
 	c.clubName,
 	c.clubAbbr,
 	concat(c.city,', ',c.state) 'Location',
 	c.distance,
-	ba.verified,
-	ba.interested as 'Reserved'
+	ba.verified
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
 where year = :year
+and ba.interested = 'N'
 order by
-	ba.verified desc,
 	ba.interested desc,
     c.distance,
     c.clubName;";
