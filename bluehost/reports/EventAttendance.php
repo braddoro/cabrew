@@ -30,6 +30,7 @@ $params['title'] = "NCHI {$year} Confirmed Clubs";
 $params['sql'] = "
 SELECT
 	c.clubName,
+	c.clubAbbr,
 	concat(c.city,', ',c.state) 'Location',
 	c.distance
 FROM brew_clubs c
@@ -87,74 +88,74 @@ $html .= $lclass->init($params);
 // $lclass = New Reporter();
 // $html .= $lclass->init($params);
 
-$params['bind'] = array('year' => $year);
-$params['show_total'] = true;
-$params['title'] = "NCHI {$year} Contact Info";
-//  'facebook'
-$params['sql'] = "
-SELECT
-	c.clubName,
-	c.clubAbbr,
-	concat(c.city,', ',c.state) 'Location',
-	c.distance,
-    ba.verified,
-	ba.interested as 'Reserved',
-    bc.contactName,
-    cp.contactPoint
-FROM brew_clubs c
-left join brew_attendence ba on c.clubID = ba.clubID
-left join brew_contacts bc on c.clubID = bc.clubID
-left join brew_contactPoints cp on bc.contactID = cp.contactID
-left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
-where year = :year
-	and ct1.contactType in ('nchi', 'facebook')
-order by
-	ba.verified desc,
-	ba.interested desc,
-    c.distance,
-    c.clubName;";
-$lclass = New Reporter();
-$html .= $lclass->init($params);
+// $params['bind'] = array('year' => $year);
+// $params['show_total'] = true;
+// $params['title'] = "NCHI {$year} Contact Info";
+// //  'facebook'
+// $params['sql'] = "
+// SELECT
+// 	c.clubName,
+// 	c.clubAbbr,
+// 	concat(c.city,', ',c.state) 'Location',
+// 	c.distance,
+//     ba.verified,
+// 	ba.interested as 'Reserved',
+//     bc.contactName,
+//     cp.contactPoint
+// FROM brew_clubs c
+// left join brew_attendence ba on c.clubID = ba.clubID
+// left join brew_contacts bc on c.clubID = bc.clubID
+// left join brew_contactPoints cp on bc.contactID = cp.contactID
+// left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
+// where year = :year
+// 	and ct1.contactType in ('nchi', 'facebook')
+// order by
+// 	ba.verified desc,
+// 	ba.interested desc,
+//     c.distance,
+//     c.clubName;";
+// $lclass = New Reporter();
+// $html .= $lclass->init($params);
 
-$params['bind'] = array('year' => $year);
-$params['show_total'] = true;
-$params['title'] = "NCHI {$year} Confirmed Club RAW Email Addresses";
-$params['sql'] = "
-SELECT
-	concat(cp.contactPoint, ', ') 'email'
-FROM brew_clubs c
-left join brew_attendence ba on c.clubID = ba.clubID
-left join brew_contacts bc on c.clubID = bc.clubID
-left join brew_contactPoints cp on bc.contactID = cp.contactID
-left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
-where
-	ba.year = :year
-	and ba.interested = 'Y'
-	and ct1.contactType = 'nchi'
-order by
-	cp.contactPoint;";
-$lclass = New Reporter();
-$html .= $lclass->init($params);
+// $params['bind'] = array('year' => $year);
+// $params['show_total'] = true;
+// $params['title'] = "NCHI {$year} Confirmed Club RAW Email Addresses";
+// $params['sql'] = "
+// SELECT
+// 	concat(cp.contactPoint, ', ') 'email'
+// FROM brew_clubs c
+// left join brew_attendence ba on c.clubID = ba.clubID
+// left join brew_contacts bc on c.clubID = bc.clubID
+// left join brew_contactPoints cp on bc.contactID = cp.contactID
+// left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
+// where
+// 	ba.year = :year
+// 	and ba.interested = 'Y'
+// 	and ct1.contactType = 'nchi'
+// order by
+// 	cp.contactPoint;";
+// $lclass = New Reporter();
+// $html .= $lclass->init($params);
 
-$params['bind'] = array('year' => $year);
-$params['show_total'] = true;
-$params['title'] = "NCHI {$year} Unconfirmed Club RAW Email Addresses";
-$params['sql'] = "
-SELECT
-	concat(cp.contactPoint, ', ') 'email'
-FROM brew_clubs c
-left join brew_attendence ba on c.clubID = ba.clubID
-left join brew_contacts bc on c.clubID = bc.clubID
-left join brew_contactPoints cp on bc.contactID = cp.contactID
-left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
-where
-	ba.year = :year
-	and ba.interested = 'N'
-	and ct1.contactType = 'nchi'
-order by
-	cp.contactPoint;";
-$lclass = New Reporter();
-$html .= $lclass->init($params);
+// $params['bind'] = array('year' => $year);
+// $params['show_total'] = true;
+// $params['title'] = "NCHI {$year} Unconfirmed Club RAW Email Addresses";
+// $params['sql'] = "
+// SELECT
+// 	concat(cp.contactPoint, ', ') 'email'
+// FROM brew_clubs c
+// left join brew_attendence ba on c.clubID = ba.clubID
+// left join brew_contacts bc on c.clubID = bc.clubID
+// left join brew_contactPoints cp on bc.contactID = cp.contactID
+// left join contactTypes ct1 on cp.contactTypeID_fk = ct1.contactTypeID
+// where
+// 	ba.year = :year
+// 	and ba.interested = 'N'
+// 	and ct1.contactType = 'nchi'
+// order by
+// 	cp.contactPoint;";
+// $lclass = New Reporter();
+// $html .= $lclass->init($params);
 
 ?>
 <!DOCTYPE html>
