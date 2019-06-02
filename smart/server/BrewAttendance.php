@@ -24,16 +24,20 @@ case 'fetch':
 	if(isset($_REQUEST['year'])){
 		$where .= ' and ba.year = ' . intval($_REQUEST['year']);
 	}
-	if(isset($_REQUEST['attended'])){
-		$where .= ' and ba.attended = ' . intval($_REQUEST['attended']);
+	if(isset($_REQUEST['verified'])){
+		$qStr = $db->qStr($_REQUEST['verified'], true);
+		$where .= " and ba.verified = '{$qStr}' ";
+	}
+	if(isset($_REQUEST['invited'])){
+		$qStr = $db->qStr($_REQUEST['invited'], true);
+		$where .= " and ba.invited = '{$qStr}' ";
 	}
 	if(isset($_REQUEST['interested'])){
 		$qStr = $db->qStr($_REQUEST['interested'], true);
 		$where .= " and ba.interested = '{$qStr}' ";
 	}
-	if(isset($_REQUEST['verified'])){
-		$qStr = $db->qStr($_REQUEST['verified'], true);
-		$where .= " and ba.verified = '{$qStr}' ";
+	if(isset($_REQUEST['attended'])){
+		$where .= ' and ba.attended = ' . intval($_REQUEST['attended']);
 	}
 	if(isset($_REQUEST['participated'])){
 		$qStr = $db->qStr($_REQUEST['participated'], true);

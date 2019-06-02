@@ -36,6 +36,7 @@ SELECT
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
 where year = :year
+and ba.invited = 'Y'
 and ba.interested = 'Y'
 order by c.clubName;";
 $lclass = New Reporter();
@@ -43,7 +44,7 @@ $html .= $lclass->init($params);
 
 $params['bind'] = array('year' => $year);
 $params['show_total'] = true;
-$params['title'] = "NCHI {$year} Unresponsive Clubs";
+$params['title'] = "NCHI {$year} Undecided Clubs";
 // ba.interested as 'Reserved'
 $params['sql'] = "
 SELECT
@@ -55,7 +56,8 @@ SELECT
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
 where year = :year
-and ba.interested = 'N'
+and ba.invited = 'Y'
+and ba.interested = 'M'
 order by
 	ba.interested desc,
     c.distance,
@@ -63,6 +65,28 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
+$params['bind'] = array('year' => $year);
+$params['show_total'] = true;
+$params['title'] = "NCHI {$year} Declined Clubs";
+// ba.interested as 'Reserved'
+$params['sql'] = "
+SELECT
+	c.clubName,
+	c.clubAbbr,
+	concat(c.city,', ',c.state) 'Location',
+	c.distance,
+	ba.verified
+FROM brew_clubs c
+left join brew_attendence ba on c.clubID = ba.clubID
+where year = :year
+and ba.invited = 'Y'
+and ba.interested = 'N'
+order by
+	ba.interested desc,
+    c.distance,
+    c.clubName;";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
 
 // $params['bind'] = array('year' => $year);
 // $params['show_total'] = true;

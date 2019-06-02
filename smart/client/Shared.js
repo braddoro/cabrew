@@ -9,6 +9,18 @@ isc.Clients = {
 			{valueLOV: "Y", displayLOV: "Yes"},
 			{valueLOV: "N", displayLOV: "No"}
 		]
+	}),
+	yesNoMaybeDS: isc.DataSource.create({
+	clientOnly: true,
+	fields: [
+		{name: "valueLOV", type: "sequence", primaryKey: true},
+		{name: "displayLOV", type: "text"}
+	],
+	testData:[
+		{valueLOV: "M", displayLOV: "Maybe"},
+		{valueLOV: "N", displayLOV: "No"},
+		{valueLOV: "Y", displayLOV: "Yes"}
+	]
 	})
 };
 isc.Shared = {

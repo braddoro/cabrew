@@ -6,6 +6,10 @@ $days = 30;
 if(isset($_GET['d'])){
 	$days = intval($_GET['d']);
 }
+$wheres = '';
+if(isset($_GET['e'])){
+	$wheres = ' and C.eventTypeID = ' . intval($_GET['e']) . ' ';
+}
 require_once('../Reporter.php');
 $params['bind'] = array(id => NULL);
 if(isset($id)){
@@ -31,6 +35,7 @@ from eventPlans C
 where (C.status IS NULL or C.status <> 'complete')
 	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL {$days} DAY)
 	and C.memberID = coalesce(:id, C.memberID)
+	$wheres
 order by
 	C.dueDate;";
 $lclass = New Reporter();
