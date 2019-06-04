@@ -32,13 +32,23 @@ SELECT
 	c.clubName,
 	c.clubAbbr,
 	concat(c.city,', ',c.state) 'Location',
-	c.distance
+	c.distance,
+	pat.participated as 'Years',
+	ba.amtPaid
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
+left join (
+	select
+		bab.clubID,
+		sum(if(bab.participated = 'Y',1,0)) participated
+	from
+		brew_attendence bab
+	group by
+		bab.clubID) pat on c.clubID = pat.clubID
 where year = :year
 and ba.invited = 'Y'
 and ba.interested = 'Y'
-order by c.clubName;";
+order by pat.participated desc, c.clubName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
