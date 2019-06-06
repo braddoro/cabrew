@@ -7,7 +7,7 @@ $sql = "select
 si.itemName
 from sec_users su
 inner join sec_user_groups sug on su.secUserID = sug.secUserID
-inner join sec_groups sg on sug.secUserGroupID = sg.secGroupID
+inner join sec_groups sg on sug.secGroupID = sg.secGroupID
 inner join sec_item_groups sig on sg.secGroupID = sig.secGroupID
 inner join sec_items si on sig.secItemID = si.secItemID
 where su.active = 'Y'
