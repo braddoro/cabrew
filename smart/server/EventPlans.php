@@ -13,7 +13,7 @@ if(!$dbconn->isConnected()){
 $pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 $_REQUEST['done'] = 'N';
-if($_REQUEST['status'] == 'complete'){
+if($_REQUEST['status'] == 'complete' || $_REQUEST['status'] == 'not needed'){
 	$_REQUEST['done'] = 'Y';
 }
 switch($operationType){
