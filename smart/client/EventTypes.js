@@ -1,15 +1,16 @@
 isc.defineClass("EventTypes", "myWindow").addProperties({
 	initWidget: function(initData){
-	this.Super("initWidget", arguments);
-	this.EventTypesLG = isc.myListGrid.create({
-		parent: this,
-		dataSource: isc.Shared.eventTypesDS,
-		name: "Event Types"
-	});
-	this.localContextMenu = isc.myContextMenu.create({
-		parent: this,
-		callingListGrid: this.EventTypesLG
-	});
-	this.addItem(isc.myVLayout.create({members: [this.EventTypesLG]}));
+		this.Super("initWidget", arguments);
+		this.EventTypesLG = isc.myListGrid.create({
+			dataSource: isc.Shared.eventTypesDS,
+			name: "Event Types",
+			parent: this
+		});
+		this.localContextMenu = isc.myContextMenu.create({
+			callingListGrid: this.EventTypesLG,
+			parent: this
+		});
+		this.addItem(isc.myVLayout.create({members: [this.EventTypesLG]}));
+		this.EventTypesLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

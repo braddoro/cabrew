@@ -1,4 +1,4 @@
-//isc.setAutoDraw(false);
+	//isc.setAutoDraw(false);
 isc.RPCResponse.STATUS_ERROR_DATA_ACCESS = -110;
 isc.RPCResponse.STATUS_SERVER_CONNECTION_ERROR = -111;
 isc.RPCResponse.STATUS_SETUP_DATA_ERROR = -112;
@@ -16,6 +16,9 @@ isc.defineClass("myWindow", "Window").addProperties({
 	title: "",
 	left: 25,
 	top: 25,
+	mm_accessFail: "It's unfortunate, mostly for you, that you don't have clearance to view this page.",
+	mm_badPassword: "So in theory that should have worked but one of us did something wrong. Probably it was you.",
+	mm_missingUserName: "A username usually a good idea when wanting to log into things. Or not. I don't really care. You can do it your way if you want.",
 	resized: function(){
 		// console.log("Title.: " + this.title);
 		// console.log("Width.: " + this.width);
@@ -39,11 +42,17 @@ isc.defineClass("myHLayout", "HLayout").addProperties({
 	//width: "99%"
 });
 isc.defineClass("myDataSource", "DataSource").addProperties({
-	dataProtocol: "postParams",
+	cacheAllData: true,
+	cacheMaxAge: 86400,
 	dataFormat: "json",
+	dataProtocol: "postParams",
 	transformRequest: function(dsRequest){
 		var superClassArguments = this.Super("transformRequest", dsRequest);
-		var newProperties = {operationType: dsRequest.operationType};
+		var userID = 0;
+		if(typeof saveUserID !== 'undefined'){
+			userID = saveUserID;
+		}
+		var newProperties = {operationType: dsRequest.operationType, userID: userID};
 		return isc.addProperties({}, superClassArguments, newProperties);
 	},
 	transformResponse: function(dsResponse, dsRequest, data){
@@ -102,51 +111,51 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 
 isc.defineClass("myListGrid", "ListGrid").addProperties({
 	alternateRecordStyles: true,
-	leaveScrollbarGap: false,
-	showFilterEditor: false,
-	showAllRecords: true,
 	autoFetchData: true,
-	modalEditing: true,
 	autoFitWidth: true,
+	canEdit: true,
+	leaveScrollbarGap: false,
+	modalEditing: true,
+	showAllRecords: true,
+	showFilterEditor: false,
 	rowContextClick: function(record, rowNum, colNum){
 		this.parent.localContextMenu.showContextMenu();
 		return false;
 	},
 	recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
-		var selected = viewer.getSelectedRecords();
-		var count = selected.length;
-		var single = 1;
-		var name = "";
-		var title = "";
-		if (viewer.name) {
-			name = viewer.name;
-		}
-		if(count > single){
-			title = name + " : Selected Rows - " + count;
-		}else{
-			title = name + " : Total Rows - " + this.getTotalRows();
-		}
-		if(viewer.parent){
-			viewer.parent.setTitle(title);
-		}
+		this.updateStatus();
 	},
 	doubleClick: function(){
-		if(this.getTotalRows() > 0){
-
-		} else{
+		if(this.getTotalRows() == 0 && this.canEdit){
 			this.startEditingNew();
 		}
 		return true;
 	},
 	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
-		this.startEditing(recordNum);
+		if(this.canEdit){
+			this.startEditing(recordNum);
+		}
 	},
 	updateStatus: function() {
-		if(this.name) {
-			this.parent.setTitle(this.name + " : Total Rows - " + this.getTotalRows());
-		}else{
-			this.parent.setTitle("Total Rows - " + this.getTotalRows());
+		var name = this.name;
+		var nameStr = "";
+		var rows = this.getTotalRows();
+		var rowsStr = "Total Rows - " + rows;
+		var selected = this.getSelectedRecords();
+		var single = 1;
+		var state = this.canEdit;
+		var stateStr = "";
+		if(selected.length > single){
+			rowsStr = "Selected Rows - " + selected.length;
 		}
+		if(!state){
+			stateStr = "(read only)";
+		}
+		if(this.name) {
+			nameStr = this.name + " | ";
+		}
+		var title = nameStr + "" + rowsStr + " " + stateStr;
+		this.parent.setTitle(title);
 		this.focus();
 	},
 	dataArrived: function(){

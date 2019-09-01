@@ -4,14 +4,16 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(record, row);
 			}
 		},
 		{title: "Refresh",
@@ -25,21 +27,21 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 				var text = "";
 				if(menu.callingListGrid.anySelected()){
 					record = menu.callingListGrid.getSelectedRecord();
+					isc.say(copyValues(record));
+					// ToDo: Fix this so it only shows proper values.
 					// for(var key in record) {
 					// 	let value = record[key];
 					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
 					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
 					// 	}
 					// }
-
-					isc.say(copyValues(record));
 				}
 			}
 		},
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
@@ -47,57 +49,58 @@ isc.defineClass("myContextMenu", "myMenu").addProperties({
 		}
 	]
 });
+
+isc.defineClass("myRefreshMenu", "myMenu").addProperties({
+	parent: this,
+	callingListGrid: null,
+	data: [
+		{title: "Refresh",
+			click: function(target, item, menu, colNum){
+				menu.callingListGrid.invalidateCache();
+			}
+		},
+		{title: "Copy Row",
+			click: function(target, item, menu, colNum){
+				var record;
+				var text = "";
+				if(menu.callingListGrid.anySelected()){
+					record = menu.callingListGrid.getSelectedRecord();
+					isc.say(copyValues(record));
+					// ToDo: Fix this so it only shows proper values.
+					// for(var key in record) {
+					// 	let value = record[key];
+					// 	if (typeof value !== "undefined" && typeof key !== "undefined"){
+					// 		text += key +  ": " + value + " - " + typeof(value) + "<br/>";
+					// 	}
+					// }
+				}
+			}
+		}
+	]
+});
+
 isc.defineClass("myChildMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,
 	data: [
-		{title: "Show Dates",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberDates.create({
-					title: "Activity for " + record.FullName,
-					memberID: record.memberID,
-					left: 150,
-					top: 50
-				});
-			}
-		},
-		{title: "Show Notes",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberNotes.create({
-					title: "Notes for " + record.FullName,
-					memberID: record.memberID,
-					left: 170,
-					top: 70
-				});
-			}
-		},
-		{title: "Show Contacts",
+		{title: "Contacts",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.MemberContacts.create({
 					title: "Contacts for " + record.FullName,
 					memberID: record.memberID,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
-		{title: "Show Leadership",
+		{title: "Dates",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberChairs.create({
-					title: "Leadership for " + record.FullName,
+				isc.MemberDates.create({
+					title: "Activity for " + record.FullName,
 					memberID: record.memberID,
-					left: 210,
-					top: 110
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
-			}
-		},
-		{title: "Refresh",
-			click: function(target, item, menu, colNum){
-				menu.callingListGrid.invalidateCache();
 			}
 		},
 		{title: "Edit Member",
@@ -106,11 +109,35 @@ isc.defineClass("myChildMenu", "myMenu").addProperties({
 				isc.EditMember.create({
 					title: "Editing " + record.FullName,
 					memberID: record.memberID,
+					left: isc.Math.random(200), top: isc.Math.random(150),
 					width: 400,
-					height: 300,
-					left: 210,
-					top: 110
+					height: 300
 				});
+			}
+		},
+		{title: "Leadership",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberChairs.create({
+					title: "Leadership for " + record.FullName,
+					memberID: record.memberID,
+					left: isc.Math.random(200), top: isc.Math.random(150)
+				});
+			}
+		},
+		{title: "Notes",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberNotes.create({
+					title: "Notes for " + record.FullName,
+					memberID: record.memberID,
+					left: isc.Math.random(200), top: isc.Math.random(150)
+				});
+			}
+		},
+		{title: "Refresh",
+			click: function(target, item, menu, colNum){
+				menu.callingListGrid.invalidateCache();
 			}
 		}
 	]
@@ -119,48 +146,24 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 	parent: this,
 	callingListGrid: null,
 	data: [
-		{title: "Show Dates",
+		{title: "Contacts",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberContacts.create({
+					title: "Contacts for " + record.FullName,
+					memberID: record.memberID,
+					left: isc.Math.random(200), top: isc.Math.random(150)
+				});
+			}
+		},
+		{title: "Dates",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.MemberDates.create({
 					title: "Activity for " + record.FullName,
 					memberID: record.memberID,
 					autoFetch: true,
-					left: 150,
-					top: 50
-				});
-			}
-		},
-		{title: "Show Notes",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberNotes.create({
-					title: "Notes for " + record.FullName,
-					memberID: record.memberID,
-					left: 170,
-					top: 70
-				});
-			}
-		},
-		{title: "Show Contacts",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberContacts.create({
-					title: "Contacts for " + record.FullName,
-					memberID: record.memberID,
-					left: 190,
-					top: 90
-				});
-			}
-		},
-		{title: "Show Leadership",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.MemberChairs.create({
-					title: "Leadership for " + record.FullName,
-					memberID: record.memberID,
-					left: 210,
-					top: 110
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
@@ -172,22 +175,43 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 					memberID: record.memberID,
 					width: 400,
 					height: 300,
-					left: 210,
-					top: 110
+					left: isc.Math.random(200), top: isc.Math.random(150)
+				});
+			}
+		},
+		{title: "Leadership",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberChairs.create({
+					title: "Leadership for " + record.FullName,
+					memberID: record.memberID,
+					left: isc.Math.random(200), top: isc.Math.random(150)
+				});
+			}
+		},
+		{title: "Notes",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.MemberNotes.create({
+					title: "Notes for " + record.FullName,
+					memberID: record.memberID,
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
 		{isSeparator: true},
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(record, row);
 			}
 		},
 		{title: "Refresh",
@@ -198,7 +222,7 @@ isc.defineClass("myFullMenu", "myMenu").addProperties({
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
@@ -212,14 +236,16 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(row, record);
 			}
 		},
 		{title: "Refresh",
@@ -230,23 +256,22 @@ isc.defineClass("myContactMenu", "myMenu").addProperties({
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
 			}
 		},
 		{isSeparator: true},
-		{title: "Show Contact Types",
+		{title: "Show Contact Points",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.BrewContactPoints.create({
-					title: "Contact Types for " + record.contactName,
+					title: "Contact Points for " + record.contactName,
 					contactID: record.contactID,
 					width: 400,
 					height: 200,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		}
@@ -258,14 +283,16 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 	data: [
 		{title: "Add",
 			click: function(target, item, menu, colNum){
-				menu.callingListGrid.startEditingNew();
+				if(menu.callingListGrid.canEdit){
+					menu.callingListGrid.startEditingNew();
+				}
 			}
 		},
 		{title: "Edit",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				var row = menu.callingListGrid.getRowNum(record);
-				menu.callingListGrid.startEditing(row);
+				menu.callingListGrid.rowDoubleClick(record, row);
 			}
 		},
 		{title: "Refresh",
@@ -276,14 +303,26 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 		{title: "Delete",
 			click: function(target, item, menu, colNum){
 				var record;
-				if(menu.callingListGrid.anySelected()){
+				if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
 					record = menu.callingListGrid.getSelectedRecord();
 					menu.callingListGrid.removeData(record);
 				}
 			}
 		},
 		{isSeparator: true},
-		{title: "Show Contacts",
+		{title: "Attendance",
+			click: function(target, item, menu, colNum){
+				var record = menu.callingListGrid.getSelectedRecord();
+				isc.BrewAttendance.create({
+					title: "Attendance for " + record.clubName,
+					clubID: record.clubID,
+					width: 800,
+					height: 300,
+					left: isc.Math.random(200), top: isc.Math.random(150)
+				});
+			}
+		},
+		{title: "Contacts",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.BrewContacts.create({
@@ -291,25 +330,11 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 					clubID: record.clubID,
 					width: 400,
 					height: 200,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		},
-		{title: "Show Attendance",
-			click: function(target, item, menu, colNum){
-				var record = menu.callingListGrid.getSelectedRecord();
-				isc.BrewAttendance.create({
-					title: "Attendance for " + record.clubName,
-					clubID: record.clubID,
-					width: 400,
-					height: 200,
-					left: 190,
-					top: 90
-				});
-			}
-		},
-		{title: "Show Media",
+		{title: "Media",
 			click: function(target, item, menu, colNum){
 				var record = menu.callingListGrid.getSelectedRecord();
 				isc.BrewMedia.create({
@@ -317,8 +342,7 @@ isc.defineClass("myClubMenu", "myMenu").addProperties({
 					clubID: record.clubID,
 					width: 500,
 					height: 200,
-					left: 190,
-					top: 90
+					left: isc.Math.random(200), top: isc.Math.random(150)
 				});
 			}
 		}

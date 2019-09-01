@@ -1,51 +1,64 @@
 <?php
 require_once 'Connect.php';
-$conn = new Connect();
-$db = $conn->conn();
+require_once 'SiteLog.php';
 $table = 'memberDates';
 $primaryKey = 'memberDateID';
+$conn = new Connect();
+$db = $conn->conn();
+if(!$db->isConnected()){
+	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+	echo json_encode($response);
+	exit(1);
+}
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
-$response = array();
 switch($operationType){
 case 'fetch':
-	$wheres = ' where 1=1 ';
+	$where = '1=1';
 	if(isset($_REQUEST['memberID_fk'])) {
-		$wheres .= ' and memberID_fk = ' . intval($_REQUEST['memberID_fk']);
+		$where .= ' and memberID_fk = ' . intval($_REQUEST['memberID_fk']);
 	}
 	if(isset($_REQUEST['dateTypeID_fk'])) {
-		$wheres .= ' and dateTypeID_fk = ' . intval($_REQUEST['dateTypeID_fk']);
+		$where .= ' and dateTypeID_fk = ' . intval($_REQUEST['dateTypeID_fk']);
 	}
-	$sql = "select * from memberDates $wheres;";
-	$response = $db->getAll($sql);
 	break;
 case 'add':
-	$record['memberID_fk'] = intval($_REQUEST['memberID_fk']);
-	$record['dateTypeID_fk'] = intval($_REQUEST['dateTypeID_fk']);
-	$record['memberDate'] = $_REQUEST['memberDate'];
-	if(isset($_REQUEST['dateDetail'])){
-		$record['dateDetail'] = $_REQUEST['dateDetail'];
-	}
-	$db->AutoExecute($table, $record, 'INSERT');
-	echo $db->errorMsg();
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $db->insert_Id();
+	$where = $primaryKey . '=' . $pkval;
 	break;
+case 'update':
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$where = $primaryKey . '=' . $pkval;
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
+ 	break;
 case 'remove':
-	if(!isset($_REQUEST[$primaryKey])){
-		echo 'Missing primary key reference for remove operation.';
-		exit(-1);
-	}
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$sql = "delete from $table where $where";
-	$result = $db->execute($sql);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
+	$where = $primaryKey . '=' . $pkval;
+	$sql = "delete from {$table} where {$where};";
+	$db->execute($sql);
 	break;
 default:
 	break;
 }
-if($response){
-	echo json_encode($response);
-}else{
-	echo json_encode(array());
+$arr = array(
+	"action" => $operationType,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
+	"pageName" => basename(__FILE__),
+	"primaryKey" => $primaryKey,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
+);
+$r = siteLog($conn, $db, $arr);
+$sql = "select * from {$table} where {$where};";
+$response = $db->getAll($sql);
+if(!$response){
+	$response = array();
 }
+echo json_encode($response);
 $db->close();
 ?>

@@ -1,88 +1,62 @@
 <?php
-require_once('../../lib/DataModel_local.php');
-$params = array(
-	'baseTable' => 'members',
-	'pk_col' => 'memberID',
-	'allowedOperations' => array('fetch','edit','update'),
-	'ini_file' => realpath('../../lib/server.ini')
-);
-$lclass = New DataModel();
-$lclass->init($params);
-if($lclass->status != 0){
-	$response = array('status' => $lclass->status, 'errorMessage' => $lclass->errorMessage);
+require_once 'Connect.php';
+require_once 'SiteLog.php';
+$table = 'members';
+$primaryKey = 'memberID';
+$conn = new Connect();
+$dbconn = $conn->conn();
+if(!$dbconn->isConnected()){
+	$response = array('status' => -1, 'errorMessage' => $dbconn->errorMsg());
 	echo json_encode($response);
-	exit;
+	exit(1);
 }
-$argsIN = array_merge($_POST,$_GET);
-$operationType = (isset($argsIN['operationType'])) ? $argsIN['operationType'] : null;
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
+$operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
-	if(isset($argsIN['Year'])) {
-		$year = ($argsIN['Year'] > 0) ? $argsIN['Year'] : NULL;
-	}else{
-		$year = 'NULL';
+	$where = '1=1';
+	if(isset($_REQUEST['memberID'])){
+		$where .= " and memberID = " . intval($_REQUEST['memberID']) . " ";
 	}
-	if(isset($argsIN['memberID'])) {
-		$memberID = ($argsIN['memberID'] > 0) ? $argsIN['memberID'] : NULL;
-	}else{
-		$memberID = 'NULL';
-	}
-	if(isset($argsIN['dateTypeID'])) {
-		$dateTypeID = ($argsIN['dateTypeID'] > 0) ? $argsIN['dateTypeID'] : NULL;
-	}else{
-		$dateTypeID = 'NULL';
-	}
-	if(isset($argsIN['$points'])) {
-		$points = ($argsIN['$points'] > 0) ? $argsIN['$points'] : NULL;
-	}else{
-		$points = '-1';
-	}
-	$argsIN['sql'] = "
-	select
-		*
-	from
-		members
-	where
-		memberID = coalesce(:id, memberID)
-	order by
-		firstName,
-		lastName;
-	";
-	$response = $lclass->pdoFetch($argsIN);
 	break;
 case 'add':
-	$response = $lclass->pdoAdd($argsIN);
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$dbconn->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $dbconn->insert_Id();
+	$where = $primaryKey . '=' . $pkval;
 	break;
 case 'update':
-	$response = $lclass->pdoUpdate($argsIN);
-	if($response && !is_null($argsIN['statusTypeID_fk'])){
-		// $sql = "INSERT INTO memberNotes(memberID_fk,noteTypeID_fk,noteDate,memberNote) VALUES({$argsIN['memberID']},3,now(),)";
-		// echo("/* {$sql} */");
-		$params1 = array(
-			'baseTable' => 'memberNotes',
-			'pk_col' => 'memberNoteID',
-			'allowedOperations' => array('fetch','add')
-		);
-		$lnote = New DataModel($params1);
-		if($lnote->status != 0){
-			$response = array('status' => $lnote->status, 'errorMessage' => $lnote->errorMessage);
-			echo json_encode($response);
-			exit;
-		}
-		$inval['operationType'] = 'add';
-		$inval['memberID_fk'] = $argsIN['memberID'];
-		$inval['noteTypeID_fk'] = 3;
-		$inval['noteDate'] = date('Y-m-d H:i:s');
-		$inval['memberNote'] = "Moved to status {$argsIN['statusTypeID_fk']} due to non renewal.";
-		$resp = $lnote->pdoAdd($inval);
-	}
-	break;
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	echo json_encode($record);
+	$where = $primaryKey . '=' . $pkval;
+	$dbconn->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
+ 	break;
 case 'remove':
-	$response = $lclass->pdoRemove($argsIN);
+	$where = $primaryKey . '=' . $pkval;
+	$sql = "delete from {$table} where {$where};";
+	$dbconn->execute($sql);
 	break;
 default:
-	$response = array('status' => 0);
 	break;
 }
+$arr = array(
+	"action" => $operationType,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
+	"pageName" => basename(__FILE__),
+	"primaryKey" => $primaryKey,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
+);
+$r = siteLog($conn, $dbconn, $arr);
+$sql = "select * from {$table} where {$where};";
+$response = $dbconn->getAll($sql);
+if(!$response){
+	$response = array();
+}
 echo json_encode($response);
+$dbconn->close();
 ?>

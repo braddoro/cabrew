@@ -1,104 +1,71 @@
 <?php
 require_once 'Connect.php';
-$response = array();
+require_once 'SiteLog.php';
+$table = 'eventTeams';
+$primaryKey = 'eventTeamID';
 $conn = new Connect();
 $db = $conn->conn();
 if(!$db->isConnected()){
-	echo $db->errorMsg();
+	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+	echo json_encode($response);
+	exit(1);
 }
-$table = 'eventTeams';
-$primaryKey = 'eventTeamID';
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
-	$wheres = ' where 1=1 ';
+	$where = '1=1';
 	if(isset($_REQUEST['eventID'])){
-		$wheres .= " and eventID = " . intval($_REQUEST['eventID']) . " ";
+		$where .= " and eventID = " . intval($_REQUEST['eventID']) . " ";
+	}
+	if(isset($_REQUEST['memberID'])){
+		$where .= " and memberID = " . intval($_REQUEST['memberID']) . " ";
 	}
 	if(isset($_REQUEST['eventTeamNameID'])){
-		$wheres .= " and eventTeamNameID = " . intval($_REQUEST['eventTeamNameID']) . " ";
+		$where .= " and eventTeamNameID = " . intval($_REQUEST['eventTeamNameID']) . " ";
 	}
 	if(isset($_REQUEST['teamMember'])){
-		$wheres .= " and teamMember = '" . $_REQUEST['teamMember'] . "' ";
+		$qStr = $db->qStr($_REQUEST['teamMember'], true);
+		$where .= " and teamMember = $qStr ";
 	}
-	$sql = "select * from $table $wheres;";
-	$response = $db->getAll($sql);
 	break;
 case 'add':
-	$record['eventTeamID'] = intval($_REQUEST['eventTeamID']);
-	$record['eventID'] = intval($_REQUEST['eventID']);
-	if(isset($_REQUEST['workTeam'])){
-		$record['eventDay'] = $_REQUEST['eventDay'];
-	}
-	if(isset($_REQUEST['eventTeamNameID'])){
-		$record['eventTeamNameID'] = intval($_REQUEST['eventTeamNameID']);
-	}
-	if(isset($_REQUEST['teamMember'])){
-		$record['teamMember'] = trim($_REQUEST['teamMember']);
-	}
-	if(isset($_REQUEST['startTime'])){
-		$record['startTime'] = trim($_REQUEST['startTime']);
-	}
-	if(isset($_REQUEST['endTime'])){
-		$record['endTime'] = trim($_REQUEST['endTime']);
-	}
-	if(isset($_REQUEST['notes'])){
-		$record['notes'] = trim($_REQUEST['notes']);
-	}
-	$db->AutoExecute($table, $record, 'INSERT');
-	if(!$response){
-		echo $db->errorMsg();
-		exit(1);
-	}
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $db->insert_Id();
+	$where = $primaryKey . '=' . $pkval;
 	break;
 case 'update':
-	if(!isset($_REQUEST[$primaryKey])){
-		echo 'Missing primary key reference for update operation.';
-		exit(-1);
-	}
-	if(isset($_REQUEST['eventTeamID'])){
-		$record['eventTeamID'] = intval($_REQUEST['eventTeamID']);
-	}
-	if(isset($_REQUEST['eventID'])){
-		$record['eventID'] = intval($_REQUEST['eventID']);
-	}
-	if(isset($_REQUEST['eventDay'])){
-		$record['eventDay'] = trim($_REQUEST['eventDay']);
-	}
-	if(isset($_REQUEST['eventTeamNameID'])){
-		$record['eventTeamNameID'] = intval($_REQUEST['eventTeamNameID']);
-	}
-	if(isset($_REQUEST['teamMember'])){
-		$record['teamMember'] = trim($_REQUEST['teamMember']);
-	}
-	if(isset($_REQUEST['startTime'])){
-		$record['startTime'] = trim($_REQUEST['startTime']);
-	}
-	if(isset($_REQUEST['endTime'])){
-		$record['endTime'] = trim($_REQUEST['endTime']);
-	}
-	if(isset($_REQUEST['notes'])){
-		$record['notes'] = trim($_REQUEST['notes']);
-	}
-	$record['lastChangeDate'] = date("Y-m-d H:i:s");
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$db->AutoExecute($table, $record, 'UPDATE', $where);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
-	if(!$response){
-		echo $db->errorMsg();
-		exit(1);
-	}
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	// echo json_encode($record);
+	$where = $primaryKey . '=' . $pkval;
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
 case 'remove':
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$sql = "delete from $table where $where";
-	$result = $db->execute($sql);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
+	$where = $primaryKey . '=' . $pkval;
+	$sql = "delete from {$table} where {$where};";
+	$db->execute($sql);
 	break;
 default:
 	break;
+}
+$arr = array(
+	"action" => $operationType,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
+	"pageName" => basename(__FILE__),
+	"primaryKey" => $primaryKey,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
+);
+$r = siteLog($conn, $db, $arr);
+$sql = "select * from {$table} where {$where};";
+$response = $db->getAll($sql);
+if(!$response){
+	$response = array();
 }
 echo json_encode($response);
 $db->close();

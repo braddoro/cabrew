@@ -3,6 +3,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.memberPointsDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "MemberPoints.php",
 			fields:[
 				{name: "memberID", type: "sequence", primaryKey: true, detail: true, foreignKey: "this.pointListDS.memberID"},
@@ -12,6 +13,7 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			]
 		});
 		this.pointListDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "PointsList.php",
 			fields:[
 				{name: "memberID", type: "sequence", primaryKey: true, detail: true},
@@ -28,9 +30,9 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			parent: this,
 			fields: [
 				{name: "Year",
-					type: "SelectItem",
-					optionDataSource: isc.Shared.eventYearsDS,
 					displayField: "Year",
+					optionDataSource: isc.Shared.eventYearsDS,
+					type: "SelectItem",
 					valueField: "Year",
 					changed: function(form, item, value){
 						form.parent.memberPointsLG.invalidateCache();
@@ -40,33 +42,35 @@ isc.defineClass("MemberPoints", "myWindow").addProperties({
 			]
 		});
 		this.memberPointsLG = isc.myListGrid.create({
-			parent: this,
-			name: "Member Points",
-			margin: 1,
-			width: 300,
+			canEdit: false,
 			dataSource: this.memberPointsDS,
-			recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
-				if(viewer.anySelected()){
-					this.parent.pointListLG.fetchData({memberID: record.memberID, year: this.parent.yearChooserDF.getValue("Year")});
-				}else{
-					this.parent.pointListLG.setData([]);
-				}
-			},
-			dataArrived: function(startRow, endRow){
-				this.selectSingleRecord(startRow);
-				this.recordClick(this,this.getRecord(startRow),"memberID",this.getFieldNum("memberID"));
-			}
+			margin: 1,
+			name: "Member Points",
+			parent: this,
+			width: 300
+			// recordClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue){
+			// 	if(viewer.anySelected()){
+			// 		this.parent.pointListLG.fetchData({memberID: record.memberID, year: this.parent.yearChooserDF.getValue("Year")});
+			// 	}else{
+			// 		this.parent.pointListLG.setData([]);
+			// 	}
+			// },
+			// dataArrived: function(startRow, endRow){
+			// 	this.selectSingleRecord(startRow);
+			// 	this.recordClick(this,this.getRecord(startRow),"memberID",this.getFieldNum("memberID"));
+			// }
 		});
 		this.localContextMenu = isc.myChildMenu.create({
-			parent: this,
-			callingListGrid: this.memberPointsLG
+			callingListGrid: this.memberPointsLG,
+			parent: this
 		});
 		this.pointListLG = isc.myListGrid.create({
+			canEdit: false,
 			dataSource: this.pointListDS,
 			margin: 1,
-			width: "*",
-			sortField: 0,
 			sortDirection: "descending",
+			sortField: 0,
+			width: "*",
 			dataArrived: function(startRow, endRow){
 				this.selectSingleRecord(startRow);
 				this.recordClick(this,this.getRecord(startRow),"dateTypeID",this.getFieldNum("dateTypeID"));

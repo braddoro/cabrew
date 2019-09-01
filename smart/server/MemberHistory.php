@@ -1,23 +1,68 @@
 <?php
 require_once 'Connect.php';
+require_once 'SiteLog.php';
+$table = 'memberDates';
+$primaryKey = 'memberDateID';
 $conn = new Connect();
 $db = $conn->conn();
-$wheres = '';
-if(isset($_REQUEST['memberID'])) {
-	$wheres .= ' and d.memberID = ' . intval($_REQUEST['memberID']);
-}
-if(isset($_REQUEST['YearDate'])) {
-	$wheres .= ' and year(d.memberDate) = ' . intval($_REQUEST['YearDate']);
-}
-if(isset($_REQUEST['dateTypeID_fk'])) {
-	$wheres .= ' and d.dateTypeID_fk = ' . intval($_REQUEST['dateTypeID_fk']);
-}
-$sql = "select d.*, year(d.memberdate) as 'YearDate' from memberDates d where 1=1 $wheres order by d.memberdate desc";
-$response = $db->getAll($sql);
-if($response){
+if(!$db->isConnected()){
+	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
 	echo json_encode($response);
-}else{
-	echo $db->errorMsg();
+	exit(1);
 }
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
+$operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
+switch($operationType){
+case 'fetch':
+	$where = '1=1';
+	if(isset($_REQUEST['memberID'])){
+		$where .= ' and d.memberID = ' . intval($_REQUEST['memberID']);
+	}
+	if(isset($_REQUEST['YearDate'])){
+		$where .= ' and year(d.memberDate) = ' . intval($_REQUEST['YearDate']);
+	}
+	if(isset($_REQUEST['dateTypeID_fk'])){
+		$where .= ' and d.dateTypeID_fk = ' . intval($_REQUEST['dateTypeID_fk']);
+	}
+	break;
+case 'add':
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $db->insert_Id();
+	$where = $primaryKey . '=' . $pkval;
+	break;
+case 'update':
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	// echo json_encode($record);
+	$where = $primaryKey . '=' . $pkval;
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
+ 	break;
+case 'remove':
+	$where = $primaryKey . '=' . $pkval;
+	$sql = "delete from {$table} where {$where};";
+	$db->execute($sql);
+	break;
+default:
+	break;
+}
+$arr = array(
+	"action" => $operationType,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
+	"pageName" => basename(__FILE__),
+	"primaryKey" => $primaryKey,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
+);
+$r = siteLog($conn, $db, $arr);
+$sql = "select d.*, year(d.memberdate) as 'YearDate' from {$table} d where {$where} order by d.memberdate desc;";
+$response = $db->getAll($sql);
+if(!$response){
+	$response = array();
+}
+echo json_encode($response);
 $db->close();
 ?>

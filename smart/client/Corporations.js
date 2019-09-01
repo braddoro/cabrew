@@ -25,14 +25,15 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 			]
 		});
 		this.CorporationsLG = isc.myListGrid.create({
-			parent: this,
+			dataSource: this.CorporationsDS,
 			name: "Corporations",
-			dataSource: this.CorporationsDS
+			parent: this
 		});
 		this.localContextMenu = isc.myContextMenu.create({
-			parent: this,
-			callingListGrid: this.CorporationsLG
+			callingListGrid: this.CorporationsLG,
+			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.CorporationsLG]}));
+		this.CorporationsLG.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });

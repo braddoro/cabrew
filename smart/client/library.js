@@ -80,3 +80,14 @@ function errorTitle(code) {
 	title = "Unknown Error Type";
     return title;
 }
+function checkPerms(stringIn){
+	var retval = false;
+	for(var key in isc.userPages){
+		if(isc.userPages.hasOwnProperty(key)){
+			if(isc.userPages[key] == stringIn){
+				return true;
+			}
+		}
+	}
+	return retval;
+}

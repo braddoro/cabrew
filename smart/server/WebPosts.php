@@ -1,52 +1,66 @@
 <?php
 require_once 'Connect.php';
-$response = array();
-$conn = new Connect();
-$db = $conn->conn();
-if(!$db->isConnected()){
-	echo $db->errorMsg();
-}
+require_once 'SiteLog.php';
 $table = 'web_posts';
 $primaryKey = 'webPostID';
+$conn = new Connect();
+$conn->debug = true;
+$db = $conn->conn();
+if(!$db->isConnected()){
+	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+	echo json_encode($response);
+	exit(1);
+}
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
-	$wheres = ' where 1=1 ';
-	$sql = "select * from $table $wheres;";
-	$response = $db->getAll($sql);
+	$where = '1=1';
+	if(isset($_REQUEST['active'])){
+		$qStr = $db->qStr($_REQUEST['active'], true);
+		$where .= " and active = $qStr ";
+	}
+	if(isset($_REQUEST['memberID'])){
+		$where .= " and memberID = " . intval($_REQUEST['memberID']);
+	}
 	break;
 case 'add':
-	$record['postName'] = $_REQUEST['postName'];
-	$record['postText'] = $_REQUEST['postText'];
-	$db->AutoExecute($table, $record, 'INSERT');
-	echo $db->errorMsg();
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $db->insert_Id();
+	$where = $primaryKey . '=' . $pkval;
 	break;
 case 'update':
-	if(!isset($_REQUEST[$primaryKey])){
-		echo 'Missing primary key reference for update operation.';
-		exit(-1);
-	}
-	$record['postName'] = $_REQUEST['postName'];
-	$record['postText'] = $_REQUEST['postText'];
-	$record['lastChangeDate'] = date("Y-m-d H:i:s");
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$db->AutoExecute($table, $record, 'UPDATE', $where);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
-	if(!$response){
-		echo $db->errorMsg();
-		exit(1);
-	}
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	 echo json_encode($record);
+	$where = $primaryKey . '=' . $pkval;
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
 case 'remove':
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$sql = "delete from $table where $where";
-	$result = $db->execute($sql);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
+	$where = $primaryKey . '=' . $pkval;
+	$sql = "delete from {$table} where {$where};";
+	$db->execute($sql);
 	break;
 default:
 	break;
+}
+$arr = array(
+	"action" => $operationType,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
+	"pageName" => basename(__FILE__),
+	"primaryKey" => $primaryKey,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
+);
+$r = siteLog($conn, $db, $arr);
+$sql = "select * from {$table} where {$where};";
+$response = $db->getAll($sql);
+if(!$response){
+	$response = array();
 }
 echo json_encode($response);
 $db->close();

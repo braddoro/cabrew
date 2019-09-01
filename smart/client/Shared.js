@@ -9,6 +9,18 @@ isc.Clients = {
 			{valueLOV: "Y", displayLOV: "Yes"},
 			{valueLOV: "N", displayLOV: "No"}
 		]
+	}),
+	yesNoMaybeDS: isc.DataSource.create({
+	clientOnly: true,
+	fields: [
+		{name: "valueLOV", type: "sequence", primaryKey: true},
+		{name: "displayLOV", type: "text"}
+	],
+	testData:[
+		{valueLOV: "M", displayLOV: "Maybe"},
+		{valueLOV: "N", displayLOV: "No"},
+		{valueLOV: "Y", displayLOV: "Yes"}
+	]
 	})
 };
 isc.Shared = {
@@ -38,7 +50,15 @@ isc.Shared = {
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"}
 		]
 	}),
+	userDateTypesDS: isc.myDataSource.create({
+		dataURL: serverPath + "DateTypesUser.php",
+		fields:[
+			{name: "dateType", type: "text"},
+			{name: "dateTypeID", type: "sequence", primaryKey: true}
+		]
+	}),
 	dateTypesDS: isc.myDataSource.create({
+		cacheAllData: false,
 		dataURL: serverPath + "DateTypes.php",
 		fields:[
 			{name: "dateTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
@@ -58,9 +78,9 @@ isc.Shared = {
 		dataURL: serverPath + "EventTypes.php",
 		fields:[
 			{name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "eventType", type: "text"},
-			{name: "description", type: "text"},
-			{name: "active", type: "text", width: 80},
+			{name: "eventType", type: "text", width: 120},
+			{name: "description", type: "text", width: "*"},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
@@ -89,7 +109,7 @@ isc.Shared = {
 		fields:[
 			{name: "memberID", type: "sequence", primaryKey: true, canEdit: false, detail: true},
 			{name: "FullName", type: "text"},
-			{name: "Status", type: "text"}
+			{name: "statusTypeID_fk", type: "integer", canEdit: false, detail: true}
 		]
 	}),
 	messageTypesDS: isc.myDataSource.create({
@@ -119,6 +139,42 @@ isc.Shared = {
 			{name: "statusCode", type: "text"},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
+		]
+	}),
+	GroupDS: isc.myDataSource.create({
+		cacheAllData: false,
+		dataURL: serverPath + "Groups.php",
+		showFilterEditor: true,
+		fields:[
+			{name: "secGroupID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "groupName", width: 300, validators: [{type: "lengthRange", max: 200}]},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", width: 100, detail: true}
+		]
+	}),
+	ItemDS: isc.myDataSource.create({
+		cacheAllData: false,
+		dataURL: serverPath + "Items.php",
+		showFilterEditor: true,
+		fields:[
+			{name: "secItemID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "itemName", width: "*", validators: [{type: "lengthRange", max: 200}]},
+			{name: "itemType", width: 100, validators: [{type: "lengthRange", max: 45}]},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", width: 100, detail: true}
+		]
+	}),
+	UserDS: isc.myDataSource.create({
+		cacheAllData: false,
+		dataURL: serverPath + "Users.php",
+		showFilterEditor: true,
+		fields:[
+			{name: "secUserID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "userName", width: 100, validators: [{type: "lengthRange", max: 20}]},
+			{name: "password", width: 150, validators: [{type: "lengthRange", max: 45}]},
+			{name: "fullName", width: 200, validators: [{type: "lengthRange", max: 50}]},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", width: 100, detail: true}
 		]
 	})
 };
@@ -165,7 +221,7 @@ isc.Members = {
 			{name: "memberNoteID", primaryKey: true, type: "sequence", canEdit: false, detail: true},
 			{name: "memberID_fk", detail: true, required: true},
 			{name: "noteTypeID_fk", required: true, title: "Type", optionDataSource: isc.Shared.noteTypesDS, optionCriteria: {active: "Y"}, displayField: "noteType", valueField: "noteTypeID"},
-			{name: "noteDate"},
+			{name: "noteDate", type: "date", width: 120, title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
 			{name: "memberNote"},
 			{name: "lastChangeDate", canEdit: false, detail: true}
 		]

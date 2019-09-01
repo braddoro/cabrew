@@ -1,64 +1,61 @@
 <?php
 require_once 'Connect.php';
+require_once 'SiteLog.php';
 $table = 'eventTypes';
 $primaryKey = 'eventTypeID';
 $conn = new Connect();
 $db = $conn->conn();
 if(!$db->isConnected()){
-	echo $db->errorMsg();
+	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
+	echo json_encode($response);
+	exit(1);
 }
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 switch($operationType){
 case 'fetch':
-	$wheres = '';
+	$where = '1=1';
 	if(isset($_REQUEST['active'])){
 		$qStr = $db->qStr($_REQUEST['active'], true);
-		$wheres .= " and active = $qStr ";
-	}
-	$sql = "select * from $table where 1=1 $wheres;";
-	$response = $db->getAll($sql);
-	if(!$response){
-		echo $db->errorMsg();
-		exit(-1);
+		$where .= " and active = $qStr ";
 	}
 	break;
 case 'add':
-	$record['eventType'] = $_REQUEST['eventType'];
-	if(isset($_REQUEST['description'])){
-		$record['description'] = $_REQUEST['description'];
-	}
-	$db->AutoExecute($table, $record, 'INSERT');
-	echo $db->errorMsg();
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
+	$pkval = $db->insert_Id();
+	$where = $primaryKey . '=' . $pkval;
 	break;
 case 'update':
-	if(isset($_REQUEST['eventType'])){
-		$record['eventType'] = $_REQUEST['eventType'];
-	}
-	if(isset($_REQUEST['active'])){
-		$record['active'] = $_REQUEST['active'];
-	}
-	if(isset($_REQUEST['description'])){
-		$record['description'] = $_REQUEST['description'];
-	}
-	$record['lastChangeDate'] = date("Y-m-d H:i:s");
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$db->AutoExecute($table, $record, 'UPDATE', $where);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
-	if(!$response){
-		echo $db->errorMsg();
-		exit(1);
-	}
+	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
+	$record = $conn->buildRecordset($data);
+	$where = $primaryKey . '=' . $pkval;
+	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
 case 'remove':
-	$where = $primaryKey . ' = ' . $_REQUEST[$primaryKey];
-	$sql = "delete from $table where $where";
-	$result = $db->execute($sql);
-	$sql = "select * from $table where $where";
-	$response = $db->getAll($sql);
+	$where = $primaryKey . '=' . $pkval;
+	$sql = "delete from {$table} where {$where};";
+	$db->execute($sql);
 	break;
 default:
 	break;
+}
+$arr = array(
+	"action" => $operationType,
+	"fieldsVals" => var_export($_REQUEST, true),
+	"ip_address" => $_SERVER['REMOTE_ADDR'],
+	"pageName" => basename(__FILE__),
+	"primaryKey" => $primaryKey,
+	"primaryKeyID" => isset($pkval) ? intval($pkval) : null,
+	"tableName" => $table,
+	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
+);
+$r = siteLog($conn, $db, $arr);
+$sql = "select * from {$table} where {$where};";
+$response = $db->getAll($sql);
+if(!$response){
+	$response = array();
 }
 echo json_encode($response);
 $db->close();

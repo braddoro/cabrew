@@ -2,12 +2,13 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.BrewContactsDS = isc.myDataSource.create({
+			cacheAllData: false,
 			dataURL: serverPath + "BrewContacts.php",
 			fields:[
 				{name: "contactID", primaryKey: true, type: "sequence", detail: true},
 				{name: "clubID", detail: true, required: true},
 				{name: "contactName"},
-				{name: "priority", width: 75}
+				{name: "priority", editorType: "spinner", width: 100, defaultValue: 1}
 			]
 		});
 		this.BrewContactsLG = isc.myListGrid.create({
@@ -20,10 +21,11 @@ isc.defineClass("BrewContacts", "myWindow").addProperties({
 			}
 		});
 		this.localContextMenu = isc.myContactMenu.create({
-			parent: this,
-			callingListGrid: this.BrewContactsLG
+			callingListGrid: this.BrewContactsLG,
+			parent: this
 		});
 		this.addItem(isc.myVLayout.create({members: [this.BrewContactsLG]}));
+		this.BrewContactsLG.canEdit = checkPerms(this.getClassName() + ".js");
 		this.BrewContactsLG.fetchData({clubID: initData.clubID});
 	}
 });

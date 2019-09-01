@@ -13,9 +13,9 @@ isc.defineClass("MemberChairs", "myWindow").addProperties({
 			]
 		});
 		this.MemberChairsLG = isc.myListGrid.create({
-			parent: this,
 			dataSource: this.MemberChairsDS,
 			name: "Member Chairs",
+			parent: this,
 			startEditingNew: function(newValues, suppressFocus){
 				var newCriteria = isc.addProperties({}, newValues, {memberID_fk: initData.memberID});
 				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
@@ -23,6 +23,7 @@ isc.defineClass("MemberChairs", "myWindow").addProperties({
 		});
 		this.localContextMenu = isc.myContextMenu.create({parent: this, callingListGrid: this.MemberChairsLG});
 		this.addItem(isc.myVLayout.create({members: [this.MemberChairsLG]}));
+		this.MemberChairsLG.canEdit = checkPerms(this.getClassName() + ".js");
 		this.MemberChairsLG.fetchData({memberID_fk: initData.memberID});
 	}
 });

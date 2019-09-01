@@ -47,6 +47,7 @@ isc.defineClass("MemberDetails", "myWindow").addProperties({
 			]
 		});
 		this.addItem(this.MemberDetailsVL);
+		// this.AddPaymentBT.canEdit = checkPerms(this.getClassName() + ".js");
 		// this.parent.MembersLG.fetchData({memberID: this.arguments.memberID});
 		// this.parent.MemberContactsLG.fetchData({memberID_fk: this.arguments.memberID});
 		// this.parent.MemberDatesLG.fetchData({memberID_fk: this.arguments.memberID});

@@ -5,44 +5,26 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			dataURL: serverPath + "AddEvent.php",
 			fields:[
 				{name: "memberDateID", primaryKey: true, type: "sequence", visible: false},
-				{name: "dateTypeID_fk",
-					type: "integer",
-					title: "Date Type",
-					optionDataSource: isc.Shared.dateTypesDS,
-					optionCriteria: {active: "Y"},
-					displayField: "dateType",
-					valueField: "dateTypeID",
-					pickListProperties: {showFilterEditor: true}
-				},
+				{name: "dateTypeID_fk", type: "integer", title: "Date Type", optionDataSource: isc.Shared.userDateTypesDS, optionCriteria: {active: "Y"}, displayField: "dateType", valueField: "dateTypeID", pickListProperties: {showFilterEditor: true}},
 				{name: "memberDate", type: "date", title: "Date", editorType: "DateItem", validators: [{type: "isDate"}]},
 				{name: "dateDetail", title: "Detail", type: "textArea", width: "*", validators: [{type: "lengthRange", max :150}]}
 			]
 		});
-		this.ActiveMembersDS = isc.myDataSource.create({
-			dataURL: serverPath + "MemberSearch.php",
-			fields:[
-				{name: "memberID", primaryKey: true, type: "sequence", hidden: true},
-				{name: "FullName"}
-			],
-			fetchData: function(criteria, callback, requestProperties){
-				return this.Super("fetchData", [{statusTypeID_fk: 1}, callback, requestProperties]);
-			}
-		});
 		this.AddEventDF = isc.myDynamicForm.create({
-			parent: this,
-			dataSource: this.AddEventDS
+			dataSource: this.AddEventDS,
+			parent: this
 		});
 		this.AddEventLG = isc.myListGrid.create({
-			parent: this,
-			showHeader: false,
-			showFilterEditor: true,
 			autoSaveEdits: false,
-			dataSource: this.ActiveMembersDS
+			dataSource: isc.Shared.memberNamesDS,
+			parent: this,
+			showFilterEditor: true,
+			showHeader: false
 		});
 		this.AddEventBT = isc.myIButton.create({
+			align: "center",
 			parent: this,
 			title: "Add",
-			align: "center",
 			click: function(){
 				this.parent.submitData();
 			}
@@ -53,6 +35,8 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 			this.AddEventLG
 		]});
 		this.addItem(this.AddEventVL);
+		this.AddEventLG.fetchData({statusTypeID_fk: 1});
+		// this.AddEventDF.canEdit = checkPerms(this.getClassName() + ".js");
 	},
 	submitData: function(){
 		var formData = this.AddEventDF.getValues();
@@ -62,10 +46,10 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		var zero = 0;
 		for (i = zero; i < loop; i++) {
 			newData = {
-				memberID_fk: selectedData[i]["memberID"],
+				dateDetail: formData["dateDetail"],
 				dateTypeID_fk: formData["dateTypeID_fk"],
 				memberDate: formData["memberDate"],
-				dateDetail: formData["dateDetail"]
+				memberID_fk: selectedData[i]["memberID"]
 			};
 			this.AddEventDS.addData(newData);
 		}

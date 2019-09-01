@@ -3,21 +3,22 @@ isc.defineClass("EditMember", "myWindow").addProperties({
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
 		this.EditMemberDF = isc.myDynamicForm.create({
-			parent: this,
 			dataSource: isc.Members.membersDS,
+			parent: this,
 			updateData: function(updatedRecord, callback, requestProperties){
 				return this.Super("updateData", [updatedRecord, callback, requestProperties]);
 			}
 		});
 		this.EditMemberBT = isc.myIButton.create({
+			align: "center",
 			parent: this,
 			title: "Save",
-			align: "center",
 			click: function(){
 				this.parent.EditMemberDF.updateData(this.parent.EditMemberDF.getValues());
 			}
 		});
 		this.addItem(isc.myVLayout.create({members: [this.EditMemberDF, this.EditMemberBT]}));
 		this.EditMemberDF.fetchData({memberID: initData.memberID});
+		this.EditMemberDF.canEdit = checkPerms(this.getClassName() + ".js");
 	}
 });
