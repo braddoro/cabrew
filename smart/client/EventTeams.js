@@ -19,7 +19,7 @@ isc.defineClass("EventTeams", "myWindow").addProperties({
 		});
 		this.EventTeamsLG = isc.myListGrid.create({
 			parent: this,
-			name: "Beer list",
+			name: "Event Teams",
 			showFilterEditor: true,
 			dataSource: this.EventTeamsDS,
 			initialSort: [
@@ -33,16 +33,18 @@ isc.defineClass("EventTeams", "myWindow").addProperties({
 				var data;
 				var eventDay;
 				var eventID;
+				var eventTeamNameID;
 				var memberID;
 				var workTeam;
 				if(this.anySelected()){
 					data = this.getSelectedRecord();
 					eventDay = data.eventDay;
 					eventID = data.eventID;
+					eventTeamNameID = data.eventTeamNameID;
 					memberID = data.memberID;
 					workTeam = data.workTeam;
 				}
-				var rowDefaults = {eventDay: eventDay, eventID: eventID, memberID: memberID, workTeam: workTeam};
+				var rowDefaults = {eventDay: eventDay, eventID: eventID, eventTeamNameID: eventTeamNameID, memberID: memberID, workTeam: workTeam};
 				var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 			}
