@@ -32,7 +32,7 @@ select
 from eventPlans C
 	inner join eventTypes CT on C.eventTypeID = CT.eventTypeID and CT.active = 'Y'
 	left join members M on M.memberID = C.memberID
-where (C.status IS NULL or C.status <> 'complete')
+where (C.status IS NULL or (C.status <> 'complete' and C.status <> 'not needed'))
 	and C.dueDate < DATE_ADD(CURDATE(), INTERVAL {$days} DAY)
 	and C.memberID = coalesce(:id, C.memberID)
 	$wheres
