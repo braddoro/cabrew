@@ -1,4 +1,37 @@
 isc.Clients = {
+	budgetActionDS: isc.DataSource.create({
+		clientOnly: true,
+		fields: [
+			{name: "valueLOV", type: "sequence", primaryKey: true},
+			{name: "displayLOV", type: "text"}
+		],
+		testData:[
+			{valueLOV: "Decide", displayLOV: "Decide"},
+			{valueLOV: "Deliver", displayLOV: "Deliver"},
+			{valueLOV: "Followup", displayLOV: "Followup"},
+			{valueLOV: "Locate", displayLOV: "Locate"},
+			{valueLOV: "Need", displayLOV: "Need"},
+			{valueLOV: "Order", displayLOV: "Order"},
+			{valueLOV: "Ordered", displayLOV: "Ordered"},
+			{valueLOV: "Pickup", displayLOV: "Pickup"},
+			{valueLOV: "Price", displayLOV: "Price"},
+			{valueLOV: "Ready", displayLOV: "Ready"},
+			{valueLOV: "Research", displayLOV: "Research"},
+			{valueLOV: "Verify", displayLOV: "Verify"}
+		]
+	}),
+	budgetStatusDS: isc.DataSource.create({
+		clientOnly: true,
+		fields: [
+			{name: "valueLOV", type: "sequence", primaryKey: true},
+			{name: "displayLOV", type: "text"}
+		],
+		testData:[
+			{valueLOV: "Buy", displayLOV: "Buy"},
+			{valueLOV: "Donation", displayLOV: "Donation"},
+			{valueLOV: "Have", displayLOV: "Have"}
+		]
+	}),
 	yesNoDS: isc.DataSource.create({
 		clientOnly: true,
 		fields: [
@@ -11,16 +44,16 @@ isc.Clients = {
 		]
 	}),
 	yesNoMaybeDS: isc.DataSource.create({
-	clientOnly: true,
-	fields: [
-		{name: "valueLOV", type: "sequence", primaryKey: true},
-		{name: "displayLOV", type: "text"}
-	],
-	testData:[
-		{valueLOV: "M", displayLOV: "Maybe"},
-		{valueLOV: "N", displayLOV: "No"},
-		{valueLOV: "Y", displayLOV: "Yes"}
-	]
+		clientOnly: true,
+		fields: [
+			{name: "valueLOV", type: "sequence", primaryKey: true},
+			{name: "displayLOV", type: "text"}
+		],
+		testData:[
+			{valueLOV: "M", displayLOV: "Maybe"},
+			{valueLOV: "N", displayLOV: "No"},
+			{valueLOV: "Y", displayLOV: "Yes"}
+		]
 	})
 };
 isc.Shared = {
@@ -79,6 +112,7 @@ isc.Shared = {
 		fields:[
 			{name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
 			{name: "eventType", type: "text", width: 120},
+			{name: "eventBudget", type: "float", width: 120},
 			{name: "description", type: "text", width: "*"},
 			{name: "active", type: "text", width: 80, editorType: "selectItem", defaultValue: "Y", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
