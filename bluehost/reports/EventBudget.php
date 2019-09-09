@@ -68,7 +68,7 @@ FROM eventBudgets
 where eventTypeID = :eventTypeID
 and status <> 'Buy'
 order by
-itemName;";
+status, action, itemName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 ?>
