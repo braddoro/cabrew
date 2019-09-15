@@ -1,5 +1,5 @@
 <?php
-$year = 2018;
+$year = date("Y");
 require_once('../Reporter.php');
 $wheres = '';
 $eventID = (isset($_GET['e'])) ? intval($_GET['e']) : 1;
@@ -12,28 +12,109 @@ $params['ini_file'] = '../server.ini';
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
-$params['title'] = "NCHI {$year} Beer Tasting List by Style";
+
+$params['title'] = "NCHI {$year} Beer Tasting List by BJCP Category";
 $params['sql'] = "SELECT
-bl.beerCode, bl.beerName, bl.beerStyle, bl.abv, bc.clubAbbr as Tent
+	bl.beerCode,
+	bcc.bjcp2015_category as BJCP_Category,
+    bl.beerName,
+    bl.abv,
+    bc.clubAbbr as Tent
 FROM eventBeers bl
-inner join brew_clubs bc
-on bl.clubID = bc.clubID
-where bl.eventID = :eventID
-order by bl.beerStyle, bl.beerName, bc.clubAbbr;";
+inner join brew_clubs bc on bl.clubID = bc.clubID
+inner join bjcp2015_styles bs on bl.bjcp2015styleID_fk = bs.bjcp2015styleID
+inner join bjcp2015_categories bcc on bs.bjcp2015_categoryID = bcc.bjcp2015_categoryID
+where
+	bl.eventID = :eventID
+order by
+	bcc.bjcp2015_category,
+	bl.beerName,
+	bc.clubAbbr;
+";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['ini_file'] = '../server.ini';
-$params['bind'] = array("eventID" => $eventID);
-$params['show_total'] = false;
+unset($params['maintitle']);
+$params['title'] = "NCHI {$year} Beer Tasting List by Style";
+$params['sql'] = "SELECT
+	bl.beerCode,
+	bs.bjcpStyle,
+    bl.beerName,
+    bl.abv,
+    bc.clubAbbr as Tent
+FROM eventBeers bl
+inner join brew_clubs bc on bl.clubID = bc.clubID
+inner join bjcp2015_styles bs on bl.bjcp2015styleID_fk = bs.bjcp2015styleID
+inner join bjcp2015_categories bcc on bs.bjcp2015_categoryID = bcc.bjcp2015_categoryID
+where
+	bl.eventID = :eventID
+order by
+	bs.bjcpStyle,
+	bl.beerName,
+	bc.clubAbbr;
+";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+
 $params['title'] = "NCHI {$year} Beer Tasting List by Club";
 $params['sql'] = "SELECT
-bl.beerCode, bl.beerName, bl.beerStyle, bl.abv, bc.clubAbbr as Tent
+	bl.beerCode,
+    bc.clubAbbr as Tent,
+	bs.bjcpStyle,
+    bl.beerName,
+    bl.abv
 FROM eventBeers bl
-inner join brew_clubs bc
-on bl.clubID = bc.clubID
-where bl.eventID = :eventID
-order by bc.clubAbbr, bl.beerStyle, bl.beerName;";
+inner join brew_clubs bc on bl.clubID = bc.clubID
+inner join bjcp2015_styles bs on bl.bjcp2015styleID_fk = bs.bjcp2015styleID
+inner join bjcp2015_categories bcc on bs.bjcp2015_categoryID = bcc.bjcp2015_categoryID
+where
+	bl.eventID = :eventID
+order by
+	bc.clubAbbr,
+	bs.bjcpStyle,
+	bl.beerName;";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+
+$params['title'] = "NCHI {$year} Beer Tasting List by Code";
+$params['sql'] = "SELECT
+	bl.beerCode,
+	bs.bjcpStyle,
+    bl.beerName,
+	bl.brewerName,
+    bc.clubAbbr as Tent
+FROM eventBeers bl
+inner join brew_clubs bc on bl.clubID = bc.clubID
+inner join bjcp2015_styles bs on bl.bjcp2015styleID_fk = bs.bjcp2015styleID
+inner join bjcp2015_categories bcc on bs.bjcp2015_categoryID = bcc.bjcp2015_categoryID
+where
+	bl.eventID = :eventID
+order by
+	bl.beerCode";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+
+$params['title'] = "NCHI {$year} Beer Tasting List All Details";
+$params['sql'] = "SELECT
+	bl.beerCode,
+	bcc.bjcp2015_category as BJCP_Category,
+	bs.bjcpCode,
+	bs.bjcpStyle,
+    bl.beerName,
+    bl.brewerName,
+    bl.abv,
+    bc.clubAbbr as Tent
+FROM eventBeers bl
+inner join brew_clubs bc on bl.clubID = bc.clubID
+inner join bjcp2015_styles bs on bl.bjcp2015styleID_fk = bs.bjcp2015styleID
+inner join bjcp2015_categories bcc on bs.bjcp2015_categoryID = bcc.bjcp2015_categoryID
+where
+	bl.eventID = :eventID
+order by
+	bc.clubAbbr,
+	bcc.bjcp2015_category,
+	bs.bjcpStyle,
+	bl.beerName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 ?>

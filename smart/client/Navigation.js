@@ -28,8 +28,8 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			title: "Events",
 			items: [
 				{title: "Attendance", click: "isc.EventAttendance.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Beers", click: "isc.EventBeers.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Budgets", click: "isc.EventBudgets.create({width: \"66%\", height: \"95%\"});"},
+				{title: "Beers", click: "isc.EventBeers.create({width: \"1000\", height: \"95%\"});"},
+				{title: "Budgets", click: "isc.EventBudgets.create({width: \"1000", height: \"95%\"});"},
 				{title: "Plans", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Schedules", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},

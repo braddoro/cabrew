@@ -57,6 +57,16 @@ isc.Clients = {
 	})
 };
 isc.Shared = {
+	bjcp2015_styleDS: isc.myDataSource.create({
+		dataURL: serverPath + "BJCP2015Styles.php",
+		fields:[
+			{name: "bjcp2015styleID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+			{name: "bjcp2015_category", type: "text"},
+			{name: "bjcp2015_categoryID", type: "integer"},
+			{name: "bjcpCode", type: "text"},
+			{name: "bjcpStyle", type: "text", width: 120}
+		]
+	}),
 	brewClubsDS: isc.myDataSource.create({
 		dataURL: serverPath + "BrewClubs.php",
 		fields:[
