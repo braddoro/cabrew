@@ -29,7 +29,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			items: [
 				{title: "Attendance", click: "isc.EventAttendance.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Beers", click: "isc.EventBeers.create({width: \"1000\", height: \"95%\"});"},
-				{title: "Budgets", click: "isc.EventBudgets.create({width: \"1000", height: \"95%\"});"},
+				{title: "Budgets", click: "isc.EventBudgets.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Plans", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Schedules", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},
@@ -48,6 +48,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			items: [
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Donations", click: "isc.CorporateDonations.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});
@@ -57,6 +58,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Chairs", click: "isc.ChairTypes.create()"},
 				{title: "Contacts", click: "isc.ContactTypes.create()"},
 				{title: "Dates", click: "isc.DateTypes.create()"},
+				{title: "EntityNames", click: "isc.EntityNames.create()"},
 				{title: "Events", click: "isc.EventTypes.create()"},
 				{title: "Notes", click: "isc.NoteTypes.create()"},
 				{title: "Status", click: "isc.StatusTypes.create()"},
@@ -74,7 +76,6 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Misc Tables", submenu: this.MiscMenu},
 				{title: "Access", submenu: this.AccessMenu},
 				{isSeparator: true},
-				{title: "Test Code", click: "isc.test.create({left: isc.Math.random(340), top: isc.Math.random(240), width: 800})"},
 				{title: "Show Log", click: "isc.ShowLog.create({width: 1200, height: \"95%\"})"}
 			]
 		});
