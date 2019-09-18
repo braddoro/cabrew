@@ -7,17 +7,7 @@ isc.defineClass("CorporateDonations", "myWindow").addProperties({
 		fields:[
 			{name: "corporateDonationID", primaryKey: true, detail: true, type: "sequence"},
 			{name: "eventTypeID_fk", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
-			{name: "entityNameID_fk",
-				align: "left",
-				displayField: "entityName",
-				optionDataSource: isc.Shared.entityNamesDS,
-				pickListFields: [{name: "entityName", width: "*"}],
-				pickListProperties: {showFilterEditor: true},
-				title: "Corporation",
-				type: "integer",
-				valueField: "entityNameID",
-				width: 250
-			},
+			{name: "entityNameID_fk", align: "left", displayField: "entityName", optionDataSource: isc.Shared.entityNamesDS, pickListFields: [{name: "entityName", width: "*"}], pickListProperties: {showFilterEditor: true}, title: "Corporation", type: "integer", valueField: "entityNameID", width: 250, optionCriteria: {active: "Y"}},
 			{name: "asked", type: "text", width: 80, editorType: "selectItem", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "agreed", type: "text", width: 80, editorType: "selectItem", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 			{name: "delivered", type: "text", width: 80, editorType: "selectItem", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
@@ -28,12 +18,13 @@ isc.defineClass("CorporateDonations", "myWindow").addProperties({
 			{name: "lastChangeDate", width: 130, detail: true}
 		]
 	});
+	// initialSort: [{property: "eventTypeID_fk", direction: "ascending"},{property: "entityNameID_fk", direction: "ascending"}],
 	this.CorporateDonationLG = isc.myListGrid.create({
 		dataSource: this.CorporateDonationDS,
-		initialSort: [{property: "eventTypeID_fk", direction: "ascending"}],
 		name: "Corporate Donations",
 		parent: this,
 		showFilterEditor: true,
+		sortField: 1,
 		startEditingNew: function(newValues, suppressFocus){
 			var data;
 			var eventTypeID;
