@@ -20,6 +20,18 @@ isc.Clients = {
 			{valueLOV: "Verify", displayLOV: "Verify"}
 		]
 	}),
+	donationStatusDS: isc.DataSource.create({
+		clientOnly: true,
+		fields: [
+			{name: "valueLOV", type: "sequence", primaryKey: true},
+			{name: "displayLOV", type: "text"}
+		],
+		testData:[
+			{valueLOV: "Asked", displayLOV: "Asked"},
+			{valueLOV: "Agreed", displayLOV: "Agreed"},
+			{valueLOV: "Gave", displayLOV: "Gave"}
+		]
+	}),
 	budgetStatusDS: isc.DataSource.create({
 		clientOnly: true,
 		fields: [
