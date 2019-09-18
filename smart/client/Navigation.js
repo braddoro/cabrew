@@ -49,6 +49,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Donations", click: "isc.CorporateDonations.create({width: \"1000\", height: \"95%\"});"},
+				{title: "Entities", click: "isc.EntityNames.create()"},
 				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});
@@ -58,7 +59,6 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Chairs", click: "isc.ChairTypes.create()"},
 				{title: "Contacts", click: "isc.ContactTypes.create()"},
 				{title: "Dates", click: "isc.DateTypes.create()"},
-				{title: "EntityNames", click: "isc.EntityNames.create()"},
 				{title: "Events", click: "isc.EventTypes.create()"},
 				{title: "Notes", click: "isc.NoteTypes.create()"},
 				{title: "Status", click: "isc.StatusTypes.create()"},
