@@ -30,7 +30,7 @@ isc.defineClass("CorporateDonations", "myWindow").addProperties({
 				eventTypeID = data.eventTypeID_fk;
 				entityNameID = data.entityNameID_fk;
 			}
-			var rowDefaults = {eventTypeID_fk: eventTypeID, entityNameID_fk: entityNameID, status: "Asked"};
+			var rowDefaults = {eventTypeID_fk: eventTypeID, entityNameID_fk: entityNameID, status: ""};
 			var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 			return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 		}

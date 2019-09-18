@@ -27,9 +27,13 @@ isc.Clients = {
 			{name: "displayLOV", type: "text"}
 		],
 		testData:[
-			{valueLOV: "Asked", displayLOV: "Asked"},
 			{valueLOV: "Agreed", displayLOV: "Agreed"},
-			{valueLOV: "Gave", displayLOV: "Gave"}
+			{valueLOV: "Asked", displayLOV: "Asked"},
+			{valueLOV: "Contact", displayLOV: "Contact"},
+			{valueLOV: "Declined", displayLOV: "Declined"},
+			{valueLOV: "Gave", displayLOV: "Gave"},
+			{valueLOV: "Pickup", displayLOV: "Pickup"},
+			{valueLOV: "Self-Deliver", displayLOV: "Self-Deliver"}
 		]
 	}),
 	budgetStatusDS: isc.DataSource.create({
