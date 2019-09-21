@@ -56,7 +56,7 @@ $arr = array(
 );
 $r = siteLog($conn, $db, $arr);
 $sql = "select * from bjcp2015_categories bc
-inner join bjcp2015_styles bs on bc.bjcp2015_categoryID = bs.bjcp2015_categoryID where {$where};";
+inner join bjcp2015_styles bs on bc.bjcp2015_categoryID = bs.bjcp2015_categoryID where {$where} order by bjcpCode, bjcpStyle;";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

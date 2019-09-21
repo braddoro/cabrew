@@ -78,6 +78,7 @@ $arr = array(
 );
 $r = siteLog($conn, $db, $arr);
 $sql = "select ba.*, bc.distance from {$table} ba left join brew_clubs bc on ba.clubID = bc.clubID where {$where};";
+echo "/* $sql  */";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

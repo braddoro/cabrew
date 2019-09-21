@@ -11,8 +11,15 @@ if(isset($_GET['e'])){
 require_once('../Reporter.php');
 $params['ini_file'] = '../server.ini';
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
+$params['title'] = "NCHI Beer Total {$year}";
+$params['sql'] = "SELECT count(*) as Total FROM eventBeers where eventID = :eventID;";
+$lclass = New Reporter();
+$html = $lclass->init($params);
+
+unset($params['maintitle']);
 
 $params['title'] = "NCHI Beer Summary by Club for {$year}";
 $params['sql'] = "SELECT
@@ -30,9 +37,7 @@ order by
 	count(*) desc,
 	bc.clubAbbr;";
 $lclass = New Reporter();
-$html = $lclass->init($params);
-
-unset($params['maintitle']);
+$html .= $lclass->init($params);
 
 $params['title'] = "NCHI Beer BJCP Category Summary for {$year}";
 $params['sql'] = "SELECT
