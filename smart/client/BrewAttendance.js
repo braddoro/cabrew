@@ -10,11 +10,13 @@ isc.defineClass("BrewAttendance", "myWindow").addProperties({
 				{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
 				{name: "beers", type: "integer"},
 				{name: "clubID", required: true, detail: true, canEdit: false},
+				{name: "contact", type: "text", width: 150},
 				{name: "verified", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "invited", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "interested", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoMaybeDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "participated", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "amtPaid", type: "float", width: 120, editorType: "Text", defaultValue: "0.00"},
+				{name: "kegList", type: "text", width: 80, editorType: "selectItem", defaultValue: "N", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
 				{name: "year", required: true, type: "integer"}
 			]
 		});

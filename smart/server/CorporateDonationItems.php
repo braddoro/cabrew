@@ -1,8 +1,8 @@
 <?php
 require_once 'Connect.php';
 require_once 'SiteLog.php';
-$table = 'eventBeers';
-$primaryKey = 'eventBeerID';
+$table = 'corporateDonationItems';
+$primaryKey = 'corporateDonationItemID';
 $conn = new Connect();
 $db = $conn->conn();
 if(!$db->isConnected()){
@@ -15,9 +15,6 @@ $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'
 switch($operationType){
 case 'fetch':
 	$where = '1=1';
-	if(isset($_REQUEST['eventID'])){
-		$where .= " and eventID = " . intval($_REQUEST['eventID']);
-	}
 	if(isset($_REQUEST['clubID'])){
 		$where .= " and clubID = " . intval($_REQUEST['clubID']);
 	}
@@ -55,7 +52,7 @@ $arr = array(
 	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 );
 $r = siteLog($conn, $db, $arr);
-$sql = "select * from {$table} where {$where} order by clubID;";
+$sql = "select * from {$table} where {$where};";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

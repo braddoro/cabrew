@@ -39,6 +39,11 @@ isc.defineClass("CorporateDonations", "myWindow").addProperties({
 		callingListGrid: this.CorporateDonationLG,
 		parent: this
 	});
+	// ,
+	// 	data: [
+	// 		{title: "Add Items", click: "isc.CorporateDonationItems.create({title: 'Items', corporateDonationID: this.parent.CorporateDonationLG.getSelectedRecord.corporateDonationID});"},
+ //        ]
+	// left: isc.Math.random(340), top: isc.Math.random(240), height: 300, width: 400,
 	this.addItem(isc.myVLayout.create({members: [this.CorporateDonationLG]}));
 	this.CorporateDonationLG.canEdit = checkPerms(this.getClassName() + ".js");
   }

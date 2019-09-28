@@ -5,6 +5,7 @@ $table = 'brew_attendence';
 $primaryKey = 'attendenceID';
 $conn = new Connect();
 $db = $conn->conn();
+// $db->debug = true;
 if(!$db->isConnected()){
 	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
 	echo json_encode($response);
@@ -47,6 +48,7 @@ case 'fetch':
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
+echo "/* " . var_export($record, true) . " */";
 	$db->AutoExecute($table, $record, DB_AUTOQUERY_INSERT);
 	$pkval = $db->insert_Id();
 	$where = $primaryKey . '=' . $pkval;
@@ -78,7 +80,7 @@ $arr = array(
 );
 $r = siteLog($conn, $db, $arr);
 $sql = "select ba.*, bc.distance from {$table} ba left join brew_clubs bc on ba.clubID = bc.clubID where {$where};";
-echo "/* $sql  */";
+// echo "/* $sql  */";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

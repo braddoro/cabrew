@@ -67,6 +67,8 @@ isc.Clients = {
 		],
 		testData:[
 			{valueLOV: "M", displayLOV: "Maybe"},
+			{valueLOV: "D", displayLOV: "Defer"},
+			{valueLOV: "G", displayLOV: "Guest"},
 			{valueLOV: "N", displayLOV: "No"},
 			{valueLOV: "Y", displayLOV: "Yes"}
 		]
@@ -83,14 +85,25 @@ isc.Shared = {
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]
 	}),
-	bjcp2015_styleDS: isc.myDataSource.create({
+	BJCP2015CategoriesDS: isc.myDataSource.create({
+		dataURL: serverPath + "BJCP2015Categories.php",
+		showFilterEditor: true,
+		fields:[
+			{name: "bjcp2015_categoryID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "bjcp2015_category", title: "BJCP Category", type: "text", width: 200, validators: [{type: "lengthRange", max: 45}]},
+			{name: "description", type: "text", width: "*", validators: [{type: "lengthRange", max: 4000}]},
+			{name: "lastChangeDate", width: 100, detail: true}
+		]
+	}),
+	BJCP2015StylesDS: isc.myDataSource.create({
 		dataURL: serverPath + "BJCP2015Styles.php",
 		fields:[
-			{name: "bjcp2015styleID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
-			{name: "bjcp2015_category", type: "text"},
-			{name: "bjcp2015_categoryID", type: "integer"},
-			{name: "bjcpCode", type: "text"},
-			{name: "bjcpStyle", type: "text", width: 120}
+			{name: "bjcp2015styleID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "bjcp2015_categoryID", align: "left", title: "BJCP Category", width: 200, type: "integer", optionDataSource: this.BJCP2015CategoriesDS, displayField: "bjcp2015_category", valueField: "bjcp2015_categoryID"},
+			{name: "bjcpCode", width: 105, type: "text", validators: [{type: "lengthRange", max: 5}]},
+			{name: "styleABBR", width: 150, type: "text",  validators: [{type: "lengthRange", max: 45}]},
+			{name: "bjcpStyle", width: "*", type: "text",  validators: [{type: "lengthRange", max: 45}]},
+			{name: "lastChangeDate", width: 100, detail: true}
 		]
 	}),
 	brewClubsDS: isc.myDataSource.create({

@@ -38,7 +38,7 @@ unset($params['maintitle']);
 $params['title'] = "NCHI {$year} Beer Tasting List by Style";
 $params['sql'] = "SELECT
 	bl.beerCode,
-	bs.bjcpStyle,
+	coalesce(bs.styleABBR, bs.bjcpStyle) as Style,
     bl.beerName,
     bl.abv,
     bc.clubAbbr as Tent
@@ -49,7 +49,7 @@ inner join bjcp2015_categories bcc on bs.bjcp2015_categoryID = bcc.bjcp2015_cate
 where
 	bl.eventID = :eventID
 order by
-	bs.bjcpStyle,
+	coalesce(bs.styleABBR, bs.bjcpStyle),
 	bl.beerName,
 	bc.clubAbbr;
 ";
@@ -60,7 +60,7 @@ $params['title'] = "NCHI {$year} Beer Tasting List by Club";
 $params['sql'] = "SELECT
 	bl.beerCode,
     bc.clubAbbr as Tent,
-	bs.bjcpStyle,
+	coalesce(bs.styleABBR, bs.bjcpStyle) as Style,
     bl.beerName,
     bl.abv
 FROM eventBeers bl
@@ -71,7 +71,7 @@ where
 	bl.eventID = :eventID
 order by
 	bc.clubAbbr,
-	bs.bjcpStyle,
+	coalesce(bs.styleABBR, bs.bjcpStyle),
 	bl.beerName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
@@ -79,7 +79,7 @@ $html .= $lclass->init($params);
 $params['title'] = "NCHI {$year} Beer Tasting List by Code";
 $params['sql'] = "SELECT
 	bl.beerCode,
-	bs.bjcpStyle,
+	coalesce(bs.styleABBR, bs.bjcpStyle) as Style,
     bl.beerName,
 	bl.brewerName,
     bc.clubAbbr as Tent

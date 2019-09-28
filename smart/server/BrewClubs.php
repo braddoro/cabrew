@@ -85,8 +85,7 @@ group by
 	c.active,
 	c.lastChangeDate
 order by
-	a.year desc,
-    c.clubName;";
+	c.clubName;";
 $response = $dbconn->getAll($sql);
 if(!$response){
 	$response = array();

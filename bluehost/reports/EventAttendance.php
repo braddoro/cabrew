@@ -32,8 +32,10 @@ SELECT
 	c.clubName,
 	c.clubAbbr,
 	concat(c.city,', ',c.state) 'Location',
+	ba.contact,
 	c.distance,
 	pat.participated as 'Years',
+	ba.kegList,
 	ba.amtPaid
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
@@ -61,13 +63,15 @@ SELECT
 	c.clubName,
 	c.clubAbbr,
 	concat(c.city,', ',c.state) 'Location',
+	ba.contact,
 	c.distance,
-	ba.verified
+	ba.verified,
+	ba.interested
 FROM brew_clubs c
 left join brew_attendence ba on c.clubID = ba.clubID
 where year = :year
 and ba.invited = 'Y'
-and ba.interested = 'M'
+and (ba.interested <> 'Y' and ba.interested <> 'N')
 order by
 	ba.interested desc,
     c.distance,
@@ -84,6 +88,7 @@ SELECT
 	c.clubName,
 	c.clubAbbr,
 	concat(c.city,', ',c.state) 'Location',
+	ba.contact,
 	c.distance,
 	ba.verified
 FROM brew_clubs c

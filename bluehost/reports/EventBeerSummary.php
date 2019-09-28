@@ -22,6 +22,7 @@ $html = $lclass->init($params);
 unset($params['maintitle']);
 
 $params['title'] = "NCHI Beer Summary by Club for {$year}";
+$params['show_total'] = true;
 $params['sql'] = "SELECT
 	bc.clubAbbr,
 	count(*) as Total
@@ -40,6 +41,7 @@ $lclass = New Reporter();
 $html .= $lclass->init($params);
 
 $params['title'] = "NCHI Beer BJCP Category Summary for {$year}";
+$params['show_total'] = false;
 $params['sql'] = "SELECT
 	bcc.bjcp2015_category,
 	count(*) as Total
@@ -59,7 +61,7 @@ $html .= $lclass->init($params);
 
 $params['title'] = "NCHI Beer BJCP Style Summary for {$year}";
 $params['sql'] = "SELECT
-	bs.bjcpStyle,
+	bs.bjcpStyle as Style,
 	count(*) as Total
 FROM eventBeers bl
 inner join brew_clubs bc on bl.clubID = bc.clubID
@@ -74,6 +76,29 @@ order by
 	bs.bjcpStyle;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
+
+$params['title'] = "NCHI Beer Summary by Club and Style for {$year}";
+$params['sql'] = "SELECT
+	bc.clubAbbr,
+	bs.bjcpStyle as Style,
+	count(*) as Total
+FROM eventBeers bl
+inner join brew_clubs bc on bl.clubID = bc.clubID
+inner join bjcp2015_styles bs on bl.bjcp2015styleID_fk = bs.bjcp2015styleID
+inner join bjcp2015_categories bcc on bs.bjcp2015_categoryID = bcc.bjcp2015_categoryID
+where
+	bl.eventID = :eventID
+group by
+	bc.clubAbbr,
+	bs.bjcpStyle
+order by
+	bc.clubAbbr,
+	bs.bjcpStyle,
+	count(*) desc;
+	";
+$lclass = New Reporter();
+$html .= $lclass->init($params);
+
 ?>
 <!DOCTYPE html>
 <html>
