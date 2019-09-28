@@ -4,8 +4,8 @@ if(isset($_GET['y'])){
 }else{
 	$year = date('Y');
 }
-require_once('../Reporter.php');
-$params['ini_file'] = '../server.ini';
+require_once('../shared/Reporter.php');
+$params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
 $params['bind'] = array('year' => $year);
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';

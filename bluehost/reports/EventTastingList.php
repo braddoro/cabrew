@@ -1,6 +1,6 @@
 <?php
 $year = date("Y");
-require_once('../Reporter.php');
+require_once('../shared/Reporter.php');
 $wheres = '';
 $eventID = (isset($_GET['e'])) ? intval($_GET['e']) : 1;
 if(isset($_GET['e'])){
@@ -8,7 +8,7 @@ if(isset($_GET['e'])){
 }else{
 	$wheres .= ' and (C.eventTypeID = 1) ';
 }
-$params['ini_file'] = '../server.ini';
+$params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';

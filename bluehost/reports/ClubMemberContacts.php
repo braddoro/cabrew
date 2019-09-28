@@ -1,6 +1,6 @@
 <?php
-require_once('../Reporter.php');
-$params['ini_file'] = '../server.ini';
+require_once('../shared/Reporter.php');
+$params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
 $params['bind'] = array();
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';

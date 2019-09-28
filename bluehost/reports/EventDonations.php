@@ -3,8 +3,8 @@ $eventTypeID = 0;
 if(isset($_GET['e'])){
 	$eventTypeID = intval($_GET['e']);
 }
-require_once('../Reporter.php');
-$params['ini_file'] = '../server.ini';
+require_once('../shared/Reporter.php');
+$params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['show_total'] = false;
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';

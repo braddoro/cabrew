@@ -1,5 +1,5 @@
 <?php
-require_once('../Reporter.php');
+require_once('../shared/Reporter.php');
 $active = 'Y';
 if(isset($_GET['a'])){
 	$active = $_GET['a'];
@@ -13,7 +13,7 @@ if(isset($_GET['p1'])){
 	$priority2 = intval($_GET['p2']);
 }
 $params['bind'] = array('priority1' => $priority1, 'priority2' => $priority2, 'active' => $active);
-$params['ini_file'] = '../server.ini';
+$params['ini_file'] = '../shared/server.ini';
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = 'Brew Club Contacts';
 $params['sql'] = "

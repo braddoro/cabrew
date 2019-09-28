@@ -13,9 +13,9 @@ if(isset($_GET['c'])){
 
 // Get a custom title.
 //
-require_once('../Reporter.php');
+require_once('../shared/Reporter.php');
 $params['bind'] = array("eventTypeID" => $eventTypeID);
-$params['ini_file'] = '../server.ini';
+$params['ini_file'] = '../shared/server.ini';
 $params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventTypeID;";
 $params['skip_format'] = true;
 $lclass = New Reporter();
@@ -28,7 +28,7 @@ while($row = $data->fetch()) {
 }
 $params = array();
 $params['bind'] = array("eventTypeID" => $eventTypeID);
-$params['ini_file'] = '../server.ini';
+$params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = $title . ' Event Schedule';

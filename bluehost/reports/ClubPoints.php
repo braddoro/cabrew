@@ -1,8 +1,8 @@
 <?php
 $year = 2018;
-require_once('../Reporter.php');
+require_once('../shared/Reporter.php');
 $params['bind'] = array();
-$params['ini_file'] = '../server.ini';
+$params['ini_file'] = '../shared/server.ini';
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
 $params['title'] = 'CABROINT Values';
 $params['sql'] = "select dateTypeID, dateType, datePoints as 'Points' from dateTypes where datePoints > 0 and active = 'Y' order by dateType;";
