@@ -1,11 +1,10 @@
 <?php
 require_once '../shared/Connect.php';
 // require_once 'SiteLog.php';
-$table = 'eventBeers_test';
-$primaryKey = 'eventBeerID';
+$table = 'eventTypes';
+$primaryKey = 'eventTypeID';
 $conn = new Connect();
 $db = $conn->conn();
-// $db->debug = true;
 if(!$db->isConnected()){
 	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
 	echo json_encode($response);
@@ -16,9 +15,10 @@ $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'
 switch($operationType){
 case 'fetch':
 	$where = '1=1';
-	// if(isset($_REQUEST['clubID'])){
-	// 	$where .= " and clubID = " . intval($_REQUEST['clubID']);
-	// }
+	if(isset($_REQUEST['active'])){
+		$qStr = $db->qStr($_REQUEST['active'], true);
+		$where .= " and active = $qStr ";
+	}
 	break;
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
@@ -52,8 +52,7 @@ default:
 // 	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 // );
 // $r = siteLog($conn, $db, $arr);
-$sql = "select * from {$table} eb inner join bjcp2015_styles bs on eb.bjcp2015styleID_fk = bs.bjcp2015styleID where {$where};";
-// echo '/*' . $sql . '*/';
+$sql = "select * from {$table} where {$where};";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

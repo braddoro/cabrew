@@ -20,11 +20,11 @@ isc.defineClass("myWindow", "Window").addProperties({
 	mm_badPassword: "So in theory that should have worked but one of us did something wrong. Probably it was you.",
 	mm_missingUserName: "A username usually a good idea when wanting to log into things. Or not. I don't really care. You can do it your way if you want.",
 	resized: function(){
-		console.log("Title.: " + this.title);
-		console.log("Width.: " + this.width);
-		console.log("Height: " + this.height);
-		console.log("Left..: " + this.left);
-		console.log("Top...: " + this.top);
+		// console.log("Title.: " + this.title);
+		// console.log("Width.: " + this.width);
+		// console.log("Height: " + this.height);
+		// console.log("Left..: " + this.left);
+		// console.log("Top...: " + this.top);
 	},
 	moved: function(){
 		// console.log("Title.: " + this.title);

@@ -29,7 +29,6 @@ case 'add':
 case 'update':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
-	// echo json_encode($record);
 	$where = $primaryKey . '=' . $pkval;
 	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;

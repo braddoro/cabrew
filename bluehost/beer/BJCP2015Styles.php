@@ -1,11 +1,10 @@
 <?php
 require_once '../shared/Connect.php';
 // require_once 'SiteLog.php';
-$table = 'eventBeers_test';
-$primaryKey = 'eventBeerID';
+$table = 'bjcp2015_styles';
+$primaryKey = 'bjcp2015styleID';
 $conn = new Connect();
 $db = $conn->conn();
-// $db->debug = true;
 if(!$db->isConnected()){
 	$response = array('status' => -1, 'errorMessage' => $db->errorMsg());
 	echo json_encode($response);
@@ -16,9 +15,12 @@ $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'
 switch($operationType){
 case 'fetch':
 	$where = '1=1';
-	// if(isset($_REQUEST['clubID'])){
-	// 	$where .= " and clubID = " . intval($_REQUEST['clubID']);
-	// }
+	if(isset($_REQUEST['bjcp2015_categoryID'])){
+		$where .= " and bjcp2015_categoryID = " . intval($_REQUEST['bjcp2015_categoryID']);
+	}
+	if(isset($_REQUEST['bjcpCategory'])){
+		$where .= " and bjcpCategory = '" . $_REQUEST['bjcpCategory']. "'";
+	}
 	break;
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
@@ -30,6 +32,7 @@ case 'add':
 case 'update':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
+	// echo json_encode($record);
 	$where = $primaryKey . '=' . $pkval;
 	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
@@ -52,8 +55,8 @@ default:
 // 	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 // );
 // $r = siteLog($conn, $db, $arr);
-$sql = "select * from {$table} eb inner join bjcp2015_styles bs on eb.bjcp2015styleID_fk = bs.bjcp2015styleID where {$where};";
-// echo '/*' . $sql . '*/';
+$sql = "select * from bjcp2015_categories bc
+inner join bjcp2015_styles bs on bc.bjcp2015_categoryID = bs.bjcp2015_categoryID where {$where} order by bjcpCode, bjcpStyle;";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();
