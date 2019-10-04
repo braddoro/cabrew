@@ -8,6 +8,7 @@ isc.defineClass("CorporateDonationItems", "myWindow").addProperties({
 			{name: "corporateDonationItemID", primaryKey: true, detail: true, type: "sequence"},
 			{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
 			{name: "entityNameID", align: "left", displayField: "entityName", optionDataSource: isc.Shared.entityNamesDS, pickListFields: [{name: "entityName", width: "*"}], pickListProperties: {showFilterEditor: true}, title: "Corporation", type: "integer", valueField: "entityNameID", width: 250, optionCriteria: {active: "Y"}},
+			{name: "type", width: 120, validators: [{type: "lengthRange", max: 45}]},
 			{name: "donationItem", width: "*", validators: [{type: "lengthRange", max: 200}]},
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
@@ -15,7 +16,7 @@ isc.defineClass("CorporateDonationItems", "myWindow").addProperties({
 			// {name: "corporateDonationID", type: "integer"},
 	this.CorporateDonationItemLG = isc.myListGrid.create({
 		dataSource: this.CorporateDonationItemDS,
-		initialSort: [{property: "corporateDonationID", direction: "ascending"}],
+		initialSort: [{property: "entityNameID", direction: "ascending"}, {property: "type", direction: "ascending"}, {property: "donationItem", direction: "ascending"}],
 		name: "Corporate Donation Items",
 		parent: this,
 		showFilterEditor: true,

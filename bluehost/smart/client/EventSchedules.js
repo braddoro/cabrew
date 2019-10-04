@@ -6,8 +6,8 @@ isc.defineClass("EventSchedules", "myWindow").addProperties({
 			showFilterEditor: true,
 			fields:[
 				{name: "eventScheduleID", primaryKey: true, detail: true, type: "sequence"},
-				{name: "typeID", width: 120, type: "integer", title: "Type"},
-				{name: "eventID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
+				{name: "typeID", width: 80, type: "integer", title: "Type", editorType: "spinner"},
+				{name: "eventID", width: 100, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
 				{name: "stepStart", type: "time", title: "Start", editorType: "TimeItem"},
 				{name: "stepEnd", type: "time", title: "End", editorType: "TimeItem"},
 				{name: "step", width: "*", validators: [{type: "lengthRange", max: 100}]},

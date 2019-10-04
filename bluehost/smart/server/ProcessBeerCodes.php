@@ -1,8 +1,8 @@
 <?php
 $eventID = 6;
-$start = 122;
+$start = 112;
 $beerCount = 0;
-$cabrew_array = parse_ini_file('../server.ini', true);
+$cabrew_array = parse_ini_file('../../server.ini', true);
 $hostname = $cabrew_array['database']['hostname'];;
 $username = $cabrew_array['database']['username'];
 $password = $cabrew_array['database']['password'];

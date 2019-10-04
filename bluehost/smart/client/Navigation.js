@@ -32,7 +32,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Budgets", click: "isc.EventBudgets.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Plans", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Schedules", click: "isc.EventSchedules.create({width: 600, height: \"95%\"});"},
+				{title: "Schedules", click: "isc.EventSchedules.create({width: 700, height: \"95%\"});"},
 				{title: "Teams", click: "isc.EventTeams.create({width: 750, height: \"95%\"});"}
 			]
 		});

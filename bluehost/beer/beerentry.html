@@ -7,7 +7,6 @@
         <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Grids.js></SCRIPT>
         <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js></SCRIPT>
         <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js></SCRIPT>
-        <!-- <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/skins/SmartClient/load_skin.js></SCRIPT> -->
         <script src=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/skins/EnterpriseBlue/load_skin.js></script>
         <SCRIPT SRC=../shared/ClassDefaults_v2.js></SCRIPT>
 	</HEAD>
@@ -160,19 +159,25 @@ isc.BeerEntryVL = isc.VLayout.create({
         this.EventBeerDF = isc.myDynamicForm.create({
             autoFetchData: false,
             canDragResize: true,
-            // dataSource: this.EventBeerDS,
-            // height: "100%",
+            height: 150,
             numCols: 3,
             parent: this,
-            height: 150,
             width: "100%",
             fields:[
+                {name: "clubCode",
+                    required: true,
+                    title: "Club Code",
+                    type: "integer",
+                    validators: [{type: "isInteger"}],
+                    width: 50
+                },
                 {name: "eventBeerID", primaryKey: true, detail: true, type: "sequence", visible: false},
                 {name: "eventID",
                     displayField: "eventType",
                     editorType: "selectItem",
                     optionCriteria: {active: "Y", eventTypeID: 6},
                     optionDataSource: this.eventTypesDS,
+                    required: true,
                     title: "Event",
                     type: "integer",
                     valueField: "eventTypeID",
@@ -183,24 +188,23 @@ isc.BeerEntryVL = isc.VLayout.create({
                     editorType: "selectItem",
                     optionCriteria: {active: "Y"},
                     optionDataSource: this.brewClubsDS,
-                    required: true,
                     pickListFields: [{name: "clubAbbr", width: "70"},{name: "clubName", width: "*"}],
                     pickListProperties: {showFilterEditor: true},
                     pickListWidth: 350,
+                    required: true,
                     title: "Club",
                     type: "integer",
                     valueField: "clubID",
                     width: 100
                 },
-                // {name: "bjcp2015styleID_fk", title: "BJCP Style", width: 180, type: "integer"},
                 {name: "bjcp2015styleID_fk",
                     displayField: "bjcpStyle",
                     editorType: "selectItem",
-                    required: true,
                     optionDataSource: this.BJCP2015StylesDS,
                     pickListFields: [{name: "bjcpCode", width: "50", title: "Code"}, {name: "bjcpStyle", width: "*"}],
                     pickListProperties: {showFilterEditor: true},
                     pickListWidth: 300,
+                    required: true,
                     title: "BJCP Style",
                     type: "integer",
                     valueField: "bjcp2015styleID",
@@ -238,10 +242,10 @@ isc.BeerEntryVL = isc.VLayout.create({
         this.EventBeerWD = isc.myWindow.create({
             autoCenter: true,
             height: 600,
+            members: [this.EventBeerLB, this.EventBeerDF, this.EventBeerBT, this.EventBeerLG],
             parent: this,
             title: "Beer Entry",
-            width: 950,
-            members: [this.EventBeerLB, this.EventBeerDF, this.EventBeerBT, this.EventBeerLG]
+            width: 950
         })
         this.EventBeerWD.addProperties();
         // this.EventBeerLG.fetchData({clubID: 1});

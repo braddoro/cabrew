@@ -79,7 +79,7 @@ $html .= $lclass->init($params);
 $params['title'] = "NCHI {$year} Beer Tasting List by Code";
 $params['sql'] = "SELECT
 	bl.beerCode,
-	coalesce(bs.styleABBR, bs.bjcpStyle) as Style,
+	bs.bjcpStyle as Style,
     bl.beerName,
 	bl.brewerName,
     bc.clubAbbr as Tent
