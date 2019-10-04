@@ -8,7 +8,7 @@ $params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['show_total'] = false;
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
-$params['title'] = "Event Donations";
+$params['title'] = "Event Donation Items";
 // , cd.lastUpdateDate
 $params['sql'] = "select
 	cd.type,
@@ -28,7 +28,7 @@ $html = $lclass->init($params);
 <html>
 <body>
 <head>
-<title><?php echo 'Event Budget' ?></title>
+<title><?php echo 'Event Donation Items' ?></title>
 <link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>

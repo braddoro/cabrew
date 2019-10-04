@@ -16,7 +16,7 @@ $params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array("eventID" => $eventID, "detail" => $detail);
 $params['show_total'] = false;
 $params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
-$params['title'] = "NCHI {$year} Schedule of Events";
+$params['title'] = "NCHI {$year} Event Schedule";
 $params['sql'] = "SELECT
 TIME_FORMAT(stepStart, '%h:%i %p') Start,
 TIME_FORMAT(stepEnd, '%h:%i %p') End,
