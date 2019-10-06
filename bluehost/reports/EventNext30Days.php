@@ -17,7 +17,7 @@ if(isset($id)){
 }
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = "Todo Next {$days} Days";
 $params['sql'] = "
 select

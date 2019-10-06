@@ -10,7 +10,7 @@ if(isset($_GET['e'])){
 }
 require_once('../shared/Reporter.php');
 $params['ini_file'] = '../shared/server.ini';
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;

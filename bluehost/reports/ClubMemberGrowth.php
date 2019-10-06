@@ -3,7 +3,7 @@ require_once('../shared/Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = "Membership Add and Drop Rate";
 $params['sql'] = "
 select st.statusType 'Status', max(year(d.memberDate)) 'Year', count(*) 'Members'

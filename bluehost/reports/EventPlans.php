@@ -30,7 +30,7 @@ $params = array();
 $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = $title . ' Event Schedule';
 	// coalesce() as step1,
 	// case LENGTH(LTRIM(C.stepURL))

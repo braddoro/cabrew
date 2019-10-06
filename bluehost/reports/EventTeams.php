@@ -3,11 +3,15 @@ $eventID = 1;
 if(isset($_GET['e'])){
 	$eventID = intval($_GET['e']);
 }
+	$year = date('Y');
+if(isset($_GET['y'])){
+	$year = intval($_GET['y']);
+}
 require_once('../shared/Reporter.php');
 $params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array(eventID => $eventID);
 $params['show_total'] = false;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = "NCHI Event Teams for {$year}";
 $params['sql'] = "
 select

@@ -4,7 +4,7 @@ $params['ini_file'] = '../shared/server.ini';
 
 $params['bind'] = array();
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = "Club Members NOT Added to Members Only";
 $params['sql'] = "
 select

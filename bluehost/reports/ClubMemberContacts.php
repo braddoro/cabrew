@@ -3,7 +3,7 @@ require_once('../shared/Reporter.php');
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
 $params['bind'] = array();
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = "Club Member Contacts";
 $params['sql'] = "select
     M.memberID,

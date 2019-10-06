@@ -11,7 +11,7 @@ if(isset($_GET['e'])){
 $params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array("eventID" => $eventID);
 $params['show_total'] = false;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 
 $params['title'] = "NCHI {$year} Beer Tasting List by BJCP Category";
 $params['sql'] = "SELECT

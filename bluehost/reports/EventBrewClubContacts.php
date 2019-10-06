@@ -2,7 +2,7 @@
 require_once('../shared/Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../shared/server.ini';
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = 'Event Brew Club Contacts';
 $params['sql'] = "
 select distinct

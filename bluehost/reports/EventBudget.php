@@ -7,7 +7,7 @@ require_once('../shared/Reporter.php');
 $params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['show_total'] = false;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = "Event Budget Summary";
 $params['sql'] = "SELECT
 et.eventType, et.eventBudget,

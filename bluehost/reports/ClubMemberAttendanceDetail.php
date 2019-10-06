@@ -3,7 +3,7 @@ require_once('../shared/Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = "Club Meeting Attendance Detail";
 $params['sql'] = "
 select concat(year(memberDate),'-',lpad(month(memberDate),2,'0')) as Date, count(*) as Total from memberDates
