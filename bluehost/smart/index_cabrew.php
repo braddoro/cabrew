@@ -40,6 +40,7 @@ $classes[] = "EventAttendance.js";
 $classes[] = "EventBeers.js";
 $classes[] = "EventBudgets.js";
 $classes[] = "EventPlans.js";
+$classes[] = "EventPhases.js";
 $classes[] = "EventSchedules.js";
 $classes[] = "EventTeamNames.js";
 $classes[] = "EventTeams.js";

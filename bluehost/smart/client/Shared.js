@@ -75,6 +75,16 @@ isc.Clients = {
 	})
 };
 isc.Shared = {
+	eventPhasesDS: isc.myDataSource.create({
+		dataURL: serverPath + "EventPhases.php",
+		showFilterEditor: true,
+		fields:[
+			{name: "eventPhaseID", primaryKey: true, type: "sequence", detail: true},
+			{name: "eventPhase", type: "text"},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
+		]
+	}),
 	entityNamesDS: isc.myDataSource.create({
 		dataURL: serverPath + "EntityNames.php",
 		showFilterEditor: true,

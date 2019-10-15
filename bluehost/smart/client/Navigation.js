@@ -64,6 +64,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Dates", click: "isc.DateTypes.create()"},
 				{title: "Events", click: "isc.EventTypes.create()"},
 				{title: "Notes", click: "isc.NoteTypes.create()"},
+				{title: "Phases", click: "isc.EventPhases.create()"},
 				{title: "Status", click: "isc.StatusTypes.create()"},
 				{title: "Teams", click: "isc.EventTeamNames.create()"}
 			]

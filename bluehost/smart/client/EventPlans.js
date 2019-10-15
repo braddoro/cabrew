@@ -8,6 +8,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			fields:[
 				{name: "eventPlanID", primaryKey: true, detail: true, type: "sequence"},
 				{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
+				{name: "eventPhaseID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventPhasesDS, displayField: "eventPhase", valueField: "eventPhaseID", optionCriteria: {active: "Y"}},
 				{name: "memberID", width: 120, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
 				{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 				{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},
@@ -30,15 +31,19 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 				var data;
 				var status = "not started";
 				var eventTypeID;
+				var eventPhaseID;
+				var memberID;
 				if(this.anySelected()){
 					data = this.getSelectedRecord();
 					today = data.dueDate;
 					eventTypeID = data.eventTypeID;
 					status = data.status;
+					eventPhaseID = data.eventPhaseID;
+					memberID = data.memberID;
 				}else{
 					today = new Date();
 				}
-				var rowDefaults = {dueDate: today, eventTypeID: eventTypeID, status: status};
+				var rowDefaults = {dueDate: today, eventTypeID: eventTypeID, status: status, eventPhaseID: eventPhaseID, memberID: memberID};
 				var newCriteria = isc.addProperties({}, newValues, rowDefaults);
 				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
 			},
