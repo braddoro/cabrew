@@ -38,6 +38,9 @@ case 'add':
 	$where = $primaryKey . '=' . $pkval;
 	break;
 case 'update':
+	if($_REQUEST['memberID'] == 0){
+		$_REQUEST['memberID'] = null;
+	}
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
 	$where = $primaryKey . '=' . $pkval;

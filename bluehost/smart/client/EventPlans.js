@@ -8,7 +8,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			fields:[
 				{name: "eventPlanID", primaryKey: true, detail: true, type: "sequence"},
 				{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
-				{name: "eventPhaseID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventPhasesDS, displayField: "eventPhase", valueField: "eventPhaseID", optionCriteria: {active: "Y"}},
+				{name: "eventPhaseID", width: 120, type: "integer", title: "Phase", optionDataSource: isc.Shared.eventPhasesDS, displayField: "eventPhase", valueField: "eventPhaseID", optionCriteria: {active: "Y"}},
 				{name: "memberID", width: 120, title: "Member", allowEmptyValue: true, type: "text", optionDataSource: isc.Shared.memberNamesDS, optionCriteria: {statusTypeID_fk: 1}, displayField: "FullName", valueField: "memberID", pickListWidth: 150, pickListProperties: {showFilterEditor: true}, pickListFields: [{name: "FullName", width: "*"}]},
 				{name: "dueDate", width: 100, useTextField: true, editorType: "DateItem", validators: [{type: "isDate"}]},
 				{name: "step", width: 300, validators: [{type: "lengthRange", max: 100}]},
@@ -39,7 +39,9 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 					eventTypeID = data.eventTypeID;
 					status = data.status;
 					eventPhaseID = data.eventPhaseID;
-					memberID = data.memberID;
+					if(data.memberID > 0){
+						memberID = data.memberID;
+					}
 				}else{
 					today = new Date();
 				}
