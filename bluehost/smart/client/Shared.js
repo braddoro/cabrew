@@ -100,6 +100,7 @@ isc.Shared = {
 		showFilterEditor: true,
 		fields:[
 			{name: "bjcp2015_categoryID", primaryKey: true, detail: true, type: "sequence"},
+			{name: "beerTable", type: "text", width: "150", validators: [{type: "lengthRange", max: 50}]},
 			{name: "bjcp2015_category", title: "BJCP Category", type: "text", width: 200, validators: [{type: "lengthRange", max: 45}]},
 			{name: "description", type: "text", width: "*", validators: [{type: "lengthRange", max: 4000}]},
 			{name: "lastChangeDate", width: 100, detail: true}

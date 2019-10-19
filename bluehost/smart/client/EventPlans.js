@@ -32,7 +32,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 				var status = "not started";
 				var eventTypeID;
 				var eventPhaseID;
-				var memberID;
+				var memberID = null;
 				if(this.anySelected()){
 					data = this.getSelectedRecord();
 					today = data.dueDate;

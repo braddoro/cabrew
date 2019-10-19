@@ -15,6 +15,9 @@ $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'
 switch($operationType){
 case 'fetch':
 	$where = '1=1';
+	if(isset($_REQUEST['table'])){
+		$where .= " and table = '" . $_REQUEST['table'] . "' ";
+	}
 	if(isset($_REQUEST['bjcp2015_categoryID'])){
 		$where .= " and bjcp2015_categoryID = " . intval($_REQUEST['bjcp2015_categoryID']);
 	}
