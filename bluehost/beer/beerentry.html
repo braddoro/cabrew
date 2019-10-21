@@ -22,7 +22,6 @@ isc.BeerEntryVL = isc.VLayout.create({
     title: "Beer Entry",
 	initWidget: function(initData){
 		this.Super("initWidget", arguments);
-
         this.eventTypesDS = isc.myDataSource.create({
             dataURL: "EventTypes.php",
             fields:[
@@ -81,6 +80,7 @@ isc.BeerEntryVL = isc.VLayout.create({
                     valueField: "clubID",
                     width: 100
                 },
+                {name: "clubCode"},
                 {name: "bjcpCode",
                     canEdit: false,
                     title: "Code",
@@ -111,7 +111,6 @@ isc.BeerEntryVL = isc.VLayout.create({
             ]
         });
         this.EventBeerLG = isc.myListGrid.create({
-            // canEdit: false,
             dataSource: this.EventBeerDS,
             height: "100%",
             name: "Club Beers",
@@ -169,13 +168,20 @@ isc.BeerEntryVL = isc.VLayout.create({
                     title: "Club Code",
                     type: "integer",
                     validators: [{type: "isInteger"}],
-                    width: 50
+                    width: 50,
+                    blur: function(form, item){
+                        var clubCode = 0;
+                        if(form.getValue("clubCode") > 0){
+                            clubCode = form.getValue("clubCode");
+                        }
+                        form.parent.EventBeerLG.fetchData({clubCode: clubCode});
+                    }
                 },
                 {name: "eventBeerID", primaryKey: true, detail: true, type: "sequence", visible: false},
                 {name: "eventID",
                     displayField: "eventType",
                     editorType: "selectItem",
-                    optionCriteria: {active: "Y", eventTypeID: 6},
+                    optionCriteria: {active: "Y", eventTypeID: 12},
                     optionDataSource: this.eventTypesDS,
                     required: true,
                     title: "Event",
@@ -248,7 +254,7 @@ isc.BeerEntryVL = isc.VLayout.create({
             width: 950
         })
         this.EventBeerWD.addProperties();
-        // this.EventBeerLG.fetchData({clubID: 1});
+        this.EventBeerLG.fetchData({clubCode: 0});
     },
     submitData: function(){
         var formData = this.EventBeerDF.getValues();

@@ -1,22 +1,33 @@
 <?php
-$title = 'Club Event Attendence';
-if(isset($_GET['y'])){
-	$year = intval($_GET['y']);
-}else{
-	$year = date('Y');
-}
+require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
 if(isset($_GET['e'])){
-	$eventID = intval($_GET['e']);
-}else{
-	$eventID = 6;
+	$eventTypeID = intval($_GET['e']);
 }
 
-require_once('../shared/Reporter.php');
+// Get a custom title.
+//
 $params['ini_file'] = '../shared/server.ini';
-$params['bind'] = array('eventID' => $eventID);
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()){
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+$params = array();
+
+$params['ini_file'] = '../shared/server.ini';
+$params['bind'] = array('eventID' => $eventTypeID);
 $params['show_total'] = false;
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
-$params['title'] = "NCHI {$year} Summary";
+$params['maintitle'] = $mainTitle;
+$params['title'] = $title;
 $params['sql'] = "
 SELECT
 	count(*) as 'Clubs Attending'
@@ -31,7 +42,7 @@ $html = $lclass->init($params);
 
 unset($params['maintitle']);
 
-$params['bind'] = array('eventID' => $eventID);
+$params['bind'] = array('eventID' => $eventTypeID);
 $params['show_total'] = false;
 $params['title'] = "NCHI {$year} Tent Map";
 $params['sql'] = "
@@ -58,7 +69,7 @@ $lclass = New Reporter();
 $html .= $lclass->init($params);
 
 
-$params['bind'] = array('eventID' => $eventID);
+$params['bind'] = array('eventID' => $eventTypeID);
 $params['show_total'] = true;
 $params['title'] = "NCHI {$year} Confirmed Clubs";
 $params['sql'] = "
@@ -89,7 +100,7 @@ order by pat.participated desc, c.clubName;";
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['bind'] = array('eventID' => $eventID);
+$params['bind'] = array('eventID' => $eventTypeID);
 $params['show_total'] = true;
 $params['title'] = "NCHI {$year} Undecided Clubs";
 // ba.interested as 'Reserved'
@@ -114,7 +125,7 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['bind'] = array('eventID' => $eventID);
+$params['bind'] = array('eventID' => $eventTypeID);
 $params['show_total'] = true;
 $params['title'] = "NCHI {$year} Declined Clubs";
 // ba.interested as 'Reserved'

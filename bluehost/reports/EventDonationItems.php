@@ -1,15 +1,33 @@
 <?php
-$eventTypeID = 0;
+require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
 if(isset($_GET['e'])){
 	$eventTypeID = intval($_GET['e']);
 }
-require_once('../shared/Reporter.php');
+
+// Get a custom title.
+//
+$params['ini_file'] = '../shared/server.ini';
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()){
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+$params = array();
+
 $params['ini_file'] = '../shared/server.ini';
 $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['show_total'] = false;
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
-$params['title'] = "Event Donation Items";
-// , cd.lastUpdateDate
+$params['maintitle'] = $mainTitle;
+$params['title'] = "{$title} Event Donation Items";
 $params['sql'] = "select
 	cd.type,
 	cd.donationItem,

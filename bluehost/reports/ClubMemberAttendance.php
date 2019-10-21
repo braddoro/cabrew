@@ -1,4 +1,8 @@
 <?php
+require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+
 if(isset($_GET['y'])){
 	$year = intval($_GET['y']);
 }else{
@@ -8,7 +12,7 @@ require_once('../shared/Reporter.php');
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
 $params['bind'] = array('year' => $year);
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
+$params['maintitle'] = $mainTitle;
 $params['title'] = "Member Attendance for {$year}";
 $params['sql'] = "
 select

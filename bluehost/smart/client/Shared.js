@@ -20,22 +20,6 @@ isc.Clients = {
 			{valueLOV: "Verify", displayLOV: "Verify"}
 		]
 	}),
-	donationStatusDS: isc.DataSource.create({
-		clientOnly: true,
-		fields: [
-			{name: "valueLOV", type: "sequence", primaryKey: true},
-			{name: "displayLOV", type: "text"}
-		],
-		testData:[
-			{valueLOV: "Agreed", displayLOV: "Agreed"},
-			{valueLOV: "Asked", displayLOV: "Asked"},
-			{valueLOV: "Contact", displayLOV: "Contact"},
-			{valueLOV: "Declined", displayLOV: "Declined"},
-			{valueLOV: "Gave", displayLOV: "Gave"},
-			{valueLOV: "Pickup", displayLOV: "Pickup"},
-			{valueLOV: "Self-Deliver", displayLOV: "Self-Deliver"}
-		]
-	}),
 	budgetStatusDS: isc.DataSource.create({
 		clientOnly: true,
 		fields: [
@@ -75,6 +59,16 @@ isc.Clients = {
 	})
 };
 isc.Shared = {
+	donationStatusDS: isc.DataSource.create({
+		dataURL: serverPath + "DonationStatuses.php",
+		showFilterEditor: true,
+		fields: [
+			{name: "donationStatusID", type: "sequence", primaryKey: true, detail: true},
+			{name: "donationStatus", type: "text", width: "*", validators: [{type: "lengthRange", max: 45}]},
+			{name: "active", type: "text", width: 80, editorType: "selectItem", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
+		]
+	}),
 	eventPhasesDS: isc.myDataSource.create({
 		dataURL: serverPath + "EventPhases.php",
 		showFilterEditor: true,

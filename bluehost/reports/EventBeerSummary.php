@@ -1,18 +1,32 @@
 <?php
-if(isset($_GET['y'])){
-	$year = intval($_GET['y']);
-}else{
-	$year = date('Y');
-}
-$eventID = 0;
-if(isset($_GET['e'])){
-	$eventID = intval($_GET['e']);
-}
 require_once('../shared/Reporter.php');
-$params['ini_file'] = '../shared/server.ini';
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
+if(isset($_GET['e'])){
+	$eventTypeID = intval($_GET['e']);
+}
 
-$params['bind'] = array("eventID" => $eventID);
+// Get a custom title.
+//
+$params['ini_file'] = '../shared/server.ini';
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()){
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+$params = array();
+
+$params['ini_file'] = '../shared/server.ini';
+$params['maintitle'] = $mainTitle;
+
+$params['bind'] = array("eventID" => $eventTypeID);
 $params['show_total'] = false;
 $params['title'] = "NCHI Beer Total {$year}";
 $params['sql'] = "SELECT count(*) as Total FROM eventBeers where eventID = :eventID;";
@@ -21,7 +35,7 @@ $html = $lclass->init($params);
 
 unset($params['maintitle']);
 
-$params['title'] = "NCHI Beer Summary by Club for {$year}";
+$params['title'] = "{$title} Beer Summary by Club";
 $params['show_total'] = true;
 $params['sql'] = "SELECT
 	bc.clubAbbr,
@@ -40,7 +54,7 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['title'] = "NCHI Beer BJCP Category Summary for {$year}";
+$params['title'] = "{$title} BJCP Category Summary";
 $params['show_total'] = false;
 $params['sql'] = "SELECT
 	bcc.bjcp2015_category,
@@ -59,7 +73,7 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['title'] = "NCHI Beer BJCP Style Summary for {$year}";
+$params['title'] = "{$title} BJCP Style Summary";
 $params['sql'] = "SELECT
 	bs.bjcpStyle as Style,
 	count(*) as Total
@@ -77,7 +91,7 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['title'] = "NCHI Beer Summary by Club and Style for {$year}";
+$params['title'] = "{$title} Summary by Club and Style";
 $params['sql'] = "SELECT
 	bc.clubAbbr,
 	bs.bjcpStyle as Style,

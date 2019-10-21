@@ -1,8 +1,16 @@
 <?php
 require_once('../shared/Reporter.php');
-$params['bind'] = array();
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
+if(isset($_GET['e'])){
+	$eventTypeID = intval($_GET['e']);
+}
+
+require_once('../shared/Reporter.php');
+$params['bind'] = array("eventID" => $eventTypeID);
 $params['ini_file'] = '../shared/server.ini';
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
+$params['maintitle'] = $mainTitle;
 $params['title'] = 'Event Brew Club Contacts';
 $params['sql'] = "
 select distinct
@@ -24,11 +32,10 @@ where
 	media.priority = 1
     and points.priority = 1
     and points.contactTypeID_fk = 2
-    and att.year = 2018
+    and att.eventTypeID = :eventID
 order by
 	club.clubName,
-	contact.contactName;
-";
+	contact.contactName;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

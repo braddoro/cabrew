@@ -1,4 +1,28 @@
 <?php
+require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
+if(isset($_GET['e'])){
+	$eventTypeID = intval($_GET['e']);
+}
+
+// Get a custom title.
+//
+$params['ini_file'] = '../shared/server.ini';
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()){
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+$params = array();
+
 if(isset($_GET['m'])){
 	$id = intval($_GET['m']);
 }
@@ -7,18 +31,15 @@ if(isset($_GET['d'])){
 	$days = intval($_GET['d']);
 }
 $wheres = '';
-if(isset($_GET['e'])){
-	$wheres = ' and C.eventTypeID = ' . intval($_GET['e']) . ' ';
-}
-require_once('../shared/Reporter.php');
+
 $params['bind'] = array(id => NULL);
 if(isset($id)){
 	$params['bind'] = array(id => $id);
 }
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
-$params['title'] = "Todo Next {$days} Days";
+$params['maintitle'] = $mainTitle;
+$params['title'] = "{$title} Todo Next {$days} Days";
 $params['sql'] = "
 select
 	CONCAT(M.firstName, ' ',M.lastName) AS 'Assignee',

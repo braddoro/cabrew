@@ -1,5 +1,9 @@
 <?php
 require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+
+require_once('../shared/Reporter.php');
 $wheres = '';
 $eventID = (isset($_GET['e'])) ? intval($_GET['e']) : 7;
 if(isset($_GET['e'])){
@@ -33,7 +37,7 @@ $params = array();
 $params['bind'] = array(eventTypeID => $eventID);
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = false;
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
+$params['maintitle'] = $mainTitle;
 $params['title'] = $title;
 $params['sql'] = "select
 	C.dueDate,

@@ -8,7 +8,7 @@ isc.defineClass("CorporateDonations", "myWindow").addProperties({
 			{name: "corporateDonationID", primaryKey: true, detail: true, type: "sequence"},
 			{name: "eventTypeID_fk", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
 			{name: "entityNameID_fk", align: "left", displayField: "entityName", optionDataSource: isc.Shared.entityNamesDS, pickListFields: [{name: "entityName", width: "*"}], pickListProperties: {showFilterEditor: true}, title: "Corporation", type: "integer", valueField: "entityNameID", width: 250, optionCriteria: {active: "Y"}},
-			{name: "status", type: "text", width: 80, editorType: "selectItem", optionDataSource: isc.Clients.donationStatusDS, displayField: "displayLOV", valueField: "valueLOV"},
+			{name: "donationStatusID_fk", width: 120, type: "integer", title: "Status", optionDataSource: isc.Shared.donationStatusDS, displayField: "donationStatus", valueField: "donationStatusID", optionCriteria: {active: "Y"}},
 			{name: "contact", width: 120, validators: [{type: "lengthRange", max: 200}]},
 			{name: "notes", width: 120, validators: [{type: "lengthRange", max: 200}]},
 			{name: "items", width: "*", validators: [{type: "lengthRange", max: 1000}]},

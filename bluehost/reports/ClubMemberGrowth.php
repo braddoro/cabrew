@@ -1,9 +1,13 @@
 <?php
 require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+
+require_once('../shared/Reporter.php');
 $params['bind'] = array();
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
+$params['maintitle'] = $mainTitle;
 $params['title'] = "Membership Add and Drop Rate";
 $params['sql'] = "
 select st.statusType 'Status', max(year(d.memberDate)) 'Year', count(*) 'Members'

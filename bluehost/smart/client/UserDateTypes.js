@@ -21,7 +21,17 @@ isc.defineClass("UserDateTypes", "myWindow").addProperties({
 			dataSource: this.UserDateTypeDS,
 			name: "User Date Type Access",
 			parent: this,
-			showFilterEditor: true
+			showFilterEditor: true,
+			startEditingNew: function(newValues, suppressFocus){
+				var DateUserID = null;
+				if(this.anySelected()){
+					data = this.getSelectedRecord();
+					DateUserID = data.DateUserID;
+				}
+				var rowDefaults = {DateUserID: DateUserID};
+				var newCriteria = isc.addProperties({}, newValues, rowDefaults);
+				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
+			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,

@@ -6,7 +6,7 @@ if($hostname == 'chimera'){
 	require_once '../adodb5/adodb.inc.php'; // cabrew.org
 }
 $cabrew_array = parse_ini_file('cabrew.ini', true);
-$skin = $cabrew_array['application']['skin'];;
+$skin = $cabrew_array['application']['skin'];
 $title = $cabrew_array['application']['title'];
 $source_path = $cabrew_array['application']['source_path'];
 $smart_ver = $cabrew_array['application']['smartclient_version'];
@@ -34,6 +34,7 @@ $classes[] = "CorporateDonations.js";
 $classes[] = "Corporations.js";
 $classes[] = "DateTypes.js";
 $classes[] = "Desktop.js";
+$classes[] = "DonationStatuses.js";
 $classes[] = "EditMember.js";
 $classes[] = "EntityNames.js";
 $classes[] = "EventAttendance.js";

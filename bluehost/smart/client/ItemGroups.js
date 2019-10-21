@@ -21,7 +21,17 @@ isc.defineClass("ItemGroups", "myWindow").addProperties({
 			dataSource: this.ItemGroupDS,
 			name: "Item Groups",
 			parent: this,
-			showFilterEditor: true
+			showFilterEditor: true,
+			startEditingNew: function(newValues, suppressFocus){
+				var secGroupID = null;
+				if(this.anySelected()){
+					data = this.getSelectedRecord();
+					secGroupID = data.secGroupID;
+				}
+				var rowDefaults = {secGroupID: secGroupID};
+				var newCriteria = isc.addProperties({}, newValues, rowDefaults);
+				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
+			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,

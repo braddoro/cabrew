@@ -21,7 +21,19 @@ isc.defineClass("UserGroups", "myWindow").addProperties({
 			dataSource: this.UserGroupDS,
 			name: "User Groups",
 			parent: this,
-			showFilterEditor: true
+			showFilterEditor: true,
+			startEditingNew: function(newValues, suppressFocus){
+				var secGroupID = null;
+				var secUserID = null;
+				if(this.anySelected()){
+					data = this.getSelectedRecord();
+					secGroupID = data.secGroupID;
+					secUserID = data.secUserID;
+				}
+				var rowDefaults = {secGroupID: secGroupID, secUserID: secUserID};
+				var newCriteria = isc.addProperties({}, newValues, rowDefaults);
+				return this.Super("startEditingNew", [newCriteria, suppressFocus]);
+			}
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			parent: this,

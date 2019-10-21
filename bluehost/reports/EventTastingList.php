@@ -1,19 +1,34 @@
 <?php
-$year = date("Y");
 require_once('../shared/Reporter.php');
-$wheres = '';
-$eventID = (isset($_GET['e'])) ? intval($_GET['e']) : 1;
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
 if(isset($_GET['e'])){
-	$wheres .= ' and (C.eventTypeID = ' . intval($_GET['e']) . ') ';
-}else{
-	$wheres .= ' and (C.eventTypeID = 1) ';
+	$eventTypeID = intval($_GET['e']);
 }
-$params['ini_file'] = '../shared/server.ini';
-$params['bind'] = array("eventID" => $eventID);
-$params['show_total'] = false;
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
 
-$params['title'] = "NCHI {$year} Beer Tasting List by BJCP Category";
+// Get a custom title.
+//
+$params['ini_file'] = '../shared/server.ini';
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()){
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+$params = array();
+
+$params['ini_file'] = '../shared/server.ini';
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['show_total'] = false;
+$params['maintitle'] = "{$mainTitle} <br/> {$title}";
+
+$params['title'] = 'Beer Tasting List by BJCP Category';
 $params['sql'] = "SELECT
 	bl.beerCode,
 	bcc.bjcp2015_category as BJCP_Category,
@@ -35,7 +50,7 @@ $lclass = New Reporter();
 $html .= $lclass->init($params);
 
 unset($params['maintitle']);
-$params['title'] = "NCHI {$year} Beer Tasting List by Style";
+$params['title'] = "Beer Tasting List by Style";
 $params['sql'] = "SELECT
 	bl.beerCode,
 	coalesce(bs.styleABBR, bs.bjcpStyle) as Style,
@@ -56,7 +71,7 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['title'] = "NCHI {$year} Beer Tasting List by Club";
+$params['title'] = "Beer Tasting List by Club";
 $params['sql'] = "SELECT
 	bl.beerCode,
     bc.clubAbbr as Tent,
@@ -76,7 +91,7 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['title'] = "NCHI {$year} Beer Tasting List by Code";
+$params['title'] = "Beer Tasting List by Code";
 $params['sql'] = "SELECT
 	bl.beerCode,
 	bs.bjcpStyle as Style,
@@ -94,7 +109,7 @@ order by
 $lclass = New Reporter();
 $html .= $lclass->init($params);
 
-$params['title'] = "NCHI {$year} Beer Tasting List All Details";
+$params['title'] = "Beer Tasting List All Details";
 $params['sql'] = "SELECT
 	bl.beerCode,
 	bcc.bjcp2015_category as BJCP_Category,

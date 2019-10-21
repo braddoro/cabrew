@@ -1,21 +1,40 @@
 <?php
-$eventTypeID = 0;
+require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
 if(isset($_GET['e'])){
 	$eventTypeID = intval($_GET['e']);
 }
+
+// Get a custom title.
+//
+$params['ini_file'] = '../shared/server.ini';
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()){
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+$params = array();
+
 $wheres = '';
 if(isset($_GET['p'])){
 	$wheres .= " and C.eventPhaseID = " . intval($_GET['p']);
 }
 if(isset($_GET['m'])){
-	$wheres .= ' and (C.memberID = ' . intval($_GET['m']) . ') ';
+	$wheres .= ' andw (C.memberID = ' . intval($_GET['m']) . ') ';
 }
 if(isset($_GET['c'])){
 	$wheres .= " and (C.done <> 'Y') ";
 }
 // Get a custom title.
 //
-require_once('../shared/Reporter.php');
 $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['ini_file'] = '../shared/server.ini';
 $params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventTypeID;";
@@ -32,7 +51,7 @@ $params = array();
 $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
+$params['maintitle'] = $mainTitle;
 $params['title'] = $title . ' Event Planning';
 // coalesce() as step1,
 // case LENGTH(LTRIM(C.stepURL))

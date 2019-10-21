@@ -1,4 +1,4 @@
-	//isc.setAutoDraw(false);
+//isc.setAutoDraw(false);
 isc.RPCResponse.STATUS_ERROR_DATA_ACCESS = -110;
 isc.RPCResponse.STATUS_SERVER_CONNECTION_ERROR = -111;
 isc.RPCResponse.STATUS_SETUP_DATA_ERROR = -112;

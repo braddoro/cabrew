@@ -1,18 +1,32 @@
 <?php
-if(isset($_GET['y'])){
-	$year = intval($_GET['y']);
-}else{
-	$year = date('Y');
-}
-$eventID = 0;
-if(isset($_GET['e'])){
-	$eventID = intval($_GET['e']);
-}
 require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+$eventTypeID = $cabrew_array['reports']['default_event'];
+if(isset($_GET['e'])){
+	$eventTypeID = intval($_GET['e']);
+}
+
+// Get a custom title.
+//
 $params['ini_file'] = '../shared/server.ini';
-$params['maintitle'] = 'Cabarrus Homebrewers Society';
-$params['bind'] = array('eventID' => $eventID);
-$params['title'] = "Event Beer Votes for {$year}";
+$params['bind'] = array("eventID" => $eventTypeID);
+$params['sql'] = "select coalesce(description,eventType) as eventType from eventTypes where eventTypeID = :eventID;";
+$params['skip_format'] = true;
+$lclass = New Reporter();
+$data = $lclass->init($params);
+$title = '';
+while($row = $data->fetch()){
+	foreach($row as $col => $val){
+		$title = $val;
+	}
+}
+$params = array();
+
+$params['ini_file'] = '../shared/server.ini';
+$params['maintitle'] = $mainTitle;
+$params['bind'] = array('eventID' => $eventTypeID);
+$params['title'] = $title . ' Beer Votes';
 $params['sql'] = "SELECT
 	bl.beerCode,
 	bcc.bjcp2015_category as BJCP_Category,

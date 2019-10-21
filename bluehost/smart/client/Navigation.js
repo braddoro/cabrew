@@ -29,6 +29,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			items: [
 				{title: "Attendance", click: "isc.EventAttendance.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Beers", click: "isc.EventBeers.create({width: \"1000\", height: \"95%\"});"},
+				{title: "Donations", click: "isc.CorporateDonationItems.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Budgets", click: "isc.EventBudgets.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Plans", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
@@ -44,13 +45,12 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			]
 		});
 		this.ClubMenu = isc.myMenu.create({
-			title: "Clubs",
+			title: "Entities",
 			items: [
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Donations", click: "isc.CorporateDonations.create({width: \"1000\", height: \"95%\"});"},
-				{title: "Donation Items", click: "isc.CorporateDonationItems.create({width: \"1000\", height: \"95%\"});"},
-				{title: "Entities", click: "isc.EntityNames.create()"},
+				{title: "Donor List", click: "isc.CorporateDonations.create({width: \"1000\", height: \"95%\"});"},
+				{title: "Entity Names", click: "isc.EntityNames.create()"},
 				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});
@@ -62,6 +62,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Chairs", click: "isc.ChairTypes.create()"},
 				{title: "Contacts", click: "isc.ContactTypes.create()"},
 				{title: "Dates", click: "isc.DateTypes.create()"},
+				{title: "Donations", click: "isc.DonationStatuses.create()"},
 				{title: "Events", click: "isc.EventTypes.create()"},
 				{title: "Notes", click: "isc.NoteTypes.create()"},
 				{title: "Phases", click: "isc.EventPhases.create()"},
@@ -74,13 +75,13 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			showShadow: true,
 			items: [
 				{title: "Books", submenu: this.BookMenu},
-				{title: "Clubs", submenu: this.ClubMenu},
+				{title: "Entities", submenu: this.ClubMenu},
 				{title: "Events", submenu: this.EventMenu},
 				{title: "Members", submenu: this.MembersMenu},
-				{title: "Misc Tables", submenu: this.MiscMenu},
-				{title: "Access", submenu: this.AccessMenu},
 				{isSeparator: true},
-				{title: "Show Log", click: "isc.ShowLog.create({width: 1200, height: \"95%\"})"}
+				{title: "Access", submenu: this.AccessMenu},
+				{title: "Audit Log", click: "isc.ShowLog.create({width: 1200, height: \"95%\"})"},
+				{title: "Misc Tables", submenu: this.MiscMenu},
 			]
 		});
 		this.menuBar = isc.MenuBar.create({

@@ -19,7 +19,7 @@ isc.defineClass("ShowLog", "myWindow").addProperties({
 		});
 		this.ShowLogLG = isc.myListGrid.create({
 			dataSource: this.ShowLogDS,
-			name: "Show Log",
+			name: "Audit Log",
 			canEdit: false,
 			parent: this,
 			showFilterEditor: true
