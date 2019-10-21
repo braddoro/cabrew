@@ -61,6 +61,7 @@ isc.BeerEntryVL = isc.VLayout.create({
                     editorType: "selectItem",
                     optionCriteria: {active: "Y"},
                     optionDataSource: this.eventTypesDS,
+                    required: true,
                     title: "Event",
                     type: "integer",
                     valueField: "eventTypeID",
@@ -80,9 +81,10 @@ isc.BeerEntryVL = isc.VLayout.create({
                     valueField: "clubID",
                     width: 100
                 },
-                {name: "clubCode"},
+                {name: "clubCode", required: true},
                 {name: "bjcpCode",
                     canEdit: false,
+                    required: true,
                     title: "Code",
                     type: "text",
                     width: 50
@@ -93,24 +95,32 @@ isc.BeerEntryVL = isc.VLayout.create({
                     pickListFields: [{name: "bjcpCode", width: "50"}, {name: "bjcpStyle", width: "*"}],
                     pickListProperties: {showFilterEditor: true},
                     pickListWidth: 250,
+                    required: true,
                     title: "BJCP Style",
                     type: "integer",
                     valueField: "bjcp2015styleID",
                     width: 180
                 },
-                {name: "abv", title: "ABV", width: 80, type: "float"},
+                {name: "abv",
+                    required: true,
+                    title: "ABV",
+                    type: "float",
+                    width: 80
+                },
                 {name: "beerName",
+                    required: true,
                     validators: [{type: "lengthRange", max: 100}],
                     width: "*"
                 },
                 {name: "brewerName",
+                    required: true,
                     validators: [{type: "lengthRange", max: 100}],
-                    width: 200
+                    width: 150
                 },
                 {name: "beerStory",
                     title: "Details",
                     validators: [{type: "lengthRange", max: 1000}],
-                    width: 300
+                    width: 200
                 },
                 {name: "lastChangeDate", width: 100, detail: true}
             ]
@@ -153,13 +163,6 @@ isc.BeerEntryVL = isc.VLayout.create({
                 }
             ]
         });
-        this.EventBeerBT = isc.myIButton.create({
-            parent: this,
-            title: "Add",
-            click: function(){
-                this.parent.submitData();
-            }
-        });
         this.EventBeerDF = isc.myDynamicForm.create({
             autoFetchData: false,
             canDragResize: true,
@@ -182,7 +185,12 @@ isc.BeerEntryVL = isc.VLayout.create({
                         form.parent.EventBeerLG.fetchData({clubCode: clubCode});
                     }
                 },
-                {name: "eventBeerID", primaryKey: true, detail: true, type: "sequence", visible: false},
+                {name: "eventBeerID",
+                    detail: true,
+                    primaryKey: true,
+                    type: "sequence",
+                    visible: false
+                },
                 {name: "eventID",
                     displayField: "eventType",
                     editorType: "selectItem",
@@ -203,7 +211,7 @@ isc.BeerEntryVL = isc.VLayout.create({
                     pickListProperties: {showFilterEditor: true},
                     pickListWidth: 350,
                     required: true,
-                    title: "Club",
+                    title: "Club Name",
                     type: "integer",
                     valueField: "clubID",
                     width: 100
@@ -248,6 +256,17 @@ isc.BeerEntryVL = isc.VLayout.create({
                 },
                 {name: "lastChangeDate", width: 100, detail: true, visible: false}
             ]
+        });
+        this.EventBeerBT = isc.myIButton.create({
+            parent: this,
+            title: "Add",
+            click: function(){
+                if(!this.parent.EventBeerDF.validate()){
+                    isc.warn("Please correct the validation errors.");
+                    return false;
+                }
+                this.parent.submitData();
+            }
         });
         this.EventBeerLB = isc.myLabel.create({
             align: "left",

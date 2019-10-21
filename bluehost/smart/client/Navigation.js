@@ -20,17 +20,14 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Search", click: "isc.MemberSearch.create({width: 600, height: \"95%\"});"},
 				{isSeparator: true},
 				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"});"}
-				// {title: "Add Payment", click: "isc.AddPayment.create({width: 800, height: 275});"}
-				// {title: "Send Message", click: "isc.SendMessage.create({width: 800, height: \"95%\"});"}
 			]
 		});
 		this.EventMenu = isc.myMenu.create({
 			title: "Events",
 			items: [
-				{title: "Attendance", click: "isc.EventAttendance.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Beers", click: "isc.EventBeers.create({width: \"1000\", height: \"95%\"});"},
-				{title: "Donations", click: "isc.CorporateDonationItems.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Budgets", click: "isc.EventBudgets.create({width: \"1000\", height: \"95%\"});"},
+				{title: "Donations", click: "isc.CorporateDonationItems.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Plans", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Schedules", click: "isc.EventSchedules.create({width: 700, height: \"95%\"});"},
