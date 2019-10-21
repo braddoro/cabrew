@@ -107,6 +107,11 @@ isc.BeerEntryVL = isc.VLayout.create({
                     validators: [{type: "lengthRange", max: 100}],
                     width: 200
                 },
+                {name: "beerStory",
+                    title: "Details",
+                    validators: [{type: "lengthRange", max: 1000}],
+                    width: 300
+                },
                 {name: "lastChangeDate", width: 100, detail: true}
             ]
         });
@@ -235,6 +240,12 @@ isc.BeerEntryVL = isc.VLayout.create({
                     validators: [{type: "lengthRange", max: 50}],
                     width: 200
                 },
+                {name: "beerStory",
+                    hint: "optional",
+                    title: "Details",
+                    validators: [{type: "lengthRange", max: 1000}],
+                    width: 300
+                },
                 {name: "lastChangeDate", width: 100, detail: true, visible: false}
             ]
         });
@@ -261,11 +272,11 @@ isc.BeerEntryVL = isc.VLayout.create({
         var newData = isc.addProperties({}, formData, {operationType: "add"});
         this.EventBeerDS.addData(formData,
             function(dsResponse, data, dsRequest){
-            this.parent.EventBeerLG.fetchData();
-            this.parent.EventBeerDF.clearValue("bjcp2015styleID_fk");
-            this.parent.EventBeerDF.clearValue("abv");
-            this.parent.EventBeerDF.clearValue("beerName");
-            this.parent.EventBeerDF.clearValue("brewerName");
+                this.parent.EventBeerLG.fetchData({clubCode: formData.clubCode});
+                this.parent.EventBeerDF.clearValue("bjcp2015styleID_fk");
+                this.parent.EventBeerDF.clearValue("abv");
+                this.parent.EventBeerDF.clearValue("beerName");
+                this.parent.EventBeerDF.clearValue("brewerName");
             });
     }
 });
