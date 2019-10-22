@@ -25,9 +25,9 @@ isc.defineClass("Navigation", "Menu").addProperties({
 		this.EventMenu = isc.myMenu.create({
 			title: "Events",
 			items: [
-				{title: "Beers", click: "isc.EventBeers.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Budgets", click: "isc.EventBudgets.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Donations", click: "isc.CorporateDonationItems.create({width: \"1000\", height: \"95%\"});"},
+				{title: "Kegs", click: "isc.EventBeers.create({width: \"1000\", height: \"95%\"});"},
 				{title: "Plans", click: "isc.EventPlans.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Posts", click: "isc.WebPosts.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Schedules", click: "isc.EventSchedules.create({width: 700, height: \"95%\"});"},
