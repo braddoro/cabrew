@@ -10,20 +10,20 @@ $params['show_total'] = true;
 $params['maintitle'] = $mainTitle;
 $params['title'] = 'Corporation Contacts';
 $params['sql'] = "select
-	name,
-	contact,
-	owner,
-	type,
-	phone,
-	email,
-	website,
-	address
-from
-	corporations
+	e.entityName,
+	c.contact,
+	c.owner,
+	c.type,
+	c.phone,
+	c.email,
+	c.website,
+	c.address
+from corporations c
+inner join entityNames e
+on c.entityNameID_fk = e.entityNameID
 order by
-	name,
-	contact
-;";
+	e.entityName,
+	c.contact;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

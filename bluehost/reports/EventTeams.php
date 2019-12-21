@@ -24,7 +24,7 @@ while($row = $data->fetch()){
 $params = array();
 
 $params['ini_file'] = '../shared/server.ini';
-$params['bind'] = array(eventID => $eventTypeID);
+$params['bind'] = array('eventID' => $eventTypeID);
 $params['show_total'] = false;
 $params['maintitle'] = 'Cabarrus Homebrewers Society';
 $params['title'] = $title . ' Event Teams';

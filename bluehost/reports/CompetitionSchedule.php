@@ -34,7 +34,7 @@ while($row = $data->fetch()) {
 	}
 }
 $params = array();
-$params['bind'] = array(eventTypeID => $eventID);
+$params['bind'] = array('eventTypeID' => $eventID);
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = false;
 $params['maintitle'] = $mainTitle;

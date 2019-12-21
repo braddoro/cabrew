@@ -18,7 +18,7 @@ if(isset($_GET['r'])){
 }
 $type4 = '';
 if($awardNameID == 4 && $isRookie){
-	$type4 = " having min(year(d.memberDate)) = $year ";
+	$type4 = " and year(J.memberDate) = $year ";
 }
 // Get a custom title.
 //
@@ -44,6 +44,7 @@ $params['title'] = $title . ' Award for ' . $year;
 $params['sql'] = "select
 	M.memberID,
 	REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ') as 'FullName',
+	J.memberDate as 'JoinYear',
 	sum(dt.datePoints) as 'totalPoints'
 from
 	memberDates d
@@ -51,10 +52,25 @@ from
 	inner join dateTypes dt on d.dateTypeID_fk = dt.dateTypeID
 	inner join awardGroups ag on ag.dateTypeID_fk = dt.dateTypeID
  	inner join awardNames an on ag.awardNameID_fk = an.awardNameID
+    left join (
+		select
+			M.memberID,
+			M.firstName,
+			M.lastName,
+			d.memberDate,
+			d.dateDetail
+		from
+			memberDates d
+			inner join members M on M.memberID = d.memberID_fk
+		where
+			d.dateTypeID_fk = 1
+			and M.statusTypeID_fk = 1
+	) J on M.memberID = J.memberID
 where
 	year(d.memberDate) =  :year
 	and M.statusTypeID_fk = 1
 	and ag.awardNameID_fk = :awardNameID
+	{$type4}
 group by
 	M.memberID,
 	REPLACE(CONCAT(M.firstName,' ',IFNULL(M.midName,''),' ',M.lastName),'  ',' ')

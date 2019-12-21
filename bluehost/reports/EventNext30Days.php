@@ -11,9 +11,9 @@ if(isset($_GET['e'])){
 	$wheres = ' and C.eventTypeID = ' . intval($_GET['e']) . ' ';
 }
 require_once('../shared/Reporter.php');
-$params['bind'] = array(id => NULL);
+$params['bind'] = array('id' => NULL);
 if(isset($id)){
-	$params['bind'] = array(id => $id);
+	$params['bind'] = array('id' => $id);
 }
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;

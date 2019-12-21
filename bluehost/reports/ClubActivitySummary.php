@@ -3,13 +3,12 @@ require_once('../shared/Reporter.php');
 $cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
 $mainTitle = $cabrew_array['reports']['default_main_title'];
 
+$year = date('Y');
 if(isset($_GET['y'])){
 	$year = intval($_GET['y']);
-}else{
-	$year = date('Y');
 }
 require_once('../shared/Reporter.php');
-$params['bind'] = array(year => $year);
+$params['bind'] = array('year' => $year);
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
 $params['maintitle'] = $mainTitle;

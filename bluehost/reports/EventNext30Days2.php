@@ -32,9 +32,9 @@ if(isset($_GET['d'])){
 }
 $wheres = '';
 
-$params['bind'] = array(id => NULL);
+$params['bind'] = array('id' => NULL);
 if(isset($id)){
-	$params['bind'] = array(id => $id);
+	$params['bind'] = array('id' => $id);
 }
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;

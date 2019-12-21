@@ -8,7 +8,7 @@ if(isset($_GET['y'])){
 	$year = intval($_GET['y']);
 }
 require_once('../shared/Reporter.php');
-$params['bind'] = array(year => $year);
+$params['bind'] = array('year' => $year);
 $params['ini_file'] = '../shared/server.ini';
 $params['maintitle'] = $mainTitle;
 $params['title'] = "Member Point Totals for {$year}";
