@@ -10,7 +10,7 @@ if(!$dbconn->isConnected()){
 	echo json_encode($response);
 	exit(1);
 }
-$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : null;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 $_REQUEST['done'] = 'N';
 if($_REQUEST['status'] == 'complete' || $_REQUEST['status'] == 'not needed'){

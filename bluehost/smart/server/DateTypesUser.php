@@ -7,7 +7,7 @@ if(!$db->isConnected()){
 	echo json_encode($response);
 	exit(1);
 }
-$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : NULL;
+$pkval = (isset($_REQUEST[$primaryKey])) ? intval($_REQUEST[$primaryKey]) : null;
 $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'] : 'fetch';
 $sql = "select dateTypeID, dateType from sec_user_date_types where DateUserID = 0 order by dateType;";
 if(isset($_REQUEST['userID'])){
