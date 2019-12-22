@@ -31,9 +31,10 @@ $params['title'] = "{$title} Event Donation Items";
 $params['sql'] = "select
 	cd.type,
 	cd.donationItem,
-	en.entityName
+	en.entityName,
+	en.entityType
 from corporateDonationItems cd
-inner join entityNames en on cd.entityNameID = en.entityNameID
+inner join entityNames en on cd.entityNameID_fk = en.entityNameID
 where cd.eventTypeID = :eventTypeID
 order by
 	cd.type,
