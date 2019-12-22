@@ -28,16 +28,18 @@ $params['bind'] = array("eventTypeID" => $eventTypeID);
 $params['show_total'] = false;
 $params['maintitle'] = $mainTitle;
 $params['title'] = "{$title} Event Donations";
-$params['sql'] = "select
-cd.status,
-en.entityName,
-cd.contact, cd.notes
+$params['sql'] = "
+select
+	cd.status,
+	en.entityName,
+	en.entityType,
+	cd.notes
 from corporateDonations cd
 inner join entityNames en on cd.entityNameID_fk = en.entityNameID
 where cd.eventTypeID_fk = :eventTypeID
 order by
-cd.status,
-en.entityName;";
+	cd.status,
+	en.entityName;";
 $lclass = New Reporter();
 $html = $lclass->init($params);
 ?>

@@ -7,7 +7,19 @@ isc.defineClass("CorporateDonationItems", "myWindow").addProperties({
 		fields:[
 			{name: "corporateDonationItemID", primaryKey: true, detail: true, type: "sequence"},
 			{name: "eventTypeID", width: 120, type: "integer", title: "Event", optionDataSource: isc.Shared.eventTypesDS, displayField: "eventType", valueField: "eventTypeID", optionCriteria: {active: "Y"}},
-			{name: "entityNameID", align: "left", displayField: "entityName", optionDataSource: isc.Shared.entityNamesDS, pickListFields: [{name: "entityName", width: "*"}], pickListProperties: {showFilterEditor: true}, title: "Corporation", type: "integer", valueField: "entityNameID", width: 250, optionCriteria: {active: "Y"}},
+			{name: "entityNameID_fk",
+				align: "left",
+				displayField: "entityName",
+				optionCriteria: {active: "Y"},
+				optionDataSource: isc.Shared.entityNamesDS,
+				pickListFields: [{name: "entityType", width: "75"}, {name: "entityName", width: "*"}],
+				pickListProperties: {showFilterEditor: true},
+				pickListWidth: 300,
+				title: "Corporation",
+				type: "integer",
+				valueField: "entityNameID",
+				width: 250
+			},
 			{name: "type", width: 120, validators: [{type: "lengthRange", max: 45}]},
 			{name: "donationItem", width: "*", validators: [{type: "lengthRange", max: 200}]},
 			{name: "lastChangeDate", width: 100, detail: true}
