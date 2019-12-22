@@ -1,10 +1,14 @@
 <?php
-require_once('../Reporter.php');
-$params['ini_file'] = '../server.ini';
+require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+
+require_once('../shared/Reporter.php');
+$params['ini_file'] = '../shared/server.ini';
 
 $params['bind'] = array();
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = $mainTitle;
 $params['title'] = "Club Members NOT Added to Members Only";
 $params['sql'] = "
 select

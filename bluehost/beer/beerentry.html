@@ -1,0 +1,304 @@
+<HTML>
+	<HEAD>
+        <SCRIPT>var isomorphicDir="../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/";</SCRIPT>
+        <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Core.js></SCRIPT>
+        <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Foundation.js></SCRIPT>
+        <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Containers.js></SCRIPT>
+        <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Grids.js></SCRIPT>
+        <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_Forms.js></SCRIPT>
+        <SCRIPT SRC=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/system/modules/ISC_DataBinding.js></SCRIPT>
+        <script src=../sc/SmartClient_v120p_2018-04-07_LGPL/smartclientRuntime/isomorphic/skins/EnterpriseBlue/load_skin.js></script>
+        <SCRIPT SRC=../shared/ClassDefaults_v2.js></SCRIPT>
+	</HEAD>
+	<BODY>
+<SCRIPT>
+isc.BeerEntryVL = isc.VLayout.create({
+    canDragResize: true,
+    name: "BeerEntryVL",
+    parent: this,
+    shadowOffset: 3,
+    shadowSoftness: 7,
+    showMaximizeButton: true,
+    title: "Beer Entry",
+	initWidget: function(initData){
+		this.Super("initWidget", arguments);
+        this.eventTypesDS = isc.myDataSource.create({
+            dataURL: "EventTypes.php",
+            fields:[
+                {name: "eventTypeID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+                {name: "eventType", type: "text", width: 120},
+                {name: "eventBudget", type: "float", width: 120},
+                {name: "description", type: "text", width: "*"},
+                {name: "active", type: "text", width: 80, defaultValue: "Y"},
+                {name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
+            ]
+        });
+        this.BJCP2015StylesDS = isc.myDataSource.create({
+            dataURL: "BJCP2015Styles.php",
+            fields:[
+                {name: "bjcp2015styleID", primaryKey: true, detail: true, type: "sequence"},
+                {name: "bjcpCode", width: 105, type: "text", validators: [{type: "lengthRange", max: 5}]},
+                {name: "bjcpStyle", width: "*", type: "text",  validators: [{type: "lengthRange", max: 45}]},
+                {name: "lastChangeDate", width: 100, detail: true}
+            ]
+        });
+        this.brewClubsDS = isc.myDataSource.create({
+            dataURL: "BrewClubs.php",
+            fields:[
+                {name: "clubID", type: "sequence", primaryKey: true, detail: true, canEdit: false},
+                {name: "clubAbbr", type: "text"},
+                {name: "clubName", type: "text"},
+                {name: "active", type: "text", width: 80}
+            ]
+        });
+        this.EventBeerDS = isc.myDataSource.create({
+            dataURL: "BeerEntry.php",
+            parent: this,
+            fields:[
+                {name: "eventBeerID", primaryKey: true, detail: true, type: "sequence"},
+                {name: "eventID",
+                    displayField: "eventType",
+                    editorType: "selectItem",
+                    optionCriteria: {active: "Y"},
+                    optionDataSource: this.eventTypesDS,
+                    required: true,
+                    title: "Event",
+                    type: "integer",
+                    valueField: "eventTypeID",
+                    width: 100
+                },
+                {name: "clubID",
+                    displayField: "clubAbbr",
+                    editorType: "selectItem",
+                    optionCriteria: {active: "Y"},
+                    optionDataSource: this.brewClubsDS,
+                    required: true,
+                    pickListFields: [{name: "clubAbbr", width: "70"},{name: "clubName", width: "*"}],
+                    pickListProperties: {showFilterEditor: true},
+                    pickListWidth: 350,
+                    title: "Club",
+                    type: "integer",
+                    valueField: "clubID",
+                    width: 100
+                },
+                {name: "clubCode", required: true},
+                {name: "bjcpCode",
+                    canEdit: false,
+                    required: true,
+                    title: "Code",
+                    type: "text",
+                    width: 50
+                },
+                {name: "bjcp2015styleID_fk",
+                    displayField: "bjcpStyle",
+                    optionDataSource: this.BJCP2015StylesDS,
+                    pickListFields: [{name: "bjcpCode", width: "50"}, {name: "bjcpStyle", width: "*"}],
+                    pickListProperties: {showFilterEditor: true},
+                    pickListWidth: 250,
+                    required: true,
+                    title: "BJCP Style",
+                    type: "integer",
+                    valueField: "bjcp2015styleID",
+                    width: 180
+                },
+                {name: "abv",
+                    required: true,
+                    title: "ABV",
+                    type: "float",
+                    width: 80
+                },
+                {name: "beerName",
+                    required: true,
+                    validators: [{type: "lengthRange", max: 100}],
+                    width: "*"
+                },
+                {name: "brewerName",
+                    required: true,
+                    validators: [{type: "lengthRange", max: 100}],
+                    width: 150
+                },
+                {name: "beerStory",
+                    title: "Details",
+                    validators: [{type: "lengthRange", max: 1000}],
+                    width: 200
+                },
+                {name: "lastChangeDate", width: 100, detail: true}
+            ]
+        });
+        this.EventBeerLG = isc.myListGrid.create({
+            dataSource: this.EventBeerDS,
+            height: "100%",
+            name: "Club Beers",
+            parent: this,
+            sortField: 1,
+            rowContextClick: function(record, rowNum, colNum){
+                this.parent.localContextMenu.showContextMenu();
+                return false;
+            }
+        });
+        this.localContextMenu = isc.myMenu.create({
+            parent: this,
+            callingListGrid: this.EventBeerLG,
+            data: [
+                {title: "Edit",
+                    click: function(target, item, menu, colNum){
+                        var record = menu.callingListGrid.getSelectedRecord();
+                        var row = menu.callingListGrid.getRowNum(record);
+                        menu.callingListGrid.rowDoubleClick(record, row);
+                    }
+                },
+                {title: "Delete",
+                    click: function(target, item, menu, colNum){
+                        var record;
+                        if(menu.callingListGrid.anySelected() && menu.callingListGrid.canEdit){
+                            record = menu.callingListGrid.getSelectedRecord();
+                            menu.callingListGrid.removeData(record);
+                        }
+                    }
+                },
+                {title: "Refresh",
+                    click: function(target, item, menu, colNum){
+                        menu.callingListGrid.invalidateCache();
+                    }
+                }
+            ]
+        });
+        this.EventBeerDF = isc.myDynamicForm.create({
+            autoFetchData: false,
+            canDragResize: true,
+            height: 150,
+            numCols: 3,
+            parent: this,
+            width: "100%",
+            fields:[
+                {name: "clubCode",
+                    required: true,
+                    title: "Club Code",
+                    type: "integer",
+                    validators: [{type: "isInteger"}],
+                    width: 50,
+                    blur: function(form, item){
+                        var clubCode = 0;
+                        if(form.getValue("clubCode") > 0){
+                            clubCode = form.getValue("clubCode");
+                        }
+                        form.parent.EventBeerLG.fetchData({clubCode: clubCode});
+                    }
+                },
+                {name: "eventBeerID",
+                    detail: true,
+                    primaryKey: true,
+                    type: "sequence",
+                    visible: false
+                },
+                {name: "eventID",
+                    displayField: "eventType",
+                    editorType: "selectItem",
+                    optionCriteria: {active: "Y", eventTypeID: 12},
+                    optionDataSource: this.eventTypesDS,
+                    required: true,
+                    title: "Event",
+                    type: "integer",
+                    valueField: "eventTypeID",
+                    width: 100
+                },
+                {name: "clubID",
+                    displayField: "clubAbbr",
+                    editorType: "selectItem",
+                    optionCriteria: {active: "Y"},
+                    optionDataSource: this.brewClubsDS,
+                    pickListFields: [{name: "clubAbbr", width: "70"},{name: "clubName", width: "*"}],
+                    pickListProperties: {showFilterEditor: true},
+                    pickListWidth: 350,
+                    required: true,
+                    title: "Club Name",
+                    type: "integer",
+                    valueField: "clubID",
+                    width: 100
+                },
+                {name: "bjcp2015styleID_fk",
+                    displayField: "bjcpStyle",
+                    editorType: "selectItem",
+                    optionDataSource: this.BJCP2015StylesDS,
+                    pickListFields: [{name: "bjcpCode", width: "50", title: "Code"}, {name: "bjcpStyle", width: "*"}],
+                    pickListProperties: {showFilterEditor: true},
+                    pickListWidth: 300,
+                    required: true,
+                    title: "BJCP Style",
+                    type: "integer",
+                    valueField: "bjcp2015styleID",
+                    width: 250
+                },
+                {name: "abv",
+                    required: true,
+                    title: "ABV",
+                    type: "float",
+                    validators: [{type: "integerRange", min: 2, max: 30}, {type: "isFloat"}],
+                    width: 50
+                },
+                {name: "beerName",
+                    title: "Beer Name",
+                    required: true,
+                    validators: [{type: "lengthRange", max: 50}],
+                    width: 250
+                },
+                {name: "brewerName",
+                    title: "Brewer Name",
+                    required: true,
+                    validators: [{type: "lengthRange", max: 50}],
+                    width: 200
+                },
+                {name: "beerStory",
+                    hint: "optional",
+                    title: "Details",
+                    validators: [{type: "lengthRange", max: 1000}],
+                    width: 300
+                },
+                {name: "lastChangeDate", width: 100, detail: true, visible: false}
+            ]
+        });
+        this.EventBeerBT = isc.myIButton.create({
+            parent: this,
+            title: "Add",
+            click: function(){
+                if(!this.parent.EventBeerDF.validate()){
+                    isc.warn("Please correct the validation errors.");
+                    return false;
+                }
+                this.parent.submitData();
+            }
+        });
+        this.EventBeerLB = isc.myLabel.create({
+            align: "left",
+            baseStyle: "headerItem",
+            contents: "<bold><h3>Add Beer for NCHI</h3></bold>",
+            height: 1,
+            margin: 4
+        }),
+        this.EventBeerWD = isc.myWindow.create({
+            autoCenter: true,
+            height: 600,
+            members: [this.EventBeerLB, this.EventBeerDF, this.EventBeerBT, this.EventBeerLG],
+            parent: this,
+            title: "Beer Entry",
+            width: 950
+        })
+        this.EventBeerWD.addProperties();
+        this.EventBeerLG.fetchData({clubCode: 0});
+    },
+    submitData: function(){
+        var formData = this.EventBeerDF.getValues();
+        var newData = isc.addProperties({}, formData, {operationType: "add"});
+        this.EventBeerDS.addData(formData,
+            function(dsResponse, data, dsRequest){
+                this.parent.EventBeerLG.fetchData({clubCode: formData.clubCode});
+                this.parent.EventBeerDF.clearValue("bjcp2015styleID_fk");
+                this.parent.EventBeerDF.clearValue("abv");
+                this.parent.EventBeerDF.clearValue("beerName");
+                this.parent.EventBeerDF.clearValue("brewerName");
+            });
+    }
+});
+</SCRIPT>
+</BODY>
+</HTML>

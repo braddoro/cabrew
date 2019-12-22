@@ -1,14 +1,18 @@
 <?php
+require_once('../shared/Reporter.php');
+$cabrew_array = parse_ini_file('../smart/cabrew.ini', true);
+$mainTitle = $cabrew_array['reports']['default_main_title'];
+
 $year = date('Y');
 if(isset($_GET['y'])){
 	$year = intval($_GET['y']);
 }
 $yearw = ' and year(D.memberDate) = ' . $year . ' ';
-require_once('../Reporter.php');
+require_once('../shared/Reporter.php');
 $params['bind'] = array();
-$params['ini_file'] = '../server.ini';
+$params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
-$params['maintitle'] = 'Cabarrus Homebrewers Society Reporting';
+$params['maintitle'] = $mainTitle;
 $params['title'] = "Competition Standings for {$year}";
 $params['sql'] = "
 select
