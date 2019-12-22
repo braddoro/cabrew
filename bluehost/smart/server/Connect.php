@@ -40,28 +40,28 @@ class Connect {
 						}
 						break;
 					case 'datetime':
-						$date = date("Y-m-d H:i:s",strtotime($value));
+						$date = date("Y-m-d H:i:s", strtotime($value));
 						$record[$key] = $date;
 						if(!$meta->not_null && strlen(trim($value)) == 0){
 							$record[$key] = 'NULL';
 						}
 						break;
 					case 'time':
-						$date = date("H:i:s",strtotime($value));
+						$date = date("H:i:s", strtotime($value));
 						$record[$key] = $date;
 						if(!$meta->not_null && strlen(trim($value)) == 0){
 							$record[$key] = 'NULL';
 						}
 						break;
 					case 'date':
-						$date = date("Y-m-d H:i:s",strtotime($value));
+						$date = date("Y-m-d H:i:s", strtotime($value));
 						$record[$key] = $date;
 						if(!$meta->not_null && strlen(trim($value)) == 0){
 							$record[$key] = 'NULL';
 						}
 						break;
 					case 'varchar':
-						$record[$key] = substr(trim($value),0,$meta->max_length);
+						$record[$key] = substr(trim($value), 0, $meta->max_length);
 						if(!$meta->not_null && strlen(trim($value)) == 0){
 							$record[$key] = 'NULL';
 						}
@@ -74,7 +74,7 @@ class Connect {
 						break;
 
 					case 'longtext':
-						$record[$key] = substr(trim($value),0,$meta->max_length);
+						$record[$key] = substr(trim($value), 0, $meta->max_length);
 						if(!$meta->not_null && strlen(trim($value)) == 0){
 							$record[$key] = 'NULL';
 						}
