@@ -18,6 +18,9 @@ case 'fetch':
 	if(isset($_REQUEST['entityName'])){
 		$where .= " and entityName = '" . $_REQUEST['entityName'] . "'";
 	}
+	if(isset($_REQUEST['entityType'])){
+		$where .= " and entityType = '" . $_REQUEST['entityType'] . "'";
+	}
 	break;
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);

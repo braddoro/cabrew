@@ -4,6 +4,7 @@ isc.defineClass("EntityNames", "myWindow").addProperties({
 		this.EntityNamesLG = isc.myListGrid.create({
 			dataSource: isc.Shared.entityNamesDS,
 			initialSort: [{property: "entityName", direction: "ascending"}],
+			showFilterEditor: true,
 			name: "Entity Names",
 			parent: this
 		});

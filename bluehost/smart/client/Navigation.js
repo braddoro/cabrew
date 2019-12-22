@@ -47,7 +47,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
 				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
 				{title: "Donor List", click: "isc.CorporateDonations.create({width: \"1000\", height: \"95%\"});"},
-				{title: "Entity Names", click: "isc.EntityNames.create()"},
+				{title: "Entity Names", click: "isc.EntityNames.create({width: \"800\", height: \"95%\"})"},
 				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});

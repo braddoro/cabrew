@@ -10,8 +10,8 @@ isc.defineClass("CorporateDonations", "myWindow").addProperties({
 			{name: "entityNameID_fk", align: "left", displayField: "entityName", optionDataSource: isc.Shared.entityNamesDS, pickListFields: [{name: "entityName", width: "*"}], pickListProperties: {showFilterEditor: true}, title: "Corporation", type: "integer", valueField: "entityNameID", width: 250, optionCriteria: {active: "Y"}},
 			{name: "donationStatusID_fk", width: 120, type: "integer", title: "Status", optionDataSource: isc.Shared.donationStatusDS, displayField: "donationStatus", valueField: "donationStatusID", optionCriteria: {active: "Y"}},
 			{name: "contact", width: 120, validators: [{type: "lengthRange", max: 200}]},
-			{name: "notes", width: 120, validators: [{type: "lengthRange", max: 200}]},
-			{name: "items", width: "*", validators: [{type: "lengthRange", max: 1000}]},
+			{name: "notes", width: "*", validators: [{type: "lengthRange", max: 200}]},
+			{name: "items", width: 100, validators: [{type: "lengthRange", max: 1000}], detail: true},
 			{name: "lastChangeDate", width: 130, detail: true}
 		]
 	});

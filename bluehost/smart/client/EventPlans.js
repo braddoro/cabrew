@@ -21,6 +21,7 @@ isc.defineClass("EventPlans", "myWindow").addProperties({
 			]
 		});
 		this.EventPlanLG = isc.myListGrid.create({
+			autoFetchData: false,
 			dataSource: this.EventPlanDS,
 			initialSort: [{property: "dueDate", direction: "ascending"}],
 			name: "Event Planning",
