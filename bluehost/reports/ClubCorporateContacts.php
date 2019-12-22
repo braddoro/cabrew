@@ -11,6 +11,7 @@ $params['maintitle'] = $mainTitle;
 $params['title'] = 'Corporation Contacts';
 $params['sql'] = "select
 	e.entityName,
+	e.entityType,
 	c.contact,
 	c.owner,
 	c.type,

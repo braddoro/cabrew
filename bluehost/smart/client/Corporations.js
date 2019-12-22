@@ -3,9 +3,9 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 		this.Super("initWidget", arguments);
 		this.CorporationsDS = isc.myDataSource.create({
 			dataURL: serverPath + "Corporations.php",
-			showFilterEditor: true,
 			fields:[
 				{name: "corporationID", primaryKey: true, type: "sequence", detail: true},
+				{name: "entityType", type: "text", canEdit: false},
 				{name: "entityNameID_fk",
 					align: "left",
 					displayField: "entityName",
@@ -38,7 +38,8 @@ isc.defineClass("Corporations", "myWindow").addProperties({
 			initialSort: [{property: "entityNameID_fk", direction: "ascending"}],
 			dataSource: this.CorporationsDS,
 			name: "Corporations",
-			parent: this
+			parent: this,
+			showFilterEditor: true
 		});
 		this.localContextMenu = isc.myContextMenu.create({
 			callingListGrid: this.CorporationsLG,

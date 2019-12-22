@@ -86,15 +86,15 @@ isc.Shared = {
 			{name: "entityName", type: "text", validators: [{type: "lengthRange", max: 200}]},
 			{name: "entityType", type: "text", editorType: "selectItem", validators: [{type: "lengthRange", max: 45}],
 			valueMap:["","Ingredient","Supply","Equipment","Brewery","Misc"] },
-			{name: "weblink", type: "text", validators: [{type: "lengthRange", max: 300}],
-				formatCellValue: function (value) {
-					var formatted;
-					if (value) {
-						formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";
-					}
-					return formatted;
-				}
-			},
+			// {name: "weblink", type: "text", validators: [{type: "lengthRange", max: 300}],
+			// 	formatCellValue: function (value) {
+			// 		var formatted;
+			// 		if (value) {
+			// 			formatted = "<a href='" + value + "' target='_blank'>" + value + "</a>";
+			// 		}
+			// 		return formatted;
+			// 	}
+			// },
 			{name: "active", type: "text", width: 80, editorType: "selectItem", optionDataSource: isc.Clients.yesNoDS, displayField: "displayLOV", valueField: "valueLOV", defaultValue: "Y"},
 			{name: "lastChangeDate", type: "datetime", canEdit: false, detail: true}
 		]

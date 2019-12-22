@@ -13,7 +13,7 @@ isc.defineClass("CorporateDonationItems", "myWindow").addProperties({
 			{name: "lastChangeDate", width: 100, detail: true}
 		]
 	});
-			// {name: "corporateDonationID", type: "integer"},
+
 	this.CorporateDonationItemLG = isc.myListGrid.create({
 		dataSource: this.CorporateDonationItemDS,
 		initialSort: [{property: "entityNameID", direction: "ascending"}, {property: "type", direction: "ascending"}, {property: "donationItem", direction: "ascending"}],
