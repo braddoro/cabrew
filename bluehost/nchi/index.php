@@ -45,21 +45,21 @@ mysqli_close($con);
 	</header>
 	<div class="output" id="dateout"></div>
 	<div class="container"><?php echo $html;?></div>
-<span style="font-size: 14pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">Here is a link to a 3 minute video of NCHI from last year: <a href="https://youtu.be/3oIpssv4Cy0" target="_blank">NCHI 2018</a></style>&nbsp;<span style="font-size: 12pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;"></style>
+<!-- <span style="font-size: 14pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">Here is a link to a 3 minute video of NCHI from last year: <a href="https://youtu.be/3oIpssv4Cy0" target="_blank">NCHI 2018</a></style>&nbsp;<span style="font-size: 12pt; font-family: Arial; vertical-align: baseline; white-space: pre-wrap;"></style> -->
 </body>
 </html>
 <script type="text/javascript">
-	var daystill = calcTarget("10/12");
+	var daystill = calcTarget("10/03");
 	var daysout = 'Only '+daystill+' days until the Invitational!';
 	document.getElementById("dateout").innerHTML = daysout;
 </script>
 <?php
-$d1 = fopen("countlog.txt","r");
-$count = fgets($d1,1000);
+$d1 = fopen("countlog.txt", "r");
+$count = fgets($d1, 1000);
 fclose($d1);
 $count = intval($count)+1;
 echo "<p style='font-size: .666em; font-family: Arial;'>{$count}</p>";
-$d2 = fopen("countlog.txt","w");
+$d2 = fopen("countlog.txt", "w");
 fwrite($d2, "$count");
 fclose($d2);
 ?>
