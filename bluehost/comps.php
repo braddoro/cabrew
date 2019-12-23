@@ -1,6 +1,6 @@
 <?php
 class Reporter {
-	public function init($params = NULL){
+	public function init($params = null){
 		return $this->report_control($params);
 	}
 	private function report_control($params){
@@ -76,12 +76,12 @@ class Reporter {
 		$base = $baseName;
 		$fmt = '';
 		for($x=0;$x<strlen($base);$x++){
-			if(ctype_upper(substr($base,$x,1))){
-				if(!ctype_upper(substr($base,$x-1,1))){
+			if(ctype_upper(substr($base, $x, 1))){
+				if(!ctype_upper(substr($base, $x-1, 1))){
 					$fmt .= ' ';
 				}
 			}
-			$fmt .= substr($base,$x,1);
+			$fmt .= substr($base, $x, 1);
 		}
 		return ucfirst(trim($fmt));
 	}
@@ -95,7 +95,7 @@ class Reporter {
 			if($loop === 0){
 				$out .= "\t<tr class=\"header\">" . PHP_EOL;
 				foreach($row as $col => $val){
-					if(substr($col,0,1) != '_'){
+					if(substr($col, 0, 1) != '_'){
 						$out .= "\t\t<th>" . $this->prettyColumn($col) . "</th>" . PHP_EOL;
 					}
 				}
@@ -104,7 +104,7 @@ class Reporter {
 			$style = $row['_type'];
 			$out .= "\t<tr class=\"{$style}\">" . PHP_EOL;
 			foreach($row as $col => $val){
-				if(substr($col,0,1) != '_'){
+				if(substr($col, 0, 1) != '_'){
 					$out .= "\t\t<td>" . $val . "</td>" . PHP_EOL;
 				}
 			}
