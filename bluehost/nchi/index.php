@@ -1,19 +1,19 @@
 <?php
-$year = 2019;
+$year = (isset($_GET['y'])) ? intval($_GET['y']) : date('Y');
 $ini_array = parse_ini_file('../server.ini', true);
 $hostname = $ini_array['database']['hostname'];
 $username = $ini_array['database']['username'];
 $password = $ini_array['database']['password'];
 $database = $ini_array['database']['dbname'];
 $dbport = 3306;
-$con = mysqli_connect($hostname,$username,$password,$database,$dbport);
-if (mysqli_connect_errno()) {
-	die ("Failed to connect to MySQL using the PHP mysqli extension: " . mysqli_connect_error());
+$con = mysqli_connect($hostname, $username, $password, $database, $dbport);
+if(mysqli_connect_errno()){
+	die("Failed to connect to MySQL using the PHP mysqli extension: " . mysqli_connect_error());
 }
-$query = 'select postText from web_posts where webPostID = 7;';
+$query = 'select postText from web_posts where webPostID = 9;';
 $result = mysqli_query($con, $query);
 $html = '';
-while($row = mysqli_fetch_array($result)) {
+while($row = mysqli_fetch_array($result)){
 	$html = $row[0];
 }
 mysqli_close($con);
@@ -30,7 +30,7 @@ mysqli_close($con);
 <link rel="stylesheet" type"text/css" href="../lib/reporter.css">
 </head>
 <body>
-	<header class="intro-header" style="background-image: url('../img/nchi2019banner.png')">
+	<header class="intro-header" style="background-image: url('../img/nchi<?php echo $year;?>banner.png')">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
