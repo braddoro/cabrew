@@ -58,7 +58,6 @@ $classes[] = "MemberPoints.js";
 $classes[] = "MemberSearch.js";
 $classes[] = "Navigation.js";
 $classes[] = "NoteTypes.js";
-$classes[] = "Preview.js";
 $classes[] = "Shared.js";
 $classes[] = "ShowInfo.js";
 $classes[] = "ShowLog.js";

@@ -32,7 +32,7 @@ if(isset($_GET['d'])){
 }
 $wheres = '';
 
-$params['bind'] = array('id' => NULL);
+$params['bind'] = array('id' => null);
 if(isset($id)){
 	$params['bind'] = array('id' => $id);
 }
