@@ -21,6 +21,7 @@ $classes[] = "BrewClubs.js";
 $classes[] = "BrewContactPoints.js";
 $classes[] = "BrewContacts.js";
 $classes[] = "BrewMedia.js";
+$classes[] = "BudgetActions.js";
 $classes[] = "ChairTypes.js";
 $classes[] = "ClubSearch.js";
 $classes[] = "ContactTypes.js";
