@@ -1,9 +1,9 @@
 <?php
 class Reporter {
 	public function init($params = null){
-		return $this->report_control($params);
+		return $this->reportControl($params);
 	}
-	private function report_control($params){
+	private function reportControl($params){
 
 		// Set up the title.
 		//
@@ -44,7 +44,7 @@ class Reporter {
 		$model_params['sql'] = $params['sql'];
 		$model_params['bind'] = $params['bind'];
 		$model_params['ini_file'] = $ini_file;
-		$data = $this->report_model($model_params);
+		$data = $this->reportModel($model_params);
 		if(isset($params['skip_format']) && $params['skip_format'] === true){
 			return $data;
 		}
@@ -52,11 +52,11 @@ class Reporter {
 		$view_params['title'] = $title;
 		$view_params['data'] = $data;
 		$view_params['show_total'] = $show_total;
-		$html = $this->report_view($view_params);
+		$html = $this->reportView($view_params);
 
 		return $html;
 	}
-	private function report_model($params){
+	private function reportModel($params){
 		$server_array = parse_ini_file($params['ini_file'], true);
 		$dbhost = $server_array['database']['hostname'];
 		$dbuser = $server_array['database']['username'];
@@ -85,7 +85,7 @@ class Reporter {
 		}
 		return ucfirst(trim($fmt));
 	}
-	private function report_view($params){
+	private function reportView($params){
 		$title = $params['title'];
 		$out = "<span class=\"title\">{$title}</span>" . PHP_EOL;
 		$out .= "<table class=\"table\">"  . PHP_EOL;
