@@ -62,18 +62,13 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 		var newResponse;
 		var message = "";
 
-		if(dsResponse.httpResponseCode
-			&& dsResponse.httpResponseCode < 200
-			&& dsResponse.httpResponseCode > 299){
+		if(dsResponse.httpResponseCode && dsResponse.httpResponseCode < 200 && dsResponse.httpResponseCode > 299){
 			status = dsResponse.httpResponseCode;
 		}
-		if(dsResponse.status
-			&& dsResponse.status !== isc.RPCResponse.STATUS_SUCCESS){
+		if(dsResponse.status && dsResponse.status !== isc.RPCResponse.STATUS_SUCCESS){
 			status = dsResponse.status;
 		}
-		if(status === isc.RPCResponse.STATUS_SUCCESS
-			&& data.status
-			&& data.status !== isc.RPCResponse.STATUS_SUCCESS){
+		if(status === isc.RPCResponse.STATUS_SUCCESS && data.status && data.status !== isc.RPCResponse.STATUS_SUCCESS){
 			status = data.status;
 		}
 

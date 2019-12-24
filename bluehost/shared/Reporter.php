@@ -1,9 +1,9 @@
 <?php
 class Reporter {
-	public function init($params = NULL){
-		return $this->report_control($params);
+	public function init($params = null){
+		return $this->reportControl($params);
 	}
-	private function report_control($params){
+	private function reportControl($params){
 
 		// Set up the title.
 		//
@@ -44,7 +44,7 @@ class Reporter {
 		$model_params['sql'] = $params['sql'];
 		$model_params['bind'] = $params['bind'];
 		$model_params['ini_file'] = $ini_file;
-		$data = $this->report_model($model_params);
+		$data = $this->reportModel($model_params);
 		if(isset($params['skip_format']) && $params['skip_format'] === true){
 			return $data;
 		}
@@ -55,11 +55,11 @@ class Reporter {
 		$view_params['title'] = $title;
 		$view_params['data'] = $data;
 		$view_params['show_total'] = $show_total;
-		$html = $this->report_view($view_params);
+		$html = $this->reportView($view_params);
 
 		return $html;
 	}
-	private function report_model($params){
+	private function reportModel($params){
 		$server_array = parse_ini_file($params['ini_file'], true);
 		$dbhost = $server_array['database']['hostname'];
 		$dbuser = $server_array['database']['username'];
@@ -79,16 +79,16 @@ class Reporter {
 		$base = $baseName;
 		$fmt = '';
 		for($x=0;$x<strlen($base);$x++){
-			if(ctype_upper(substr($base,$x,1))){
-				if(!ctype_upper(substr($base,$x-1,1))){
+			if(ctype_upper(substr($base, $x, 1))){
+				if(!ctype_upper(substr($base, $x-1, 1))){
 					$fmt .= ' ';
 				}
 			}
-			$fmt .= substr($base,$x,1);
+			$fmt .= substr($base, $x, 1);
 		}
 		return ucfirst(trim($fmt));
 	}
-	private function report_view($params){
+	private function reportView($params){
 		$out = "";
 		$title = $params['title'];
 		if(isset($params['maintitle'])){
@@ -103,7 +103,7 @@ class Reporter {
 			if($loop === 0){
 				$out .= "\t<tr class=\"header\">" . PHP_EOL;
 				foreach($row as $col => $val){
-					if(substr($col,0,1) != '_'){
+					if(substr($col, 0, 1) != '_'){
 						$out .= "\t\t<th>" . $this->prettyColumn($col) . "</th>" . PHP_EOL;
 					}
 				}
@@ -112,7 +112,7 @@ class Reporter {
 			$style = ($loop % 2 == 0) ? 'even' : 'odd';
 			$out .= "\t<tr class=\"{$style}\">" . PHP_EOL;
 			foreach($row as $col => $val){
-				if(substr($col,0,1) != '_'){
+				if(substr($col, 0, 1) != '_'){
 					$out .= "\t\t<td>" . $val . "</td>" . PHP_EOL;
 				}
 			}
