@@ -49,7 +49,7 @@ $arr = array(
 	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 );
 $r = siteLog($conn, $db, $arr);
-$sql = "select * from {$table} where {$where};";
+$sql = "select * from {$table} where {$where} order by itemName;";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();
