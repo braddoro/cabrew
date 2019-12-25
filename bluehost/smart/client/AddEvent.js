@@ -44,12 +44,12 @@ isc.defineClass("AddEvent", "myWindow").addProperties({
 		var newData;
 		var loop = selectedData.length;
 		var zero = 0;
-		for (i = zero; i < loop; i++) {
+		for(i = zero; i < loop; i++){
 			newData = {
-				dateDetail: formData["dateDetail"],
-				dateTypeID_fk: formData["dateTypeID_fk"],
-				memberDate: formData["memberDate"],
-				memberID_fk: selectedData[i]["memberID"]
+				dateDetail: formData.dateDetail,
+				dateTypeID_fk: formData.dateTypeID_fk,
+				memberDate: formData.memberDate,
+				memberID_fk: selectedData[i].memberID
 			};
 			this.AddEventDS.addData(newData);
 		}

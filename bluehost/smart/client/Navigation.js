@@ -58,6 +58,7 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "BJCP 2015 Styles", click: "isc.BJCP2015Styles.create({width: 650, height: \"95%\"})"},
 				{title: "Chairs", click: "isc.ChairTypes.create()"},
 				{title: "Contacts", click: "isc.ContactTypes.create()"},
+				{title: "Budget Actions", click: "isc.BudgetActions.create()"},
 				{title: "Dates", click: "isc.DateTypes.create()"},
 				{title: "Donations", click: "isc.DonationStatuses.create()"},
 				{title: "Events", click: "isc.EventTypes.create()"},

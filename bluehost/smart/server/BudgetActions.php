@@ -1,8 +1,8 @@
 <?php
 require_once 'Connect.php';
 require_once 'SiteLog.php';
-$table = 'sec_items';
-$primaryKey = 'secItemID';
+$table = 'budgetActions';
+$primaryKey = 'budgetActionID';
 $conn = new Connect();
 $db = $conn->conn();
 if(!$db->isConnected()){
@@ -15,6 +15,10 @@ $operationType = (isset($_REQUEST['operationType'])) ? $_REQUEST['operationType'
 switch($operationType){
 case 'fetch':
 	$where = '1=1';
+	if(isset($_REQUEST['active'])){
+		$qStr = $db->qStr($_REQUEST['active'], true);
+		$where .= " and active = $qStr ";
+	}
 	break;
 case 'add':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
@@ -26,7 +30,6 @@ case 'add':
 case 'update':
 	$data = array('table' => $table, 'primaryKey' => $primaryKey, 'newvals' => $_REQUEST);
 	$record = $conn->buildRecordset($data);
-	// echo json_encode($record);
 	$where = $primaryKey . '=' . $pkval;
 	$db->AutoExecute($table, $record, DB_AUTOQUERY_UPDATE, $where);
  	break;
@@ -49,7 +52,7 @@ $arr = array(
 	"userID" => (isset($_REQUEST['userID'])) ? intval($_REQUEST['userID']): 0
 );
 $r = siteLog($conn, $db, $arr);
-$sql = "select * from {$table} where {$where} order by itemName;";
+$sql = "select * from {$table} where {$where} order by budgetAction;";
 $response = $db->getAll($sql);
 if(!$response){
 	$response = array();

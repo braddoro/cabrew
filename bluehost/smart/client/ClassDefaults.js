@@ -62,17 +62,13 @@ isc.defineClass("myDataSource", "DataSource").addProperties({
 		var newResponse;
 		var message = "";
 
-		if(dsResponse.httpResponseCode
-			&& dsResponse.httpResponseCode < 200
-			&& dsResponse.httpResponseCode > 299){
+		if(dsResponse.httpResponseCode && dsResponse.httpResponseCode < 200 && dsResponse.httpResponseCode > 299){
 			status = dsResponse.httpResponseCode;
 		}
 		if(dsResponse.status && dsResponse.status !== isc.RPCResponse.STATUS_SUCCESS){
 			status = dsResponse.status;
 		}
-		if(status === isc.RPCResponse.STATUS_SUCCESS
-			&& data.status
-			&& data.status !== isc.RPCResponse.STATUS_SUCCESS){
+		if(status === isc.RPCResponse.STATUS_SUCCESS && data.status && data.status !== isc.RPCResponse.STATUS_SUCCESS){
 			status = data.status;
 		}
 
@@ -130,12 +126,12 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		}
 		return true;
 	},
-	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated) {
+	rowDoubleClick: function(record, recordNum, fieldNum, keyboardGenerated){
 		if(this.canEdit){
 			this.startEditing(recordNum);
 		}
 	},
-	updateStatus: function() {
+	updateStatus: function(){
 		var name = this.name;
 		var nameStr = "";
 		var rows = this.getTotalRows();
@@ -150,7 +146,7 @@ isc.defineClass("myListGrid", "ListGrid").addProperties({
 		if(!state){
 			stateStr = "(read only)";
 		}
-		if(this.name) {
+		if(this.name){
 			nameStr = this.name + " | ";
 		}
 		var title = nameStr + "" + rowsStr + " " + stateStr;
