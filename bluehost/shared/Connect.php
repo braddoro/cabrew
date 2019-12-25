@@ -1,9 +1,9 @@
 <?php
 class Connect {
 	protected $dbo;
-	public function conn() {
+	public function conn(){
 		$hostname = gethostname();
-		require_once '../adodb5/adodb.inc.php'; // cabrew.org
+		include_once '../adodb5/adodb.inc.php'; // cabrew.org
 		$ini_array = parse_ini_file('server.ini', true);
 		$hostname = $ini_array['database']['hostname'];
 		$username = $ini_array['database']['username'];
@@ -16,7 +16,7 @@ class Connect {
 		$this->dbo = $dbo;
 		return $dbo;
 	}
-	public function buildRecordset($data) {
+	public function buildRecordset($data){
 		$cols = $this->dbo->metaColumns($data['table']);
 		foreach($data['newvals'] as $key => $value){
 			if(array_key_exists(strtoupper($key), $cols)){
@@ -92,8 +92,8 @@ class Connect {
 		$record['lastChangeDate'] = date("Y-m-d H:i:s");
 		return $record;
 	}
-	public function getMessage($errorNumber, $data = null) {
-		switch ($errorNumber) {
+	public function getMessage($errorNumber, $data = null){
+		switch ($errorNumber){
 			case 1:
 				$error = "No Primary Key sent on {$data} action.  This is not desirable. F5 is your friend right now.";
 				break;
