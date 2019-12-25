@@ -1,7 +1,7 @@
 <?php
 class Connect {
 	protected $dbo;
-	public function conn() {
+	public function conn(){
 		$hostname = gethostname();
 		require_once '../../adodb5/adodb.inc.php'; // cabrew.org
 		$ini_array = parse_ini_file('../../shared/server.ini', true);
@@ -92,7 +92,7 @@ class Connect {
 		$record['lastChangeDate'] = date("Y-m-d H:i:s");
 		return $record;
 	}
-	public function getMessage($errorNumber, $data = null) {
+	public function getMessage($errorNumber, $data = null){
 		switch ($errorNumber) {
 			case 1:
 				$error = "No Primary Key sent on {$data} action.  This is not desirable. F5 is your friend right now.";

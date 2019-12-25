@@ -1,10 +1,9 @@
 <?php
-/*$Access = new Access();
-$params = array('user' => $_REQUEST['userID'], 'item' => $_REQUEST['']);
-$check = $Access->Check($params);
-*/
-require_once 'Connect.php';
+incude_once 'Connect.php';
 Class Access {
+	// $Access = new Access();
+	// $params = array('user' => $_REQUEST['userID'], 'item' => $_REQUEST['']);
+	// $check = $Access->Check($params);
     fuction __construct() {}
 	private function checkAccess($params){
 		$conn = new Connect();
