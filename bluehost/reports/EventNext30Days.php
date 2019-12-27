@@ -14,6 +14,12 @@ if(isset($_GET['e'])){
 	$eventTypeID = intval($_GET['e']);
 }
 
+$where = "";
+if(isset($_GET['m'])){
+	$memberID = intval($_GET['m']);
+	$where = 'and C.memberID = ' . $memberID;
+}
+
 $params['ini_file'] = '../shared/server.ini';
 $params['show_total'] = true;
 $params['maintitle'] = 'Cabarrus Homebrewers Society';
@@ -35,6 +41,7 @@ where
 	(C.status IS NULL or (C.status <> 'complete' and C.status <> 'not needed'))
 	and C.dueDate <= :tomorrow
 	and C.eventTypeID = :eventTypeID
+	{$where}
 order by
 	C.dueDate,
 	C.step;";

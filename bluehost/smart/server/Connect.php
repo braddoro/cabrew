@@ -31,7 +31,10 @@ class Connect {
 					case 'bigint': // Planned fall through.
 					case 'int':
 						if(!$meta->primary_key){
-							$record[$key] = intval($value);
+							$record[$key] = null;
+							if(!is_null($value)){
+								$record[$key] = intval($value);
+							}
 						}
 						break;
 					case 'datetime':
