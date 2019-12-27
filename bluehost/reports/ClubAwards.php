@@ -87,7 +87,7 @@ $html = $lclass->init($params);
 <html>
 <body>
 <head>
-<title><?php echo 'Event Budget' ?></title>
+<title><?php echo 'Club Awards' ?></title>
 <link rel="stylesheet" type"text/css" href="../reporter.css">
 </head>
 <body>
