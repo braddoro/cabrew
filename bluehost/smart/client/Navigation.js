@@ -12,14 +12,22 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Item Groups", click: "isc.ItemGroups.create({title: 'Item Groups', left: isc.Math.random(340), top: isc.Math.random(240), height: \"90%\", width: 400});"}
 			]
 		});
-		this.MembersMenu = isc.myMenu.create({
-			title: "Members",
+		this.BookMenu = isc.myMenu.create({
+			title: "Books",
 			items: [
-				{title: "History", click: "isc.MemberHistory.create({width: 900, height: 300});"},
-				{title: "Points", click: "isc.MemberPoints.create({width: 900, height: 300});"},
-				{title: "Search", click: "isc.MemberSearch.create({width: 600, height: \"95%\"});"},
-				{isSeparator: true},
-				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"});"}
+				{title: "Books", click: "isc.LibraryBooks.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Loans", click: "isc.LibraryLoans.create({width: 800, height: 400});"}
+			]
+		});
+		this.ClubMenu = isc.myMenu.create({
+			title: "Entities",
+			items: [
+				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
+				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Donation Touches", click: "isc.DonationTouch.create({width: \"95%\", height: \"95%\"});"},
+				{title: "Donor List", click: "isc.CorporateDonations.create({width: \"1000\", height: \"95%\"});"},
+				{title: "Entity Names", click: "isc.EntityNames.create({width: \"800\", height: \"95%\"})"},
+				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"}
 			]
 		});
 		this.EventMenu = isc.myMenu.create({
@@ -34,21 +42,14 @@ isc.defineClass("Navigation", "Menu").addProperties({
 				{title: "Teams", click: "isc.EventTeams.create({width: 750, height: \"95%\"});"}
 			]
 		});
-		this.BookMenu = isc.myMenu.create({
-			title: "Books",
+		this.MembersMenu = isc.myMenu.create({
+			title: "Members",
 			items: [
-				{title: "Books", click: "isc.LibraryBooks.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Loans", click: "isc.LibraryLoans.create({width: 800, height: 400});"}
-			]
-		});
-		this.ClubMenu = isc.myMenu.create({
-			title: "Entities",
-			items: [
-				{title: "Clubs", click: "isc.BrewClubs.create({width: \"800\", height: \"66%\"});"},
-				{title: "Corporations", click: "isc.Corporations.create({width: \"95%\", height: \"95%\"});"},
-				{title: "Donor List", click: "isc.CorporateDonations.create({width: \"1000\", height: \"95%\"});"},
-				{title: "Entity Names", click: "isc.EntityNames.create({width: \"800\", height: \"95%\"})"},
-				{title: "Search", click: "isc.ClubSearch.create({width: \"95%\", height: \"95%\"});"}
+				{title: "History", click: "isc.MemberHistory.create({width: 900, height: 300});"},
+				{title: "Points", click: "isc.MemberPoints.create({width: 900, height: 300});"},
+				{title: "Search", click: "isc.MemberSearch.create({width: 600, height: \"95%\"});"},
+				{isSeparator: true},
+				{title: "Add Date", click: "isc.AddEvent.create({width: 300, height: \"95%\", title: \"Add Date\"});"}
 			]
 		});
 		this.MiscMenu = isc.myMenu.create({
@@ -56,9 +57,9 @@ isc.defineClass("Navigation", "Menu").addProperties({
 			items: [
 				{title: "BJCP 2015 Categories", click: "isc.BJCP2015Categories.create({width: \"95%\", height: \"95%\"})"},
 				{title: "BJCP 2015 Styles", click: "isc.BJCP2015Styles.create({width: 650, height: \"95%\"})"},
+				{title: "Budget Actions", click: "isc.BudgetActions.create()"},
 				{title: "Chairs", click: "isc.ChairTypes.create()"},
 				{title: "Contacts", click: "isc.ContactTypes.create()"},
-				{title: "Budget Actions", click: "isc.BudgetActions.create()"},
 				{title: "Dates", click: "isc.DateTypes.create()"},
 				{title: "Donations", click: "isc.DonationStatuses.create()"},
 				{title: "Events", click: "isc.EventTypes.create()"},
