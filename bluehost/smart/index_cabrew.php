@@ -1,6 +1,6 @@
 <?php
 $hostname = gethostname();
-require_once '../adodb5/adodb.inc.php'; 
+require_once '../adodb5/adodb.inc.php';
 $cabrew_array = parse_ini_file('cabrew.ini', true);
 $skin = $cabrew_array['application']['skin'];
 $title = $cabrew_array['application']['title'];
@@ -32,7 +32,7 @@ $classes[] = "Corporations.js";
 $classes[] = "DateTypes.js";
 $classes[] = "Desktop.js";
 $classes[] = "DonationStatuses.js";
-$classes[] = "DonationTouches.js";
+$classes[] = "DonationTouch.js";
 $classes[] = "EditMember.js";
 $classes[] = "EntityNames.js";
 $classes[] = "EventAttendance.js";
