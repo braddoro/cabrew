@@ -16,7 +16,8 @@ $params['sql'] = "
 	select
 		M.memberID,
 		REPLACE(CONCAT(IFNULL(M.nickName, M.firstName), ' ', M.lastName),'  ',' ') as 'FullName',
-		sum(dt.datePoints) as 'Points'
+		sum(dt.datePoints) Base,
+		ceiling(sum(dt.datePoints)/5)*5 Rounded
 	from
 		memberDates d
 		inner join members M on M.memberID = d.memberID_fk
