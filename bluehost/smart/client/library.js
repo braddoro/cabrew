@@ -3,7 +3,7 @@ function copyValues(stringIn){
 	for(var key in stringIn) {
 		if (stringIn.hasOwnProperty) {
 			let value = stringIn[key];
-			if (typeof value !== "undefined" && typeof key !== "undefined") {
+			if (typeof value !== "undefined" && typeof key !== "undefined" && value !== null) {
 				stringOut += key + ": " + value + " - " + typeof(value) + "<br/>";
 			}
 		}
